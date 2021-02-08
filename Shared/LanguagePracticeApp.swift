@@ -8,12 +8,21 @@ import SwiftUI
 
 @main
 struct LanguagePracticeApp: App {
-    let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            #if os(iOS)
+            PhoneTabView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            #else
+            Text("MacOS TBD")
+                .frame(width: 300, height: 200)
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            #endif
         }
     }
+    
+    // MARK: - Private
+    
+    private let persistenceController = PersistenceController.shared
 }
