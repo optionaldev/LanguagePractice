@@ -22,6 +22,10 @@
 		6E675E9425CEFE1B002D8D98 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E675E6525CEFE1A002D8D98 /* Persistence.swift */; };
 		6E675E9525CEFE1B002D8D98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E675E6625CEFE1B002D8D98 /* Assets.xcassets */; };
 		6E675E9625CEFE1B002D8D98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E675E6625CEFE1B002D8D98 /* Assets.xcassets */; };
+		6E8C0DC225D34E1E006C399E /* ChallengeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C0DC125D34E1E006C399E /* ChallengeType.swift */; };
+		6E8C0DC325D34E1E006C399E /* ChallengeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C0DC125D34E1E006C399E /* ChallengeType.swift */; };
+		6E8C0DC925D34E6B006C399E /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C0DC825D34E6B006C399E /* Language.swift */; };
+		6E8C0DCA25D34E6B006C399E /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C0DC825D34E6B006C399E /* Language.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +64,8 @@
 		6E675E8625CEFE1B002D8D98 /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E675E8A25CEFE1B002D8D98 /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		6E675E8C25CEFE1B002D8D98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6E8C0DC125D34E1E006C399E /* ChallengeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeType.swift; sourceTree = "<group>"; };
+		6E8C0DC825D34E6B006C399E /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,12 +115,11 @@
 		6E675E6025CEFE1A002D8D98 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				6E675E6325CEFE1A002D8D98 /* LanguagePracticeApp.swift */,
 				6E675E6425CEFE1A002D8D98 /* ContentView.swift */,
+				6E675E6325CEFE1A002D8D98 /* LanguagePracticeApp.swift */,
 				6E675E6525CEFE1A002D8D98 /* Persistence.swift */,
 				6E675E6625CEFE1B002D8D98 /* Assets.xcassets */,
-				6E675E6125CEFE1A002D8D98 /* LanguagePractice.xcdatamodeld */,
-				6E55549425D2026A000565F2 /* Tab.swift */,
+				6E8C0DC025D34E09006C399E /* Model */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -164,6 +169,17 @@
 				6E675E8C25CEFE1B002D8D98 /* Info.plist */,
 			);
 			path = "Tests macOS";
+			sourceTree = "<group>";
+		};
+		6E8C0DC025D34E09006C399E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6E8C0DC125D34E1E006C399E /* ChallengeType.swift */,
+				6E8C0DC825D34E6B006C399E /* Language.swift */,
+				6E675E6125CEFE1A002D8D98 /* LanguagePractice.xcdatamodeld */,
+				6E55549425D2026A000565F2 /* Tab.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -323,10 +339,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E8C0DC225D34E1E006C399E /* ChallengeType.swift in Sources */,
 				6E675E8F25CEFE1B002D8D98 /* LanguagePracticeApp.swift in Sources */,
 				6E675E9325CEFE1B002D8D98 /* Persistence.swift in Sources */,
 				6E55549525D2026A000565F2 /* Tab.swift in Sources */,
 				6E55549C25D20674000565F2 /* PhoneTabView.swift in Sources */,
+				6E8C0DC925D34E6B006C399E /* Language.swift in Sources */,
 				6E675E8D25CEFE1B002D8D98 /* LanguagePractice.xcdatamodeld in Sources */,
 				6E675E9125CEFE1B002D8D98 /* ContentView.swift in Sources */,
 			);
@@ -339,6 +357,8 @@
 				6E675E9025CEFE1B002D8D98 /* LanguagePracticeApp.swift in Sources */,
 				6E675E9425CEFE1B002D8D98 /* Persistence.swift in Sources */,
 				6E55549625D2026A000565F2 /* Tab.swift in Sources */,
+				6E8C0DCA25D34E6B006C399E /* Language.swift in Sources */,
+				6E8C0DC325D34E1E006C399E /* ChallengeType.swift in Sources */,
 				6E675E8E25CEFE1B002D8D98 /* LanguagePractice.xcdatamodeld in Sources */,
 				6E675E9225CEFE1B002D8D98 /* ContentView.swift in Sources */,
 			);
@@ -430,6 +450,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-DJAPANESE";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -482,6 +503,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_SWIFT_FLAGS = "-DJAPANESE";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
@@ -501,6 +523,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_SWIFT_FLAGS = "-DJAPANESE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.optionaldev.LanguagePractice;
 				PRODUCT_NAME = LanguagePractice;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -524,6 +547,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_SWIFT_FLAGS = "-DJAPANESE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.optionaldev.LanguagePractice;
 				PRODUCT_NAME = LanguagePractice;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -551,6 +575,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				OTHER_SWIFT_FLAGS = "-DJAPANESE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.optionaldev.LanguagePractice;
 				PRODUCT_NAME = LanguagePractice;
 				SDKROOT = macosx;
@@ -575,6 +600,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				OTHER_SWIFT_FLAGS = "-DJAPANESE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.optionaldev.LanguagePractice;
 				PRODUCT_NAME = LanguagePractice;
 				SDKROOT = macosx;

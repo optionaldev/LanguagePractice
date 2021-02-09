@@ -4,8 +4,6 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-import Foundation
-
 enum Tab: Int, CaseIterable, Identifiable {
     
     case home
