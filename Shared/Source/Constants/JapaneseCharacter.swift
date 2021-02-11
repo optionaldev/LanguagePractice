@@ -5,7 +5,7 @@
 // 
 
 #if JAPANESE
-struct JapaneseCharacter: ForeignCharacter {
+struct JapaneseCharacter {
 
     let character: String
     

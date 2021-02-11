@@ -26,6 +26,14 @@
 		6E8C0DC325D34E1E006C399E /* ChallengeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C0DC125D34E1E006C399E /* ChallengeType.swift */; };
 		6E8C0DC925D34E6B006C399E /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C0DC825D34E6B006C399E /* Language.swift */; };
 		6E8C0DCA25D34E6B006C399E /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C0DC825D34E6B006C399E /* Language.swift */; };
+		6EB3818025D5D5DA00114B83 /* Speech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB3817F25D5D5DA00114B83 /* Speech.swift */; };
+		6EB3818125D5D5DA00114B83 /* Speech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB3817F25D5D5DA00114B83 /* Speech.swift */; };
+		6EB3818C25D5D5FF00114B83 /* Voices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB3818B25D5D5FF00114B83 /* Voices.swift */; };
+		6EB3818D25D5D5FF00114B83 /* Voices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB3818B25D5D5FF00114B83 /* Voices.swift */; };
+		6EB3819725D5D68900114B83 /* VoiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB3819625D5D68900114B83 /* VoiceHandler.swift */; };
+		6EB3819825D5D68900114B83 /* VoiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB3819625D5D68900114B83 /* VoiceHandler.swift */; };
+		6EB381A625D5D70900114B83 /* SpeechBlacklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB381A525D5D70900114B83 /* SpeechBlacklist.swift */; };
+		6EB381A725D5D70900114B83 /* SpeechBlacklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB381A525D5D70900114B83 /* SpeechBlacklist.swift */; };
 		6EF4E3E025D4A47A00CDCC40 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF4E3DF25D4A47A00CDCC40 /* AppConstants.swift */; };
 		6EF4E3E125D4A47A00CDCC40 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF4E3DF25D4A47A00CDCC40 /* AppConstants.swift */; };
 		6EF4E3E725D4A48D00CDCC40 /* Hiragana.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF4E3E625D4A48D00CDCC40 /* Hiragana.swift */; };
@@ -74,6 +82,10 @@
 		6E675E8C25CEFE1B002D8D98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6E8C0DC125D34E1E006C399E /* ChallengeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeType.swift; sourceTree = "<group>"; };
 		6E8C0DC825D34E6B006C399E /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
+		6EB3817F25D5D5DA00114B83 /* Speech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speech.swift; sourceTree = "<group>"; };
+		6EB3818B25D5D5FF00114B83 /* Voices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voices.swift; sourceTree = "<group>"; };
+		6EB3819625D5D68900114B83 /* VoiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceHandler.swift; sourceTree = "<group>"; };
+		6EB381A525D5D70900114B83 /* SpeechBlacklist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechBlacklist.swift; sourceTree = "<group>"; };
 		6EF4E3DF25D4A47A00CDCC40 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		6EF4E3E625D4A48D00CDCC40 /* Hiragana.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hiragana.swift; sourceTree = "<group>"; };
 		6EF4E3ED25D4A49F00CDCC40 /* HiraganaRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiraganaRow.swift; sourceTree = "<group>"; };
@@ -115,6 +127,7 @@
 		6E1B1D6625D4970B00F59F91 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				6EB3817E25D5D5D000114B83 /* Utility */,
 				6E675E6425CEFE1A002D8D98 /* ContentView.swift */,
 				6E675E6325CEFE1A002D8D98 /* LanguagePracticeApp.swift */,
 				6E675E6525CEFE1A002D8D98 /* Persistence.swift */,
@@ -201,6 +214,25 @@
 				6E55549425D2026A000565F2 /* Tab.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		6EB3817E25D5D5D000114B83 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				6EB3818A25D5D5F400114B83 /* Speech */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		6EB3818A25D5D5F400114B83 /* Speech */ = {
+			isa = PBXGroup;
+			children = (
+				6EB3817F25D5D5DA00114B83 /* Speech.swift */,
+				6EB381A525D5D70900114B83 /* SpeechBlacklist.swift */,
+				6EB3819625D5D68900114B83 /* VoiceHandler.swift */,
+				6EB3818B25D5D5FF00114B83 /* Voices.swift */,
+			);
+			path = Speech;
 			sourceTree = "<group>";
 		};
 		6EF4E3DE25D4A46B00CDCC40 /* Constants */ = {
@@ -374,11 +406,15 @@
 				6E8C0DC225D34E1E006C399E /* ChallengeType.swift in Sources */,
 				6E675E8F25CEFE1B002D8D98 /* LanguagePracticeApp.swift in Sources */,
 				6E675E9325CEFE1B002D8D98 /* Persistence.swift in Sources */,
+				6EB381A625D5D70900114B83 /* SpeechBlacklist.swift in Sources */,
 				6E55549525D2026A000565F2 /* Tab.swift in Sources */,
 				6E55549C25D20674000565F2 /* PhoneTabView.swift in Sources */,
 				6EF4E3E725D4A48D00CDCC40 /* Hiragana.swift in Sources */,
 				6EF4E3F525D4A4CC00CDCC40 /* JapaneseCharacter.swift in Sources */,
+				6EB3819725D5D68900114B83 /* VoiceHandler.swift in Sources */,
+				6EB3818C25D5D5FF00114B83 /* Voices.swift in Sources */,
 				6EF4E3EE25D4A49F00CDCC40 /* HiraganaRow.swift in Sources */,
+				6EB3818025D5D5DA00114B83 /* Speech.swift in Sources */,
 				6E8C0DC925D34E6B006C399E /* Language.swift in Sources */,
 				6E675E8D25CEFE1B002D8D98 /* LanguagePractice.xcdatamodeld in Sources */,
 				6E675E9125CEFE1B002D8D98 /* ContentView.swift in Sources */,
@@ -393,8 +429,12 @@
 				6EF4E3E125D4A47A00CDCC40 /* AppConstants.swift in Sources */,
 				6EF4E3F625D4A4CC00CDCC40 /* JapaneseCharacter.swift in Sources */,
 				6E675E9025CEFE1B002D8D98 /* LanguagePracticeApp.swift in Sources */,
+				6EB3818125D5D5DA00114B83 /* Speech.swift in Sources */,
 				6E675E9425CEFE1B002D8D98 /* Persistence.swift in Sources */,
+				6EB381A725D5D70900114B83 /* SpeechBlacklist.swift in Sources */,
+				6EB3818D25D5D5FF00114B83 /* Voices.swift in Sources */,
 				6E55549625D2026A000565F2 /* Tab.swift in Sources */,
+				6EB3819825D5D68900114B83 /* VoiceHandler.swift in Sources */,
 				6E8C0DCA25D34E6B006C399E /* Language.swift in Sources */,
 				6E8C0DC325D34E1E006C399E /* ChallengeType.swift in Sources */,
 				6E675E8E25CEFE1B002D8D98 /* LanguagePractice.xcdatamodeld in Sources */,
