@@ -38,6 +38,26 @@
 		6EB3819825D5D68900114B83 /* VoiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB3819625D5D68900114B83 /* VoiceHandler.swift */; };
 		6EB381A625D5D70900114B83 /* SpeechBlacklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB381A525D5D70900114B83 /* SpeechBlacklist.swift */; };
 		6EB381A725D5D70900114B83 /* SpeechBlacklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB381A525D5D70900114B83 /* SpeechBlacklist.swift */; };
+		6EE81C9025D89C1F00667CE5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81C8F25D89C1F00667CE5 /* HomeView.swift */; };
+		6EE81C9125D89C1F00667CE5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81C8F25D89C1F00667CE5 /* HomeView.swift */; };
+		6EE81C9B25D89CC200667CE5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81C9A25D89CC200667CE5 /* HomeViewModel.swift */; };
+		6EE81C9C25D89CC200667CE5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81C9A25D89CC200667CE5 /* HomeViewModel.swift */; };
+		6EE81CA925D89D6800667CE5 /* Lexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CA825D89D6800667CE5 /* Lexicon.swift */; };
+		6EE81CAA25D89D6800667CE5 /* Lexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CA825D89D6800667CE5 /* Lexicon.swift */; };
+		6EE81CB125D89DCA00667CE5 /* EnglishLexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CB025D89DCA00667CE5 /* EnglishLexicon.swift */; };
+		6EE81CB225D89DCA00667CE5 /* EnglishLexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CB025D89DCA00667CE5 /* EnglishLexicon.swift */; };
+		6EE81CB825D89DD900667CE5 /* ForeignLexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CB725D89DD900667CE5 /* ForeignLexicon.swift */; };
+		6EE81CB925D89DD900667CE5 /* ForeignLexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CB725D89DD900667CE5 /* ForeignLexicon.swift */; };
+		6EE81CC925D89E4E00667CE5 /* ForeignNoun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CC825D89E4E00667CE5 /* ForeignNoun.swift */; };
+		6EE81CCA25D89E4E00667CE5 /* ForeignNoun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CC825D89E4E00667CE5 /* ForeignNoun.swift */; };
+		6EE81CD025D89E7F00667CE5 /* ForeignWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CCF25D89E7F00667CE5 /* ForeignWord.swift */; };
+		6EE81CD125D89E7F00667CE5 /* ForeignWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CCF25D89E7F00667CE5 /* ForeignWord.swift */; };
+		6EE81CD725D89E9300667CE5 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CD625D89E9300667CE5 /* Word.swift */; };
+		6EE81CD825D89E9300667CE5 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CD625D89E9300667CE5 /* Word.swift */; };
+		6EE81CDE25D89EAB00667CE5 /* EnglishNoun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CDD25D89EAB00667CE5 /* EnglishNoun.swift */; };
+		6EE81CDF25D89EAB00667CE5 /* EnglishNoun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CDD25D89EAB00667CE5 /* EnglishNoun.swift */; };
+		6EE81CE525D89EC000667CE5 /* EnglishWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CE425D89EC000667CE5 /* EnglishWord.swift */; };
+		6EE81CE625D89EC000667CE5 /* EnglishWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CE425D89EC000667CE5 /* EnglishWord.swift */; };
 		6EF4E3E025D4A47A00CDCC40 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF4E3DF25D4A47A00CDCC40 /* AppConstants.swift */; };
 		6EF4E3E125D4A47A00CDCC40 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF4E3DF25D4A47A00CDCC40 /* AppConstants.swift */; };
 		6EF4E3E725D4A48D00CDCC40 /* Hiragana.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF4E3E625D4A48D00CDCC40 /* Hiragana.swift */; };
@@ -92,6 +112,16 @@
 		6EB3818B25D5D5FF00114B83 /* Voices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voices.swift; sourceTree = "<group>"; };
 		6EB3819625D5D68900114B83 /* VoiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceHandler.swift; sourceTree = "<group>"; };
 		6EB381A525D5D70900114B83 /* SpeechBlacklist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechBlacklist.swift; sourceTree = "<group>"; };
+		6EE81C8F25D89C1F00667CE5 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		6EE81C9A25D89CC200667CE5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		6EE81CA825D89D6800667CE5 /* Lexicon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexicon.swift; sourceTree = "<group>"; };
+		6EE81CB025D89DCA00667CE5 /* EnglishLexicon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishLexicon.swift; sourceTree = "<group>"; };
+		6EE81CB725D89DD900667CE5 /* ForeignLexicon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignLexicon.swift; sourceTree = "<group>"; };
+		6EE81CC825D89E4E00667CE5 /* ForeignNoun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignNoun.swift; sourceTree = "<group>"; };
+		6EE81CCF25D89E7F00667CE5 /* ForeignWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignWord.swift; sourceTree = "<group>"; };
+		6EE81CD625D89E9300667CE5 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
+		6EE81CDD25D89EAB00667CE5 /* EnglishNoun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishNoun.swift; sourceTree = "<group>"; };
+		6EE81CE425D89EC000667CE5 /* EnglishWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishWord.swift; sourceTree = "<group>"; };
 		6EF4E3DF25D4A47A00CDCC40 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		6EF4E3E625D4A48D00CDCC40 /* Hiragana.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hiragana.swift; sourceTree = "<group>"; };
 		6EF4E3ED25D4A49F00CDCC40 /* HiraganaRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiraganaRow.swift; sourceTree = "<group>"; };
@@ -130,24 +160,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6E18FC2425D73E0A00EEEB42 /* Extension */ = {
+		6E18FC2425D73E0A00EEEB42 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				6E18FC3025D73E3D00EEEB42 /* CharacterExtension.swift */,
 				6E18FC2525D73E1E00EEEB42 /* StringExtension.swift */,
 			);
-			path = Extension;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		6E1B1D6625D4970B00F59F91 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				6E675E6425CEFE1A002D8D98 /* ContentView.swift */,
-				6E675E6325CEFE1A002D8D98 /* LanguagePracticeApp.swift */,
-				6E675E6525CEFE1A002D8D98 /* Persistence.swift */,
 				6EF4E3DE25D4A46B00CDCC40 /* Constants */,
-				6E18FC2425D73E0A00EEEB42 /* Extension */,
-				6E8C0DC025D34E09006C399E /* Model */,
+				6E18FC2425D73E0A00EEEB42 /* Extensions */,
+				6E8C0DC025D34E09006C399E /* Models */,
+				6EE81C8525D89BD500667CE5 /* UI */,
 				6EB3817E25D5D5D000114B83 /* Utility */,
 			);
 			path = Source;
@@ -222,19 +250,21 @@
 			path = "Tests macOS";
 			sourceTree = "<group>";
 		};
-		6E8C0DC025D34E09006C399E /* Model */ = {
+		6E8C0DC025D34E09006C399E /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				6E8C0DC125D34E1E006C399E /* ChallengeType.swift */,
 				6E8C0DC825D34E6B006C399E /* Language.swift */,
 				6E55549425D2026A000565F2 /* Tab.swift */,
+				6EE81CAF25D89DAD00667CE5 /* Lexicons */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		6EB3817E25D5D5D000114B83 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				6E675E6525CEFE1A002D8D98 /* Persistence.swift */,
 				6EB3818A25D5D5F400114B83 /* Speech */,
 			);
 			path = Utility;
@@ -249,6 +279,56 @@
 				6EB3818B25D5D5FF00114B83 /* Voices.swift */,
 			);
 			path = Speech;
+			sourceTree = "<group>";
+		};
+		6EE81C8525D89BD500667CE5 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				6E675E6425CEFE1A002D8D98 /* ContentView.swift */,
+				6E675E6325CEFE1A002D8D98 /* LanguagePracticeApp.swift */,
+				6EE81C8E25D89BFA00667CE5 /* Home */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		6EE81C8E25D89BFA00667CE5 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				6EE81C8F25D89C1F00667CE5 /* HomeView.swift */,
+				6EE81C9A25D89CC200667CE5 /* HomeViewModel.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		6EE81CAF25D89DAD00667CE5 /* Lexicons */ = {
+			isa = PBXGroup;
+			children = (
+				6EE81CA825D89D6800667CE5 /* Lexicon.swift */,
+				6EE81CD625D89E9300667CE5 /* Word.swift */,
+				6EE81CC625D89E3800667CE5 /* English */,
+				6EE81CC725D89E3F00667CE5 /* Foreign */,
+			);
+			path = Lexicons;
+			sourceTree = "<group>";
+		};
+		6EE81CC625D89E3800667CE5 /* English */ = {
+			isa = PBXGroup;
+			children = (
+				6EE81CB025D89DCA00667CE5 /* EnglishLexicon.swift */,
+				6EE81CDD25D89EAB00667CE5 /* EnglishNoun.swift */,
+				6EE81CE425D89EC000667CE5 /* EnglishWord.swift */,
+			);
+			path = English;
+			sourceTree = "<group>";
+		};
+		6EE81CC725D89E3F00667CE5 /* Foreign */ = {
+			isa = PBXGroup;
+			children = (
+				6EE81CB725D89DD900667CE5 /* ForeignLexicon.swift */,
+				6EE81CC825D89E4E00667CE5 /* ForeignNoun.swift */,
+				6EE81CCF25D89E7F00667CE5 /* ForeignWord.swift */,
+			);
+			path = Foreign;
 			sourceTree = "<group>";
 		};
 		6EF4E3DE25D4A46B00CDCC40 /* Constants */ = {
@@ -421,22 +501,32 @@
 			files = (
 				6E8C0DC225D34E1E006C399E /* ChallengeType.swift in Sources */,
 				6E675E8F25CEFE1B002D8D98 /* LanguagePracticeApp.swift in Sources */,
+				6EE81CB125D89DCA00667CE5 /* EnglishLexicon.swift in Sources */,
+				6EE81CB825D89DD900667CE5 /* ForeignLexicon.swift in Sources */,
 				6E675E9325CEFE1B002D8D98 /* Persistence.swift in Sources */,
+				6EE81C9B25D89CC200667CE5 /* HomeViewModel.swift in Sources */,
+				6EE81CDE25D89EAB00667CE5 /* EnglishNoun.swift in Sources */,
 				6E18FC3125D73E3D00EEEB42 /* CharacterExtension.swift in Sources */,
 				6EB381A625D5D70900114B83 /* SpeechBlacklist.swift in Sources */,
 				6E55549525D2026A000565F2 /* Tab.swift in Sources */,
 				6E55549C25D20674000565F2 /* PhoneTabView.swift in Sources */,
 				6EF4E3E725D4A48D00CDCC40 /* Hiragana.swift in Sources */,
+				6EE81CA925D89D6800667CE5 /* Lexicon.swift in Sources */,
 				6EF4E3F525D4A4CC00CDCC40 /* JapaneseCharacter.swift in Sources */,
+				6EE81CD725D89E9300667CE5 /* Word.swift in Sources */,
 				6E18FC2625D73E1E00EEEB42 /* StringExtension.swift in Sources */,
+				6EE81CC925D89E4E00667CE5 /* ForeignNoun.swift in Sources */,
 				6EB3819725D5D68900114B83 /* VoiceHandler.swift in Sources */,
+				6EE81CE525D89EC000667CE5 /* EnglishWord.swift in Sources */,
 				6EB3818C25D5D5FF00114B83 /* Voices.swift in Sources */,
 				6EF4E3EE25D4A49F00CDCC40 /* HiraganaRow.swift in Sources */,
 				6EB3818025D5D5DA00114B83 /* Speech.swift in Sources */,
 				6E8C0DC925D34E6B006C399E /* Language.swift in Sources */,
 				6E675E8D25CEFE1B002D8D98 /* LanguagePractice.xcdatamodeld in Sources */,
 				6E675E9125CEFE1B002D8D98 /* ContentView.swift in Sources */,
+				6EE81CD025D89E7F00667CE5 /* ForeignWord.swift in Sources */,
 				6EF4E3E025D4A47A00CDCC40 /* AppConstants.swift in Sources */,
+				6EE81C9025D89C1F00667CE5 /* HomeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,16 +534,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6EE81CAA25D89D6800667CE5 /* Lexicon.swift in Sources */,
+				6EE81C9C25D89CC200667CE5 /* HomeViewModel.swift in Sources */,
+				6EE81CD125D89E7F00667CE5 /* ForeignWord.swift in Sources */,
 				6EF4E3E125D4A47A00CDCC40 /* AppConstants.swift in Sources */,
 				6EF4E3F625D4A4CC00CDCC40 /* JapaneseCharacter.swift in Sources */,
 				6E675E9025CEFE1B002D8D98 /* LanguagePracticeApp.swift in Sources */,
 				6EB3818125D5D5DA00114B83 /* Speech.swift in Sources */,
 				6E18FC2725D73E1E00EEEB42 /* StringExtension.swift in Sources */,
+				6EE81CB225D89DCA00667CE5 /* EnglishLexicon.swift in Sources */,
+				6EE81CB925D89DD900667CE5 /* ForeignLexicon.swift in Sources */,
 				6E675E9425CEFE1B002D8D98 /* Persistence.swift in Sources */,
 				6EB381A725D5D70900114B83 /* SpeechBlacklist.swift in Sources */,
 				6EB3818D25D5D5FF00114B83 /* Voices.swift in Sources */,
 				6E18FC3225D73E3D00EEEB42 /* CharacterExtension.swift in Sources */,
+				6EE81CCA25D89E4E00667CE5 /* ForeignNoun.swift in Sources */,
+				6EE81C9125D89C1F00667CE5 /* HomeView.swift in Sources */,
+				6EE81CDF25D89EAB00667CE5 /* EnglishNoun.swift in Sources */,
 				6E55549625D2026A000565F2 /* Tab.swift in Sources */,
+				6EE81CD825D89E9300667CE5 /* Word.swift in Sources */,
+				6EE81CE625D89EC000667CE5 /* EnglishWord.swift in Sources */,
 				6EB3819825D5D68900114B83 /* VoiceHandler.swift in Sources */,
 				6E8C0DCA25D34E6B006C399E /* Language.swift in Sources */,
 				6E8C0DC325D34E1E006C399E /* ChallengeType.swift in Sources */,
