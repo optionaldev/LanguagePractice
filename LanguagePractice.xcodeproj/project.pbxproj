@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E07D51825D971AF00310B17 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E07D51725D971AF00310B17 /* SideMenuView.swift */; };
+		6E07D52725D9751D00310B17 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E07D52625D9751D00310B17 /* Defaults.swift */; };
+		6E07D52825D9751D00310B17 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E07D52625D9751D00310B17 /* Defaults.swift */; };
+		6E07D52F25D975B900310B17 /* iOSDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E07D52E25D975B900310B17 /* iOSDefaults.swift */; };
+		6E07D53A25D975DF00310B17 /* MacDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E07D53925D975DF00310B17 /* MacDefaults.swift */; };
+		6E07D54B25D9774800310B17 /* Storable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E07D54A25D9774800310B17 /* Storable.swift */; };
+		6E07D54C25D9774800310B17 /* Storable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E07D54A25D9774800310B17 /* Storable.swift */; };
+		6E07D56225D988AC00310B17 /* MacDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E07D56125D988AC00310B17 /* MacDefaultsKey.swift */; };
 		6E18FC2625D73E1E00EEEB42 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E18FC2525D73E1E00EEEB42 /* StringExtension.swift */; };
 		6E18FC2725D73E1E00EEEB42 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E18FC2525D73E1E00EEEB42 /* StringExtension.swift */; };
 		6E18FC3125D73E3D00EEEB42 /* CharacterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E18FC3025D73E3D00EEEB42 /* CharacterExtension.swift */; };
@@ -38,10 +46,6 @@
 		6EB3819825D5D68900114B83 /* VoiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB3819625D5D68900114B83 /* VoiceHandler.swift */; };
 		6EB381A625D5D70900114B83 /* SpeechBlacklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB381A525D5D70900114B83 /* SpeechBlacklist.swift */; };
 		6EB381A725D5D70900114B83 /* SpeechBlacklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB381A525D5D70900114B83 /* SpeechBlacklist.swift */; };
-		6EE81C9025D89C1F00667CE5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81C8F25D89C1F00667CE5 /* HomeView.swift */; };
-		6EE81C9125D89C1F00667CE5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81C8F25D89C1F00667CE5 /* HomeView.swift */; };
-		6EE81C9B25D89CC200667CE5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81C9A25D89CC200667CE5 /* HomeViewModel.swift */; };
-		6EE81C9C25D89CC200667CE5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81C9A25D89CC200667CE5 /* HomeViewModel.swift */; };
 		6EE81CA925D89D6800667CE5 /* Lexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CA825D89D6800667CE5 /* Lexicon.swift */; };
 		6EE81CAA25D89D6800667CE5 /* Lexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CA825D89D6800667CE5 /* Lexicon.swift */; };
 		6EE81CB125D89DCA00667CE5 /* EnglishLexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CB025D89DCA00667CE5 /* EnglishLexicon.swift */; };
@@ -86,6 +90,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6E07D51725D971AF00310B17 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
+		6E07D52625D9751D00310B17 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		6E07D52E25D975B900310B17 /* iOSDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSDefaults.swift; sourceTree = "<group>"; };
+		6E07D53925D975DF00310B17 /* MacDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacDefaults.swift; sourceTree = "<group>"; };
+		6E07D54A25D9774800310B17 /* Storable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storable.swift; sourceTree = "<group>"; };
+		6E07D56125D988AC00310B17 /* MacDefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacDefaultsKey.swift; sourceTree = "<group>"; };
 		6E18FC2525D73E1E00EEEB42 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		6E18FC3025D73E3D00EEEB42 /* CharacterExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterExtension.swift; sourceTree = "<group>"; };
 		6E55549425D2026A000565F2 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
@@ -112,8 +122,6 @@
 		6EB3818B25D5D5FF00114B83 /* Voices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voices.swift; sourceTree = "<group>"; };
 		6EB3819625D5D68900114B83 /* VoiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceHandler.swift; sourceTree = "<group>"; };
 		6EB381A525D5D70900114B83 /* SpeechBlacklist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechBlacklist.swift; sourceTree = "<group>"; };
-		6EE81C8F25D89C1F00667CE5 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		6EE81C9A25D89CC200667CE5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		6EE81CA825D89D6800667CE5 /* Lexicon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexicon.swift; sourceTree = "<group>"; };
 		6EE81CB025D89DCA00667CE5 /* EnglishLexicon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishLexicon.swift; sourceTree = "<group>"; };
 		6EE81CB725D89DD900667CE5 /* ForeignLexicon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignLexicon.swift; sourceTree = "<group>"; };
@@ -160,6 +168,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6E07D51625D9717100310B17 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6E07D52D25D9754A00310B17 /* Defaults */ = {
+			isa = PBXGroup;
+			children = (
+				6E07D52625D9751D00310B17 /* Defaults.swift */,
+				6E07D54A25D9774800310B17 /* Storable.swift */,
+			);
+			path = Defaults;
+			sourceTree = "<group>";
+		};
 		6E18FC2425D73E0A00EEEB42 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -177,6 +201,7 @@
 				6E8C0DC025D34E09006C399E /* Models */,
 				6EE81C8525D89BD500667CE5 /* UI */,
 				6EB3817E25D5D5D000114B83 /* Utility */,
+				6E07D51625D9717100310B17 /* Views */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -218,6 +243,7 @@
 			isa = PBXGroup;
 			children = (
 				6E675E6E25CEFE1B002D8D98 /* Info.plist */,
+				6E07D52E25D975B900310B17 /* iOSDefaults.swift */,
 				6E55549B25D20674000565F2 /* PhoneTabView.swift */,
 			);
 			path = iOS;
@@ -226,8 +252,11 @@
 		6E675E7425CEFE1B002D8D98 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
-				6E675E7525CEFE1B002D8D98 /* Info.plist */,
 				6E675E7625CEFE1B002D8D98 /* macOS.entitlements */,
+				6E675E7525CEFE1B002D8D98 /* Info.plist */,
+				6E07D53925D975DF00310B17 /* MacDefaults.swift */,
+				6E07D51725D971AF00310B17 /* SideMenuView.swift */,
+				6E07D56125D988AC00310B17 /* MacDefaultsKey.swift */,
 			);
 			path = macOS;
 			sourceTree = "<group>";
@@ -265,6 +294,7 @@
 			isa = PBXGroup;
 			children = (
 				6E675E6525CEFE1A002D8D98 /* Persistence.swift */,
+				6E07D52D25D9754A00310B17 /* Defaults */,
 				6EB3818A25D5D5F400114B83 /* Speech */,
 			);
 			path = Utility;
@@ -286,18 +316,8 @@
 			children = (
 				6E675E6425CEFE1A002D8D98 /* ContentView.swift */,
 				6E675E6325CEFE1A002D8D98 /* LanguagePracticeApp.swift */,
-				6EE81C8E25D89BFA00667CE5 /* Home */,
 			);
 			path = UI;
-			sourceTree = "<group>";
-		};
-		6EE81C8E25D89BFA00667CE5 /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				6EE81C8F25D89C1F00667CE5 /* HomeView.swift */,
-				6EE81C9A25D89CC200667CE5 /* HomeViewModel.swift */,
-			);
-			path = Home;
 			sourceTree = "<group>";
 		};
 		6EE81CAF25D89DAD00667CE5 /* Lexicons */ = {
@@ -503,13 +523,14 @@
 				6E675E8F25CEFE1B002D8D98 /* LanguagePracticeApp.swift in Sources */,
 				6EE81CB125D89DCA00667CE5 /* EnglishLexicon.swift in Sources */,
 				6EE81CB825D89DD900667CE5 /* ForeignLexicon.swift in Sources */,
+				6E07D54B25D9774800310B17 /* Storable.swift in Sources */,
 				6E675E9325CEFE1B002D8D98 /* Persistence.swift in Sources */,
-				6EE81C9B25D89CC200667CE5 /* HomeViewModel.swift in Sources */,
 				6EE81CDE25D89EAB00667CE5 /* EnglishNoun.swift in Sources */,
 				6E18FC3125D73E3D00EEEB42 /* CharacterExtension.swift in Sources */,
 				6EB381A625D5D70900114B83 /* SpeechBlacklist.swift in Sources */,
 				6E55549525D2026A000565F2 /* Tab.swift in Sources */,
 				6E55549C25D20674000565F2 /* PhoneTabView.swift in Sources */,
+				6E07D52F25D975B900310B17 /* iOSDefaults.swift in Sources */,
 				6EF4E3E725D4A48D00CDCC40 /* Hiragana.swift in Sources */,
 				6EE81CA925D89D6800667CE5 /* Lexicon.swift in Sources */,
 				6EF4E3F525D4A4CC00CDCC40 /* JapaneseCharacter.swift in Sources */,
@@ -524,9 +545,9 @@
 				6E8C0DC925D34E6B006C399E /* Language.swift in Sources */,
 				6E675E8D25CEFE1B002D8D98 /* LanguagePractice.xcdatamodeld in Sources */,
 				6E675E9125CEFE1B002D8D98 /* ContentView.swift in Sources */,
+				6E07D52725D9751D00310B17 /* Defaults.swift in Sources */,
 				6EE81CD025D89E7F00667CE5 /* ForeignWord.swift in Sources */,
 				6EF4E3E025D4A47A00CDCC40 /* AppConstants.swift in Sources */,
-				6EE81C9025D89C1F00667CE5 /* HomeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -535,30 +556,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				6EE81CAA25D89D6800667CE5 /* Lexicon.swift in Sources */,
-				6EE81C9C25D89CC200667CE5 /* HomeViewModel.swift in Sources */,
 				6EE81CD125D89E7F00667CE5 /* ForeignWord.swift in Sources */,
 				6EF4E3E125D4A47A00CDCC40 /* AppConstants.swift in Sources */,
 				6EF4E3F625D4A4CC00CDCC40 /* JapaneseCharacter.swift in Sources */,
 				6E675E9025CEFE1B002D8D98 /* LanguagePracticeApp.swift in Sources */,
+				6E07D54C25D9774800310B17 /* Storable.swift in Sources */,
 				6EB3818125D5D5DA00114B83 /* Speech.swift in Sources */,
 				6E18FC2725D73E1E00EEEB42 /* StringExtension.swift in Sources */,
 				6EE81CB225D89DCA00667CE5 /* EnglishLexicon.swift in Sources */,
 				6EE81CB925D89DD900667CE5 /* ForeignLexicon.swift in Sources */,
+				6E07D53A25D975DF00310B17 /* MacDefaults.swift in Sources */,
 				6E675E9425CEFE1B002D8D98 /* Persistence.swift in Sources */,
 				6EB381A725D5D70900114B83 /* SpeechBlacklist.swift in Sources */,
 				6EB3818D25D5D5FF00114B83 /* Voices.swift in Sources */,
 				6E18FC3225D73E3D00EEEB42 /* CharacterExtension.swift in Sources */,
 				6EE81CCA25D89E4E00667CE5 /* ForeignNoun.swift in Sources */,
-				6EE81C9125D89C1F00667CE5 /* HomeView.swift in Sources */,
 				6EE81CDF25D89EAB00667CE5 /* EnglishNoun.swift in Sources */,
 				6E55549625D2026A000565F2 /* Tab.swift in Sources */,
 				6EE81CD825D89E9300667CE5 /* Word.swift in Sources */,
 				6EE81CE625D89EC000667CE5 /* EnglishWord.swift in Sources */,
 				6EB3819825D5D68900114B83 /* VoiceHandler.swift in Sources */,
+				6E07D56225D988AC00310B17 /* MacDefaultsKey.swift in Sources */,
 				6E8C0DCA25D34E6B006C399E /* Language.swift in Sources */,
+				6E07D51825D971AF00310B17 /* SideMenuView.swift in Sources */,
 				6E8C0DC325D34E1E006C399E /* ChallengeType.swift in Sources */,
 				6E675E8E25CEFE1B002D8D98 /* LanguagePractice.xcdatamodeld in Sources */,
 				6EF4E3EF25D4A49F00CDCC40 /* HiraganaRow.swift in Sources */,
+				6E07D52825D9751D00310B17 /* Defaults.swift in Sources */,
 				6EF4E3E825D4A48D00CDCC40 /* Hiragana.swift in Sources */,
 				6E675E9225CEFE1B002D8D98 /* ContentView.swift in Sources */,
 			);

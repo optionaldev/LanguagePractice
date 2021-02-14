@@ -15,8 +15,8 @@ struct LanguagePracticeApp: App {
             PhoneTabView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
             #else
-            Text("MacOS TBD")
-                .frame(width: 300, height: 200)
+            SideMenuView()
+                .frame(minWidth: 200, idealWidth: 300, maxWidth: 400, minHeight: 200, idealHeight: 300, maxHeight: 400, alignment: .bottom)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
             #endif
         }
