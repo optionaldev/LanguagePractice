@@ -49,6 +49,9 @@ struct SideMenuView: View {
             }
             Spacer()
         }
+        // Pressing between the image and the text doesn't work without a background
+        // There's probably a better way to do this, but for now it should suffice
+        .background(Color.black.opacity(0.01))
     }
     
     @ViewBuilder
