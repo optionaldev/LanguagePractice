@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,10 @@
 		6E07D56225D988AC00310B17 /* MacDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E07D56125D988AC00310B17 /* MacDefaultsKey.swift */; };
 		6E10FF6925DDE41F00F8EDBD /* UrlBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E10FF6825DDE41F00F8EDBD /* UrlBuilder.swift */; };
 		6E10FF6A25DDE41F00F8EDBD /* UrlBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E10FF6825DDE41F00F8EDBD /* UrlBuilder.swift */; };
+		6E112BA325E71799005CE59B /* SwiftPrint in Frameworks */ = {isa = PBXBuildFile; productRef = 6E112BA225E71799005CE59B /* SwiftPrint */; };
+		6E112BA925E717BF005CE59B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E112BA825E717BF005CE59B /* Logger.swift */; };
+		6E112BAA25E717BF005CE59B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E112BA825E717BF005CE59B /* Logger.swift */; };
+		6E112BB925E719BE005CE59B /* SwiftPrint in Frameworks */ = {isa = PBXBuildFile; productRef = 6E112BB825E719BE005CE59B /* SwiftPrint */; };
 		6E18FC2625D73E1E00EEEB42 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E18FC2525D73E1E00EEEB42 /* StringExtension.swift */; };
 		6E18FC2725D73E1E00EEEB42 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E18FC2525D73E1E00EEEB42 /* StringExtension.swift */; };
 		6E18FC3125D73E3D00EEEB42 /* CharacterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E18FC3025D73E3D00EEEB42 /* CharacterExtension.swift */; };
@@ -101,6 +105,7 @@
 		6E07D54A25D9774800310B17 /* Storable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storable.swift; sourceTree = "<group>"; };
 		6E07D56125D988AC00310B17 /* MacDefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacDefaultsKey.swift; sourceTree = "<group>"; };
 		6E10FF6825DDE41F00F8EDBD /* UrlBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlBuilder.swift; sourceTree = "<group>"; };
+		6E112BA825E717BF005CE59B /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		6E18FC2525D73E1E00EEEB42 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		6E18FC3025D73E3D00EEEB42 /* CharacterExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterExtension.swift; sourceTree = "<group>"; };
 		6E2B22D925DC899F001B8A77 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
@@ -147,6 +152,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E112BA325E71799005CE59B /* SwiftPrint in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,6 +160,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E112BB925E719BE005CE59B /* SwiftPrint in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,6 +206,13 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
+		6E112BB725E719BE005CE59B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6E18FC2425D73E0A00EEEB42 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -231,6 +245,7 @@
 				6E675E7E25CEFE1B002D8D98 /* Tests iOS */,
 				6E675E8925CEFE1B002D8D98 /* Tests macOS */,
 				6E675E6C25CEFE1B002D8D98 /* Products */,
+				6E112BB725E719BE005CE59B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -309,6 +324,7 @@
 		6EB3817E25D5D5D000114B83 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				6E112BA825E717BF005CE59B /* Logger.swift */,
 				6E675E6525CEFE1A002D8D98 /* Persistence.swift */,
 				6E07D52D25D9754A00310B17 /* Defaults */,
 				6EB3818A25D5D5F400114B83 /* Speech */,
@@ -394,6 +410,9 @@
 			dependencies = (
 			);
 			name = "LanguagePractice (iOS)";
+			packageProductDependencies = (
+				6E112BA225E71799005CE59B /* SwiftPrint */,
+			);
 			productName = "LanguagePractice (iOS)";
 			productReference = 6E675E6B25CEFE1B002D8D98 /* LanguagePractice.app */;
 			productType = "com.apple.product-type.application";
@@ -411,6 +430,9 @@
 			dependencies = (
 			);
 			name = "LanguagePractice (macOS)";
+			packageProductDependencies = (
+				6E112BB825E719BE005CE59B /* SwiftPrint */,
+			);
 			productName = "LanguagePractice (macOS)";
 			productReference = 6E675E7325CEFE1B002D8D98 /* LanguagePractice.app */;
 			productType = "com.apple.product-type.application";
@@ -485,6 +507,9 @@
 				Base,
 			);
 			mainGroup = 6E675E5B25CEFE1A002D8D98;
+			packageReferences = (
+				6E112BA125E71799005CE59B /* XCRemoteSwiftPackageReference "SwiftPrint" */,
+			);
 			productRefGroup = 6E675E6C25CEFE1B002D8D98 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -548,6 +573,7 @@
 				6E55549525D2026A000565F2 /* Tab.swift in Sources */,
 				6E55549C25D20674000565F2 /* PhoneTabView.swift in Sources */,
 				6E07D52F25D975B900310B17 /* iOSDefaults.swift in Sources */,
+				6E112BA925E717BF005CE59B /* Logger.swift in Sources */,
 				6EF4E3E725D4A48D00CDCC40 /* Hiragana.swift in Sources */,
 				6EE81CA925D89D6800667CE5 /* Lexicon.swift in Sources */,
 				6EF4E3F525D4A4CC00CDCC40 /* JapaneseCharacter.swift in Sources */,
@@ -586,6 +612,7 @@
 				6EE81CB225D89DCA00667CE5 /* EnglishLexicon.swift in Sources */,
 				6EE81CB925D89DD900667CE5 /* ForeignLexicon.swift in Sources */,
 				6E07D53A25D975DF00310B17 /* MacDefaults.swift in Sources */,
+				6E112BAA25E717BF005CE59B /* Logger.swift in Sources */,
 				6E675E9425CEFE1B002D8D98 /* Persistence.swift in Sources */,
 				6EB381A725D5D70900114B83 /* SpeechBlacklist.swift in Sources */,
 				6EB3818D25D5D5FF00114B83 /* Voices.swift in Sources */,
@@ -990,6 +1017,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6E112BA125E71799005CE59B /* XCRemoteSwiftPackageReference "SwiftPrint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/optionaldev/SwiftPrint";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6E112BA225E71799005CE59B /* SwiftPrint */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6E112BA125E71799005CE59B /* XCRemoteSwiftPackageReference "SwiftPrint" */;
+			productName = SwiftPrint;
+		};
+		6E112BB825E719BE005CE59B /* SwiftPrint */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6E112BA125E71799005CE59B /* XCRemoteSwiftPackageReference "SwiftPrint" */;
+			productName = SwiftPrint;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		6E675E6125CEFE1A002D8D98 /* LanguagePractice.xcdatamodeld */ = {

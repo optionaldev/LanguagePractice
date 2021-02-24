@@ -13,7 +13,7 @@ extension String {
     #if JAPANESE
     func toHiragana() -> String {
         guard let hiragana = applyingTransform(.latinToHiragana, reverse: false) else {
-            print("Found string that couldn't be converted to hiragana = \"\(self)\"")
+            log("Found string that couldn't be converted to hiragana = \"\(self)\"")
             return self
         }
         

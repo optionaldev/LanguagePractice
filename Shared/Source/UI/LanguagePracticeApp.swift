@@ -9,6 +9,10 @@ import SwiftUI
 @main
 struct LanguagePracticeApp: App {
 
+    init() {
+        Logger.performInitialSetup()
+    }
+    
     var body: some Scene {
         WindowGroup {
             #if os(iOS)

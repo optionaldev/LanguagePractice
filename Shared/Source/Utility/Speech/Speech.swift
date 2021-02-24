@@ -85,7 +85,7 @@ final class Speech: NSObject, AVSpeechSynthesizerDelegate {
             do {
                 try AVAudioSession.sharedInstance().setActive(started)
             } catch {
-                print("AVAudioSession.sharedInstance().setActive(started) error = \(error)")
+                log("AVAudioSession.sharedInstance().setActive(started) error = \(error)")
             }
             #endif
         }

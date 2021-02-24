@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "SwiftPrint",
+        "repositoryURL": "https://github.com/optionaldev/SwiftPrint",
+        "state": {
+          "branch": null,
+          "revision": "4830db0686edf2f89bfd2eb3e5ea620d01ddebbf",
+          "version": "1.0.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
