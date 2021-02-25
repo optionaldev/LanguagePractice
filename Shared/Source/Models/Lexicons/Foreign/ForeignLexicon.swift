@@ -6,4 +6,5 @@
 
 struct ForeignLexicon: Codable {
     
+    let nouns: [ForeignNoun]
 }

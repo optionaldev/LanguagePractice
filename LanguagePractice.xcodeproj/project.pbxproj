@@ -25,6 +25,8 @@
 		6E18FC2725D73E1E00EEEB42 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E18FC2525D73E1E00EEEB42 /* StringExtension.swift */; };
 		6E18FC3125D73E3D00EEEB42 /* CharacterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E18FC3025D73E3D00EEEB42 /* CharacterExtension.swift */; };
 		6E18FC3225D73E3D00EEEB42 /* CharacterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E18FC3025D73E3D00EEEB42 /* CharacterExtension.swift */; };
+		6E24753525E867A900AC64B9 /* LexiconRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E24753425E867A900AC64B9 /* LexiconRequest.swift */; };
+		6E24753625E867A900AC64B9 /* LexiconRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E24753425E867A900AC64B9 /* LexiconRequest.swift */; };
 		6E2B22DA25DC899F001B8A77 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2B22D925DC899F001B8A77 /* Network.swift */; };
 		6E2B22DB25DC899F001B8A77 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2B22D925DC899F001B8A77 /* Network.swift */; };
 		6E55549525D2026A000565F2 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E55549425D2026A000565F2 /* Tab.swift */; };
@@ -108,6 +110,7 @@
 		6E112BA825E717BF005CE59B /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		6E18FC2525D73E1E00EEEB42 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		6E18FC3025D73E3D00EEEB42 /* CharacterExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterExtension.swift; sourceTree = "<group>"; };
+		6E24753425E867A900AC64B9 /* LexiconRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LexiconRequest.swift; sourceTree = "<group>"; };
 		6E2B22D925DC899F001B8A77 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		6E55549425D2026A000565F2 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		6E55549B25D20674000565F2 /* PhoneTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneTabView.swift; sourceTree = "<group>"; };
@@ -200,6 +203,7 @@
 		6E10FF6725DDE40400F8EDBD /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				6E24753425E867A900AC64B9 /* LexiconRequest.swift */,
 				6E2B22D925DC899F001B8A77 /* Network.swift */,
 				6E10FF6825DDE41F00F8EDBD /* UrlBuilder.swift */,
 			);
@@ -587,6 +591,7 @@
 				6EF4E3EE25D4A49F00CDCC40 /* HiraganaRow.swift in Sources */,
 				6EB3818025D5D5DA00114B83 /* Speech.swift in Sources */,
 				6E8C0DC925D34E6B006C399E /* Language.swift in Sources */,
+				6E24753525E867A900AC64B9 /* LexiconRequest.swift in Sources */,
 				6E675E8D25CEFE1B002D8D98 /* LanguagePractice.xcdatamodeld in Sources */,
 				6E675E9125CEFE1B002D8D98 /* ContentView.swift in Sources */,
 				6E07D52725D9751D00310B17 /* Defaults.swift in Sources */,
@@ -603,6 +608,7 @@
 				6EE81CD125D89E7F00667CE5 /* ForeignWord.swift in Sources */,
 				6EF4E3E125D4A47A00CDCC40 /* AppConstants.swift in Sources */,
 				6EF4E3F625D4A4CC00CDCC40 /* JapaneseCharacter.swift in Sources */,
+				6E24753625E867A900AC64B9 /* LexiconRequest.swift in Sources */,
 				6E675E9025CEFE1B002D8D98 /* LanguagePracticeApp.swift in Sources */,
 				6E10FF6A25DDE41F00F8EDBD /* UrlBuilder.swift in Sources */,
 				6E07D54C25D9774800310B17 /* Storable.swift in Sources */,
