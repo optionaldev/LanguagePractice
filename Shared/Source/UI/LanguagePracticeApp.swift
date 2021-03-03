@@ -4,7 +4,9 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-import SwiftUI
+import protocol SwiftUI.App
+import protocol SwiftUI.Scene
+import struct   SwiftUI.WindowGroup
 
 @main
 struct LanguagePracticeApp: App {
@@ -17,16 +19,10 @@ struct LanguagePracticeApp: App {
         WindowGroup {
             #if os(iOS)
             PhoneTabView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
             #else
             SideMenuView()
                 .frame(minWidth: 200, idealWidth: 300, maxWidth: 400, minHeight: 200, idealHeight: 300, maxHeight: 400, alignment: .bottom)
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
             #endif
         }
     }
-    
-    // MARK: - Private
-    
-    private let persistenceController = PersistenceController.shared
 }
