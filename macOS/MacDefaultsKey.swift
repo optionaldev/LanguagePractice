@@ -8,11 +8,4 @@
 enum MacDefaultsKey: String, Storable {
     
     case sideMenuShowLabels
-
-    // MARK: - Storable conformance
-
-    var storeValue: String {
-        return AppConstants.storeValuePrefix + rawValue
-    }
-
 }

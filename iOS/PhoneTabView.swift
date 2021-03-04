@@ -12,7 +12,7 @@ extension Tab {
     var view: some View {
         switch self {
         case .home:
-            Text("Home view")
+            HomeView()
         case .dictionary:
             Text("Dictionary view")
         case .settings:

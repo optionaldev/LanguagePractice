@@ -6,17 +6,20 @@
 
 import Foundation
 
-final class MacDefaults {
+extension Defaults {
     
-    func bool(forKey key: MacDefaultsKey) -> Bool {
-        return defaults.bool(forKey: key.storeValue)
+    final class macOS {
+        
+        static func bool(forKey key: MacDefaultsKey) -> Bool {
+            return defaults.bool(forKey: key)
+        }
+        
+        static func set(_ bool: Bool, forKey key: MacDefaultsKey) {
+            defaults.set(bool, forKey: key)
+        }
+        
+        // MARK: - Private
+        
+        static private let defaults = UserDefaults()
     }
-    
-    func set(_ bool: Bool, forKey key: MacDefaultsKey) {
-        defaults.set(bool, forKey: key.storeValue)
-    }
-    
-    // MARK: - Private
-    
-    private let defaults = UserDefaults()
 }

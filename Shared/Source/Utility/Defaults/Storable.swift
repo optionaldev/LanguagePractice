@@ -8,3 +8,11 @@ protocol Storable {
     
     var storeValue: String { get }
 }
+
+extension Storable where Self: RawRepresentable, Self.RawValue: StringProtocol {
+    
+    var storeValue: String {
+        log("\(self)")
+        return AppConstants.storeValuePrefix + rawValue
+    }
+}

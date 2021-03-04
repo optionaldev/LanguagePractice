@@ -4,6 +4,9 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-final class iOSDefaults {
+extension Defaults {
     
+    final class iOS {
+        
+    }
 }

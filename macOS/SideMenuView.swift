@@ -58,7 +58,7 @@ struct SideMenuView: View {
     private var content: some View {
         switch selectedItem {
         case .home:
-            Text("Content = Home")
+            HomeView()
         case .dictionary:
             Text("Content = Dictionary")
         case .settings:

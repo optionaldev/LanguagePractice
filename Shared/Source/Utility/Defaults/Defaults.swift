@@ -4,11 +4,13 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
+import class Foundation.UserDefaults
+import class Foundation.JSONDecoder
+
 final class Defaults {
     
-    #if os(iOS)
-    static let iOS = iOSDefaults()
-    #else
-    static let macOS = MacDefaults()
-    #endif
+    
+    // MARK: - Private
+    
+    static private var defaults = UserDefaults()
 }
