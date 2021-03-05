@@ -8,18 +8,9 @@ import Foundation
 
 extension Defaults {
     
-    final class macOS {
+    final class macOS: DefaultsBoolProtocol {
         
-        static func bool(forKey key: MacDefaultsKey) -> Bool {
-            return defaults.bool(forKey: key)
-        }
+        typealias BoolKeyType = MacDefaultsBoolKey
         
-        static func set(_ bool: Bool, forKey key: MacDefaultsKey) {
-            defaults.set(bool, forKey: key)
-        }
-        
-        // MARK: - Private
-        
-        static private let defaults = UserDefaults()
     }
 }

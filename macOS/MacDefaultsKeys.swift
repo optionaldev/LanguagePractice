@@ -5,7 +5,7 @@
 // 
 
 
-enum MacDefaultsKey: String, Storable {
+enum MacDefaultsBoolKey: String, BoolStorable {
     
     case sideMenuShowLabels
 }

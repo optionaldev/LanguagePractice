@@ -56,12 +56,18 @@ final class LexiconsRequest {
     }
     
     private func performCallbackIfComplete() {
-        if let english = englishLexicon,
-           let foreign = foreignLexicon
+        guard let englishLexicon = englishLexicon,
+              let foreignLexicon = foreignLexicon else
         {
-            let lexicon = Lexicon(english: english, foreign: foreign)
-            completion?(lexicon)
+            log("""
+                Trying to perform callback with one or both lexicons missing:
+                english = \(String(describing: self.englishLexicon))
+                \(Language.foreign.rawValue) = \(String(describing: self.foreignLexicon))
+                """, type: .unexpected)
+            return
         }
+        Defaults.set(englishLexicon, forKey: .englishLexicon)
+        Defaults.set(foreignLexicon, forKey: .foreignLexicon)
     }
 }
 

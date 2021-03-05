@@ -4,8 +4,8 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-enum DefaultsDecodableKey: String, Storable {
+enum DefaultsCodingKey: String, CodingStorable {
     
-    case english
-    case foreign
+    case englishLexicon
+    case foreignLexicon
 }
