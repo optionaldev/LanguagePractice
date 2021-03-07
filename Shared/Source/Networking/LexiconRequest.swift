@@ -4,7 +4,7 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-import Combine
+import class Combine.AnyCancellable
 
 final class LexiconsRequest {
     
@@ -59,11 +59,6 @@ final class LexiconsRequest {
         guard let englishLexicon = englishLexicon,
               let foreignLexicon = foreignLexicon else
         {
-            log("""
-                Trying to perform callback with one or both lexicons missing:
-                english = \(String(describing: self.englishLexicon))
-                \(Language.foreign.rawValue) = \(String(describing: self.foreignLexicon))
-                """, type: .unexpected)
             return
         }
         Defaults.set(englishLexicon, forKey: .englishLexicon)

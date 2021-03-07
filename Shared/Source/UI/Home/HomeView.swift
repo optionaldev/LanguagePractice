@@ -12,7 +12,7 @@ struct HomeView: View {
     var body: some View {
         Text("Shared home")
             .onAppear {
-                viewModel.requestMissingItems()
+                viewModel.requestAnyMissingItems()
             }
     }
     
