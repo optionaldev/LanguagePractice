@@ -10,10 +10,11 @@ import SwiftUI
 struct HomeView: View {
     
     var body: some View {
-        Text("Shared home")
-            .onAppear {
-                viewModel.requestAnyMissingItems()
-            }
+        NavigationView {
+            NavigationLink("Pick", destination: NavigationLazyView(PickChallengeView()))
+                .navigationBarTitle("")
+                .navigationBarHidden(true)
+        }
     }
     
     // MARK: - Private
