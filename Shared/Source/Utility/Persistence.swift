@@ -5,7 +5,7 @@
 // 
 
 import Foundation
-#if DEBUG
+#if DEBUG && os(iOS)
 import UIKit
 #endif
 
@@ -57,14 +57,18 @@ final class Persistence {
         do {
             if FileManager.default.fileExists(atPath: imagePermanentUrl.path) {
                 try FileManager.default.removeItem(at: imagePermanentUrl)
-                log("deleted image = \(word)")
+                log("deleted image = \(word)", type: .info)
             }
+            #if os(iOS)
             if UIImage(data: imageData) != nil {
                 log("copy image = \(word)", type: .info)
                 try imageData.write(to: imagePermanentUrl)
             } else {
                 log("Corrupted image with ID: \"\(word)\"", type: .unexpected)
             }
+            #else
+            try imageData.write(to: imagePermanentUrl)
+            #endif
         } catch {
             log(error)
         }
@@ -73,7 +77,7 @@ final class Persistence {
     // MARK: - Private
     
     private static func imageData(forPath path: String) -> Data? {
-        #if DEBUG
+        #if DEBUG && os(iOS)
         if let imageData = FileManager.default.contents(atPath: path) {
             if UIImage(data: imageData) != nil {
                 return imageData

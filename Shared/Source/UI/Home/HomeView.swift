@@ -4,16 +4,19 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-import CoreData
 import SwiftUI
 
 struct HomeView: View {
     
     var body: some View {
         NavigationView {
+            #if os(iOS)
             NavigationLink("Pick", destination: NavigationLazyView(PickChallengeView()))
                 .navigationBarTitle("")
                 .navigationBarHidden(true)
+            #else
+            NavigationLink("Pick", destination: NavigationLazyView(PickChallengeView()))
+            #endif
         }
     }
     

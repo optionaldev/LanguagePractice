@@ -8,4 +8,7 @@ import Foundation
 
 final class PickChallengeViewModel: ObservableObject {
     
+    
+    @Published var history: [PickChallenge] = []
+    
 }

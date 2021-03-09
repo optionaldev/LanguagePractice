@@ -6,14 +6,17 @@
 
 import protocol SwiftUI.View
 
+
 import struct SwiftUI.PageTabViewStyle
 import struct SwiftUI.TabView
+import struct SwiftUI.Text
+import struct SwiftUI.ObservedObject
 
 struct PickChallengeView: View {
     
     var body: some View {
-        TabView {
-            
-        }.tabViewStyle(PageTabViewStyle())
+        Text("Pick Challenge")
     }
+    
+    @ObservedObject var viewModel = PickChallengeViewModel()
 }
