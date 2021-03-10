@@ -58,6 +58,8 @@ protocol DefaultsCodingProtocol: DefaultsProtocol {
 
 extension DefaultsCodingProtocol {
     
+    // The main issue with this approach is that you need to always specify what the return type is
+    // Is there a better way to do this?
     static func decodable<T: Decodable>(forKey key: DecodeKeyType) -> T?  {
         guard let data = UserDefaults.standard.data(forKey: key.storeValue) else {
             return nil

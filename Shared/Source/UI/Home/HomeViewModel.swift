@@ -12,10 +12,7 @@ import struct   Foundation.Published
 final class HomeViewModel: ObservableObject {
     
     init() {
-        let englishLexicon: EnglishLexicon? = Defaults.decodable(forKey: .englishLexicon)
-        let foreignLexicon: ForeignLexicon? = Defaults.decodable(forKey: .foreignLexicon)
-        
-        lexiconExists = englishLexicon != nil && foreignLexicon != nil
+        lexiconExists = Defaults.lexicon != nil
     }
     
     func requestAnyMissingItems() {
@@ -37,8 +34,7 @@ final class HomeViewModel: ObservableObject {
     private var imageCancellable: AnyCancellable?
     
     private func startDownloadingImages() {
-        let englishLexicon: EnglishLexicon? = Defaults.decodable(forKey: .englishLexicon)
-        guard let lexicon = englishLexicon else {
+        guard let lexicon = Defaults.lexicon else {
             log("Attempt ")
             return
         }
@@ -48,7 +44,7 @@ final class HomeViewModel: ObservableObject {
             log("Download location: \"\(url)\"")
         }
         
-        imagesToDownload = lexicon.nouns
+        imagesToDownload = lexicon.english.nouns
             .filter { $0.imageExists }
             .filter { Persistence.imagePath(id: $0.id) == nil }
             .map { $0.id }

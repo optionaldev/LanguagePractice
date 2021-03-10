@@ -16,4 +16,9 @@ struct Lexicon: Codable {
     lazy var foreignDictionary: [String: ForeignNoun] = {
         foreign.nouns.reduce(into: [String: ForeignNoun]()) { $0[$1.id] = $1 }
     }()
+    
+    init(english: EnglishLexicon, foreign: ForeignLexicon) {
+        self.english = english
+        self.foreign = foreign
+    }
 }
