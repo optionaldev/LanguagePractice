@@ -21,6 +21,7 @@ final class PickChallengeViewModel: ObservableObject {
         guard let lexicon = Defaults.lexicon else {
             fatalError("Shouldn't allow creation of view model without lexicon existing")
         }
+        self.lexicon = lexicon
         
         let foreignNouns = lexicon.foreign.nouns
         let challengeNouns = foreignNouns.shuffled().prefix(10)
@@ -72,10 +73,60 @@ final class PickChallengeViewModel: ObservableObject {
     // MARK: - Private
     
     private let challengeEntries: [Entry]
+    private var lexicon: Lexicon
     private var nextChallenge: PickChallenge?
     
     private func prepareNextChallenge() {
+        guard history.count < challengeEntries.count else {
+            log("Nothing to prepare", type: .info)
+            return
+        }
+        
+        let nextEntry = challengeEntries[history.count]
+        
+        let inputType = generateInputType(for: nextEntry)
+        let input     = generateInput(for: nextEntry, inputType: inputType)
+        let outputType = generateOutputType()
+    }
+    
+    private func generateInputType(for entry: Entry) -> ChallengeType {
+        var inputTypePossibilities = ChallengeType.allCases
+        
+        if entry.from == .foreign && entry.to == .foreign {
+            return .simplified
+        } else {
+            // TODO: Handle images and voice
+            inputTypePossibilities.removing(.voice(.english))
+            inputTypePossibilities.removing(.voice(.foreign))
+            inputTypePossibilities.removing(.image)
+            
+            if entry.english != nil {
+                inputTypePossibilities.removing(.simplified)
+            }
+            
+            guard let randomInputType = inputTypePossibilities.randomElement() else {
+                fatalError("Array should never be empty after applying filters")
+            }
+            return randomInputType
+        }
+    }
+    
+    private func generateInput(for entry: Entry, inputType: ChallengeType) -> String {
+        if inputType == .text(.foreign) || inputType == .voice(.foreign) || inputType == .simplified {
+            guard let inputWord = lexicon.foreignDictionary[entry.input] else {
+                fatalError("Tried to fetch entry with ID \"\(entry.input)\" from foreign dictionary")
+            }
+            
+            return inputWord.id
+        } else {
+            // For images and english input types, we simply use the input
+            return entry.input
+        }
+    }
+    
+    private func generateOutputType() -> ChallengeType {
         // TODO
+        return .image
     }
     
     private func informView() {
