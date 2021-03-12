@@ -10,3 +10,20 @@ extension Array where Element: Equatable {
         self = filter { $0 != element }
     }
 }
+
+extension Array where Element: Hashable {
+    
+    func removingDuplicates() -> Array {
+        var array = Array()
+        var set = Set<Element>()
+        for elem in self where !array.contains(elem) {
+            array.append(elem)
+            set.insert(elem)
+        }
+        return array
+    }
+    
+    func difference(from other: [Element]) -> [Element] {
+        return Array(Set(self).symmetricDifference(Set(other)))
+    }
+}

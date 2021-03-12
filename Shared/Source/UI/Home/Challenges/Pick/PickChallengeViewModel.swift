@@ -84,9 +84,11 @@ final class PickChallengeViewModel: ObservableObject {
         
         let nextEntry = challengeEntries[history.count]
         
-        let inputType = generateInputType(for: nextEntry)
-        let input     = generateInput(for: nextEntry, inputType: inputType)
-        let outputType = generateOutputType()
+        let inputType  = generateInputType(for: nextEntry)
+        let input      = generateInput(for: nextEntry, inputType: inputType)
+        
+        let outputType = generateOutputType(for: nextEntry, inputType: inputType)
+        let output     = generateOutput(for: nextEntry, outputType: outputType)
     }
     
     private func generateInputType(for entry: Entry) -> ChallengeType {
@@ -124,9 +126,85 @@ final class PickChallengeViewModel: ObservableObject {
         }
     }
     
-    private func generateOutputType() -> ChallengeType {
-        // TODO
-        return .image
+    private func generateOutputType(for entry: Entry, inputType: ChallengeType) -> ChallengeType {
+        var outputTypePossibilities: [ChallengeType]
+        switch inputType {
+        case .text(let language):
+            switch language {
+            case .english:
+                outputTypePossibilities = [.voice(.foreign), .text(.foreign)]
+                
+            case .foreign:
+                outputTypePossibilities = [.image, .text(.english)]
+            }
+        case .voice(let language):
+            switch language {
+            case .english:
+                outputTypePossibilities = [.voice(.foreign), .text(.foreign)]
+            case .foreign:
+                outputTypePossibilities = [.image, .text(.english) /*TODO: draw kanji ?*/]
+            }
+        case .image:
+            outputTypePossibilities = [.text(.foreign), .voice(.foreign)]
+        case .simplified:
+            outputTypePossibilities = [.text(.foreign)]
+        }
+        
+        if entry.english != nil {
+            outputTypePossibilities.removing(.simplified)
+        }
+        
+        var outputType: ChallengeType
+        if inputType == .simplified {
+            outputType = .simplified
+        } else {
+            guard let randomOutputType = outputTypePossibilities.randomElement() else {
+                fatalError("Array is empty after filters are applied")
+            }
+            outputType = randomOutputType
+        }
+        
+        return outputType
+    }
+    
+    private func generateOutput(for entry: Entry, outputType: ChallengeType) -> [String] {
+        // Get a list of challenge
+        var otherSameTypeChallengeEntries = challengeEntries.filter { $0.type == entry.type &&
+                                                                      $0 != entry }
+        if let word = lexicon.foreignDictionary[entry.foreign] {
+            let other = otherSameTypeChallengeEntries.filter { $0.english == nil ||
+                                                              !word.english.contains($0.english!) }
+            otherSameTypeChallengeEntries = other
+        }
+        
+        var output: [String]
+        switch outputType {
+        case .image:
+            // TODO: handle images
+            return []
+        case .simplified:
+            output = otherSameTypeChallengeEntries.map { $0.input }
+            
+        case .text(let language):
+            switch language {
+            case .english:
+                output = Array(otherSameTypeChallengeEntries.map { $0.output })
+            case .foreign:
+                let outputIDs = Array(otherSameTypeChallengeEntries.map { $0.output })
+                output = outputIDs.compactMap { lexicon.foreignDictionary[$0]?.id }
+            }
+            
+        case .voice(let language):
+            switch language {
+            case .english:
+                output = Array(otherSameTypeChallengeEntries.map { $0.output })
+            case .foreign:
+                let outputIDs = Array(otherSameTypeChallengeEntries.map { $0.output })
+                output = outputIDs.compactMap { lexicon.foreignDictionary[$0]?.id }
+            }
+        }
+        
+        return Array(output.removingDuplicates().prefix(5))
     }
     
     private func informView() {
