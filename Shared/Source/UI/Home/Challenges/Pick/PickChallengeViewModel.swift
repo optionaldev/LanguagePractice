@@ -84,12 +84,26 @@ final class PickChallengeViewModel: ObservableObject {
         
         let nextEntry = challengeEntries[history.count]
         
+        guard let nextForeignWord = lexicon.foreignDictionary[nextEntry.foreign] else {
+            log("No foreign word with ID = \"\(nextEntry.foreign)\" found in dictionary", type: .unexpected)
+            return
+        }
+        
         let inputType  = generateInputType(for: nextEntry)
         let input      = generateInput(for: nextEntry, inputType: inputType)
+        let inputRep   = generateInputRep(for: nextEntry, inputType: inputType, input: input, word: nextForeignWord)
         
         let outputType = generateOutputType(for: nextEntry, inputType: inputType)
         let output     = generateOutput(for: nextEntry, outputType: outputType)
+        let outputRep = generateOutputRep(outputType: outputType, output: output, word: nextForeignWord)
+        
     }
+    
+    private func informView() {
+        // TODO
+    }
+    
+    // MARK: Input
     
     private func generateInputType(for entry: Entry) -> ChallengeType {
         var inputTypePossibilities = ChallengeType.allCases
@@ -125,6 +139,44 @@ final class PickChallengeViewModel: ObservableObject {
             return entry.input
         }
     }
+    
+    private func generateInputRep(for entry: Entry, inputType: ChallengeType, input: String, word: ForeignWord) -> Rep {
+        switch inputType {
+        case .text(let language):
+            switch language {
+            case .english:
+                return Rep.simpleText(.init(text: entry.input.removingDigits(),
+                                            language: .english))
+                
+            case .foreign:
+                if word.hasKana {
+                    return .textWithFurigana(.init(text: word.characters.map { String($0) },
+                                                   furigana: word.kanaComponenets,
+                                                   english: entry.output.removingDigits()))
+                } else {
+                    return .simpleText(.init(text: word.characters,
+                                             language: .foreign))
+                }
+            }
+        case .voice(let language):
+            switch language {
+            case .english:
+                return .voice(.init(text: entry.input.removingDigits(),
+                                    language: .english))
+            case .foreign:
+                return .voice(.init(text: word.characters,
+                                    language: .foreign))
+            }
+        case .image:
+            return .image(.init(imageID: input))
+        case .simplified:
+            return .textWithTranslation(.init(text: word.characters,
+                                              language: .foreign,
+                                              translation: entry.output.removingDigits()))
+        }
+    }
+    
+    // MARK: Output
     
     private func generateOutputType(for entry: Entry, inputType: ChallengeType) -> ChallengeType {
         var outputTypePossibilities: [ChallengeType]
@@ -207,7 +259,36 @@ final class PickChallengeViewModel: ObservableObject {
         return Array(output.removingDuplicates().prefix(5))
     }
     
-    private func informView() {
-        // TODO
+    func generateOutputRep(outputType: ChallengeType, output: [String], word: ForeignWord) -> [Rep] {
+        
+        switch outputType {
+        case .image:
+            return output.map { Rep.image(.init(imageID: $0)) }
+        case .simplified:
+            return output.compactMap { lexicon.foreignDictionary[$0] }
+                .map { Rep.textWithTranslation(.init(text: $0.kana ?? "kana-miss",
+                                                     language: .foreign,
+                                                     translation: $0.english.randomElement()!.removingDigits()))}
+        case .text(let language):
+            switch language {
+            case .english:
+                return output.map { Rep.textWithTranslation(.init(text: $0.removingDigits(),
+                                                                  language: .english,
+                                                                  translation: word.characters)) }
+            case .foreign:
+                return output.compactMap { lexicon.foreignDictionary[$0] }
+                    .map { Rep.textWithFurigana(.init(text: $0.characters.map { String($0) },
+                                                      furigana: $0.kanaComponenets,
+                                                      english: $0.english.first!)) }
+            }
+        case .voice(let language):
+            switch language {
+            case .english:
+                return output.map { Rep.voice(.init(text: $0.removingDigits(), language: .english)) }
+            case .foreign:
+                return output.compactMap { lexicon.foreignDictionary[$0] }
+                    .map { Rep.voice(.init(text: $0.characters, language: .foreign)) }
+            }
+        }
     }
 }
