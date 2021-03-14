@@ -18,6 +18,9 @@ struct HomeView: View {
             NavigationLink("Pick", destination: NavigationLazyView(PickChallengeView()))
             #endif
         }
+        .onAppear {
+            viewModel.requestAnyMissingItems()
+        }
     }
     
     // MARK: - Private

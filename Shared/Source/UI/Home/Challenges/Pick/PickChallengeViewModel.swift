@@ -94,13 +94,42 @@ final class PickChallengeViewModel: ObservableObject {
         let inputRep   = generateInputRep(for: nextEntry, inputType: inputType, input: input, word: nextForeignWord)
         
         let outputType = generateOutputType(for: nextEntry, inputType: inputType)
-        let output     = generateOutput(for: nextEntry, outputType: outputType)
+        var output     = generateOutput(for: nextEntry, outputType: outputType)
         let outputRep = generateOutputRep(outputType: outputType, output: output, word: nextForeignWord)
         
+        let answerOutput: String
+        // Handle the case where output is already kana in nextEntry for simplified case
+        if nextEntry.to == .english {
+            answerOutput = nextEntry.output
+        } else if nextEntry.from == .foreign && nextEntry.to == .foreign {
+            answerOutput = nextEntry.input
+        } else {
+            answerOutput = lexicon.foreignDictionary[nextEntry.output]?.id ?? ""
+        }
+        output.append(answerOutput)
+        output.shuffle()
+        
+        let correctAnswerIndex = output.firstIndex(of: answerOutput)!
+        
+        if output.count < 6 {
+            log("Something went wrong", type: .unexpected)
+        }
+        
+        nextChallenge = PickChallenge(inputType: inputType,
+                                      input: input,
+                                      outputType: outputType,
+                                      output: output,
+                                      correctAnswerIndex: correctAnswerIndex,
+                                      inputRepresentations: inputRep,
+                                      outputRepresentations: outputRep)
     }
     
     private func informView() {
-        // TODO
+        if let nextChallenge = nextChallenge {
+            history.append(nextChallenge)
+        } else {
+            // TODO: Handle challenge fininshed
+        }
     }
     
     // MARK: Input
