@@ -149,6 +149,9 @@ final class PickChallengeViewModel: ObservableObject {
                 inputTypePossibilities.removing(.simplified)
             }
             
+            // Remove possibilities for output's language
+            inputTypePossibilities.removing(.text(entry.to))
+            
             guard let randomInputType = inputTypePossibilities.randomElement() else {
                 fatalError("Array should never be empty after applying filters")
             }
