@@ -4,27 +4,39 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-import SwiftUI
+import protocol SwiftUI.View
+
+import struct SwiftUI.ObservedObject
+import struct SwiftUI.ViewBuilder
+
+#if os(iOS)
+import struct SwiftUI.NavigationView
+import struct SwiftUI.NavigationLink
+#endif
 
 struct HomeView: View {
     
     var body: some View {
-        NavigationView {
-            #if os(iOS)
-            NavigationLink("Pick", destination: NavigationLazyView(PickChallengeView()))
-                .navigationBarTitle("")
-                .navigationBarHidden(true)
-            #else
-            NavigationLink("Pick", destination: NavigationLazyView(PickChallengeView()))
-            #endif
-        }
-        .onAppear {
-            viewModel.requestAnyMissingItems()
-        }
+        view()
+            .onAppear {
+                viewModel.requestAnyMissingItems()
+            }
     }
     
     // MARK: - Private
     
     @ObservedObject private var viewModel = HomeViewModel()
     
+    @ViewBuilder
+    private func view() -> some View {
+        #if os(iOS)
+        NavigationView {
+            NavigationLink("Pick", destination: NavigationLazyView(PickChallengeView()))
+                .navigationBarTitle("")
+                .navigationBarHidden(true)
+        }
+        #else
+        MacHomeView()
+        #endif
+    }
 }

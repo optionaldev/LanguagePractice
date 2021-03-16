@@ -48,6 +48,7 @@ struct PickChallengeView: View {
     @ViewBuilder
     private func challengeView(challenge: PickChallenge) -> some View {
         
+        // TODO: Find a better way do macros with declarative statements
         #if os(iOS)
         VStack {
             inputView(rep: challenge.inputRepresentation)
@@ -62,11 +63,9 @@ struct PickChallengeView: View {
         .frame(width: Screen.width)
         .background(Color.green.opacity(0.3))
         #else
-        // TODO: Find a better way do macros with declarative statements
         VStack {
             inputView(rep: challenge.inputRepresentation)
-                .frame(height: 200)
-                .frame(width: 200)
+                .frame(width: 300, height: 200)
                 .background(Color.orange.opacity(0.5))
                 .cornerRadius(5)
                 .drawingGroup()

@@ -22,7 +22,6 @@ struct LanguagePracticeApp: App {
             PhoneTabView()
             #else
             SideMenuView()
-                .frame(minWidth: 200, idealWidth: 300, maxWidth: 400, minHeight: 200, idealHeight: 300, maxHeight: 400, alignment: .bottom)
             #endif
         }
     }

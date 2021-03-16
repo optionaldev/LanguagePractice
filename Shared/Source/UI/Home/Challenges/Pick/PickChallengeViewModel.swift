@@ -55,9 +55,8 @@ final class PickChallengeViewModel: ObservableObject {
         
         challengeEntries = challengeNouns.flatMap { extract($0) }.shuffled()
         
-        log("challengeEntries:")
-        _ = challengeEntries.map { print("\($0.from) \"\($0.input)\" \($0.to) \"\($0.output)\"") }
-        
+//        log("challengeEntries:")
+//        _ = challengeEntries.map { print("\($0.from) \"\($0.input)\" \($0.to) \"\($0.output)\"") }
         
         prepareNextChallenge()
         
@@ -216,10 +215,10 @@ final class PickChallengeViewModel: ObservableObject {
         case .text(let language):
             switch language {
             case .english:
-                outputTypePossibilities = [.voice(.foreign), .text(.foreign)]
+                outputTypePossibilities = [/*.voice(.foreign),*/ .text(.foreign)]
                 
             case .foreign:
-                outputTypePossibilities = [.image, .text(.english)]
+                outputTypePossibilities = [/*.image,*/ .text(.english)]
             }
         case .voice(let language):
             switch language {

@@ -32,6 +32,7 @@ struct SideMenuView: View {
             content
                 .frame(maxWidth: .infinity)
         }
+        .frame(width: showLabelCheckbox ? 450 : 350)
     }
     
     // MARK: - Private
