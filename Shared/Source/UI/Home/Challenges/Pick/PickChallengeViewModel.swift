@@ -176,8 +176,8 @@ final class PickChallengeViewModel: ObservableObject {
         case .text(let language):
             switch language {
             case .english:
-                return Rep.simpleText(.init(text: entry.input.removingDigits(),
-                                            language: .english))
+                return .simpleText(.init(text: entry.input.removingDigits(),
+                                         language: .english))
                 
             case .foreign:
                 if word.hasKana {

@@ -32,7 +32,6 @@ struct HomeView: View {
         #if os(iOS)
         NavigationView {
             NavigationLink("Pick", destination: NavigationLazyView(PickChallengeView()))
-                .navigationBarTitle("")
                 .navigationBarHidden(true)
         }
         #else
