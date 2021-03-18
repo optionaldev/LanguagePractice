@@ -4,7 +4,14 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-import SwiftUI
+import protocol SwiftUI.View
+
+import struct SwiftUI.ForEach
+import struct SwiftUI.Image
+import struct SwiftUI.State
+import struct SwiftUI.TabView
+import struct SwiftUI.Text
+import struct SwiftUI.ViewBuilder
 
 extension Tab {
     

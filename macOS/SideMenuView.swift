@@ -4,7 +4,20 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-import SwiftUI
+import protocol SwiftUI.View
+
+import struct SwiftUI.Button
+import struct SwiftUI.Color
+import struct SwiftUI.ForEach
+import struct SwiftUI.HStack
+import struct SwiftUI.Image
+import struct SwiftUI.PlainButtonStyle
+import struct SwiftUI.Spacer
+import struct SwiftUI.State
+import struct SwiftUI.Text
+import struct SwiftUI.ViewBuilder
+import struct SwiftUI.VStack
+
 
 typealias SideMenuItem = Tab
 

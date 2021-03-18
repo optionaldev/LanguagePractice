@@ -94,7 +94,6 @@ final class PickChallengeViewModel: ObservableObject {
         
         let outputType = generateOutputType(for: nextEntry, inputType: inputType)
         var output     = generateOutput(for: nextEntry, outputType: outputType)
-        let outputRep = generateOutputRep(outputType: outputType, output: output, word: nextForeignWord)
         
         let answerOutput: String
         // Handle the case where output is already kana in nextEntry for simplified case
@@ -108,10 +107,16 @@ final class PickChallengeViewModel: ObservableObject {
         output.append(answerOutput)
         output.shuffle()
         
+        let outputRep = generateOutputRep(outputType: outputType, output: output, word: nextForeignWord)
+        
         let correctAnswerIndex = output.firstIndex(of: answerOutput)!
         
         if output.count < 6 {
-            log("Something went wrong", type: .unexpected)
+            log("output.count < 6", type: .unexpected)
+        }
+        
+        if outputRep.count < 6 {
+            log("outputRep.count < 6", type: .unexpected)
         }
         
         nextChallenge = PickChallenge(inputType: inputType,

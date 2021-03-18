@@ -8,20 +8,21 @@ import func SwiftUI.withAnimation
 
 import protocol SwiftUI.View
 
-import struct SwiftUI.ViewBuilder
+import struct SwiftUI.Button
 import struct SwiftUI.Color
 import struct SwiftUI.ForEach
 import struct SwiftUI.HStack
 import struct SwiftUI.LazyHStack
 import struct SwiftUI.Text
 import struct SwiftUI.ObservedObject
+import struct SwiftUI.PlainButtonStyle
+import struct SwiftUI.Rectangle
 import struct SwiftUI.ScrollView
 import struct SwiftUI.ScrollViewReader
 import struct SwiftUI.Spacer
 import struct SwiftUI.VStack
+import struct SwiftUI.ViewBuilder
 import struct SwiftUI.ZStack
-
-import SwiftUI
 
 struct PickChallengeView: View {
     
@@ -60,7 +61,6 @@ struct PickChallengeView: View {
     
     @ViewBuilder
     private func challengeView(challenge: PickChallenge) -> some View {
-        
         // TODO: Find a better way do macros with declarative statements
         #if os(iOS)
         VStack {
@@ -69,8 +69,9 @@ struct PickChallengeView: View {
                 .frame(maxWidth: Screen.width - 10)
                 .background(Color.orange.opacity(0.5))
                 .cornerRadius(5)
-            // TODO: Replace Spacer with outputView
-            Spacer()
+            pickChallengeOutput(outputType: challenge.outputType, representations: challenge.outputRepresentations)
+                .frame(maxWidth: Screen.width - 10, maxHeight: .infinity)
+                .padding(0)
         }
         .frame(width: Screen.width)
         .background(Color.green.opacity(0.3))
@@ -80,9 +81,9 @@ struct PickChallengeView: View {
                 .frame(width: 300, height: 200)
                 .background(Color.orange.opacity(0.5))
                 .cornerRadius(5)
-                .drawingGroup()
-            // TODO: Replace Spacer with outputView
-            Spacer()
+            pickChallengeOutput(outputType: challenge.outputType, representations: challenge.outputRepresentations)
+                .frame(width: 300, height: 300)
+                .padding(0)
         }
         .background(Color.green.opacity(0.3))
         #endif
@@ -132,6 +133,56 @@ struct PickChallengeView: View {
                 }
                 .background(Color.purple.opacity(0.3))
             }
+        }
+    }
+    
+    // MARK: - Output
+    
+    private func pickChallengeOutput(outputType: ChallengeType, representations: [Rep]) -> some View {
+        MatrixView(columns: 2, rows: 3) { index in
+            Button {
+                // TODO: Implement action
+            } label: {
+                outputContent(forRepresentation: representations[index])
+                    .contentShape(Rectangle())
+                    .padding(0)
+                    .background(Color.blue.opacity(0.5))
+                    .cornerRadius(5)
+            }
+            .buttonStyle(PlainButtonStyle())
+            .padding(5)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    
+    @ViewBuilder
+    private func outputContent(forRepresentation representation: Rep) -> some View {
+        switch representation {
+        case .image(let rep):
+            fatalError("TODO")
+        case .voice:
+            fatalError("TODO")
+        case .textWithTranslation(let rep):
+            Text(rep.text)
+                .fixedSize(horizontal: false, vertical: true)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .contentShape(Rectangle())
+                .font(.system(size: 25))
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.blue.opacity(0.5))
+                .cornerRadius(5)
+        case .textWithFurigana(let rep):
+            textWithFurigana(representation: rep)
+                .background(Color.blue.opacity(0.5))
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .cornerRadius(5)
+        case .simpleText(let rep):
+            Text(rep.text)
+                .font(.system(size: 20))
+                .background(Color.blue.opacity(0.5))
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .cornerRadius(5)
         }
     }
 }
