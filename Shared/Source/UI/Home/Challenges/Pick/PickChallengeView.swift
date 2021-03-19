@@ -4,60 +4,32 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 //
 
-import func SwiftUI.withAnimation
-
 import protocol SwiftUI.View
 
 import struct SwiftUI.Button
 import struct SwiftUI.Color
 import struct SwiftUI.ForEach
 import struct SwiftUI.HStack
-import struct SwiftUI.LazyHStack
 import struct SwiftUI.Text
 import struct SwiftUI.ObservedObject
 import struct SwiftUI.PlainButtonStyle
 import struct SwiftUI.Rectangle
-import struct SwiftUI.ScrollView
-import struct SwiftUI.ScrollViewReader
-import struct SwiftUI.Spacer
 import struct SwiftUI.VStack
 import struct SwiftUI.ViewBuilder
-import struct SwiftUI.ZStack
+
+import SwiftUI
 
 struct PickChallengeView: View {
     
     var body: some View {
-        #if os(iOS)
-        container()
-            // TODO: Replace with custom bar
-            .navigationBarTitle("", displayMode: .inline)
-        #else
-        container()
-        #endif
+        PickChallengeBody(viewModel: viewModel) { challenge in
+            challengeView(challenge: challenge)
+        }
     }
     
     // MARK: - Private
     
     @ObservedObject private var viewModel = PickChallengeViewModel()
-    
-    private func container() -> some View {
-        ZStack {
-            ScrollView(.horizontal) {
-                ScrollViewReader { value in
-                    LazyHStack(spacing: 0) {
-                        ForEach(viewModel.history) { word in
-                            challengeView(challenge: word)
-                        }
-                    }
-                    .onChange(of: viewModel.history) { val in
-                        withAnimation {
-                            value.scrollTo(val.last!.id)
-                        }
-                    }
-                }
-            }
-        }
-    }
     
     @ViewBuilder
     private func challengeView(challenge: PickChallenge) -> some View {
@@ -141,7 +113,7 @@ struct PickChallengeView: View {
     private func pickChallengeOutput(outputType: ChallengeType, representations: [Rep]) -> some View {
         MatrixView(columns: 2, rows: 3) { index in
             Button {
-                // TODO: Implement action
+                viewModel.chose(index: index)
             } label: {
                 outputContent(forRepresentation: representations[index])
                     .contentShape(Rectangle())

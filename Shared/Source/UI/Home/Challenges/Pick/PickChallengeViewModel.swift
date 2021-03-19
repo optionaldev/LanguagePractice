@@ -69,6 +69,19 @@ final class PickChallengeViewModel: ObservableObject {
         prepareNextChallenge()
     }
     
+    func chose(index: Int) {
+        switch currentWord.outputRepresentations[index] {
+        case .voice(let rep):
+            fatalError("Handle voice output")
+        default:
+            if currentWord.correctAnswerIndex == index {
+                goToNext()
+            } else {
+                history[history.count - 1].state = .guessedIncorrectly
+            }
+        }
+    }
+    
     // MARK: - Private
     
     private let challengeEntries: [Entry]
@@ -133,6 +146,13 @@ final class PickChallengeViewModel: ObservableObject {
             history.append(nextChallenge)
         } else {
             // TODO: Handle challenge fininshed
+        }
+    }
+    
+    private func goToNext() {
+        informView()
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.prepareNextChallenge()
         }
     }
     

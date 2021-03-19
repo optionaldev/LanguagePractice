@@ -2,7 +2,15 @@
 // The LanguagePractice project.
 // Created by optionaldev on 10/02/2021.
 // Copyright © 2021 optionaldev. All rights reserved.
-// 
+//
+
+let iOS: Bool = {
+    #if os(iOS)
+    return true
+    #else
+    return false
+    #endif
+}()
 
 struct AppConstants {
     

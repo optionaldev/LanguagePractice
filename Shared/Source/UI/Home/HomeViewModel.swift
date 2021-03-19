@@ -41,7 +41,7 @@ final class HomeViewModel: ObservableObject {
         log("start downloading images", type: .info)
         
         if let url = Persistence.imageFolderUrl {
-            log("Download location: \"\(url)\"")
+            log("Download location: \"\(url)\"", type: .info)
         }
         
         imagesToDownload = lexicon.english.nouns
