@@ -10,15 +10,20 @@ import protocol SwiftUI.ViewModifier
 
 import struct SwiftUI.CGSize
 import struct SwiftUI.DragGesture
-import struct SwiftUI.LazyHStack
 import struct SwiftUI.ForEach
 import struct SwiftUI.ScrollView
 import struct SwiftUI.ModifiedContent
 import struct SwiftUI.ScrollViewReader
 import struct SwiftUI.State
+import struct SwiftUI.ViewBuilder
 
 import func SwiftUI.withAnimation
 
+#if os(iOS)
+import struct SwiftUI.LazyHStack
+#else
+import struct SwiftUI.LazyVStack
+#endif
 
 struct PickChallengeBody<Content: View>: View {
     
@@ -38,20 +43,17 @@ struct PickChallengeBody<Content: View>: View {
     
     // MARK: - Private
     
-    var bodyContent: some View {
-        // When the content appears, it is initially not scrollable
-        // After additional content is added, it becomes scrollable
-        // On MacOS, once the content becomes scrollable, the scroll bar appears and
-        // it enlarges the frame and we don't want that
-        // As a workaround, add a drag gesture and solve the scroll bar issue some other way (if at all)
-        ScrollView(.horizontal, showsIndicators: iOS ? true : false) {
+    private var bodyContent: some View {
+        // On iOS it makes more sense to have the content scroll horizontally because the pressable
+        // output buttons should be towards the bottom of the screen, for easy access and finger comfort
+        // On MacOS, horizontal ScrollView doesn't work out of the box, only vertical works with scroll wheel
+        ScrollView(iOS ? .horizontal : .vertical, showsIndicators: iOS ? true : false) {
             ScrollViewReader { value in
-                LazyHStack(spacing: 0) {
+                container {
                     ForEach(viewModel.history) { challenge in
                         content(challenge)
                     }
                 }
-                .platformSpecificModifier()
                 .onChange(of: viewModel.history) { val in
                     withAnimation {
                         value.scrollTo(val.last!.id)
@@ -60,46 +62,17 @@ struct PickChallengeBody<Content: View>: View {
             }
         }
     }
-}
-
-fileprivate struct Modifier: ViewModifier {
     
-    func body(content: Content) -> some View {
+    @ViewBuilder
+    private func container<Container: View>(content: () -> Container) -> some View {
         #if os(iOS)
-        return content
+        LazyHStack(spacing: 0) {
+            content()
+        }
         #else
-        return content
-            .offset(x: currentOffset.width, y: currentOffset.height)
-            .gesture(dragGesture)
+        LazyVStack(spacing: 0) {
+            content()
+        }
         #endif
-    }
-    
-    // MARK: - Private
-    
-    #if os(macOS)
-    @State private var currentOffset:  CGSize = .zero
-    @State private var previousOffset: CGSize = .zero
-    
-    // TODO: Handle minimum scroll and maximum scroll
-    // Right now content can be scrolled beyond the edges
-    private var dragGesture: some Gesture {
-        DragGesture()
-            .onChanged { value in
-                currentOffset = CGSize(width: value.translation.width + previousOffset.width,
-                                       height: previousOffset.height)
-            }
-            .onEnded { value in
-                currentOffset = CGSize(width: value.translation.width + previousOffset.width,
-                                       height: previousOffset.height)
-                previousOffset = currentOffset
-            }
-    }
-    #endif
-}
-
-fileprivate extension View {
-    
-    func platformSpecificModifier() -> some View {
-        ModifiedContent(content: self, modifier: Modifier())
     }
 }

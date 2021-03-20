@@ -48,11 +48,12 @@ struct PickChallengeView: View {
         .frame(width: Screen.width)
         .background(Color.green.opacity(0.3))
         #else
-        VStack {
+        HStack {
             inputView(rep: challenge.inputRepresentation)
-                .frame(width: 300, height: 200)
+                .frame(width: 390, height: 290)
                 .background(Color.orange.opacity(0.5))
                 .cornerRadius(5)
+                .padding(5)
             pickChallengeOutput(outputType: challenge.outputType, representations: challenge.outputRepresentations)
                 .frame(width: 300, height: 300)
                 .padding(0)

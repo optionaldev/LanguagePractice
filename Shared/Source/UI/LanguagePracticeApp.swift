@@ -22,6 +22,11 @@ struct LanguagePracticeApp: App {
             PhoneTabView()
             #else
             SideMenuView()
+                // It seems like, unless the window is slightly larger than the area occupied by
+                // the scroll view, when scrolling to the last item, it doesn't scroll the whole
+                // way on MacOS. Might affect the idea of a resizable window in the future
+                .frame(width: Defaults.macOS.bool(forKey: .sideMenuShowLabels) ? 850 : 750,
+                       height: 310)
             #endif
         }
     }
