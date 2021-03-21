@@ -7,6 +7,7 @@
 import protocol SwiftUI.View
 
 import struct SwiftUI.Button
+import struct SwiftUI.CGFloat
 import struct SwiftUI.Color
 import struct SwiftUI.ForEach
 import struct SwiftUI.HStack
@@ -19,13 +20,19 @@ import struct SwiftUI.ViewBuilder
 import struct SwiftUI.VStack
 
 
+private struct Constants {
+    
+    static let padding: CGFloat = 15
+}
+
+
 typealias SideMenuItem = Tab
 
 struct SideMenuView: View {
     
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 20) {
                 ForEach(SideMenuItem.allCases) { item in
                     Button {
                         selectedItem = item
@@ -33,19 +40,25 @@ struct SideMenuView: View {
                         sideMenuItemView(for: item)
                     }
                     .buttonStyle(PlainButtonStyle())
+                    .padding(.leading, Constants.padding)
                 }
                 Spacer()
                 checkbox
             }
+            .padding([.top, .bottom], Constants.padding)
             .frame(width: showLabelCheckbox ? 150 : 50)
             .background(Color.black.opacity(0.1))
-            
+
             // Add separator here?
-            
+
             content
                 .frame(maxWidth: .infinity)
+                // Both the content padding of 1 and the slightly higher height on the parent
+                // are needed. Without these, when we programmatically scroll to the last
+                // element, it doesn't scroll all the way down
+                .padding(.all, 1)
         }
-        .frame(width: showLabelCheckbox ? 850 : 750, height: 300)
+        .frame(width: showLabelCheckbox ? 850 : 750, height: 302)
     }
     
     // MARK: - Private
@@ -56,7 +69,6 @@ struct SideMenuView: View {
             Image(systemName: item.icon(selected: selectedItem == item))
                 .resizable()
                 .frame(width: 20, height: 20)
-                .padding(.all, 15)
                 .foregroundColor(selectedItem == item ? .blue : .gray)
             if showLabelCheckbox {
                 Text(item.name)
@@ -90,13 +102,18 @@ struct SideMenuView: View {
                 HStack {
                     checkboxView
                     Text("Show labels")
+                    Spacer()
                 }
+                
             } else {
-                checkboxView
+                HStack {
+                    checkboxView
+                    Spacer()
+                }
             }
         }
         .buttonStyle(PlainButtonStyle())
-        .padding(.all, 17)
+        .padding(.leading, Constants.padding)
     }
     
     private var checkboxView: some View {
