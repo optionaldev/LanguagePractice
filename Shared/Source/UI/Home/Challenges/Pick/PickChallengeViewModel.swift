@@ -167,7 +167,14 @@ final class PickChallengeViewModel: ObservableObject {
             // TODO: Handle images and voice
             inputTypePossibilities.removing(.voice(.english))
             inputTypePossibilities.removing(.voice(.foreign))
-            inputTypePossibilities.removing(.image)
+            
+            // In case there's no images found, we can't create image based challenges
+            // For entries that don't have "from" as english, it doens't make sense to create an image based challenge
+            // We would just end up trying to guess if an image representing a concept matches an english word,
+            // which defeats the purpose of trying to learn a foreign word
+            if entry.noImage || entry.from != .english {
+                inputTypePossibilities.removing(.image)
+            }
             
             if entry.english != nil {
                 inputTypePossibilities.removing(.simplified)
@@ -243,7 +250,7 @@ final class PickChallengeViewModel: ObservableObject {
                 outputTypePossibilities = [/*.voice(.foreign),*/ .text(.foreign)]
                 
             case .foreign:
-                outputTypePossibilities = [/*.image,*/ .text(.english)]
+                outputTypePossibilities = [.image, .text(.english)]
             }
         case .voice(let language):
             switch language {
@@ -260,6 +267,12 @@ final class PickChallengeViewModel: ObservableObject {
         
         if entry.english != nil {
             outputTypePossibilities.removing(.simplified)
+        }
+        
+        if entry.noImage {
+            outputTypePossibilities.removing(.image)
+        } else {
+            // TODO: handle not enough images downloaded so far
         }
         
         var outputType: ChallengeType
@@ -288,8 +301,14 @@ final class PickChallengeViewModel: ObservableObject {
         var output: [String]
         switch outputType {
         case .image:
-            // TODO: handle images
-            return []
+            // Get a list of all input, which in our scenario can only represent english IDs
+            let otherChallengeEntryIDs = otherSameTypeChallengeEntries.map { $0.output }
+            
+            // Get a list of all images available for current english IDs
+            output = otherChallengeEntryIDs.filter { Persistence.imagePath(id: $0) != nil }
+            
+            // TODO: Handle picking images from other entries
+            
         case .simplified:
             output = otherSameTypeChallengeEntries.map { $0.input }
             

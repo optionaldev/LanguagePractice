@@ -24,4 +24,12 @@ struct Entry: Equatable {
     var foreign: String {
         from == .foreign ? input : output
     }
+    
+    var noImage: Bool {
+        if let english = english {
+            return Persistence.imagePath(id: english) == nil
+        } else {
+            return false
+        }
+    }
 }
