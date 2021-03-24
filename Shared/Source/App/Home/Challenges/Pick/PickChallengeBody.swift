@@ -25,6 +25,7 @@ import struct SwiftUI.LazyHStack
 import struct SwiftUI.LazyVStack
 #endif
 
+
 struct PickChallengeBody<Content: View>: View {
     
     var viewModel: PickChallengeViewModel

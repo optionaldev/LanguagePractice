@@ -17,7 +17,6 @@ import struct SwiftUI.Rectangle
 import struct SwiftUI.VStack
 import struct SwiftUI.ViewBuilder
 
-import SwiftUI
 
 struct PickChallengeView: View {
     
@@ -30,6 +29,8 @@ struct PickChallengeView: View {
     // MARK: - Private
     
     @ObservedObject private var viewModel = PickChallengeViewModel()
+    
+    private let imageCache = ImageCache()
     
     @ViewBuilder
     private func challengeView(challenge: PickChallenge) -> some View {
@@ -62,6 +63,25 @@ struct PickChallengeView: View {
         #endif
     }
     
+    enum Signal {
+        case input
+        case output
+    }
+    
+    @ViewBuilder
+    private func viewForImage(withRepresentation rep: ImageRep, signal: Signal) -> some View {
+        if let customImage = imageCache.image(forID: rep.imageID) {
+            Image(customImage: customImage)
+                .resizable()
+                .cornerRadius(5)
+        } else {
+            // Should never end up on the else branch, but just in case
+            Text(rep.imageID.removingDigits())
+        }
+    }
+    
+    // MARK: - Input
+    
     @ViewBuilder
     private func inputView(rep: Rep) -> some View {
         switch rep {
@@ -84,7 +104,7 @@ struct PickChallengeView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .cornerRadius(5)
         case .image(let rep):
-            Text("TODO")
+            viewForImage(withRepresentation: rep, signal: .output)
         }
     }
     
@@ -132,7 +152,7 @@ struct PickChallengeView: View {
     private func outputContent(forRepresentation representation: Rep) -> some View {
         switch representation {
         case .image(let rep):
-            fatalError("TODO")
+            viewForImage(withRepresentation: rep, signal: .output)
         case .voice:
             fatalError("TODO")
         case .textWithTranslation(let rep):
@@ -159,3 +179,8 @@ struct PickChallengeView: View {
         }
     }
 }
+
+#if DEBUG
+import SwiftUI
+#endif
+

@@ -31,7 +31,7 @@ final class ImageCache {
             return uiImage
         }
         
-        log("Path doesn't exist, but we shouldn't have created a challenge with image type", type: .unexpected)
+        log("Path \"\(String(describing: Persistence.imagePath(id: id)))\" doesn't exist, but we shouldn't have created a challenge with image type", type: .unexpected)
         return nil
     }
 }

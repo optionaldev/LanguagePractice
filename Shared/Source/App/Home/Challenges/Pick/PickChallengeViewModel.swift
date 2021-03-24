@@ -260,7 +260,7 @@ final class PickChallengeViewModel: ObservableObject {
                 outputTypePossibilities = [.image, .text(.english) /*TODO: draw kanji ?*/]
             }
         case .image:
-            outputTypePossibilities = [.text(.foreign), .voice(.foreign)]
+            outputTypePossibilities = [.text(.foreign) /*, .voice(.foreign)*/]
         case .simplified:
             outputTypePossibilities = [.text(.foreign)]
         }
@@ -308,6 +308,7 @@ final class PickChallengeViewModel: ObservableObject {
             output = otherChallengeEntryIDs.filter { Persistence.imagePath(id: $0) != nil }
             
             // TODO: Handle picking images from other entries
+            log("Before filtering, found entries with images: \(output)")
             
         case .simplified:
             output = otherSameTypeChallengeEntries.map { $0.input }

@@ -26,7 +26,7 @@ final class Persistence {
             return nil
         }
         
-        guard FileManager.default.fileExists(atPath: imageFolderUrl.absoluteString) else {
+        guard FileManager.default.fileExists(atPath: imageFolderUrl.path) else {
             return nil
         }
         
