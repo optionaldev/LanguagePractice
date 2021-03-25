@@ -4,8 +4,8 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-
-import Foundation
+import struct Foundation.URL
+import struct Foundation.URLComponents
 
 extension Language {
     

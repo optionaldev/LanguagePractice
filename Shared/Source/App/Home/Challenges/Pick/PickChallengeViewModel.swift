@@ -2,9 +2,14 @@
 // The LanguagePractice project.
 // Created by optionaldev on 08/03/2021.
 // Copyright © 2021 optionaldev. All rights reserved.
-// 
+//
 
-import Foundation
+import class Foundation.DispatchQueue
+
+import protocol Foundation.ObservableObject
+
+import struct Foundation.Published
+
 
 final class PickChallengeViewModel: ObservableObject {
     
@@ -72,7 +77,16 @@ final class PickChallengeViewModel: ObservableObject {
     func chose(index: Int) {
         switch currentWord.outputRepresentations[index] {
         case .voice(let rep):
-            fatalError("Handle voice output")
+            // When voice is the output type of the challenge, the user first has to tap on the
+            // output button to hear the answer and tap the same output button again to choose
+            // that answer, so we always remember what the last pressed button was
+            if voiceLastTappedIndex == index && currentWord.correctAnswerIndex == index {
+                goToNext()
+                voiceLastTappedIndex = -1
+            } else {
+                voiceLastTappedIndex = index
+                Speech.shared.speak(string: rep.text, language: rep.language)
+            }
         default:
             if currentWord.correctAnswerIndex == index {
                 goToNext()
@@ -86,7 +100,15 @@ final class PickChallengeViewModel: ObservableObject {
     
     private let challengeEntries: [Entry]
     private var lexicon: Lexicon
+    
     private var nextChallenge: PickChallenge?
+    
+    // Keep the index of the last selected option in order to know when the user presses the button twice
+    // First tap on the output button means that the user wants to know what the output is
+    // Second tap on the output button means that the user chooses this answer
+    // Is initially -1 and it resets after every challenge, due to 0 representing the first index
+    // Valid values on second tap, depending on challenge size, is either 0...3 or 0...5
+    private var voiceLastTappedIndex: Int = -1
     
     private func prepareNextChallenge() {
         guard history.count < challengeEntries.count else {

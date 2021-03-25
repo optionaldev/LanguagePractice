@@ -26,13 +26,14 @@ final class LexiconsRequest {
     private var foreignLexicon: ForeignLexicon?
     
     private func fetchEnglishWords() {
-        log("Fetching English words")
+        log("Fetching English words", type: .info)
         guard let url = Language.english.url else {
-            log("Failed to build URL")
+            log("Failed to build URL for \(Language.english)")
             return
         }
         
         self.englishCancellable = Network.fetchJson(from: url).sink(receiveCompletion: { error in
+            // TODO: we receive an error type "finished". Handle it to avoid confusion with real errors
             log(error)
         }, receiveValue: { (lexicon: EnglishLexicon) in
             self.englishLexicon = lexicon
@@ -41,9 +42,9 @@ final class LexiconsRequest {
     }
     
     private func fetchForeignWords() {
-        log("Fetching foreign words")
+        log("Fetching foreign words", type: .info)
         guard let url = Language.foreign.url else {
-            log("Failed to build URL")
+            log("Failed to build URL for language \(Language.foreign)")
             return
         }
         

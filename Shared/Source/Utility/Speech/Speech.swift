@@ -2,10 +2,15 @@
 // The LanguagePractice project.
 // Created by optionaldev on 11/02/2021.
 // Copyright © 2021 optionaldev. All rights reserved.
-// 
+//
 
+import class AVFoundation.AVAudioSession
+import class AVFoundation.AVSpeechSynthesizer
+import class AVFoundation.AVSpeechUtterance
+import class Foundation.DispatchQueue
+import class Foundation.NSObject
 
-import AVFoundation
+import protocol AVFoundation.AVSpeechSynthesizerDelegate
 
 protocol SpeechDelegate: class {
     func speechStarted()
@@ -13,6 +18,8 @@ protocol SpeechDelegate: class {
 }
 
 final class Speech: NSObject, AVSpeechSynthesizerDelegate {
+    
+    static let shared = Speech()
     
     weak var delegate: SpeechDelegate?
     

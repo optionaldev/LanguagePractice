@@ -47,7 +47,9 @@ struct PickChallengeBody<Content: View>: View {
     private var bodyContent: some View {
         // On iOS it makes more sense to have the content scroll horizontally because the pressable
         // output buttons should be towards the bottom of the screen, for easy access and finger comfort
-        // On MacOS, horizontal ScrollView doesn't work out of the box, only vertical works with scroll wheel
+        // On MacOS, horizontal ScrollView doesn't have a built in drag gesture
+        // What it does have is scroll wheel integration, but that only work with vertical scroll views
+        // and even if it worked with horizontal ones, it's just more natural to scroll vertically on mac
         ScrollView(iOS ? .horizontal : .vertical, showsIndicators: iOS ? true : false) {
             ScrollViewReader { value in
                 container {

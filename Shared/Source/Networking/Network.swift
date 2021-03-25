@@ -4,8 +4,17 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-import Combine
-import Foundation
+import class Foundation.DispatchQueue
+import class Foundation.JSONDecoder
+import class Foundation.URLSession
+
+import protocol Swift.Decodable
+
+import struct Combine.AnyPublisher
+import struct Foundation.Data
+import struct Foundation.URL
+import struct Foundation.URLError
+
 
 final class Network {
 

@@ -8,7 +8,7 @@
 import class UIKit.UIImage
 typealias CustomImage = UIImage
 #else
-import AppKit
+import class AppKit.NSImage
 typealias CustomImage = NSImage
 #endif
 
