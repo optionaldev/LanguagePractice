@@ -8,7 +8,7 @@ import class Combine.AnyCancellable
 
 final class LexiconsRequest {
     
-    func start(_ completion: @escaping (Lexicon) -> Void) {
+    func start(_ completion: @escaping () -> Void) {
         self.completion = completion
         
         fetchEnglishWords()
@@ -17,7 +17,7 @@ final class LexiconsRequest {
     
     // MARK: - Private
     
-    private var completion: ((Lexicon) -> Void)?
+    private var completion: (() -> Void)?
     
     private var englishCancellable: AnyCancellable?
     private var foreignCancellable: AnyCancellable?
@@ -64,7 +64,7 @@ final class LexiconsRequest {
         }
         Defaults.set(englishLexicon, forKey: .englishLexicon)
         Defaults.set(foreignLexicon, forKey: .foreignLexicon)
+        completion?()
+        completion = nil
     }
 }
-
-

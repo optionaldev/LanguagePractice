@@ -5,9 +5,12 @@
 // 
 
 import class    Combine.AnyCancellable
-import struct   Foundation.Data
+
 import protocol Foundation.ObservableObject
+
+import struct   Foundation.Data
 import struct   Foundation.Published
+
 
 final class HomeViewModel: ObservableObject {
     
@@ -19,13 +22,15 @@ final class HomeViewModel: ObservableObject {
         if lexiconExists {
             startDownloadingImages()
         } else {
-            LexiconsRequest().start { lexicon in
+            LexiconsRequest().start {
                 self.lexiconExists = true
                 self.startDownloadingImages()
             }
         }
     }
     
+    // TODO: Challenge such as pick challenge should initially be disabled
+    // Once we get the lexicon, the button becomes enabled
     @Published var lexiconExists: Bool
     
     // MARK: - Private
