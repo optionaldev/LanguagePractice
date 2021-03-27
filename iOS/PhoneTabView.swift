@@ -13,7 +13,8 @@ import struct SwiftUI.TabView
 import struct SwiftUI.Text
 import struct SwiftUI.ViewBuilder
 
-extension Tab {
+
+private extension Tab {
     
     @ViewBuilder
     var view: some View {
@@ -27,6 +28,7 @@ extension Tab {
         }
     }
 }
+
 
 struct PhoneTabView: View {
  

@@ -4,6 +4,12 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
+import protocol SwiftUI.View
+
+import struct SwiftUI.Text
+import struct SwiftUI.ViewBuilder
+
+
 enum Tab: Int, CaseIterable, Identifiable {
     
     case home

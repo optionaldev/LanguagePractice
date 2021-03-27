@@ -16,19 +16,16 @@ import struct SwiftUI.NavigationLink
 
 struct HomeView: View {
     
-    var body: some View {
-        view()
-            .onAppear {
-                viewModel.requestAnyMissingItems()
-            }
+    init() {
+        log("redraw HomeView")
+        #if os(iOS)
+        // On iOS, the view only gets drawn once with the native TabView, but in MacOS, we use a custom
+        // TabView that behaves differently, so we call requestAnyMissingItems() from a different place
+        viewModel.requestAnyMissingItems()
+        #endif
     }
     
-    // MARK: - Private
-    
-    @ObservedObject private var viewModel = HomeViewModel()
-    
-    @ViewBuilder
-    private func view() -> some View {
+    var body: some View {
         #if os(iOS)
         NavigationView {
             NavigationLink("Pick", destination: NavigationLazyView(PickChallengeView()))
@@ -36,6 +33,14 @@ struct HomeView: View {
         }
         #else
         MacHomeView()
+            .onAppear {
+                log("Home on appear triggered")
+                viewModel.requestAnyMissingItems()
+            }
         #endif
     }
+    
+    // MARK: - Private
+    
+    @ObservedObject private var viewModel = HomeViewModel()
 }

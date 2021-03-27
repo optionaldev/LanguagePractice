@@ -18,11 +18,13 @@ import struct SwiftUI.State
 import struct SwiftUI.Text
 import struct SwiftUI.ViewBuilder
 import struct SwiftUI.VStack
+import struct SwiftUI.ZStack
 
 
 private struct Constants {
     
     static let padding: CGFloat = 15
+    static let sideItemSize: CGFloat = 20
 }
 
 
@@ -34,62 +36,60 @@ struct SideMenuView: View {
         HStack {
             VStack(alignment: .leading, spacing: 20) {
                 ForEach(SideMenuItem.allCases) { item in
-                    Button {
+                    Button(action: {
                         selectedItem = item
-                    } label: {
+                    }, label: {
                         sideMenuItemView(for: item)
-                    }
+                    })
                     .buttonStyle(PlainButtonStyle())
-                    .padding(.leading, Constants.padding)
                 }
                 Spacer()
                 checkbox
             }
-            .padding([.top, .bottom], Constants.padding)
+            .padding([.top, .leading, .bottom], 15)
+            .opacity(0.7)
+            .background(Color.gray.opacity(0.1))
+
+            // TODO: check if it's possible to change to expand the frame to the left instead of to
+            // the right such that we can keep the position of the challenge portion where it is
             .frame(width: showLabelCheckbox ? 150 : 50)
-            .background(Color.black.opacity(0.1))
-
-            // Add separator here?
-
-            content
-                .frame(maxWidth: .infinity)
-                // Both the content padding of 1 and the slightly higher height on the parent
-                // are needed. Without these, when we programmatically scroll to the last
-                // element, it doesn't scroll all the way down
-                .padding(.all, 1)
+            ZStack {
+                HomeView()
+                    .opacity(selectedItem == .home ? 1 : 0)
+                Text("Mac Dictionary")
+                    .opacity(selectedItem == .dictionary ? 1 : 0)
+                Text("Mac Settings")
+                    .opacity(selectedItem == .settings ? 1 : 0)
+            }
+            .frame(width: 700)
+            // For some reason, without this padding, the ScrollView acts a bit strange
+            // ScrollViewReader method scrollTo() doesn't go all the way to the bottom
+            .padding(.all, 1)
         }
-        .frame(width: showLabelCheckbox ? 850 : 750, height: 302)
+        .frame(height: 302)
     }
     
     // MARK: - Private
+    
+    @State private var selectedItem: SideMenuItem = .home
+    @State private var showLabelCheckbox: Bool = Defaults.macOS.bool(forKey: .sideMenuShowLabels)
     
     @ViewBuilder
     private func sideMenuItemView(for item: SideMenuItem) -> some View {
         HStack {
             Image(systemName: item.icon(selected: selectedItem == item))
                 .resizable()
-                .frame(width: 20, height: 20)
+                .frame(width: Constants.sideItemSize, height: Constants.sideItemSize)
                 .foregroundColor(selectedItem == item ? .blue : .gray)
             if showLabelCheckbox {
                 Text(item.name)
             }
             Spacer()
         }
+        
         // Pressing between the image and the text doesn't work without a background
         // There's probably a better way to do this, but for now it should suffice
         .background(Color.black.opacity(0.01))
-    }
-    
-    @ViewBuilder
-    private var content: some View {
-        switch selectedItem {
-        case .home:
-            HomeView()
-        case .dictionary:
-            Text("Content = Dictionary")
-        case .settings:
-            Text("Content = Settings")
-        }
     }
     
     @ViewBuilder
@@ -104,7 +104,6 @@ struct SideMenuView: View {
                     Text("Show labels")
                     Spacer()
                 }
-                
             } else {
                 HStack {
                     checkboxView
@@ -113,17 +112,12 @@ struct SideMenuView: View {
             }
         }
         .buttonStyle(PlainButtonStyle())
-        .padding(.leading, Constants.padding)
     }
     
     private var checkboxView: some View {
         Image(systemName: showLabelCheckbox ? "checkmark.square" : "square")
             .resizable()
-            .frame(width: 20, height: 20)
+            .frame(width: Constants.sideItemSize, height: Constants.sideItemSize)
             .foregroundColor(.gray)
-            .opacity(0.5)
     }
-    
-    @State private var selectedItem: SideMenuItem = .home
-    @State private var showLabelCheckbox: Bool = Defaults.macOS.bool(forKey: .sideMenuShowLabels)
 }
