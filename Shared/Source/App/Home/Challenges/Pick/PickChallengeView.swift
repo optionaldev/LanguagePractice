@@ -31,6 +31,7 @@ struct PickChallengeView: View {
     @ObservedObject private var viewModel = PickChallengeViewModel()
     
     private let imageCache = ImageCache()
+    private let waveformImage = Image(systemName: "waveform.circle")
     
     @ViewBuilder
     private func challengeView(challenge: PickChallenge) -> some View {
@@ -86,7 +87,17 @@ struct PickChallengeView: View {
     private func inputView(rep: Rep) -> some View {
         switch rep {
         case .voice:
-            Text("TODO")
+            waveformImage
+                .resizable()
+                .frame(width: 50, height: 50)
+                .onTapGesture {
+                    viewModel.inputTapped()
+                }
+                .onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                        viewModel.inputTapped()
+                    }
+                }
         case .textWithTranslation(let rep):
             VStack {
                 Text(" ")
@@ -154,7 +165,13 @@ struct PickChallengeView: View {
         case .image(let rep):
             viewForImage(withRepresentation: rep, signal: .output)
         case .voice:
-            fatalError("TODO")
+            waveformImage
+                .resizable()
+                .aspectRatio(1, contentMode: .fit)
+                .padding(10)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.blue.opacity(0.5))
+                .cornerRadius(5)
         case .textWithTranslation(let rep):
             Text(rep.text)
                 .fixedSize(horizontal: false, vertical: true)

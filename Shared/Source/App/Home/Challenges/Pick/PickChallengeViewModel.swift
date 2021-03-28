@@ -96,6 +96,12 @@ final class PickChallengeViewModel: ObservableObject {
         }
     }
     
+    func inputTapped() {
+        if case .voice(let rep) = currentWord.inputRepresentation {
+            Speech.shared.speak(string: rep.text, language: rep.language)
+        }
+    }
+    
     // MARK: - Private
     
     private let challengeEntries: [Entry]
@@ -186,10 +192,6 @@ final class PickChallengeViewModel: ObservableObject {
         if entry.from == .foreign && entry.to == .foreign {
             return .simplified
         } else {
-            // TODO: Handle images and voice
-            inputTypePossibilities.removing(.voice(.english))
-            inputTypePossibilities.removing(.voice(.foreign))
-            
             // In case there's no images found, we can't create image based challenges
             // For entries that don't have "from" as english, it doens't make sense to create an image based challenge
             // We would just end up trying to guess if an image representing a concept matches an english word,
@@ -202,7 +204,9 @@ final class PickChallengeViewModel: ObservableObject {
                 inputTypePossibilities.removing(.simplified)
             }
             
-            // Remove possibilities for output's language
+            // `entry.to` represents the output type, but here we're trying to generate
+            // the input type and input and output can not be the same language
+            inputTypePossibilities.removing(.voice(entry.to))
             inputTypePossibilities.removing(.text(entry.to))
             
             guard let randomInputType = inputTypePossibilities.randomElement() else {
@@ -269,7 +273,7 @@ final class PickChallengeViewModel: ObservableObject {
         case .text(let language):
             switch language {
             case .english:
-                outputTypePossibilities = [/*.voice(.foreign),*/ .text(.foreign)]
+                outputTypePossibilities = [.voice(.foreign), .text(.foreign)]
                 
             case .foreign:
                 outputTypePossibilities = [.image, .text(.english)]
@@ -282,7 +286,7 @@ final class PickChallengeViewModel: ObservableObject {
                 outputTypePossibilities = [.image, .text(.english) /*TODO: draw kanji ?*/]
             }
         case .image:
-            outputTypePossibilities = [.text(.foreign) /*, .voice(.foreign)*/]
+            outputTypePossibilities = [.text(.foreign), .voice(.foreign)]
         case .simplified:
             outputTypePossibilities = [.text(.foreign)]
         }

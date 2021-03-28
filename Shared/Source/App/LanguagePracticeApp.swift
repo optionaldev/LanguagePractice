@@ -14,6 +14,7 @@ struct LanguagePracticeApp: App {
 
     init() {
         Logger.performInitialSetup()
+        _ = Speech.shared
     }
     
     var body: some Scene {
