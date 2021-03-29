@@ -336,6 +336,10 @@ final class PickChallengeViewModel: ObservableObject {
             // TODO: Handle picking images from other entries
             log("Before filtering, found entries with images: \(output)")
             
+            if output.count < 6 {
+                fatalError("Not enough images")
+            }
+            
         case .simplified:
             output = otherSameTypeChallengeEntries.map { $0.input }
             

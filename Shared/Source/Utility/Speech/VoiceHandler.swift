@@ -10,6 +10,8 @@ struct VoiceHandler {
     
     init(_ type: Language) {
         self.voices = type.voices
+        
+        log("Initialized \(type) with voices: \(voices.map { $0.name })", type: .info)
     }
     
     mutating func next() -> AVSpeechSynthesisVoice {

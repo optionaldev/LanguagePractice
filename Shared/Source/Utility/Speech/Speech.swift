@@ -61,6 +61,8 @@ final class Speech: NSObject, AVSpeechSynthesizerDelegate {
         utterance.rate = rate
         utterance.volume = volume
         
+        log("Speaking \"\(string)\" with voice: \(String(describing: utterance.voice?.name))")
+        
         synthesizer.speak(utterance)
     }
     

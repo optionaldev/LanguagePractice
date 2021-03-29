@@ -54,6 +54,10 @@ struct SideMenuView: View {
             // the right such that we can keep the position of the challenge portion where it is
             .frame(width: showLabelCheckbox ? 150 : 50)
             ZStack {
+                // On MacOS, all views exist at the same time and displaying is based on opacity
+                // because TabView doesn't seem very customizable right now. Other approaches
+                // have been attempted, but this is the only one I've found so far that makes
+                // the views be persistent
                 HomeView()
                     .opacity(selectedItem == .home ? 1 : 0)
                 Text("Mac Dictionary")
