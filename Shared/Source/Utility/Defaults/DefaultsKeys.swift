@@ -9,3 +9,13 @@ enum DefaultsCodingKey: String, CodingStorable {
     case englishLexicon
     case foreignLexicon
 }
+
+enum DefaultsArrayKey: String, CodingStorable {
+    
+    case wordsLearned
+}
+
+enum DefaultsDictionaryKey: String, CodingStorable {
+    
+    case guessHistory
+}

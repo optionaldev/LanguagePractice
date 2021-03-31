@@ -7,7 +7,10 @@
 import class  Foundation.JSONDecoder
 import class  Foundation.JSONEncoder
 import class  Foundation.UserDefaults
+
 import struct Foundation.Data
+import struct Foundation.TimeInterval
+
 
 protocol DefaultsProtocol {
     
@@ -61,7 +64,7 @@ extension DefaultsCodingProtocol {
     // The main issue with this approach is that you need to always specify what the return type is
     // Is there a better way to do this?
     static func decodable<T: Decodable>(forKey key: DecodeKeyType) -> T?  {
-        guard let data = UserDefaults.standard.data(forKey: key.storeValue) else {
+        guard let data = defaults.data(forKey: key.storeValue) else {
             return nil
         }
         
@@ -82,3 +85,59 @@ extension DefaultsCodingProtocol {
         }
     }
 }
+
+// MARK: - Arrays
+
+protocol DefaultsArrayProtocol: DefaultsProtocol {
+
+    associatedtype ArrayKeyType: CodingStorable
+
+    static func array<T: Saveable>(forKey key: ArrayKeyType) -> [T]
+    static func set<T: Saveable>(_ array: [T], forKey key: ArrayKeyType)
+}
+
+
+extension DefaultsArrayProtocol {
+    
+    static func array<T: Saveable>(forKey key: ArrayKeyType) -> [T] {
+        guard let rawResult = defaults.array(forKey: key.storeValue) else {
+            return []
+        }
+        guard let result = rawResult as? [T] else {
+            return []
+        }
+        return result
+    }
+    
+    static func set<T: Saveable>(_ array: [T], forKey key: ArrayKeyType) {
+        defaults.set(array, forKey: key.storeValue)
+    }
+}
+
+// MARK: - Dictionaries
+
+protocol DefaultsDictionaryProtocol: DefaultsProtocol {
+
+    associatedtype DictionaryKeyType: CodingStorable
+
+    static func dictionary<U: Saveable, V: Saveable>(forKey key: DictionaryKeyType) -> [U: V]
+    static func set<U: Saveable, V: Saveable>(_ dictionary: [U: V], forKey key: DictionaryKeyType)
+}
+
+extension DefaultsDictionaryProtocol {
+    
+    static func dictionary<U: Saveable, V: Saveable>(forKey key: DictionaryKeyType) -> [U:V] {
+        guard let rawResult = defaults.dictionary(forKey: key.storeValue) else {
+            return [:]
+        }
+        guard let result = rawResult as? [U:V] else {
+            return [:]
+        }
+        return result
+    }
+    
+    static func set<U: Saveable, V: Saveable>(_ array: [U: V], forKey key: DictionaryKeyType) {
+        defaults.set(array, forKey: key.storeValue)
+    }
+}
+
