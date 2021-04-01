@@ -4,7 +4,11 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-import Foundation
+import class Foundation.FileManager
+
+import struct Foundation.Data
+import struct Foundation.URL
+
 #if DEBUG && os(iOS)
 import UIKit
 #endif

@@ -14,6 +14,8 @@ enum ChallengeType: Hashable, Codable {
     case simplified
     #endif
     
+    // TODO: Add another case to this enum where user writes the translation of one of the words' characters
+    
     var storeValue: Int {
         switch self {
         case .image:

@@ -8,7 +8,9 @@ import class Foundation.DispatchQueue
 
 import protocol Foundation.ObservableObject
 
+import struct Foundation.Date
 import struct Foundation.Published
+import struct Foundation.TimeInterval
 
 
 final class PickChallengeViewModel: ObservableObject {
@@ -18,7 +20,12 @@ final class PickChallengeViewModel: ObservableObject {
     // Reflects whether the answers are displayed when remaining is equal to the 'forfeitRetriesCount' in Constants
     @Published var challengeState: PickChallengeState = .regular
     
+    // Populated at the end of the challenge
+    // Used to display words that were considered "learned", based on different metrics
+    @Published var wordsLearned: [String] = []
+    
     var currentWord: PickChallenge {
+        // TODO: Maybe implement a non-empty array to prevent force unwrap?
         return history.last!
     }
     
@@ -28,18 +35,19 @@ final class PickChallengeViewModel: ObservableObject {
         }
         self.lexicon = lexicon
         
-        let foreignNouns = lexicon.foreign.nouns
-        let challengeNouns = foreignNouns.shuffled().prefix(10)
+        let wordsLearned = Defaults.wordsLearned
         
+        // We want to avoid including words that were already deemed as "learned"
+        let filteredForeignWords = lexicon.foreign.nouns.filter { !wordsLearned.contains($0.id) }
+        
+        let challengeNouns = filteredForeignWords.shuffled().prefix(10)
+        
+        // Method is declared here to be able to have a fully known 'challengeEntries' as a constant
         func extract(_ foreignNoun: ForeignNoun) -> [Entry] {
-            var result = foreignNoun.english.flatMap { [Entry(from: .english,
-                                                              to: .foreign,
-                                                              input: $0,
-                                                              output: foreignNoun.id),
-                                                        Entry(from: .foreign,
-                                                              to: .english,
-                                                              input: foreignNoun.id,
-                                                              output: $0) ] }
+            var result = foreignNoun.english.flatMap {
+                [Entry(from: .english, to: .foreign, input: $0,             output: foreignNoun.id),
+                 Entry(from: .foreign, to: .english, input: foreignNoun.id, output: $0)]
+            }
 
             if foreignNoun.kana != nil {
                 // For input, we could show multiple english translations, but for output only 1,
@@ -50,19 +58,12 @@ final class PickChallengeViewModel: ObservableObject {
                     return result
                 }
                 
-                result.append(Entry(from: .foreign,
-                                    to: .foreign,
-                                    input: foreignNoun.id,
-                                    output: translation))
+                result.append(Entry(from: .foreign, to: .foreign, input: foreignNoun.id, output: translation))
             }
             return result
         }
         
         challengeEntries = challengeNouns.flatMap { extract($0) }.shuffled()
-        
-//        log("challengeEntries:")
-//        _ = challengeEntries.map { print("\($0.from) \"\($0.input)\" \($0.to) \"\($0.output)\"") }
-        
         prepareNextChallenge()
         
         guard nextChallenge != nil else {
@@ -70,7 +71,6 @@ final class PickChallengeViewModel: ObservableObject {
             return
         }
         informView()
-        
         prepareNextChallenge()
     }
     
@@ -105,8 +105,12 @@ final class PickChallengeViewModel: ObservableObject {
     // MARK: - Private
     
     private let challengeEntries: [Entry]
+    
+    // Declared as var due to it having mutating generated dictionaries
     private var lexicon: Lexicon
     
+    // After processing the initial challenge that is immediately displayed to the user, we also prepare the next challenge
+    // Challenge preparation should be done off the main queue. Processing isn't very resources expensive, but might become one day
     private var nextChallenge: PickChallenge?
     
     // Keep the index of the last selected option in order to know when the user presses the button twice
@@ -149,12 +153,7 @@ final class PickChallengeViewModel: ObservableObject {
         output.shuffle()
         
         let outputRep = generateOutputRep(outputType: outputType, output: output, word: nextForeignWord)
-        
         let correctAnswerIndex = output.firstIndex(of: answerOutput)!
-        
-        if output.count < 6 {
-            log("output.count < 6", type: .unexpected)
-        }
         
         if outputRep.count < 6 {
             log("outputRep.count < 6", type: .unexpected)
@@ -173,15 +172,75 @@ final class PickChallengeViewModel: ObservableObject {
         if let nextChallenge = nextChallenge {
             history.append(nextChallenge)
         } else {
-            // TODO: Handle challenge fininshed
+            var guessHistory: [String: [TimeInterval]] = Defaults.guessHistory
+            for entry in history {
+                let id: String
+                if lexicon.foreignDictionary[entry.input] != nil {
+                    id = entry.input
+                } else {
+                    id = entry.output[entry.correctAnswerIndex]
+                }
+                if case .guessedIncorrectly = entry.state {
+                    if guessHistory[id] == nil {
+                        guessHistory[id] = [-1]
+                    } else {
+                        guessHistory[id]?.append(-1)
+                    }
+                }
+                if case .finished(let value) = entry.state {
+                    if guessHistory[id] == nil {
+                        guessHistory[id] = [value]
+                    } else {
+                        guessHistory[id]?.append(value)
+                    }
+                }
+            }
+            log(guessHistory)
+            Defaults.set(guessHistory, forKey: .guessHistory)
+            
+            let wordsLearnedBeforeCurrentChallenge: [String] = Defaults.array(forKey: .wordsLearned)
+            var allWordsLearned: [String] = wordsLearnedBeforeCurrentChallenge
+            for (key, value) in guessHistory {
+                let last3 = value.suffix(3).map { TimeInterval($0) }
+                
+                // For a challenge to be considered complete, user needs to get the answer correct on first try
+                // and get the answer correct in less than 10 seconds
+                // TODO: replace 10 seconds with a per user, per challenge value
+                if last3.filter({ $0 != 0 && $0 > 1 && $0 < 10 }).count == 3 {
+                    if !allWordsLearned.contains(key) {
+                        allWordsLearned.append(key)
+                    }
+                }
+            }
+            
+            let diff = allWordsLearned.difference(from: wordsLearnedBeforeCurrentChallenge)
+            
+            wordsLearned = diff
+            
+            Defaults.set(allWordsLearned, forKey: .wordsLearned)
         }
+        
+        // At this point, we've already appended the `nextChallenge` to the `history` array
+        nextChallenge = nil
     }
     
     private func goToNext() {
+        finishedCurrentChallenge()
         informView()
         DispatchQueue.global(qos: .userInitiated).async {
             self.prepareNextChallenge()
         }
+    }
+    
+    private var endTimeOfPreviousChallenge = Date()
+    
+    private func finishedCurrentChallenge() {
+        let currentDate = Date()
+        if history[history.count - 1].state != .guessedIncorrectly {
+            let challengeTime = currentDate.timeIntervalSince(endTimeOfPreviousChallenge)
+            history[history.count - 1].state = .finished(challengeTime)
+        }
+        endTimeOfPreviousChallenge = currentDate
     }
     
     // MARK: Input
@@ -328,10 +387,14 @@ final class PickChallengeViewModel: ObservableObject {
         switch outputType {
         case .image:
             // Get a list of all input, which in our scenario can only represent english IDs
-            let otherChallengeEntryIDs = otherSameTypeChallengeEntries.map { $0.output }
+//            let otherChallengeEntryIDs = otherSameTypeChallengeEntries.map { $0.output }
+            // TODO: Handle when current challenge doesn't countain 5 images
+            let otherChallengeEntryIDs = lexicon.english.nouns.map { $0.id }
             
             // Get a list of all images available for current english IDs
             output = otherChallengeEntryIDs.filter { Persistence.imagePath(id: $0) != nil }
+            
+            output.removing(entry.english!)
             
             // TODO: Handle picking images from other entries
             log("Before filtering, found entries with images: \(output)")
@@ -362,11 +425,14 @@ final class PickChallengeViewModel: ObservableObject {
             }
         }
         
+        if output.count < 6 {
+            log("output.count < 6", type: .unexpected)
+        }
+        
         return Array(output.removingDuplicates().prefix(5))
     }
     
     func generateOutputRep(outputType: ChallengeType, output: [String], word: ForeignWord) -> [Rep] {
-        
         switch outputType {
         case .image:
             return output.map { Rep.image(.init(imageID: $0)) }

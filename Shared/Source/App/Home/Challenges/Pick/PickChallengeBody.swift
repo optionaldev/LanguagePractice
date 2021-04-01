@@ -9,13 +9,16 @@ import protocol SwiftUI.View
 import protocol SwiftUI.ViewModifier
 
 import struct SwiftUI.CGSize
+import struct SwiftUI.Color
 import struct SwiftUI.DragGesture
 import struct SwiftUI.ForEach
 import struct SwiftUI.ScrollView
 import struct SwiftUI.ModifiedContent
 import struct SwiftUI.ScrollViewReader
 import struct SwiftUI.State
+import struct SwiftUI.Text
 import struct SwiftUI.ViewBuilder
+import struct SwiftUI.VStack
 
 import func SwiftUI.withAnimation
 
@@ -25,6 +28,11 @@ import struct SwiftUI.LazyHStack
 import struct SwiftUI.LazyVStack
 #endif
 
+
+private struct Constants {
+    
+    static let resultsID = "results_screen"
+}
 
 struct PickChallengeBody<Content: View>: View {
     
@@ -44,6 +52,7 @@ struct PickChallengeBody<Content: View>: View {
     
     // MARK: - Private
     
+    @ViewBuilder
     private var bodyContent: some View {
         // On iOS it makes more sense to have the content scroll horizontally because the pressable
         // output buttons should be towards the bottom of the screen, for easy access and finger comfort
@@ -56,6 +65,9 @@ struct PickChallengeBody<Content: View>: View {
                     ForEach(viewModel.history) { challenge in
                         content(challenge)
                     }
+                    if viewModel.wordsLearned.isEmpty == false {
+                        resultsScreen()
+                    }
                 }
                 .onChange(of: viewModel.history) { val in
                     withAnimation {
@@ -67,7 +79,7 @@ struct PickChallengeBody<Content: View>: View {
     }
     
     @ViewBuilder
-    private func container<Container: View>(content: () -> Container) -> some View {
+    private func container<Container: View>(@ViewBuilder content: () -> Container) -> some View {
         #if os(iOS)
         LazyHStack(spacing: 0) {
             content()
@@ -77,5 +89,17 @@ struct PickChallengeBody<Content: View>: View {
             content()
         }
         #endif
+    }
+    
+    private func resultsScreen() -> some View {
+        VStack {
+            ForEach(0..<viewModel.wordsLearned.count) { index in
+                Text(viewModel.wordsLearned[index])
+                    .padding(5)
+            }
+        }
+        .frame(width: Canvas.width)
+        .id(Constants.resultsID)
+        .background(Color.blue)
     }
 }
