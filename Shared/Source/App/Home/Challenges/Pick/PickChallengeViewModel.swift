@@ -38,9 +38,22 @@ final class PickChallengeViewModel: ObservableObject {
         let wordsLearned = Defaults.wordsLearned
         
         // We want to avoid including words that were already deemed as "learned"
-        let filteredForeignWords = lexicon.foreign.nouns.filter { !wordsLearned.contains($0.id) }
+        let shuffledForeignWords = lexicon.foreign.nouns.shuffled()
         
-        let challengeNouns = filteredForeignWords.shuffled().prefix(10)
+        let unknownWords = shuffledForeignWords.filter { !wordsLearned.contains($0.id) }
+        
+        // prefix(10) doesn't crash if there's less than 10 elements in the array
+        var challengeWords = unknownWords.prefix(10)
+        
+        // Handle case when there are less than 10 words left to learn
+        if challengeWords.count < 10 {
+            let knownWords = shuffledForeignWords.filter { wordsLearned.contains($0.id) }
+            challengeWords.append(contentsOf: knownWords.prefix(10 - challengeWords.count))
+        }
+        
+        guard challengeWords.count == 10 else {
+            fatalError("Invalid number of elements")
+        }
         
         // Method is declared here to be able to have a fully known 'challengeEntries' as a constant
         func extract(_ foreignNoun: ForeignNoun) -> [Entry] {
@@ -63,7 +76,7 @@ final class PickChallengeViewModel: ObservableObject {
             return result
         }
         
-        challengeEntries = challengeNouns.flatMap { extract($0) }.shuffled()
+        challengeEntries = challengeWords.flatMap { extract($0) }.shuffled()
         prepareNextChallenge()
         
         guard nextChallenge != nil else {
@@ -154,10 +167,6 @@ final class PickChallengeViewModel: ObservableObject {
         
         let outputRep = generateOutputRep(outputType: outputType, output: output, word: nextForeignWord)
         let correctAnswerIndex = output.firstIndex(of: answerOutput)!
-        
-        if outputRep.count < 6 {
-            log("outputRep.count < 6", type: .unexpected)
-        }
         
         nextChallenge = PickChallenge(inputType: inputType,
                                       input: input,
@@ -397,7 +406,7 @@ final class PickChallengeViewModel: ObservableObject {
             output.removing(entry.english!)
             
             // TODO: Handle picking images from other entries
-            log("Before filtering, found entries with images: \(output)")
+            log("Before filtering, found \(output.count) entries with images")
             
             if output.count < 6 {
                 fatalError("Not enough images")
@@ -425,30 +434,34 @@ final class PickChallengeViewModel: ObservableObject {
             }
         }
         
-        if output.count < 6 {
-            log("output.count < 6", type: .unexpected)
+        output = Array(output.removingDuplicates().prefix(5))
+        
+        guard output.count == 5 else {
+            fatalError("`output` should have exactly 5 entries")
         }
         
-        return Array(output.removingDuplicates().prefix(5))
+        return output
     }
     
     func generateOutputRep(outputType: ChallengeType, output: [String], word: ForeignWord) -> [Rep] {
+        let result: [Rep]
+        
         switch outputType {
         case .image:
-            return output.map { Rep.image(.init(imageID: $0)) }
+            result = output.map { Rep.image(.init(imageID: $0)) }
         case .simplified:
-            return output.compactMap { lexicon.foreignDictionary[$0] }
+            result = output.compactMap { lexicon.foreignDictionary[$0] }
                 .map { Rep.textWithTranslation(.init(text: $0.kana ?? "kana-miss",
                                                      language: .foreign,
                                                      translation: $0.english.randomElement()!.removingDigits()))}
         case .text(let language):
             switch language {
             case .english:
-                return output.map { Rep.textWithTranslation(.init(text: $0.removingDigits(),
-                                                                  language: .english,
-                                                                  translation: word.characters)) }
+                result = output.map { Rep.textWithTranslation(.init(text: $0.removingDigits(),
+                                                                    language: .english,
+                                                                    translation: word.characters)) }
             case .foreign:
-                return output.compactMap { lexicon.foreignDictionary[$0] }
+                result = output.compactMap { lexicon.foreignDictionary[$0] }
                     .map { Rep.textWithFurigana(.init(text: $0.characters.map { String($0) },
                                                       furigana: $0.kanaComponenets,
                                                       english: $0.english.first!)) }
@@ -456,11 +469,17 @@ final class PickChallengeViewModel: ObservableObject {
         case .voice(let language):
             switch language {
             case .english:
-                return output.map { Rep.voice(.init(text: $0.removingDigits(), language: .english)) }
+                result = output.map { Rep.voice(.init(text: $0.removingDigits(), language: .english)) }
             case .foreign:
-                return output.compactMap { lexicon.foreignDictionary[$0] }
+                result = output.compactMap { lexicon.foreignDictionary[$0] }
                     .map { Rep.voice(.init(text: $0.characters, language: .foreign)) }
             }
         }
+        
+        guard result.count == 6 else {
+            fatalError("There should be exactly 6 output representations.")
+        }
+        
+        return result
     }
 }

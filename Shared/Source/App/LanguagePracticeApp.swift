@@ -14,7 +14,8 @@ struct LanguagePracticeApp: App {
 
     init() {
         Logger.performInitialSetup()
-        _ = Speech.shared
+//        _ = Speech.shared
+        printStatus()
     }
     
     var body: some Scene {
@@ -25,5 +26,18 @@ struct LanguagePracticeApp: App {
             SideMenuView()
             #endif
         }
+    }
+    
+    // MARK: - Private
+    private func printStatus() {
+        #if DEBUG
+        
+        if let lexicon = Defaults.lexicon {
+            if Defaults.wordsLearned.count < 40 {
+                log("Words learned so far: \(Defaults.wordsLearned.sorted())")
+                log("Words left to learn: \(lexicon.foreign.nouns.map { $0.id }.filter { !Defaults.wordsLearned.contains($0) }.sorted() )")
+            }
+        }
+        #endif
     }
 }
