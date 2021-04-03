@@ -17,7 +17,7 @@ import struct SwiftUI.NavigationLink
 struct HomeView: View {
     
     init() {
-        log("redraw HomeView")
+        log("HomeView init")
         #if os(iOS)
         // On iOS, the view only gets drawn once with the native TabView, but in MacOS, we use a custom
         // TabView that behaves differently, so we call requestAnyMissingItems() from a different place

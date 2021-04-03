@@ -40,14 +40,14 @@ struct PickChallengeView: View {
         VStack {
             inputView(rep: challenge.inputRepresentation)
                 .frame(height: 200)
-                .frame(maxWidth: Screen.width - 10)
+                .frame(maxWidth: Canvas.width - 10)
                 .background(Color.orange.opacity(0.5))
                 .cornerRadius(5)
             pickChallengeOutput(outputType: challenge.outputType, representations: challenge.outputRepresentations)
-                .frame(maxWidth: Screen.width - 10, maxHeight: .infinity)
+                .frame(maxWidth: Canvas.width - 10, maxHeight: .infinity)
                 .padding(0)
         }
-        .frame(width: Screen.width)
+        .frame(width: Canvas.width)
         .background(Color.green.opacity(0.3))
         #else
         HStack {

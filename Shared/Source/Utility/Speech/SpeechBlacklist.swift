@@ -25,7 +25,7 @@ private enum SpeechBlacklist: String, CaseIterable {
 extension AVSpeechSynthesisVoice {
     
     func misspronounces(word: String) -> Bool {
-        guard let blacklist = SpeechBlacklist(rawValue: identifier) else {
+        guard let blacklist = SpeechBlacklist(rawValue: name) else {
             return false
         }
         return blacklist.misspronouncedWords.contains(word)

@@ -5,6 +5,7 @@
 //
 
 import class Foundation.DispatchQueue
+import class Foundation.NumberFormatter
 
 import protocol Foundation.ObservableObject
 
@@ -15,14 +16,12 @@ import struct Foundation.TimeInterval
 
 final class PickChallengeViewModel: ObservableObject {
     
-    @Published var history: [PickChallenge] = []
-    
-    // Reflects whether the answers are displayed when remaining is equal to the 'forfeitRetriesCount' in Constants
-    @Published var challengeState: PickChallengeState = .regular
+    /** Holds all the challenge that have been completed */
+    @Published private(set) var history: [PickChallenge] = []
     
     // Populated at the end of the challenge
     // Used to display words that were considered "learned", based on different metrics
-    @Published var wordsLearned: [String] = []
+    @Published private(set) var wordsLearned: [String] = []
     
     var currentWord: PickChallenge {
         // TODO: Maybe implement a non-empty array to prevent force unwrap?
@@ -45,10 +44,16 @@ final class PickChallengeViewModel: ObservableObject {
         // prefix(10) doesn't crash if there's less than 10 elements in the array
         var challengeWords = unknownWords.prefix(10)
         
+        log("Learning: \(challengeWords.map { $0.id }.joined(separator: " "))")
+        
         // Handle case when there are less than 10 words left to learn
         if challengeWords.count < 10 {
             let knownWords = shuffledForeignWords.filter { wordsLearned.contains($0.id) }
-            challengeWords.append(contentsOf: knownWords.prefix(10 - challengeWords.count))
+                .prefix(10 - challengeWords.count)
+            
+            challengeWords.append(contentsOf: knownWords)
+            
+            log("and rehearsing: \(knownWords.map { $0.id }.joined(separator: " "))")
         }
         
         guard challengeWords.count == 10 else {
@@ -181,8 +186,10 @@ final class PickChallengeViewModel: ObservableObject {
         if let nextChallenge = nextChallenge {
             history.append(nextChallenge)
         } else {
+            // Challenge finished!
             var guessHistory: [String: [TimeInterval]] = Defaults.guessHistory
             for entry in history {
+                // History is recorded based on the foreign word ID, because that's what is being learned
                 let id: String
                 if lexicon.foreignDictionary[entry.input] != nil {
                     id = entry.input
@@ -204,7 +211,12 @@ final class PickChallengeViewModel: ObservableObject {
                     }
                 }
             }
-            log(guessHistory)
+            
+            log("Guess history:")
+            let numberFormatter = NumberFormatter()
+            numberFormatter.maximumFractionDigits = 1
+            _ = guessHistory.map { print("\($0.key) \($0.value.compactMap { numberFormatter.string(for: $0) }.joined(separator: " "))") }
+            
             Defaults.set(guessHistory, forKey: .guessHistory)
             
             let wordsLearnedBeforeCurrentChallenge: [String] = Defaults.array(forKey: .wordsLearned)
@@ -262,7 +274,7 @@ final class PickChallengeViewModel: ObservableObject {
         } else {
             // In case there's no images found, we can't create image based challenges
             // For entries that don't have "from" as english, it doens't make sense to create an image based challenge
-            // We would just end up trying to guess if an image representing a concept matches an english word,
+            // We would just end up trying to guess if an image representing a concept matching an english word,
             // which defeats the purpose of trying to learn a foreign word
             if entry.noImage || entry.from != .english {
                 inputTypePossibilities.removing(.image)
@@ -272,8 +284,8 @@ final class PickChallengeViewModel: ObservableObject {
                 inputTypePossibilities.removing(.simplified)
             }
             
-            // `entry.to` represents the output type, but here we're trying to generate
-            // the input type and input and output can not be the same language
+            // `entry.to` represents the output type, but here we're trying to generate the input type
+            // and aside from simplified challenge, input & output are never the same language
             inputTypePossibilities.removing(.voice(entry.to))
             inputTypePossibilities.removing(.text(entry.to))
             

@@ -74,6 +74,11 @@ struct PickChallengeBody<Content: View>: View {
                         value.scrollTo(val.last!.id)
                     }
                 }
+                .onChange(of: viewModel.wordsLearned) { _ in
+                    withAnimation {
+                        value.scrollTo(Constants.resultsID)
+                    }
+                }
             }
         }
     }
@@ -98,7 +103,7 @@ struct PickChallengeBody<Content: View>: View {
                     .padding(5)
             }
         }
-        .frame(width: Canvas.width)
+        .frame(width: Canvas.width, height: iOS ? nil : Canvas.height)
         .id(Constants.resultsID)
         .background(Color.blue)
     }
