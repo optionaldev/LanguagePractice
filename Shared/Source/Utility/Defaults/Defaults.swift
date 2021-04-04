@@ -23,11 +23,18 @@ final class Defaults: DefaultsCodingProtocol, DefaultsArrayProtocol, DefaultsDic
         return nil
     }
     
-    static var wordsLearned: [String] {
-        return Defaults.array(forKey: .wordsLearned)
-    }
-    
     static var guessHistory:[String: [TimeInterval]] {
         return Defaults.dictionary(forKey: .guessHistory)
+    }
+    
+    static var knownWords: [String] {
+        return guessHistory.filter {
+            // We take the last 3 values and if they're all below our success threshold
+            // the word is considered to be known
+            $0.value.suffix(3).filter {
+                // Check if all 3 of our values are within success range
+                AppConstants.successRange ~= $0
+            }.count == 3
+        }.map { $0.key }
     }
 }

@@ -4,6 +4,9 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 //
 
+import struct Foundation.TimeInterval
+
+
 let iOS: Bool = {
     #if os(iOS)
     return true
@@ -18,10 +21,9 @@ struct AppConstants {
     static let hiragana = Hiragana()
     #endif
     
-    // Main reason for using an underscore is because all rawValues appended start with lowercase letter
-    // and it's not worth going through the trouble of uppercasing it
-    static let storeValuePrefix = "LanguagePracticeUserDefaults_"
-    
     // Primarily used in order to differentiate between the guessing word and the answers
     static let defaultOpacity = 0.3
+    
+    // If an answer has a time interval between these two values, it is a successful answer
+    static let successRange = 0.0...10.0
 }

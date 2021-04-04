@@ -12,6 +12,7 @@ enum DefaultsCodingKey: String, CodingStorable {
 
 enum DefaultsArrayKey: String, CodingStorable {
     
+    // Currently unused
     case wordsLearned
 }
 

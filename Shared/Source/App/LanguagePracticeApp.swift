@@ -33,9 +33,10 @@ struct LanguagePracticeApp: App {
         #if DEBUG
         
         if let lexicon = Defaults.lexicon {
-            if Defaults.wordsLearned.count < 40 {
-                log("Words learned so far: \(Defaults.wordsLearned.sorted())")
-                log("Words left to learn: \(lexicon.foreign.nouns.map { $0.id }.filter { !Defaults.wordsLearned.contains($0) }.sorted() )")
+            let knownWords = Defaults.knownWords
+            if knownWords.count < 40 {
+                log("Words learned so far: \(knownWords.sorted())")
+                log("Words left to learn: \(lexicon.foreign.nouns.map { $0.id }.filter { !knownWords.contains($0) }.sorted() )")
             }
         }
         #endif

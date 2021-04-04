@@ -4,6 +4,8 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 //
 
+import func SwiftUI.withAnimation
+
 import protocol SwiftUI.Gesture
 import protocol SwiftUI.View
 import protocol SwiftUI.ViewModifier
@@ -20,12 +22,12 @@ import struct SwiftUI.Text
 import struct SwiftUI.ViewBuilder
 import struct SwiftUI.VStack
 
-import func SwiftUI.withAnimation
-
 #if os(iOS)
 import struct SwiftUI.LazyHStack
+typealias LazyStack = LazyHStack
 #else
 import struct SwiftUI.LazyVStack
+typealias LazyStack = LazyVStack
 #endif
 
 
@@ -36,8 +38,8 @@ private struct Constants {
 
 struct PickChallengeBody<Content: View>: View {
     
-    var viewModel: PickChallengeViewModel
-    var content: (PickChallenge) -> Content
+    let viewModel: PickChallengeViewModel
+    let content: (PickChallenge) -> Content
     
     var body: some View {
         #if os(iOS)
@@ -61,7 +63,7 @@ struct PickChallengeBody<Content: View>: View {
         // and even if it worked with horizontal ones, it's just more natural to scroll vertically on mac
         ScrollView(iOS ? .horizontal : .vertical, showsIndicators: iOS ? true : false) {
             ScrollViewReader { value in
-                container {
+                LazyStack(spacing: 0) {
                     ForEach(viewModel.history) { challenge in
                         content(challenge)
                     }
@@ -81,19 +83,6 @@ struct PickChallengeBody<Content: View>: View {
                 }
             }
         }
-    }
-    
-    @ViewBuilder
-    private func container<Container: View>(@ViewBuilder content: () -> Container) -> some View {
-        #if os(iOS)
-        LazyHStack(spacing: 0) {
-            content()
-        }
-        #else
-        LazyVStack(spacing: 0) {
-            content()
-        }
-        #endif
     }
     
     private func resultsScreen() -> some View {

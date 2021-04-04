@@ -14,6 +14,10 @@ import struct Foundation.Published
 import struct Foundation.TimeInterval
 
 
+private struct Constants {
+    static let expectedChallengeWordCount = 10
+}
+
 final class PickChallengeViewModel: ObservableObject {
     
     /** Holds all the challenge that have been completed */
@@ -34,29 +38,28 @@ final class PickChallengeViewModel: ObservableObject {
         }
         self.lexicon = lexicon
         
-        let wordsLearned = Defaults.wordsLearned
+        let knownWords = Defaults.knownWords
         
         // We want to avoid including words that were already deemed as "learned"
         let shuffledForeignWords = lexicon.foreign.nouns.shuffled()
         
-        let unknownWords = shuffledForeignWords.filter { !wordsLearned.contains($0.id) }
-        
         // prefix(10) doesn't crash if there's less than 10 elements in the array
-        var challengeWords = unknownWords.prefix(10)
+        var challengeWords = shuffledForeignWords.filter { !knownWords.contains($0.id) }
+            .prefix(10)
         
         log("Learning: \(challengeWords.map { $0.id }.joined(separator: " "))")
         
         // Handle case when there are less than 10 words left to learn
-        if challengeWords.count < 10 {
-            let knownWords = shuffledForeignWords.filter { wordsLearned.contains($0.id) }
-                .prefix(10 - challengeWords.count)
+        if challengeWords.count < Constants.expectedChallengeWordCount {
+            let extraWords = shuffledForeignWords.filter { knownWords.contains($0.id) }
+                .prefix(Constants.expectedChallengeWordCount - challengeWords.count)
             
-            challengeWords.append(contentsOf: knownWords)
+            challengeWords.append(contentsOf: extraWords)
             
-            log("and rehearsing: \(knownWords.map { $0.id }.joined(separator: " "))")
+            log("and rehearsing: \(extraWords.map { $0.id }.joined(separator: " "))")
         }
         
-        guard challengeWords.count == 10 else {
+        guard challengeWords.count == Constants.expectedChallengeWordCount else {
             fatalError("Invalid number of elements")
         }
         
@@ -217,28 +220,11 @@ final class PickChallengeViewModel: ObservableObject {
             numberFormatter.maximumFractionDigits = 1
             _ = guessHistory.map { print("\($0.key) \($0.value.compactMap { numberFormatter.string(for: $0) }.joined(separator: " "))") }
             
+            let knownWordsBeforeChallenge = Defaults.knownWords
             Defaults.set(guessHistory, forKey: .guessHistory)
+            let knownWordsNow = Defaults.knownWords
             
-            let wordsLearnedBeforeCurrentChallenge: [String] = Defaults.array(forKey: .wordsLearned)
-            var allWordsLearned: [String] = wordsLearnedBeforeCurrentChallenge
-            for (key, value) in guessHistory {
-                let last3 = value.suffix(3).map { TimeInterval($0) }
-                
-                // For a challenge to be considered complete, user needs to get the answer correct on first try
-                // and get the answer correct in less than 10 seconds
-                // TODO: replace 10 seconds with a per user, per challenge value
-                if last3.filter({ $0 != 0 && $0 > 1 && $0 < 10 }).count == 3 {
-                    if !allWordsLearned.contains(key) {
-                        allWordsLearned.append(key)
-                    }
-                }
-            }
-            
-            let diff = allWordsLearned.difference(from: wordsLearnedBeforeCurrentChallenge)
-            
-            wordsLearned = diff
-            
-            Defaults.set(allWordsLearned, forKey: .wordsLearned)
+            wordsLearned = knownWordsNow.filter { !knownWordsBeforeChallenge.contains($0) }
         }
         
         // At this point, we've already appended the `nextChallenge` to the `history` array

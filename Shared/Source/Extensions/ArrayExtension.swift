@@ -23,6 +23,7 @@ extension Array where Element: Hashable {
         return array
     }
     
+    /** Returns elements in `self` that are */
     func difference(from other: [Element]) -> [Element] {
         return Array(Set(self).symmetricDifference(Set(other)))
     }

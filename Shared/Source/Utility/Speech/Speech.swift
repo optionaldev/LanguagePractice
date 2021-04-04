@@ -89,15 +89,15 @@ final class Speech: NSObject, AVSpeechSynthesizerDelegate {
             delegate?.speechEnded()
         }
         
+        #if os(iOS)
         DispatchQueue.global(qos: .userInteractive).async {
-            #if os(iOS)
             do {
                 try AVAudioSession.sharedInstance().setActive(started)
             } catch {
                 log("AVAudioSession.sharedInstance().setActive(started) error = \(error)")
             }
-            #endif
         }
+        #endif
     }
 }
 
