@@ -28,7 +28,7 @@ struct PickChallengeView: View {
     
     // MARK: - Private
     
-    @ObservedObject private var viewModel = PickChallengeViewModel()
+    @ObservedObject private var viewModel = HiraganaPickChallengeViewModel()
     
     private let imageCache = ImageCache()
     private let waveformImage = Image(systemName: "waveform.circle")

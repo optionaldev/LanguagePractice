@@ -38,7 +38,7 @@ private struct Constants {
 
 struct PickChallengeBody<Content: View>: View {
     
-    let viewModel: PickChallengeViewModel
+    let viewModel: HiraganaPickChallengeViewModel
     let content: (PickChallenge) -> Content
     
     var body: some View {

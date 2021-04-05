@@ -11,17 +11,21 @@ struct Hiragana {
 //    let similarLookingCharacters:
     
     static let rows: [HiraganaRow] = [
-        .init(a: "あ", i: "い", u: "う", e: "え", o: "お"),
-        .init(a: "か", i: "き", u: "く", e: "け", o: "こ"),
-        .init(a: "さ", i: "し", u: "す", e: "せ", o: "そ"),
-        .init(a: "た", i: "ち", u: "つ", e: "て", o: "と"),
-        .init(a: "な", i: "に", u: "ぬ", e: "ね", o: "の"),
-        .init(a: "は", i: "ひ", u: "ふ", e: "へ", o: "ほ"),
-        .init(a: "ま", i: "み", u: "む", e: "め", o: "も"),
-        .init(a: "ら", i: "り", u: "る", e: "れ", o: "ろ"),
-        .init(a: "や", i: "　", u: "ゆ", e: "　", o: "よ"),
-        .init(a: "わ", i: "　", u: "　", e: "　", o: "を"),
-        .init(a: "ん", i: "　", u: "　", e: "　", o: "　"),
+        .init(a:  "a", i:  "i",  u:   "u", e:  "e", o:  "o"),
+        .init(a: "ka", i: "ki",  u:  "ku", e: "ke", o: "ko"),
+        .init(a: "sa", i: "shi", u:  "su", e: "se", o: "so"),
+        .init(a: "ta", i: "chi", u: "tsu", e: "te", o: "to"),
+        .init(a: "na", i: "ni",  u:  "nu", e: "ne", o: "no"),
+        .init(a: "ha", i: "hi",  u:  "fu", e: "he", o: "ho"),
+        .init(a: "ma", i: "mi",  u:  "mu", e: "me", o: "mo"),
+        .init(a: "ra", i: "ri",  u:  "ru", e: "re", o: "ro"),
+        .init(a: "ya", i:  nil,  u:  "yu", e:  nil, o: "yo"),
+        .init(a: "wa", i:  nil,  u:   nil, e:  nil, o: "wo"),
+        .init(a: "n",  i:  nil,  u:   nil, e:  nil, o:  nil),
     ]
+    
+    static var all: [ForeignCharacter] {
+        return rows.flatMap { $0.all }
+    }
 }
 #endif

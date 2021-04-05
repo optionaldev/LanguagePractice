@@ -7,18 +7,22 @@
 #if JAPANESE
 struct HiraganaRow {
     
-    let a: JapaneseCharacter
-    let i: JapaneseCharacter
-    let u: JapaneseCharacter
-    let e: JapaneseCharacter
-    let o: JapaneseCharacter
+    let a: ForeignCharacter?
+    let i: ForeignCharacter?
+    let u: ForeignCharacter?
+    let e: ForeignCharacter?
+    let o: ForeignCharacter?
     
-    init(a: String, i: String, u: String, e: String, o: String) {
-        self.a = .init(a)
-        self.i = .init(i)
-        self.u = .init(u)
-        self.e = .init(e)
-        self.o = .init(o)
+    init(a: String?, i: String?, u: String?, e: String?, o: String?) {
+        self.a = ForeignCharacter.init(a) ?? nil
+        self.i = ForeignCharacter.init(i) ?? nil
+        self.u = ForeignCharacter.init(u) ?? nil
+        self.e = ForeignCharacter.init(e) ?? nil
+        self.o = ForeignCharacter.init(o) ?? nil
+    }
+    
+    var all: [ForeignCharacter] {
+        return [a, i, u, e, o].compactMap { $0 }
     }
 }
 #endif

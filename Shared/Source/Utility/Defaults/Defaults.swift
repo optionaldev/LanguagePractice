@@ -23,12 +23,29 @@ final class Defaults: DefaultsCodingProtocol, DefaultsArrayProtocol, DefaultsDic
         return nil
     }
     
-    static var guessHistory:[String: [TimeInterval]] {
-        return Defaults.dictionary(forKey: .guessHistory)
+    #if JAPANESE
+    static var hiraganaGuessHistory: [String: [TimeInterval]] {
+        return Defaults.dictionary(forKey: .hiraganaGuessHistory)
+    }
+    
+    static var knownHiragana: [ForeignCharacter] {
+        return hiraganaGuessHistory.known().compactMap { ForeignCharacter($0) } 
+    }
+    #endif
+    
+    static var wordGuessHistory: [String: [TimeInterval]] {
+        return Defaults.dictionary(forKey: .wordGuessHistory)
     }
     
     static var knownWords: [String] {
-        return guessHistory.filter {
+        return wordGuessHistory.known()
+    }
+}
+
+private extension Dictionary where Key == String, Value == [TimeInterval] {
+    
+    func known() -> [String] {
+        self.filter {
             // We take the last 3 values and if they're all below our success threshold
             // the word is considered to be known
             $0.value.suffix(3).filter {

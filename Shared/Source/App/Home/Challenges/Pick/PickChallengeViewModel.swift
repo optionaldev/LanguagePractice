@@ -14,10 +14,6 @@ import struct Foundation.Published
 import struct Foundation.TimeInterval
 
 
-private struct Constants {
-    static let expectedChallengeWordCount = 10
-}
-
 final class PickChallengeViewModel: ObservableObject {
     
     /** Holds all the challenge that have been completed */
@@ -50,16 +46,16 @@ final class PickChallengeViewModel: ObservableObject {
         log("Learning: \(challengeWords.map { $0.id }.joined(separator: " "))")
         
         // Handle case when there are less than 10 words left to learn
-        if challengeWords.count < Constants.expectedChallengeWordCount {
+        if challengeWords.count < AppConstants.challengeInitialSampleSize {
             let extraWords = shuffledForeignWords.filter { knownWords.contains($0.id) }
-                .prefix(Constants.expectedChallengeWordCount - challengeWords.count)
+                .prefix(AppConstants.challengeInitialSampleSize - challengeWords.count)
             
             challengeWords.append(contentsOf: extraWords)
             
             log("and rehearsing: \(extraWords.map { $0.id }.joined(separator: " "))")
         }
         
-        guard challengeWords.count == Constants.expectedChallengeWordCount else {
+        guard challengeWords.count == AppConstants.challengeInitialSampleSize else {
             fatalError("Invalid number of elements")
         }
         
@@ -190,7 +186,7 @@ final class PickChallengeViewModel: ObservableObject {
             history.append(nextChallenge)
         } else {
             // Challenge finished!
-            var guessHistory: [String: [TimeInterval]] = Defaults.guessHistory
+            var guessHistory = Defaults.wordGuessHistory
             for entry in history {
                 // History is recorded based on the foreign word ID, because that's what is being learned
                 let id: String
@@ -221,7 +217,7 @@ final class PickChallengeViewModel: ObservableObject {
             _ = guessHistory.map { print("\($0.key) \($0.value.compactMap { numberFormatter.string(for: $0) }.joined(separator: " "))") }
             
             let knownWordsBeforeChallenge = Defaults.knownWords
-            Defaults.set(guessHistory, forKey: .guessHistory)
+            Defaults.set(guessHistory, forKey: .wordGuessHistory)
             let knownWordsNow = Defaults.knownWords
             
             wordsLearned = knownWordsNow.filter { !knownWordsBeforeChallenge.contains($0) }
@@ -339,17 +335,17 @@ final class PickChallengeViewModel: ObservableObject {
         case .text(let language):
             switch language {
             case .english:
-                outputTypePossibilities = [.voice(.foreign), .text(.foreign)]
+                outputTypePossibilities = [.text(.foreign), .voice(.foreign)]
                 
             case .foreign:
-                outputTypePossibilities = [.image, .text(.english)]
+                outputTypePossibilities = [.text(.english), .image]
             }
         case .voice(let language):
             switch language {
             case .english:
-                outputTypePossibilities = [.voice(.foreign), .text(.foreign)]
+                outputTypePossibilities = [.text(.foreign), .voice(.foreign)]
             case .foreign:
-                outputTypePossibilities = [.image, .text(.english) /*TODO: draw kanji ?*/]
+                outputTypePossibilities = [.text(.english), .image /*TODO: draw kanji ?*/]
             }
         case .image:
             outputTypePossibilities = [.text(.foreign), .voice(.foreign)]
