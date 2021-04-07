@@ -15,7 +15,9 @@ import struct Foundation.Published
 import struct Foundation.TimeInterval
 
 
-final class HiraganaPickChallengeViewModel: ObservableObject {
+final class HiraganaPickChallengeViewModel: ViewModelProtocol {
+    
+    typealias Entry = HiraganaEntry
     
     /** Holds all the challenge that have been completed */
     @Published private(set) var history: [PickChallenge] = []
@@ -58,9 +60,9 @@ final class HiraganaPickChallengeViewModel: ObservableObject {
         
         // Method is declared here to be able to have a fully known 'challengeEntries' as a constant
         func extract(_ foreignCharacter: ForeignCharacter) -> [Entry] {
-            
-            return [Entry(from: .english, to: .foreign, input: foreignCharacter.roman, output: foreignCharacter.hiragana),
-                    Entry(from: .foreign, to: .english, input: foreignCharacter.hiragana, output: foreignCharacter.roman)]
+            return [HiraganaEntry.foreign(id: foreignCharacter.roman),
+                    HiraganaEntry.foreignToRoman(foreignCharacter.roman),
+                    HiraganaEntry.romanToForeign(foreignCharacter.roman)]
         }
         
         challengeEntries = challengeHiragana.flatMap { extract($0) }.shuffled()
@@ -132,27 +134,11 @@ final class HiraganaPickChallengeViewModel: ObservableObject {
         let outputType = generateOutputType(for: nextEntry, inputType: inputType)
         var output     = generateOutput(for: nextEntry, outputType: outputType)
         
-        let answerOutput: String
-        // Handle the case where output is already kana in nextEntry for simplified case
-        switch nextEntry.to {
-        case .english:
-            guard let english = nextEntry.english else {
-                fatalError("English output without english translation?")
-            }
-            log("answerOutput is english")
-            answerOutput = english
-        case .foreign:
-            guard let foreign = ForeignCharacter(nextEntry.foreign)?.hiragana else {
-                fatalError("Foreign output without convertible characters?")
-            }
-            log("answerOutput is foreign")
-            answerOutput = foreign
-        }
-        output.append(answerOutput)
+        output.append(nextEntry.output)
         output.shuffle()
         
         let outputRep = generateOutputRep(outputType: outputType, output: output)
-        let correctAnswerIndex = output.firstIndex(of: answerOutput)!
+        let correctAnswerIndex = output.firstIndex(of: nextEntry.output)!
         
         nextChallenge = PickChallenge(inputType: inputType,
                                       input: input,
@@ -264,14 +250,7 @@ final class HiraganaPickChallengeViewModel: ObservableObject {
     }
     
     private func generateInput(for entry: Entry, inputType: ChallengeType) -> String {
-        if inputType == .text(.english) {
-            guard let english = entry.english else {
-                fatalError("Expected english for this type of challenge")
-            }
-            return english
-        } else {
-            return entry.foreign
-        }
+        return entry.input
     }
     
     private func generateInputRep(for entry: Entry, inputType: ChallengeType, input: String) -> Rep {
@@ -323,7 +302,7 @@ final class HiraganaPickChallengeViewModel: ObservableObject {
         
         var result: [String]
         // Get a list of challenge
-        let otherSameTypeChallengeEntries = challengeEntries.filter { $0.type == entry.type &&
+        let otherSameTypeChallengeEntries = challengeEntries.filter { $0.sameType(as: entry) &&
                                                                       $0 != entry }
         
         switch outputType {
@@ -339,7 +318,7 @@ final class HiraganaPickChallengeViewModel: ObservableObject {
             case .english:
                 fatalError("We don't want to read \"a\" with english voice")
             case .foreign:
-                result = otherSameTypeChallengeEntries.map { $0.foreign }
+                result = otherSameTypeChallengeEntries.map { $0.output }
                     .compactMap { ForeignCharacter($0)?.hiragana }
             }
         case .image, .simplified:

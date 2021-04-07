@@ -33,3 +33,116 @@ struct Entry: Equatable {
         }
     }
 }
+
+protocol EntryProtocol: Equatable, Identifiable {
+    
+    var inputLanguage: Language { get }
+    var outputLanguage: Language { get }
+    
+    var input: String { get }
+    var output: String { get }
+    
+    /// We're always learned some word or characters and this is how we identify it
+    var foreignID: String { get }
+    
+    func sameType(as other: Self) -> Bool
+}
+
+enum HiraganaEntry: EntryProtocol {
+    
+    case foreign(id: String)
+    case romanToForeign(_ id: String)
+    case foreignToRoman(_ id: String)
+    
+    // MARK: - Equatable conformance
+    
+    static func == (lhs: HiraganaEntry, rhs: HiraganaEntry) -> Bool {
+        if case .foreign(let lhsID) = lhs,
+           case .foreign(let rhsID) = rhs {
+            return lhsID == rhsID
+        } else if case .romanToForeign(let lhsID) = lhs,
+                  case .romanToForeign(let rhsID) = rhs {
+            return lhsID == rhsID
+        } else if case .foreignToRoman(let lhsID) = lhs,
+                  case .foreignToRoman(let rhsID) = rhs {
+            return lhsID == rhsID
+        }
+        return false
+    }
+    
+    // MARK: - Identifiable conformance
+    
+    var id: String {
+        switch self {
+        case .foreign(let id):
+            return "foreign\(id)"
+        case .romanToForeign(let id):
+            return "romanToForeign\(id)"
+        case .foreignToRoman(let id):
+            return "romanToForeign\(id)"
+        }
+    }
+    
+    // MARK: - EntryProtocol conformance
+    
+    var input: String {
+        switch self {
+        case .foreign(let id):
+            return id.toHiragana()
+        case .romanToForeign(let id):
+            return id.removingDigits()
+        case .foreignToRoman(let id):
+            return id.toHiragana()
+        }
+    }
+    
+    var output: String {
+        switch self {
+        case .foreign(let id):
+            return id.toHiragana()
+        case .romanToForeign(let id):
+            return id.toHiragana()
+        case .foreignToRoman(let id):
+            return id.removingDigits()
+        }
+    }
+    
+    var inputLanguage: Language {
+        return .foreign
+    }
+    
+    var outputLanguage: Language {
+        return .foreign
+    }
+    
+    var foreignID: String {
+        switch self {
+        case .foreign(let id):
+            return id
+        case .romanToForeign(let id):
+            return id
+        case .foreignToRoman(let id):
+            return id
+        }
+    }
+    
+    func sameType(as other: Self) -> Bool {
+        if case .foreign = self,
+           case .foreign = other {
+            return true
+        } else if case .romanToForeign = self,
+                  case .romanToForeign = other {
+            return true
+        } else if case .foreignToRoman = self,
+                  case .foreignToRoman = other {
+            return true
+        }
+        return false
+    }
+}
+
+struct ChallengeComponent {
+    
+    let language: Language
+    let id: String
+}
