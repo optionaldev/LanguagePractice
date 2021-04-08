@@ -1,8 +1,9 @@
 //
 // The LanguagePractice project.
-// Created by optionaldev on 19/03/2021.
+// Created by optionaldev on 06/04/2021.
 // Copyright © 2021 optionaldev. All rights reserved.
-//
+// 
+
 
 import func SwiftUI.withAnimation
 
@@ -36,9 +37,9 @@ private struct Constants {
     static let resultsID = "results_screen"
 }
 
-struct PickChallengeBody<Content: View>: View {
+struct GenericPickChallengeBody<ViewModel: ViewModelProtocol, Content: View>: View {
     
-    let viewModel: PickChallengeViewModel
+    let viewModel: ViewModel
     let content: (PickChallenge) -> Content
     
     var body: some View {

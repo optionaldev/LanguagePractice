@@ -6,7 +6,9 @@
 
 protocol ViewModelProtocol: ObservableObject {
 
-    init()
+    associatedtype Entry = EntryProtocol
+    
+    init(entries: [Entry])
     
     var history: [PickChallenge] { get }
     var wordsLearned: [String] { get }
@@ -18,14 +20,14 @@ protocol ViewModelProtocol: ObservableObject {
 struct GenericPickChallengeView<ViewModel: ViewModelProtocol>: View {
     
     var body: some View {
-        PickChallengeBody(viewModel: viewModel) { challenge in
+        GenericPickChallengeBody(viewModel: viewModel) { challenge in
             challengeView(challenge: challenge)
         }
     }
     
     // MARK: - Private
     
-    @ObservedObject private var viewModel = ViewModel()
+    @ObservedObject var viewModel: ViewModel
     
     private let imageCache = ImageCache()
     private let waveformImage = Image(systemName: "waveform.circle")

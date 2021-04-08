@@ -46,6 +46,29 @@ protocol EntryProtocol: Equatable, Identifiable {
     var foreignID: String { get }
     
     func sameType(as other: Self) -> Bool
+    
+    var noImage: Bool { get }
+    
+    var english: String? { get }
+}
+
+extension EntryProtocol {
+    
+    var noImage: Bool {
+        if let english = english {
+            return Persistence.imagePath(id: english) == nil
+        }
+        return false
+    }
+    
+    var english: String? {
+        if inputLanguage == .english {
+            return input
+        } else if outputLanguage == .english {
+            return output
+        }
+        return nil
+    }
 }
 
 enum HiraganaEntry: EntryProtocol {
@@ -53,6 +76,18 @@ enum HiraganaEntry: EntryProtocol {
     case foreign(id: String)
     case romanToForeign(_ id: String)
     case foreignToRoman(_ id: String)
+    
+    init(from: Language, _ input: String, to: Language?, _ output: String?) {
+        if to != nil {
+            if from == .english {
+                self = .romanToForeign(input)
+            } else {
+                self = .foreignToRoman(input)
+            }
+        } else {
+            self = .foreign(id: input)
+        }
+    }
     
     // MARK: - Equatable conformance
     
