@@ -42,6 +42,9 @@ protocol EntryProtocol: Equatable, Identifiable {
     var input: String { get }
     var output: String { get }
     
+    var inputPossibilities: [ChallengeType] { get}
+    var outputPossibilities: [ChallengeType] { get }
+    
     /// We're always learned some word or characters and this is how we identify it
     var foreignID: String { get }
     
@@ -148,6 +151,28 @@ enum HiraganaEntry: EntryProtocol {
     
     var outputLanguage: Language {
         return .foreign
+    }
+    
+    var inputPossibilities: [ChallengeType] {
+        switch self {
+        case .foreign:
+            return [.text(.foreign), .voice(.foreign)]
+        case .romanToForeign:
+            return [.text(.english)]
+        case .foreignToRoman:
+            return [.text(.foreign), .voice(.foreign)]
+        }
+    }
+    
+    var outputPossibilities: [ChallengeType] {
+        switch self {
+        case .foreign:
+            return [.text(.foreign), .voice(.foreign)]
+        case .romanToForeign:
+            return [.text(.foreign), .voice(.foreign)]
+        case .foreignToRoman:
+            return [.text(.english)]
+        }
     }
     
     var foreignID: String {
