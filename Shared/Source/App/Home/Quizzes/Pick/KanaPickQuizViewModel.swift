@@ -11,7 +11,7 @@ import struct Foundation.Date
 import struct Foundation.Published
 
 
-final class KanaPickChallengeViewModel<EntryType: EntryProtocol>: ViewModelProtocol {
+final class KanaPickQuizViewModel<EntryType: EntryProtocol>: ViewModelProtocol {
     
     /** Holds all the challenge that have been completed */
     @Published private(set) var history: [PickChallenge] = []

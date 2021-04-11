@@ -14,7 +14,7 @@ import struct Foundation.Published
 import struct Foundation.TimeInterval
 
 
-final class PickChallengeViewModel: ObservableObject {
+final class PickQuizViewModel: ObservableObject {
     
     /** Holds all the challenge that have been completed */
     @Published private(set) var history: [PickChallenge] = []

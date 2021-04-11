@@ -74,7 +74,7 @@ extension EntryProtocol {
     }
 }
 
-enum HiraganaEntry: EntryProtocol {
+enum KanaEntry: EntryProtocol {
     
     case foreign(id: String)
     case romanToForeign(_ id: String)
@@ -94,7 +94,7 @@ enum HiraganaEntry: EntryProtocol {
     
     // MARK: - Equatable conformance
     
-    static func == (lhs: HiraganaEntry, rhs: HiraganaEntry) -> Bool {
+    static func == (lhs: Self, rhs: Self) -> Bool {
         if case .foreign(let lhsID) = lhs,
            case .foreign(let rhsID) = rhs {
             return lhsID == rhsID

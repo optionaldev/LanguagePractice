@@ -17,10 +17,10 @@ protocol ViewModelProtocol: ObservableObject {
     func chose(index: Int)
 }
 
-struct GenericPickChallengeView<ViewModel: ViewModelProtocol>: View {
+struct GenericPickQuizView<ViewModel: ViewModelProtocol>: View {
     
     var body: some View {
-        GenericPickChallengeBody(viewModel: viewModel) { challenge in
+        GenericPickQuizBody(viewModel: viewModel) { challenge in
             challengeView(challenge: challenge)
         }
     }

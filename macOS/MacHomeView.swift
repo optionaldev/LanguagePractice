@@ -19,7 +19,7 @@ struct MacHomeView: View {
     @ViewBuilder
     var body: some View {
         if showPick {
-            GenericPickChallengeView(viewModel: KanaPickChallengeViewModel(entries: HiraganaEntryProvider.generate()))
+            GenericPickQuizView(viewModel: KanaPickQuizViewModel(entries: HiraganaEntryProvider.generate()))
 //            PickChallengeView()
         } else {
             homeView()

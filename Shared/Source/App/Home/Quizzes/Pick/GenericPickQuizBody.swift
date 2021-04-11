@@ -37,7 +37,7 @@ private struct Constants {
     static let resultsID = "results_screen"
 }
 
-struct GenericPickChallengeBody<ViewModel: ViewModelProtocol, Content: View>: View {
+struct GenericPickQuizBody<ViewModel: ViewModelProtocol, Content: View>: View {
     
     let viewModel: ViewModel
     let content: (PickChallenge) -> Content

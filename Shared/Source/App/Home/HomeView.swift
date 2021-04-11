@@ -30,7 +30,7 @@ struct HomeView: View {
         NavigationView {
             NavigationLink("Pick", destination: NavigationLazyView(PickChallengeView()))
                 .navigationBarHidden(true)
-            NavigationLink("Hiragana", destination: NavigationLazyView(PickChallengeView()))
+            NavigationLink("Hiragana", destination: NavigationLazyView(GenericPickQuizView(viewModel: KanaPickQuizViewModel(entries: HiraganaEntryProvider.generate())) ))
                 .navigationBarHidden(true)
         }
         #else

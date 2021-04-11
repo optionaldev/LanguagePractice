@@ -29,7 +29,7 @@ final class HomeViewModel: ObservableObject {
         }
     }
     
-    // TODO: Challenge such as pick challenge should initially be disabled
+    // TODO: Quizzes such as the word pick quiz should initially be disabled
     // Once we get the lexicon, the button becomes enabled
     @Published var lexiconExists: Bool
     

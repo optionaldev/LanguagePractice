@@ -6,18 +6,19 @@
 
 import struct Foundation.TimeInterval
 
+private struct Constants {
+    static let incorrectGuessStoreValue: TimeInterval = -1
+}
+
 enum PickChallengeState: Hashable, Codable {
     
-    case regular
     case guessedIncorrectly
     case finished(_ time: TimeInterval)
     
     var storeValue: TimeInterval {
         switch self {
-        case .regular:
-            return -1
         case .guessedIncorrectly:
-            return -2
+            return -1
         case .finished(let interval):
             return interval
         }
@@ -30,10 +31,8 @@ enum PickChallengeState: Hashable, Codable {
         
         let value = try container.decode(TimeInterval.self)
         
-        if value == -2 {
+        if value == Constants.incorrectGuessStoreValue {
             self = .guessedIncorrectly
-        } else if value == -1 {
-            self = .regular
         } else {
             self = .finished(value)
         }

@@ -6,7 +6,7 @@
 
 struct HiraganaEntryProvider {
     
-    static func generate() -> [HiraganaEntry] {
+    static func generate() -> [KanaEntry] {
         
         let knownHiragana = Defaults.knownHiragana
         
@@ -33,13 +33,15 @@ struct HiraganaEntryProvider {
             fatalError("Invalid number of elements")
         }
         
-        // Method is declared here to be able to have a fully known 'challengeEntries' as a constant
-        func extract(_ foreignCharacter: ForeignCharacter) -> [HiraganaEntry] {
-            return [.foreign(id: foreignCharacter.roman),
-                    .foreignToRoman(foreignCharacter.roman),
-                    .romanToForeign(foreignCharacter.roman)]
-        }
-        
         return challengeHiragana.flatMap { extract($0) }.shuffled()
+    }
+    
+    // MARK: - Private
+    
+    // Method is declared here to be able to have a fully known 'challengeEntries' as a constant
+    private static func extract(_ foreignCharacter: ForeignCharacter) -> [KanaEntry] {
+        return [.foreign(id: foreignCharacter.roman),
+                .foreignToRoman(foreignCharacter.roman),
+                .romanToForeign(foreignCharacter.roman)]
     }
 }

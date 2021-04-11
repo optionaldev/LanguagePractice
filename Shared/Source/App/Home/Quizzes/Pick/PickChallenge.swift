@@ -13,7 +13,7 @@ struct PickChallenge: ChallengeProtocol, Identifiable, Equatable {
     let output: [String]
     let correctAnswerIndex: Int
     
-    var state: PickChallengeState = .regular
+    var state: PickChallengeState?
     
     enum CodingKeys: String, CodingKey {
         

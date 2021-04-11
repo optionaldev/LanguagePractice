@@ -36,9 +36,9 @@ private struct Constants {
     static let resultsID = "results_screen"
 }
 
-struct PickChallengeBody<Content: View>: View {
+struct PickQuizBody<Content: View>: View {
     
-    let viewModel: PickChallengeViewModel
+    let viewModel: PickQuizViewModel
     let content: (PickChallenge) -> Content
     
     var body: some View {

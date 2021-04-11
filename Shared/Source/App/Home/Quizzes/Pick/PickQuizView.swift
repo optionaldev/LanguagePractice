@@ -18,17 +18,17 @@ import struct SwiftUI.VStack
 import struct SwiftUI.ViewBuilder
 
 
-struct PickChallengeView: View {
+struct PickQuizView: View {
     
     var body: some View {
-        PickChallengeBody(viewModel: viewModel) { challenge in
+        PickQuizBody(viewModel: viewModel) { challenge in
             challengeView(challenge: challenge)
         }
     }
     
     // MARK: - Private
     
-    @ObservedObject private var viewModel = PickChallengeViewModel()
+    @ObservedObject private var viewModel = PickQuizViewModel()
     
     private let imageCache = ImageCache()
     private let waveformImage = Image(systemName: "waveform.circle")
