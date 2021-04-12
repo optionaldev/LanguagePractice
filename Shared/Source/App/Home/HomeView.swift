@@ -28,7 +28,7 @@ struct HomeView: View {
     var body: some View {
         #if os(iOS)
         NavigationView {
-            NavigationLink("Pick", destination: NavigationLazyView(PickChallengeView()))
+            NavigationLink("Pick", destination: NavigationLazyView(PickQuizView()))
                 .navigationBarHidden(true)
             NavigationLink("Hiragana", destination: NavigationLazyView(GenericPickQuizView(viewModel: KanaPickQuizViewModel(entries: HiraganaEntryProvider.generate())) ))
                 .navigationBarHidden(true)

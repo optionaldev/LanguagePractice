@@ -200,9 +200,3 @@ enum KanaEntry: EntryProtocol {
         return false
     }
 }
-
-struct ChallengeComponent {
-    
-    let language: Language
-    let id: String
-}

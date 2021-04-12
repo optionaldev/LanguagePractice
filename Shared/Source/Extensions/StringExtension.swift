@@ -20,6 +20,15 @@ extension String {
         return hiragana
     }
     
+    func toKatakana() -> String {
+        guard let katakana = applyingTransform(.latinToKatakana, reverse: false) else {
+            log("Found string that couldn't be converted to hiragana = \"\(self)\"")
+            return self
+        }
+        
+        return katakana
+    }
+    
     var containsKanji: Bool {
         return first(where: { !$0.isHiragana }) != nil
     }

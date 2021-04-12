@@ -19,5 +19,6 @@ enum DefaultsArrayKey: String, CodingStorable {
 enum DefaultsDictionaryKey: String, CodingStorable {
     
     case hiraganaGuessHistory
+    case katakanaGuessHistory
     case wordGuessHistory
 }

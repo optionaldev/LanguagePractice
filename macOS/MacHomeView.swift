@@ -7,20 +7,25 @@
 import protocol SwiftUI.View
 
 import struct SwiftUI.Button
+import struct SwiftUI.ForEach
+import struct SwiftUI.List
 import struct SwiftUI.State
-import struct SwiftUI.ViewBuilder
 import struct SwiftUI.Text
-import struct SwiftUI.ZStack
-
-import func SwiftUI.withAnimation
+import struct SwiftUI.ViewBuilder
 
 struct MacHomeView: View {
     
     @ViewBuilder
     var body: some View {
-        if showPick {
-            GenericPickQuizView(viewModel: KanaPickQuizViewModel(entries: HiraganaEntryProvider.generate()))
-//            PickChallengeView()
+        if let quiz = currentQuiz {
+            switch quiz {
+            case .hiragana:
+                GenericPickQuizView(viewModel: KanaPickQuizViewModel(entries: EntryProvider.generate(.hiragana)))
+            case .katakana:
+                GenericPickQuizView(viewModel: KanaPickQuizViewModel(entries: EntryProvider.generate(.katakana)))
+            case .words:
+                PickQuizView()
+            }
         } else {
             homeView()
         }
@@ -28,13 +33,17 @@ struct MacHomeView: View {
     
     // MARK: - Private
     
-    @State private var showPick = false
+    @State private var currentQuiz: HomeQuiz?
     
     private func homeView() -> some View {
-        Button(action: {
-            showPick = true
-        }, label: {
-            Text("Pick")
-        })
+        List {
+            ForEach(HomeQuiz.allCases) { quiz in
+                Button(action: {
+                    currentQuiz = quiz
+                }, label: {
+                    Text(quiz.title)
+                })
+            }
+        }
     }
 }
