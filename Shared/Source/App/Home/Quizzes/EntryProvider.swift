@@ -12,7 +12,32 @@ enum EntryType {
 
 struct EntryProvider {
     
-    static func generate(_ type: EntryType) -> [KanaEntry] {
+    // TODO: Find a way to make it generic
+    static func generateHiragana() -> [HiraganaEntry] {
+        return generate(.hiragana).flatMap { extractHiragana(from: $0) }.shuffled()
+    }
+    
+    static func generateKatakana() -> [KatakanaEntry] {
+        return generate(.hiragana).flatMap { extractKatakana(from: $0) }.shuffled()
+    }
+    
+    // MARK: - Private
+    
+    private static func extractHiragana(from foreignCharacter: ForeignCharacter) -> [HiraganaEntry] {
+        let id = foreignCharacter.roman
+        return [HiraganaEntry(id: id, kanaChallengeType: .foreign),
+                HiraganaEntry(id: id, kanaChallengeType: .foreignToRoman),
+                HiraganaEntry(id: id, kanaChallengeType: .romanToForeign)]
+    }
+    
+    private static func extractKatakana(from foreignCharacter: ForeignCharacter) -> [KatakanaEntry] {
+        let id = foreignCharacter.roman
+        return [KatakanaEntry(id: id, kanaChallengeType: .foreign),
+                KatakanaEntry(id: id, kanaChallengeType: .foreignToRoman),
+                KatakanaEntry(id: id, kanaChallengeType: .romanToForeign)]
+    }
+    
+    private static func generate(_ type: EntryType) -> [ForeignCharacter] {
         
         let knownEntries: [ForeignCharacter]
         var challengeEntries: [ForeignCharacter]
@@ -30,8 +55,6 @@ struct EntryProvider {
             .shuffled()
             .prefix(AppConstants.challengeInitialSampleSize))
         
-        log("Learning: \(challengeEntries.map { $0.hiragana }.joined(separator: ", "))")
-        
         
         // Handle case when there are less than 10 words left to learn
         if challengeEntries.count < AppConstants.challengeInitialSampleSize {
@@ -39,22 +62,12 @@ struct EntryProvider {
                 .prefix(AppConstants.challengeInitialSampleSize - challengeEntries.count)
             
             challengeEntries.append(contentsOf: extraHiragana)
-            
-            log("and rehearsing: \(extraHiragana.map { $0.hiragana }.joined(separator: " "))")
         }
         
         guard challengeEntries.count == AppConstants.challengeInitialSampleSize else {
             fatalError("Invalid number of elements")
         }
         
-        return challengeEntries.flatMap { extract($0) }.shuffled()
-    }
-    
-    // MARK: - Private
-    
-    private static func extract(_ foreignCharacter: ForeignCharacter) -> [KanaEntry] {
-        return [.foreign(id: foreignCharacter.roman),
-                .foreignToRoman(foreignCharacter.roman),
-                .romanToForeign(foreignCharacter.roman)]
+        return challengeEntries
     }
 }

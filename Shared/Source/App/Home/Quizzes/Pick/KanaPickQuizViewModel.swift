@@ -203,18 +203,15 @@ final class KanaPickQuizViewModel<EntryType: EntryProtocol>: ViewModelProtocol {
     }
     
     private func generateInputRep(for entry: EntryType, inputType: ChallengeType, input: String) -> Rep {
-        if inputType == .text(.english) {
-            return .simpleText(.init(text: entry.input, language: .english))
-        } else {
-            guard let hiragana = ForeignCharacter(entry.input)?.hiragana else {
-                fatalError("Tried to convert \(entry.input) to hiragana and failed")
-            }
-            
-            if inputType == .text(.foreign) {
-                return .simpleText(.init(text: hiragana, language: .foreign))
-            } else {
-                return .voice(.init(text: hiragana, language: .foreign))
-            }
+        switch inputType {
+        case .simplified:
+            return .simpleText(.init(text: entry.input, language: .foreign))
+        case .text(let language):
+            return .simpleText(.init(text: entry.input, language: language))
+        case .voice:
+            return .voice(.init(text: entry.input, language: .foreign))
+        case .image:
+            fatalError("Images no bueno in this type of challenge")
         }
     }
     
