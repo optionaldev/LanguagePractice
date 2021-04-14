@@ -114,6 +114,8 @@
 		6EE81CDF25D89EAB00667CE5 /* EnglishNoun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CDD25D89EAB00667CE5 /* EnglishNoun.swift */; };
 		6EE81CE525D89EC000667CE5 /* EnglishWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CE425D89EC000667CE5 /* EnglishWord.swift */; };
 		6EE81CE625D89EC000667CE5 /* EnglishWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81CE425D89EC000667CE5 /* EnglishWord.swift */; };
+		6EEAA8A826277980007DF1BA /* FontSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EEAA8A726277980007DF1BA /* FontSelectionViewModel.swift */; };
+		6EEAA8AD2627799B007DF1BA /* FontSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EEAA8A726277980007DF1BA /* FontSelectionViewModel.swift */; };
 		6EEAF94A260B2EE4005EE9CC /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EEAF949260B2EE4005EE9CC /* ImageExtension.swift */; };
 		6EEAF94B260B2EE4005EE9CC /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EEAF949260B2EE4005EE9CC /* ImageExtension.swift */; };
 		6EF4E3E025D4A47A00CDCC40 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF4E3DF25D4A47A00CDCC40 /* AppConstants.swift */; };
@@ -213,6 +215,7 @@
 		6EE81CD625D89E9300667CE5 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		6EE81CDD25D89EAB00667CE5 /* EnglishNoun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishNoun.swift; sourceTree = "<group>"; };
 		6EE81CE425D89EC000667CE5 /* EnglishWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishWord.swift; sourceTree = "<group>"; };
+		6EEAA8A726277980007DF1BA /* FontSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSelectionViewModel.swift; sourceTree = "<group>"; };
 		6EEAF949260B2EE4005EE9CC /* ImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
 		6EF4E3DF25D4A47A00CDCC40 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		6EF4E3E625D4A48D00CDCC40 /* Hiragana.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hiragana.swift; sourceTree = "<group>"; };
@@ -470,6 +473,7 @@
 			children = (
 				6E675E6325CEFE1A002D8D98 /* LanguagePracticeApp.swift */,
 				6E5D632D25EEFD0F0062E564 /* Home */,
+				6EEAA8A526277964007DF1BA /* Settings */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -503,6 +507,22 @@
 				6EE81CCF25D89E7F00667CE5 /* ForeignWord.swift */,
 			);
 			path = Foreign;
+			sourceTree = "<group>";
+		};
+		6EEAA8A526277964007DF1BA /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				6EEAA8A62627796F007DF1BA /* Font */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		6EEAA8A62627796F007DF1BA /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				6EEAA8A726277980007DF1BA /* FontSelectionViewModel.swift */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 		6EF4E3DE25D4A46B00CDCC40 /* Constants */ = {
@@ -733,6 +753,7 @@
 				6E8C0DC925D34E6B006C399E /* Language.swift in Sources */,
 				6E24753525E867A900AC64B9 /* LexiconRequest.swift in Sources */,
 				6E14EB9925F61412008800C6 /* NavigationLazyView.swift in Sources */,
+				6EEAA8A826277980007DF1BA /* FontSelectionViewModel.swift in Sources */,
 				6E07D52725D9751D00310B17 /* Defaults.swift in Sources */,
 				6EE81CD025D89E7F00667CE5 /* ForeignWord.swift in Sources */,
 				6EF4E3E025D4A47A00CDCC40 /* AppConstants.swift in Sources */,
@@ -763,6 +784,7 @@
 				6E07D54C25D9774800310B17 /* Storable.swift in Sources */,
 				6E5D631525EEFB4E0062E564 /* HomeView.swift in Sources */,
 				6E522F3C25F4079D00DA229C /* Persistence.swift in Sources */,
+				6EEAA8AD2627799B007DF1BA /* FontSelectionViewModel.swift in Sources */,
 				6EEAF94B260B2EE4005EE9CC /* ImageExtension.swift in Sources */,
 				6E14EB9325F612B9008800C6 /* PickQuizViewModel.swift in Sources */,
 				6EB3818125D5D5DA00114B83 /* Speech.swift in Sources */,

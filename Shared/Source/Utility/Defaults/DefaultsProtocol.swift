@@ -141,3 +141,26 @@ extension DefaultsDictionaryProtocol {
     }
 }
 
+// MARK: - Strings
+
+protocol DefaultsStringProtocol: DefaultsProtocol {
+
+    associatedtype StringKeyType: CodingStorable
+
+    static func string(forKey key: StringKeyType) -> String?
+    static func set(_ string: String?, forKey key: StringKeyType)
+}
+
+extension DefaultsStringProtocol {
+    
+    static func string(forKey key: StringKeyType) -> String? {
+        guard let string = defaults.string(forKey: key.storeValue) else {
+            return nil
+        }
+        return string
+    }
+    
+    static func set(_ string: String?, forKey key: StringKeyType) {
+        defaults.set(string, forKey: key.storeValue)
+    }
+}

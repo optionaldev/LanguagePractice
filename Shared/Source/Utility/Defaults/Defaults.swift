@@ -6,11 +6,15 @@
 
 import struct Foundation.TimeInterval
 
-final class Defaults: DefaultsCodingProtocol, DefaultsArrayProtocol, DefaultsDictionaryProtocol {
+final class Defaults: DefaultsCodingProtocol,
+                      DefaultsArrayProtocol,
+                      DefaultsDictionaryProtocol,
+                      DefaultsStringProtocol {
     
-    typealias ArrayKeyType = DefaultsArrayKey
-    typealias DecodeKeyType = DefaultsCodingKey
+    typealias ArrayKeyType      = DefaultsArrayKey
+    typealias DecodeKeyType     = DefaultsCodingKey
     typealias DictionaryKeyType = DefaultsDictionaryKey
+    typealias StringKeyType     = DefaultsStringKey
     
     static var lexicon: Lexicon? {
         let english: EnglishLexicon? = Defaults.decodable(forKey: .englishLexicon)

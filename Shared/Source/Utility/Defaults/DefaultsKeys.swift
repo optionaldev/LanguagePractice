@@ -22,3 +22,8 @@ enum DefaultsDictionaryKey: String, CodingStorable {
     case katakanaGuessHistory
     case wordGuessHistory
 }
+
+enum DefaultsStringKey: String, CodingStorable {
+    
+    case kanjiFontName
+}
