@@ -21,6 +21,17 @@ enum HomeQuiz: String, CaseIterable, Identifiable {
         }
     }
     
+    var dictionaryID: DefaultsDictionaryKey {
+        switch self {
+        case .hiragana:
+            return .hiraganaGuessHistory
+        case .katakana:
+            return .katakanaGuessHistory
+        case .words:
+            return .wordGuessHistory
+        }
+    }
+    
     // MARK: - Identifiable conformance
     
     var id: String {

@@ -20,9 +20,9 @@ struct MacHomeView: View {
         if let quiz = currentQuiz {
             switch quiz {
             case .hiragana:
-                GenericPickQuizView(viewModel: KanaPickQuizViewModel(entries: EntryProvider.generateHiragana()))
+                GenericPickQuizView(viewModel: KanaPickQuizViewModel(entries: EntryProvider.generate(.hiragana)))
             case .katakana:
-                GenericPickQuizView(viewModel: KanaPickQuizViewModel(entries: EntryProvider.generateKatakana()))
+                GenericPickQuizView(viewModel: KanaPickQuizViewModel(entries: EntryProvider.generate(.katakana)))
             case .words:
                 PickQuizView()
             }

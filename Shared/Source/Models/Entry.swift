@@ -2,7 +2,7 @@
 // The LanguagePractice project.
 // Created by optionaldev on 10/03/2021.
 // Copyright © 2021 optionaldev. All rights reserved.
-// 
+//
 
 struct Entry: Equatable {
     
@@ -34,7 +34,13 @@ struct Entry: Equatable {
     }
 }
 
-protocol EntryProtocol: Equatable, Identifiable {
+
+protocol KanaEntryProtocol: EntryProtocol {
+    
+    init(roman: String, kanaChallengeType: KanaChallengeType)
+}
+
+protocol EntryProtocol {
     
     var inputLanguage: Language { get }
     var outputLanguage: Language { get }
@@ -48,11 +54,75 @@ protocol EntryProtocol: Equatable, Identifiable {
     /// We're always learned some word or characters and this is how we identify it
     var foreignID: String { get }
     
-    func sameType(as other: Self) -> Bool
-    
     var noImage: Bool { get }
     
     var english: String? { get }
+    
+    var typeIndex: Int { get }
+}
+
+extension EntryProtocol {
+    
+    func sameType(as other: EntryProtocol) -> Bool {
+        return inputLanguage == other.inputLanguage &&
+            outputLanguage == other.outputLanguage
+    }
+}
+
+struct AnyEntry: EntryProtocol, Equatable, Identifiable {
+    
+    let entry: EntryProtocol
+    
+    init(entry: EntryProtocol) {
+        self.entry = entry
+    }
+    
+    var inputLanguage: Language {
+        return entry.inputLanguage
+    }
+    
+    var outputLanguage: Language {
+        return entry.outputLanguage
+    }
+    
+    var input: String {
+        return entry.input
+    }
+    
+    var output: String {
+        return entry.output
+    }
+    
+    var inputPossibilities: [ChallengeType] {
+        return entry.inputPossibilities
+    }
+    
+    var outputPossibilities: [ChallengeType] {
+        return entry.outputPossibilities
+    }
+    
+    var foreignID: String {
+        return entry.foreignID
+    }
+    
+    var typeIndex: Int {
+        return entry.typeIndex
+    }
+    
+    // Equatable conformance
+    
+    static func == (lhs: AnyEntry, rhs: AnyEntry) -> Bool {
+        return lhs.input == rhs.input &&
+            lhs.output == rhs.output &&
+            lhs.inputLanguage == rhs.inputLanguage &&
+            lhs.outputLanguage == rhs.outputLanguage
+    }
+    
+    // Identifiable conformance
+    
+    var id: String {
+        return input
+    }
 }
 
 extension EntryProtocol {
@@ -81,10 +151,10 @@ enum KanaChallengeType {
     case foreignToRoman
 }
 
-struct HiraganaEntry: EntryProtocol {
+struct HiraganaEntry: KanaEntryProtocol {
     
-    init(id: String, kanaChallengeType: KanaChallengeType) {
-        self.id = id
+    init(roman: String, kanaChallengeType: KanaChallengeType) {
+        self.id = roman
         self.kanaChallengeType = kanaChallengeType
     }
     
@@ -147,15 +217,22 @@ struct HiraganaEntry: EntryProtocol {
         return id
     }
     
-    func sameType(as other: Self) -> Bool {
-        return kanaChallengeType == other.kanaChallengeType
+    var typeIndex: Int {
+        switch kanaChallengeType {
+        case .foreign:
+            return 0
+        case .foreignToRoman:
+            return 1
+        case .romanToForeign:
+            return 2
+        }
     }
 }
 
-struct KatakanaEntry: EntryProtocol {
+struct KatakanaEntry: KanaEntryProtocol {
     
-    init(id: String, kanaChallengeType: KanaChallengeType) {
-        self.id = id
+    init(roman: String, kanaChallengeType: KanaChallengeType) {
+        self.id = roman
         self.kanaChallengeType = kanaChallengeType
     }
     
@@ -218,7 +295,14 @@ struct KatakanaEntry: EntryProtocol {
         return id
     }
     
-    func sameType(as other: Self) -> Bool {
-        return kanaChallengeType == other.kanaChallengeType
+    var typeIndex: Int {
+        switch kanaChallengeType {
+        case .foreign:
+            return 0
+        case .foreignToRoman:
+            return 1
+        case .romanToForeign:
+            return 2
+        }
     }
 }

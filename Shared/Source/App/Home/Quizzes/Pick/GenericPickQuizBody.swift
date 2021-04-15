@@ -11,17 +11,21 @@ import protocol SwiftUI.Gesture
 import protocol SwiftUI.View
 import protocol SwiftUI.ViewModifier
 
+import struct SwiftUI.Button
 import struct SwiftUI.CGSize
 import struct SwiftUI.Color
-import struct SwiftUI.DragGesture
+import struct SwiftUI.Environment
 import struct SwiftUI.ForEach
+import struct SwiftUI.HStack
 import struct SwiftUI.ScrollView
 import struct SwiftUI.ModifiedContent
 import struct SwiftUI.ScrollViewReader
 import struct SwiftUI.State
+import struct SwiftUI.Spacer
 import struct SwiftUI.Text
 import struct SwiftUI.ViewBuilder
 import struct SwiftUI.VStack
+import struct SwiftUI.ZStack
 
 #if os(iOS)
 import struct SwiftUI.LazyHStack
@@ -57,32 +61,38 @@ struct GenericPickQuizBody<ViewModel: ViewModelProtocol, Content: View>: View {
     
     @ViewBuilder
     private var bodyContent: some View {
-        // On iOS it makes more sense to have the content scroll horizontally because the pressable
-        // output buttons should be towards the bottom of the screen, for easy access and finger comfort
-        // On MacOS, horizontal ScrollView doesn't have a built in drag gesture
-        // What it does have is scroll wheel integration, but that only work with vertical scroll views
-        // and even if it worked with horizontal ones, it's just more natural to scroll vertically on mac
-        ScrollView(iOS ? .horizontal : .vertical, showsIndicators: iOS ? true : false) {
-            ScrollViewReader { value in
-                LazyStack(spacing: 0) {
-                    ForEach(viewModel.history) { challenge in
-                        content(challenge)
+        ZStack {
+            // On iOS it makes more sense to have the content scroll horizontally because the pressable
+            // output buttons should be towards the bottom of the screen, for easy access and finger comfort
+            // On MacOS, horizontal ScrollView doesn't have a built in drag gesture
+            // What it does have is scroll wheel integration, but that only work with vertical scroll views
+            // and even if it worked with horizontal ones, it's just more natural to scroll vertically on mac
+            ScrollView(iOS ? .horizontal : .vertical, showsIndicators: iOS ? true : false) {
+                ScrollViewReader { value in
+                    LazyStack(spacing: 0) {
+                        ForEach(viewModel.history) { challenge in
+                            content(challenge)
+                        }
+                        if viewModel.wordsLearned.isEmpty == false {
+                            resultsScreen()
+                        }
                     }
-                    if viewModel.wordsLearned.isEmpty == false {
-                        resultsScreen()
+                    .onChange(of: viewModel.history) { val in
+                        withAnimation {
+                            value.scrollTo(val.last!.id)
+                        }
                     }
-                }
-                .onChange(of: viewModel.history) { val in
-                    withAnimation {
-                        value.scrollTo(val.last!.id)
-                    }
-                }
-                .onChange(of: viewModel.wordsLearned) { _ in
-                    withAnimation {
-                        value.scrollTo(Constants.resultsID)
+                    .onChange(of: viewModel.wordsLearned) { _ in
+                        withAnimation {
+                            value.scrollTo(Constants.resultsID)
+                        }
                     }
                 }
             }
+            
+            // We keep the topBar as the last view in the ZStack because
+            // if we place it first, it's no longer tappable
+            topBar()
         }
     }
     
@@ -96,5 +106,32 @@ struct GenericPickQuizBody<ViewModel: ViewModelProtocol, Content: View>: View {
         .frame(width: Canvas.width, height: iOS ? nil : Canvas.height)
         .id(Constants.resultsID)
         .background(Color.blue)
+    }
+    
+    // Used for dismissing this view
+    @Environment(\.presentationMode) private var presentationMode
+    
+    private func topBar() -> some View {
+        // Navigation bars are in the same ZStack as the ChallengeWordView due to small screens
+        // where we want the buttons to overlap the images, to preserve space
+        // Also, placing these above the ScrollView would make the buttons unpressable
+        VStack {
+            HStack {
+                // Replacement for back button, in order to avoid accidental swipe out of challenge
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    Text("Exit")
+                })
+                
+                
+                .padding(10)
+                .opacity(0.7)
+//                .background(colorScheme == .dark ? Color.black.opacity(0.7) : Color.white.opacity(0.7))
+                .cornerRadius(3)
+                Spacer()
+            }
+            Spacer()
+        }
     }
 }

@@ -9,6 +9,10 @@ extension Array where Element: Equatable {
     mutating func removing(_ element: Element) {
         self = filter { $0 != element }
     }
+    
+    func without(_ element: Element) -> [Element] {
+        return self.filter { $0 != element }
+    }
 }
 
 extension Array where Element: Hashable {

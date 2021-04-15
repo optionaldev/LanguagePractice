@@ -4,7 +4,7 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 //
 
-enum EntryType {
+enum KanaEntryType {
     
     case hiragana
     case katakana
@@ -12,32 +12,7 @@ enum EntryType {
 
 struct EntryProvider {
     
-    // TODO: Find a way to make it generic
-    static func generateHiragana() -> [HiraganaEntry] {
-        return generate(.hiragana).flatMap { extractHiragana(from: $0) }.shuffled()
-    }
-    
-    static func generateKatakana() -> [KatakanaEntry] {
-        return generate(.hiragana).flatMap { extractKatakana(from: $0) }.shuffled()
-    }
-    
-    // MARK: - Private
-    
-    private static func extractHiragana(from foreignCharacter: ForeignCharacter) -> [HiraganaEntry] {
-        let id = foreignCharacter.roman
-        return [HiraganaEntry(id: id, kanaChallengeType: .foreign),
-                HiraganaEntry(id: id, kanaChallengeType: .foreignToRoman),
-                HiraganaEntry(id: id, kanaChallengeType: .romanToForeign)]
-    }
-    
-    private static func extractKatakana(from foreignCharacter: ForeignCharacter) -> [KatakanaEntry] {
-        let id = foreignCharacter.roman
-        return [KatakanaEntry(id: id, kanaChallengeType: .foreign),
-                KatakanaEntry(id: id, kanaChallengeType: .foreignToRoman),
-                KatakanaEntry(id: id, kanaChallengeType: .romanToForeign)]
-    }
-    
-    private static func generate(_ type: EntryType) -> [ForeignCharacter] {
+    static func generate(_ type: KanaEntryType) -> [AnyEntry] {
         
         let knownEntries: [ForeignCharacter]
         var challengeEntries: [ForeignCharacter]
@@ -68,6 +43,12 @@ struct EntryProvider {
             fatalError("Invalid number of elements")
         }
         
-        return challengeEntries
+        let kanaClass: KanaEntryProtocol.Type = type == .hiragana ? HiraganaEntry.self : KatakanaEntry.self
+        
+        let kanaInstances = challengeEntries.flatMap { [kanaClass.init(roman: $0.roman, kanaChallengeType: .foreign),
+                                                        kanaClass.init(roman: $0.roman, kanaChallengeType: .romanToForeign),
+                                                        kanaClass.init(roman: $0.roman, kanaChallengeType: .foreignToRoman)] }
+        
+        return kanaInstances.map { AnyEntry(entry: $0) }
     }
 }

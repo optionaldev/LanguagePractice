@@ -11,7 +11,7 @@ import struct Foundation.Date
 import struct Foundation.Published
 
 
-final class KanaPickQuizViewModel<EntryType: EntryProtocol>: ViewModelProtocol {
+final class KanaPickQuizViewModel: ViewModelProtocol {
     
     /** Holds all the challenge that have been completed */
     @Published private(set) var history: [PickChallenge] = []
@@ -25,7 +25,7 @@ final class KanaPickQuizViewModel<EntryType: EntryProtocol>: ViewModelProtocol {
         return history.last!
     }
     
-    init(entries: [EntryType]) {
+    init(entries: [AnyEntry]) {
         challengeEntries = entries
         prepareNextChallenge()
         
@@ -67,7 +67,7 @@ final class KanaPickQuizViewModel<EntryType: EntryProtocol>: ViewModelProtocol {
     
     // MARK: - Private
     
-    private let challengeEntries: [EntryType]
+    private let challengeEntries: [AnyEntry]
     
     // Declared as var due to it having mutating generated dictionaries
     private var lexicon: Lexicon?
@@ -184,7 +184,7 @@ final class KanaPickQuizViewModel<EntryType: EntryProtocol>: ViewModelProtocol {
     
     // MARK: Input
     
-    private func generateInputType(for entry: EntryType) -> ChallengeType {
+    private func generateInputType(for entry: AnyEntry) -> ChallengeType {
         var inputTypePossibilities = entry.inputPossibilities
         
         inputTypePossibilities.removing(.image)
@@ -198,11 +198,11 @@ final class KanaPickQuizViewModel<EntryType: EntryProtocol>: ViewModelProtocol {
         return result
     }
     
-    private func generateInput(for entry: EntryType, inputType: ChallengeType) -> String {
+    private func generateInput(for entry: AnyEntry, inputType: ChallengeType) -> String {
         return entry.input
     }
     
-    private func generateInputRep(for entry: EntryType, inputType: ChallengeType, input: String) -> Rep {
+    private func generateInputRep(for entry: AnyEntry, inputType: ChallengeType, input: String) -> Rep {
         switch inputType {
         case .simplified:
             return .simpleText(.init(text: entry.input, language: .foreign))
@@ -217,7 +217,7 @@ final class KanaPickQuizViewModel<EntryType: EntryProtocol>: ViewModelProtocol {
     
     // MARK: Output
     
-    private func generateOutputType(for entry: EntryType, inputType: ChallengeType) -> ChallengeType {
+    private func generateOutputType(for entry: AnyEntry, inputType: ChallengeType) -> ChallengeType {
         var outputTypePossibilities = entry.outputPossibilities
         
         outputTypePossibilities.removing(inputType)
@@ -228,12 +228,12 @@ final class KanaPickQuizViewModel<EntryType: EntryProtocol>: ViewModelProtocol {
         return randomOutputType
     }
     
-    private func generateOutput(for entry: EntryType, outputType: ChallengeType) -> [String] {
+    private func generateOutput(for entry: AnyEntry, outputType: ChallengeType) -> [String] {
         
         var result: [String]
         // Get a list of challenge
-        let otherSameTypeChallengeEntries = challengeEntries.filter { $0.sameType(as: entry) &&
-            $0 != entry }
+        let otherSameTypeChallengeEntries = challengeEntries.without(entry)
+            .filter { $0.typeIndex == entry.typeIndex }
         
         switch outputType {
         case .text(let language):
@@ -249,7 +249,6 @@ final class KanaPickQuizViewModel<EntryType: EntryProtocol>: ViewModelProtocol {
                 fatalError("We don't want to read \"a\" with english voice")
             case .foreign:
                 result = otherSameTypeChallengeEntries.map { $0.output }
-                    .compactMap { ForeignCharacter($0)?.hiragana }
             }
         case .image, .simplified:
             fatalError("Not possible to have these output types")

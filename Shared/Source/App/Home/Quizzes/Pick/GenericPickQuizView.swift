@@ -5,10 +5,8 @@
 // 
 
 protocol ViewModelProtocol: ObservableObject {
-
-    associatedtype Entry = EntryProtocol
     
-    init(entries: [Entry])
+    init(entries: [AnyEntry])
     
     var history: [PickChallenge] { get }
     var wordsLearned: [String] { get }
