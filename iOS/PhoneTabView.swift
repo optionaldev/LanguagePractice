@@ -24,7 +24,7 @@ private extension Tab {
         case .dictionary:
             Text("Dictionary view")
         case .settings:
-            Text("Settings view")
+            SettingsView()
         }
     }
 }

@@ -62,7 +62,7 @@ struct SideMenuView: View {
                     .opacity(selectedItem == .home ? 1 : 0)
                 Text("Mac Dictionary")
                     .opacity(selectedItem == .dictionary ? 1 : 0)
-                Text("Mac Settings")
+                SettingsView()
                     .opacity(selectedItem == .settings ? 1 : 0)
             }
             .frame(width: 700)

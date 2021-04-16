@@ -8,6 +8,7 @@ import protocol SwiftUI.ObservableObject
 
 import struct SwiftUI.Published
 
+
 private struct Constants {
     
     static let kanjiCompatibleFontsFound: [String] = [
@@ -24,14 +25,17 @@ final class FontSelectionViewModel: ObservableObject {
     
     @Published var fontName: String?
     
+    let fontViewModels: [FontViewModel] = Constants.kanjiCompatibleFontsFound.map { FontViewModel(name: $0) }
+    
     init() {
         if let initialKanjiFontName = Defaults.string(forKey: .kanjiFontName) {
             fontName = initialKanjiFontName
         }
     }
     
-    func setFont(_ fontName: String) {
-        Defaults.set(fontName, forKey: .kanjiFontName)
-        self.fontName = fontName
+    func setFont(_ font: FontViewModel?) {
+        Defaults.set(font?.name, forKey: .kanjiFontName)
+        self.fontName = font?.name
     }
 }
+
