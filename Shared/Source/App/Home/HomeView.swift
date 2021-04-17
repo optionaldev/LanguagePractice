@@ -12,6 +12,7 @@ import struct SwiftUI.ViewBuilder
 #if os(iOS)
 import struct SwiftUI.NavigationView
 import struct SwiftUI.NavigationLink
+import struct SwiftUI.List
 #endif
 
 struct HomeView: View {
@@ -28,10 +29,14 @@ struct HomeView: View {
     var body: some View {
         #if os(iOS)
         NavigationView {
-            NavigationLink("Pick", destination: NavigationLazyView(PickQuizView()))
-                .navigationBarHidden(true)
-            NavigationLink("Hiragana", destination: NavigationLazyView(GenericPickQuizView(viewModel: KanaPickQuizViewModel(entries: EntryProvider.generate(.hiragana)))))
-                .navigationBarHidden(true)
+            List {
+                NavigationLink("Pick", destination: NavigationLazyView(PickQuizView()))
+                    .navigationBarHidden(true)
+                NavigationLink("Hiragana", destination: NavigationLazyView(GenericPickQuizView(viewModel: KanaPickQuizViewModel(entries: EntryProvider.generate(.hiragana)))))
+                    .navigationBarHidden(true)
+                NavigationLink("Katakana", destination: NavigationLazyView(GenericPickQuizView(viewModel: KanaPickQuizViewModel(entries: EntryProvider.generate(.hiragana)))))
+                    .navigationBarHidden(true)
+            }
         }
         #else
         MacHomeView()

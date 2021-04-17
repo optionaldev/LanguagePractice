@@ -8,10 +8,10 @@ import AVFoundation
 
 struct VoiceHandler {
     
-    init(_ type: Language) {
-        self.voices = type.voices
+    init(_ language: Language) {
+        self.voices = language.voices
         
-        log("Initialized \(type) with voices: \(voices.map { $0.name })", type: .info)
+        log("Initialized \(language) with voices: \(voices.map { $0.name })", type: .info)
     }
     
     mutating func next() -> AVSpeechSynthesisVoice {

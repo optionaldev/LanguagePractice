@@ -49,6 +49,6 @@ struct EntryProvider {
                                                         kanaClass.init(roman: $0.roman, kanaChallengeType: .romanToForeign),
                                                         kanaClass.init(roman: $0.roman, kanaChallengeType: .foreignToRoman)] }
         
-        return kanaInstances.map { AnyEntry(entry: $0) }
+        return kanaInstances.map { AnyEntry(entry: $0) }.shuffled()
     }
 }

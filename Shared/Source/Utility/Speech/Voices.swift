@@ -29,12 +29,12 @@ extension Language {
             #else
             // These seem to be the voices that correctly pronounce the vast majority
             // of words and high a relatively decent output in terms of voice quality
-            return ["Lee", "Tom"]
+            return ["Lee", "Lee (Enhanced)", "Tom", "Tom (Enhanced)"]
             #endif
         case .foreign:
             // Even though there is Kyoko premium, is sounds like lower quality than Otoya
             #if JAPANESE
-            return ["Otoya"]
+            return ["Otoya", "Otoya (Enhanced)"]
             #endif
         }
     }
