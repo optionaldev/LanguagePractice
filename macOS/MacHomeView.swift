@@ -13,33 +13,40 @@ import struct SwiftUI.State
 import struct SwiftUI.Text
 import struct SwiftUI.ViewBuilder
 
+import SwiftUI
+
 struct MacHomeView: View {
     
-    @ViewBuilder
     var body: some View {
-        if let quiz = currentQuiz {
-            switch quiz {
-            case .hiragana:
-                GenericPickQuizView(viewModel: KanaPickQuizViewModel(entries: EntryProvider.generate(.hiragana)))
-            case .katakana:
-                GenericPickQuizView(viewModel: KanaPickQuizViewModel(entries: EntryProvider.generate(.katakana)))
-            case .words:
-                PickQuizView()
-            }
-        } else {
+        ZStack {
             homeView()
+            
+            // Not a perfect solution, but for now, if let in combination with @StateObject
+            // is the only that that not only allows for `dismiss` actions in other views,
+            // but also remembers where the view was if the user switches tabs
+            if let quiz = viewModel.currentQuiz {
+                switch quiz {
+                case .hiragana:
+                    GenericPickQuizView(viewModel: KanaPickQuizViewModel(entries: EntryProvider.generate(.hiragana)))
+                case .katakana:
+                    GenericPickQuizView(viewModel: KanaPickQuizViewModel(entries: EntryProvider.generate(.katakana)))
+                case .words:
+                    PickQuizView()
+                }
+            }
         }
+        .environmentObject(viewModel)
     }
     
     // MARK: - Private
     
-    @State private var currentQuiz: HomeQuiz?
+    @StateObject private var viewModel: MacHomeViewModel = MacHomeViewModel()
     
     private func homeView() -> some View {
         List {
             ForEach(HomeQuiz.allCases) { quiz in
                 Button(action: {
-                    currentQuiz = quiz
+                    viewModel.currentQuiz = quiz
                 }, label: {
                     Text(quiz.title)
                 })

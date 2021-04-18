@@ -10,14 +10,10 @@ import protocol SwiftUI.Gesture
 import protocol SwiftUI.View
 import protocol SwiftUI.ViewModifier
 
-import struct SwiftUI.CGSize
 import struct SwiftUI.Color
-import struct SwiftUI.DragGesture
 import struct SwiftUI.ForEach
 import struct SwiftUI.ScrollView
-import struct SwiftUI.ModifiedContent
 import struct SwiftUI.ScrollViewReader
-import struct SwiftUI.State
 import struct SwiftUI.Text
 import struct SwiftUI.ViewBuilder
 import struct SwiftUI.VStack

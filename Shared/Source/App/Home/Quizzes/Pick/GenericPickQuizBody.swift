@@ -12,15 +12,11 @@ import protocol SwiftUI.View
 import protocol SwiftUI.ViewModifier
 
 import struct SwiftUI.Button
-import struct SwiftUI.CGSize
 import struct SwiftUI.Color
-import struct SwiftUI.Environment
 import struct SwiftUI.ForEach
 import struct SwiftUI.HStack
 import struct SwiftUI.ScrollView
-import struct SwiftUI.ModifiedContent
 import struct SwiftUI.ScrollViewReader
-import struct SwiftUI.State
 import struct SwiftUI.Spacer
 import struct SwiftUI.Text
 import struct SwiftUI.ViewBuilder
@@ -28,9 +24,11 @@ import struct SwiftUI.VStack
 import struct SwiftUI.ZStack
 
 #if os(iOS)
+import struct SwiftUI.Environment
 import struct SwiftUI.LazyHStack
 private typealias LazyStack = LazyHStack
 #else
+import struct SwiftUI.EnvironmentObject
 import struct SwiftUI.LazyVStack
 private typealias LazyStack = LazyVStack
 #endif
@@ -108,8 +106,12 @@ struct GenericPickQuizBody<ViewModel: ViewModelProtocol, Content: View>: View {
         .background(Color.blue)
     }
     
+    #if os(iOS)
     // Used for dismissing this view
     @Environment(\.presentationMode) private var presentationMode
+    #else
+    @EnvironmentObject private var homeViewModel: MacHomeViewModel
+    #endif
     
     private func topBar() -> some View {
         // Navigation bars are in the same ZStack as the ChallengeWordView due to small screens
@@ -119,15 +121,15 @@ struct GenericPickQuizBody<ViewModel: ViewModelProtocol, Content: View>: View {
             HStack {
                 // Replacement for back button, in order to avoid accidental swipe out of challenge
                 Button(action: {
+                    #if os(iOS)
                     presentationMode.wrappedValue.dismiss()
+                    #else
+                    homeViewModel.currentQuiz = nil
+                    #endif
                 }, label: {
                     Text("Exit")
                 })
-                
-                
                 .padding(10)
-                .opacity(0.7)
-//                .background(colorScheme == .dark ? Color.black.opacity(0.7) : Color.white.opacity(0.7))
                 .cornerRadius(3)
                 Spacer()
             }
