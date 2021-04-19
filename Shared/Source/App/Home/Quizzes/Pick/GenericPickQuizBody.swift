@@ -70,6 +70,7 @@ struct GenericPickQuizBody<ViewModel: ViewModelProtocol, Content: View>: View {
                     LazyStack(spacing: 0) {
                         ForEach(viewModel.history) { challenge in
                             content(challenge)
+                                .disabled(challenge != viewModel.history.last)
                         }
                         if viewModel.wordsLearned.isEmpty == false {
                             resultsScreen()
@@ -106,8 +107,8 @@ struct GenericPickQuizBody<ViewModel: ViewModelProtocol, Content: View>: View {
         .background(Color.blue)
     }
     
-    #if os(iOS)
     // Used for dismissing this view
+    #if os(iOS)
     @Environment(\.presentationMode) private var presentationMode
     #else
     @EnvironmentObject private var homeViewModel: MacHomeViewModel
