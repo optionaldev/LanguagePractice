@@ -58,6 +58,7 @@
 		6E275D1725F7738D00617262 /* PickChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E275D1525F7738D00617262 /* PickChallenge.swift */; };
 		6E275D1D25F774B700617262 /* PickChallengeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E275D1C25F774B700617262 /* PickChallengeState.swift */; };
 		6E275D1E25F774B700617262 /* PickChallengeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E275D1C25F774B700617262 /* PickChallengeState.swift */; };
+		6E289FDA262F5CB40081E38E /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E289FD9262F5CB40081E38E /* CustomTextField.swift */; };
 		6E2B22DA25DC899F001B8A77 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2B22D925DC899F001B8A77 /* Network.swift */; };
 		6E2B22DB25DC899F001B8A77 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2B22D925DC899F001B8A77 /* Network.swift */; };
 		6E522F3B25F4079D00DA229C /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E522F3A25F4079D00DA229C /* Persistence.swift */; };
@@ -184,6 +185,7 @@
 		6E275D0525F61A2E00617262 /* Representation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Representation.swift; sourceTree = "<group>"; };
 		6E275D1525F7738D00617262 /* PickChallenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickChallenge.swift; sourceTree = "<group>"; };
 		6E275D1C25F774B700617262 /* PickChallengeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickChallengeState.swift; sourceTree = "<group>"; };
+		6E289FD9262F5CB40081E38E /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		6E2B22D925DC899F001B8A77 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		6E522F3A25F4079D00DA229C /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		6E55549425D2026A000565F2 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 				6E675E6E25CEFE1B002D8D98 /* Info.plist */,
 				6E07D52E25D975B900310B17 /* iOSDefaults.swift */,
 				6E55549B25D20674000565F2 /* PhoneTabView.swift */,
+				6E289FD9262F5CB40081E38E /* CustomTextField.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -775,6 +778,7 @@
 				6E07D52725D9751D00310B17 /* Defaults.swift in Sources */,
 				6EE81CD025D89E7F00667CE5 /* ForeignWord.swift in Sources */,
 				6EF4E3E025D4A47A00CDCC40 /* AppConstants.swift in Sources */,
+				6E289FDA262F5CB40081E38E /* CustomTextField.swift in Sources */,
 				6E14EBAB25F616C1008800C6 /* ChallengeProtocol.swift in Sources */,
 				6E1BA93425FA07BD00D64435 /* ArrayExtension.swift in Sources */,
 				6E0354EE261AFB6A00F562C9 /* KanaPickQuizViewModel.swift in Sources */,
