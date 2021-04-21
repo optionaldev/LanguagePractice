@@ -10,7 +10,7 @@ private struct Constants {
     static let incorrectGuessStoreValue: TimeInterval = -1
 }
 
-enum PickChallengeState: Hashable, Codable {
+enum ChallengeState: Hashable, Codable {
     
     case guessedIncorrectly
     case finished(_ time: TimeInterval)

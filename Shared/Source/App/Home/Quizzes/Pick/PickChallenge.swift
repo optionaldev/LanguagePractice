@@ -6,14 +6,11 @@
 
 struct PickChallenge: ChallengeProtocol, Identifiable, Equatable {
     
-    let inputType: ChallengeType
-    let input: String
-    
     let outputType: ChallengeType
     let output: [String]
     let correctAnswerIndex: Int
     
-    var state: PickChallengeState?
+    var state: ChallengeState?
     
     enum CodingKeys: String, CodingKey {
         
@@ -47,6 +44,11 @@ struct PickChallenge: ChallengeProtocol, Identifiable, Equatable {
         self.inputRepresentation = inputRepresentations
         self.outputRepresentations = outputRepresentations
     }
+    
+    // MARK: - ChallengeProtocol conformance
+    
+    let inputType: ChallengeType
+    let input: String
     
     // MARK: - Equatable conformance
     

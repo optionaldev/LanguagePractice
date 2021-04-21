@@ -9,11 +9,10 @@ import protocol SwiftUI.View
 import struct SwiftUI.Button
 import struct SwiftUI.ForEach
 import struct SwiftUI.List
-import struct SwiftUI.State
+import struct SwiftUI.StateObject
 import struct SwiftUI.Text
 import struct SwiftUI.ViewBuilder
-
-import SwiftUI
+import struct SwiftUI.ZStack
 
 struct MacHomeView: View {
     
