@@ -7,19 +7,12 @@
 struct TypingChallenge: ChallengeProtocol, Identifiable, Equatable {
 
     let output: [String]
-    var state: ChallengeState?
+    var state: TypingChallengeState?
     
     var inputRepresentation: Rep = .textWithTranslation(.init(text: "-",
                                                               language: .english,
                                                               translation: ""))
     
-    enum CodingKeys: String, CodingKey {
-
-        case inputType
-        case input
-        case output
-        case state
-    }
     
     init(inputType: ChallengeType,
          input: String,
@@ -35,6 +28,16 @@ struct TypingChallenge: ChallengeProtocol, Identifiable, Equatable {
     
     let inputType: ChallengeType
     let input: String
+    
+    // MARK: - Codable conformance
+    
+    enum CodingKeys: String, CodingKey {
+
+        case inputType
+        case input
+        case output
+        case state
+    }
     
     // MARK: - Equatable conformance
     

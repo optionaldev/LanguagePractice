@@ -4,12 +4,15 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 //
 
+import Dispatch
+
 import protocol SwiftUI.View
 
 import struct SwiftUI.Button
 import struct SwiftUI.Color
 import struct SwiftUI.ForEach
 import struct SwiftUI.HStack
+import struct SwiftUI.Image
 import struct SwiftUI.Text
 import struct SwiftUI.ObservedObject
 import struct SwiftUI.PlainButtonStyle
@@ -196,8 +199,3 @@ struct PickQuizView: View {
         }
     }
 }
-
-#if DEBUG
-import SwiftUI
-#endif
-

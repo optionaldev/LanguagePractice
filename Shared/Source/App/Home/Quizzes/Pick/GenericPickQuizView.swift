@@ -2,7 +2,25 @@
 // The LanguagePractice project.
 // Created by optionaldev on 04/04/2021.
 // Copyright © 2021 optionaldev. All rights reserved.
-// 
+//
+
+import Dispatch
+
+import protocol SwiftUI.ObservableObject
+import protocol SwiftUI.View
+
+import struct SwiftUI.Button
+import struct SwiftUI.Color
+import struct SwiftUI.ForEach
+import struct SwiftUI.HStack
+import struct SwiftUI.Image
+import struct SwiftUI.ObservedObject
+import struct SwiftUI.PlainButtonStyle
+import struct SwiftUI.Rectangle
+import struct SwiftUI.Text
+import struct SwiftUI.ViewBuilder
+import struct SwiftUI.VStack
+
 
 protocol ViewModelProtocol: ObservableObject {
     
@@ -193,8 +211,3 @@ struct GenericPickQuizView<ViewModel: ViewModelProtocol>: View {
         }
     }
 }
-
-#if DEBUG
-import SwiftUI
-#endif
-

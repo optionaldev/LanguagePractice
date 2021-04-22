@@ -10,17 +10,7 @@ struct PickChallenge: ChallengeProtocol, Identifiable, Equatable {
     let output: [String]
     let correctAnswerIndex: Int
     
-    var state: ChallengeState?
-    
-    enum CodingKeys: String, CodingKey {
-        
-        case inputType
-        case input
-        case outputType
-        case output
-        case correctAnswerIndex
-        case state
-    }
+    var state: PickChallengeState?
     
     // inputRepresentation and outputRepresentation can change during a challenge
     // so they're not part of what we save
@@ -49,6 +39,18 @@ struct PickChallenge: ChallengeProtocol, Identifiable, Equatable {
     
     let inputType: ChallengeType
     let input: String
+    
+    // MARK: - Codable conformance
+    
+    enum CodingKeys: String, CodingKey {
+        
+        case inputType
+        case input
+        case outputType
+        case output
+        case correctAnswerIndex
+        case state
+    }
     
     // MARK: - Equatable conformance
     

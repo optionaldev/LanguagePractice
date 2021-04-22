@@ -29,7 +29,6 @@ struct AppConstants {
     ///     foreign -> foreign (also known as simplified)
     ///
     /// A foreign word that has 4 translations can generate up to 9 entries
-    
     static let challengeInitialSampleSize = 10
     
     /// Primarily used in order to differentiate between the guessing word and the answers
@@ -37,4 +36,7 @@ struct AppConstants {
     
     /// If an answer has a time interval between these two values, it is a successful answer
     static let successRange = 0.0...10.0
+    
+    /// Default number of times the user has to complete the typing challenge to go to the next word
+    static let forfeitRetriesCount = 3
 }
