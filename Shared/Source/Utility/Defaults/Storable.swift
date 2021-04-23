@@ -22,6 +22,3 @@ extension Storable where Self: RawRepresentable, Self.RawValue: StringProtocol {
         return Constants.storeValuePrefix + rawValue
     }
 }
-
-protocol CodingStorable: Storable {}
-protocol BoolStorable: Storable {}

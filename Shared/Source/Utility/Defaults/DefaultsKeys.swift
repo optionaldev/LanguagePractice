@@ -4,26 +4,31 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-enum DefaultsCodingKey: String, CodingStorable {
+enum DefaultsCodingKey: String, Storable {
     
     case englishLexicon
     case foreignLexicon
 }
 
-enum DefaultsArrayKey: String, CodingStorable {
+enum DefaultsArrayKey: String, Storable {
     
     // Currently unused
     case wordsLearned
 }
 
-enum DefaultsDictionaryKey: String, CodingStorable {
+enum DefaultsBoolKey: String, Storable {
+    
+    case voiceEnabled
+}
+
+enum DefaultsDictionaryKey: String, Storable {
     
     case hiraganaGuessHistory
     case katakanaGuessHistory
     case wordGuessHistory
 }
 
-enum DefaultsStringKey: String, CodingStorable {
+enum DefaultsStringKey: String, Storable {
     
     case kanjiFontName
 }

@@ -6,12 +6,14 @@
 
 import struct Foundation.TimeInterval
 
-final class Defaults: DefaultsCodingProtocol,
-                      DefaultsArrayProtocol,
+final class Defaults: DefaultsArrayProtocol,
+                      DefaultsBoolProtocol,
+                      DefaultsCodingProtocol,
                       DefaultsDictionaryProtocol,
                       DefaultsStringProtocol {
     
     typealias ArrayKeyType      = DefaultsArrayKey
+    typealias BoolKeyType       = DefaultsBoolKey
     typealias DecodeKeyType     = DefaultsCodingKey
     typealias DictionaryKeyType = DefaultsDictionaryKey
     typealias StringKeyType     = DefaultsStringKey
@@ -33,6 +35,10 @@ final class Defaults: DefaultsCodingProtocol,
     
     static var knownWords: [String] {
         return wordGuessHistory.known()
+    }
+    
+    static var voiceEnabled: Bool {
+        return Defaults.bool(forKey: .voiceEnabled)
     }
     
     #if JAPANESE

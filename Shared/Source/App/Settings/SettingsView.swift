@@ -9,7 +9,9 @@ import protocol SwiftUI.View
 import struct SwiftUI.List
 import struct SwiftUI.NavigationLink
 import struct SwiftUI.NavigationView
+import struct SwiftUI.State
 import struct SwiftUI.Text
+import struct SwiftUI.Toggle
 import struct SwiftUI.ViewBuilder
 
 struct SettingsView: View {
@@ -25,6 +27,9 @@ struct SettingsView: View {
         #endif
     }
     
+    // MARK: - Private
+    
+    @State private var voiceEnabled = Defaults.voiceEnabled
     
     private func content() -> some View {
         NavigationView {
@@ -32,7 +37,11 @@ struct SettingsView: View {
                 NavigationLink(destination: NavigationLazyView(FontSelectionView(viewModel: FontSelectionViewModel()))) {
                     Text("Select font")
                 }
+                Toggle("Voice enabled", isOn: $voiceEnabled)
             }
+            .onChange(of: voiceEnabled, perform: { _ in
+                Defaults.set(voiceEnabled, forKey: .voiceEnabled)
+            })
             .padding(.top, 10)
         }
     }

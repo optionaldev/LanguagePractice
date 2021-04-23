@@ -32,7 +32,7 @@ extension DefaultsProtocol {
 
 protocol DefaultsBoolProtocol: DefaultsProtocol {
     
-    associatedtype BoolKeyType: BoolStorable
+    associatedtype BoolKeyType: Storable
     
     static func bool(forKey key: BoolKeyType) -> Bool
     static func set(_ bool: Bool, forKey key: BoolKeyType)
@@ -53,7 +53,7 @@ extension DefaultsBoolProtocol {
 
 protocol DefaultsCodingProtocol: DefaultsProtocol {
 
-    associatedtype DecodeKeyType: CodingStorable
+    associatedtype DecodeKeyType: Storable
 
     static func decodable<T: Decodable>(forKey key: DecodeKeyType) -> T?
     static func set<T: Encodable>(_ decodable: T, forKey key: DecodeKeyType)
@@ -90,7 +90,7 @@ extension DefaultsCodingProtocol {
 
 protocol DefaultsArrayProtocol: DefaultsProtocol {
 
-    associatedtype ArrayKeyType: CodingStorable
+    associatedtype ArrayKeyType: Storable
 
     static func array<T: Saveable>(forKey key: ArrayKeyType) -> [T]
     static func set<T: Saveable>(_ array: [T], forKey key: ArrayKeyType)
@@ -118,7 +118,7 @@ extension DefaultsArrayProtocol {
 
 protocol DefaultsDictionaryProtocol: DefaultsProtocol {
 
-    associatedtype DictionaryKeyType: CodingStorable
+    associatedtype DictionaryKeyType: Storable
 
     static func dictionary<U: Saveable, V: Saveable>(forKey key: DictionaryKeyType) -> [U: V]
     static func set<U: Saveable, V: Saveable>(_ dictionary: [U: V], forKey key: DictionaryKeyType)
@@ -145,7 +145,7 @@ extension DefaultsDictionaryProtocol {
 
 protocol DefaultsStringProtocol: DefaultsProtocol {
 
-    associatedtype StringKeyType: CodingStorable
+    associatedtype StringKeyType: Storable
 
     static func string(forKey key: StringKeyType) -> String?
     static func set(_ string: String?, forKey key: StringKeyType)
