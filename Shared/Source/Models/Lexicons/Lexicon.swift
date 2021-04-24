@@ -9,12 +9,12 @@ struct Lexicon: Codable {
     var english: EnglishLexicon
     var foreign: ForeignLexicon
     
-    lazy var englishDictionary: [String: EnglishNoun] = {
-        english.nouns.reduce(into: [String: EnglishNoun]()) { $0[$1.id] = $1 }
+    lazy var englishDictionary: [String: EnglishWord] = {
+        english.nouns.reduce(into: [String: EnglishWord]()) { $0[$1.id] = $1 }
     }()
     
-    lazy var foreignDictionary: [String: ForeignNoun] = {
-        foreign.nouns.reduce(into: [String: ForeignNoun]()) { $0[$1.id] = $1 }
+    lazy var foreignDictionary: [String: ForeignWord] = {
+        foreign.nouns.reduce(into: [String: ForeignWord]()) { $0[$1.id] = $1 }
     }()
     
     init(english: EnglishLexicon, foreign: ForeignLexicon) {

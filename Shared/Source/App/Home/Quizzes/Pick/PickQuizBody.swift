@@ -60,14 +60,14 @@ struct PickQuizBody<Content: View>: View {
         ScrollView(iOS ? .horizontal : .vertical, showsIndicators: iOS ? true : false) {
             ScrollViewReader { value in
                 LazyStack(spacing: 0) {
-                    ForEach(viewModel.history) { challenge in
+                    ForEach(viewModel.visibleChallenges) { challenge in
                         content(challenge)
                     }
                     if viewModel.wordsLearned.isEmpty == false {
                         resultsScreen()
                     }
                 }
-                .onChange(of: viewModel.history) { val in
+                .onChange(of: viewModel.visibleChallenges) { val in
                     withAnimation {
                         value.scrollTo(val.last!.id)
                     }

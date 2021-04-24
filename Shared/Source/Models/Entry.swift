@@ -71,7 +71,7 @@ extension EntryProtocol {
 
 struct AnyEntry: EntryProtocol, Equatable, Identifiable {
     
-    let entry: EntryProtocol
+    private let entry: EntryProtocol
     
     init(entry: EntryProtocol) {
         self.entry = entry

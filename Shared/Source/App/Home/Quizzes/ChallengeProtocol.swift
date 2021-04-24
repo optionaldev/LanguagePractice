@@ -4,10 +4,11 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-import typealias Swift.Codable
-
-protocol ChallengeProtocol: Codable {
+protocol ChallengeProtocol {
     
     var inputType: ChallengeType { get }
     var input: String { get }
+    var inputRepresentation: Rep { get }
+    
+    var output: [String] { get }
 }

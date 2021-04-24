@@ -31,7 +31,7 @@ struct PickQuizView: View {
     
     // MARK: - Private
     
-    @ObservedObject private var viewModel = PickQuizViewModel()
+    @ObservedObject private var viewModel = PickQuizViewModel(entries: EntryProvider.generate(.hiragana))
     
     private let imageCache = ImageCache()
     private let waveformImage = Image(systemName: "waveform.circle")
