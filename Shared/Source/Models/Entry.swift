@@ -4,37 +4,6 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 //
 
-struct Entry: Equatable {
-    
-    let from: Language
-    let to: Language
- 
-    let input: String
-    let output: String
-    
-    var type: (Language, Language) {
-        return (from, to)
-    }
-    
-    // No guarantee to have english text because it might be a 'simplified' type challenge
-    var english: String? {
-        from == .english ? input : (to == .english ? output : nil)
-    }
-    
-    var foreign: String {
-        from == .foreign ? input : output
-    }
-    
-    var noImage: Bool {
-        if let english = english {
-            return Persistence.imagePath(id: english) == nil
-        } else {
-            return false
-        }
-    }
-}
-
-
 protocol KanaEntryProtocol: EntryProtocol {
     
     init(roman: String, kanaChallengeType: KanaChallengeType)
@@ -61,11 +30,33 @@ protocol EntryProtocol {
     var typeIndex: Int { get }
 }
 
+func == (lhs: EntryProtocol, rhs: EntryProtocol) -> Bool {
+    return lhs.input == rhs.input &&
+        lhs.inputLanguage == rhs.inputLanguage &&
+        lhs.output == rhs.output &&
+        rhs.outputLanguage == rhs.outputLanguage
+}
+
+func != (lhs: EntryProtocol, rhs: EntryProtocol) -> Bool {
+    return !(lhs == rhs)
+}
+
 extension EntryProtocol {
     
-    func sameType(as other: EntryProtocol) -> Bool {
-        return inputLanguage == other.inputLanguage &&
-            outputLanguage == other.outputLanguage
+    var noImage: Bool {
+        if let english = english {
+            return Persistence.imagePath(id: english) == nil
+        }
+        return false
+    }
+    
+    var english: String? {
+        if inputLanguage == .english {
+            return input
+        } else if outputLanguage == .english {
+            return output
+        }
+        return nil
     }
 }
 
@@ -122,25 +113,6 @@ struct AnyEntry: EntryProtocol, Equatable, Identifiable {
     
     var id: String {
         return input
-    }
-}
-
-extension EntryProtocol {
-    
-    var noImage: Bool {
-        if let english = english {
-            return Persistence.imagePath(id: english) == nil
-        }
-        return false
-    }
-    
-    var english: String? {
-        if inputLanguage == .english {
-            return input
-        } else if outputLanguage == .english {
-            return output
-        }
-        return nil
     }
 }
 
@@ -229,6 +201,41 @@ struct HiraganaEntry: KanaEntryProtocol {
     }
 }
 
+struct WordEntry: EntryProtocol {
+    
+    init(inputLanguage: Language, input: String, outputLanguage: Language, output: String) {
+        self.inputLanguage = inputLanguage
+        self.input = input
+        
+        self.outputLanguage = outputLanguage
+        self.output = output
+    }
+    
+    let inputLanguage: Language
+    
+    let outputLanguage: Language
+    
+    let input: String
+    
+    let output: String
+    
+    var inputPossibilities: [ChallengeType] {
+        return ChallengeType.allCases
+    }
+    
+    var outputPossibilities: [ChallengeType] {
+        return ChallengeType.allCases
+    }
+    
+    var foreignID: String {
+        inputLanguage == .foreign ? input : output
+    }
+    
+    var typeIndex: Int {
+        return 7
+    }
+}
+
 struct KatakanaEntry: KanaEntryProtocol {
     
     init(roman: String, kanaChallengeType: KanaChallengeType) {
@@ -298,11 +305,11 @@ struct KatakanaEntry: KanaEntryProtocol {
     var typeIndex: Int {
         switch kanaChallengeType {
         case .foreign:
-            return 0
+            return 3
         case .foreignToRoman:
-            return 1
+            return 4
         case .romanToForeign:
-            return 2
+            return 5
         }
     }
 }

@@ -25,7 +25,7 @@ final class KanaPickQuizViewModel: ViewModelProtocol {
         return history.last!
     }
     
-    init(entries: [AnyEntry]) {
+    init(entries: [EntryProtocol]) {
         challengeEntries = entries
         prepareNextChallenge()
         
@@ -67,7 +67,7 @@ final class KanaPickQuizViewModel: ViewModelProtocol {
     
     // MARK: - Private
     
-    private let challengeEntries: [AnyEntry]
+    private let challengeEntries: [EntryProtocol]
     
     // Declared as var due to it having mutating generated dictionaries
     private var lexicon: Lexicon?
@@ -184,7 +184,7 @@ final class KanaPickQuizViewModel: ViewModelProtocol {
     
     // MARK: Input
     
-    private func generateInputType(for entry: AnyEntry) -> ChallengeType {
+    private func generateInputType(for entry: EntryProtocol) -> ChallengeType {
         var inputTypePossibilities = entry.inputPossibilities
         
         inputTypePossibilities.removing(.image)
@@ -198,11 +198,11 @@ final class KanaPickQuizViewModel: ViewModelProtocol {
         return result
     }
     
-    private func generateInput(for entry: AnyEntry, inputType: ChallengeType) -> String {
+    private func generateInput(for entry: EntryProtocol, inputType: ChallengeType) -> String {
         return entry.input
     }
     
-    private func generateInputRep(for entry: AnyEntry, inputType: ChallengeType, input: String) -> Rep {
+    private func generateInputRep(for entry: EntryProtocol, inputType: ChallengeType, input: String) -> Rep {
         switch inputType {
         case .simplified:
             return .simpleText(.init(text: entry.input, language: .foreign))
@@ -217,7 +217,7 @@ final class KanaPickQuizViewModel: ViewModelProtocol {
     
     // MARK: Output
     
-    private func generateOutputType(for entry: AnyEntry, inputType: ChallengeType) -> ChallengeType {
+    private func generateOutputType(for entry: EntryProtocol, inputType: ChallengeType) -> ChallengeType {
         var outputTypePossibilities = entry.outputPossibilities
         
         outputTypePossibilities.removing(inputType)
@@ -228,12 +228,12 @@ final class KanaPickQuizViewModel: ViewModelProtocol {
         return randomOutputType
     }
     
-    private func generateOutput(for entry: AnyEntry, outputType: ChallengeType) -> [String] {
+    private func generateOutput(for entry: EntryProtocol, outputType: ChallengeType) -> [String] {
         
         var result: [String]
         // Get a list of challenge
-        let otherSameTypeChallengeEntries = challengeEntries.without(entry)
-            .filter { $0.typeIndex == entry.typeIndex }
+        let otherSameTypeChallengeEntries = challengeEntries
+            .filter { $0.typeIndex == entry.typeIndex && $0 != entry }
         
         switch outputType {
         case .text(let language):

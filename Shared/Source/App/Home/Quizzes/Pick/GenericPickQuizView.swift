@@ -24,7 +24,7 @@ import struct SwiftUI.VStack
 
 protocol ViewModelProtocol: ObservableObject {
     
-    init(entries: [AnyEntry])
+    init(entries: [EntryProtocol])
     
     var history: [PickChallenge] { get }
     var wordsLearned: [String] { get }

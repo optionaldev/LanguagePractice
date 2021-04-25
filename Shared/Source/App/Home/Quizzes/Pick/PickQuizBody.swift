@@ -32,10 +32,10 @@ private struct Constants {
     static let resultsID = "results_screen"
 }
 
-struct PickQuizBody<Content: View>: View {
+struct QuizBody<ViewModel: Quizable, Content: View>: View {
     
-    let viewModel: PickQuizViewModel
-    let content: (PickChallenge) -> Content
+    var viewModel: ViewModel
+    let content: (ViewModel.Challenge) -> Content
     
     var body: some View {
         #if os(iOS)

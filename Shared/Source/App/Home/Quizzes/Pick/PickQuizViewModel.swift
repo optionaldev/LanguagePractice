@@ -14,30 +14,21 @@ import struct Foundation.Published
 import struct Foundation.TimeInterval
 
 
-final class PickQuizViewModel: Challengeable, ObservableObject {
-
-    var challengeEntries: [AnyEntry]
+final class PickQuizViewModel: Quizable, ObservableObject {
     
     @Published var visibleChallenges: [PickChallenge] = []
     
     @Published var wordsLearned: [String] = []
     
+    private(set) var challengeEntries: [EntryProtocol]
+    
     var nextChallenge: PickChallenge? = nil
     
-    var challengeStartTime: Date = Date()
+    var challengeStartTime = Date()
     
-    init(entries: [AnyEntry]) {
+    init(entries: [EntryProtocol]) {
         challengeEntries = entries
-        
-        prepareNextChallenge()
-        
-        guard let challenge = nextChallenge else {
-            log("no next challenge", type: .unexpected)
-            return
-        }
-        visibleChallenges.append(challenge)
-        
-        prepareNextChallenge()
+        performInitialSetup()
     }
     
     private var voiceLastTappedIndex: Int = -1
@@ -76,7 +67,46 @@ final class PickQuizViewModel: Challengeable, ObservableObject {
     }
     
     func handleFinish() {
-        // Handle finish
+        guard var lexicon = Defaults.lexicon else {
+            log("Should definitely have a lexicon if we finished the challenge", type: .unexpected)
+            return
+        }
+        
+        var guessHistory = Defaults.wordGuessHistory
+        for entry in visibleChallenges {
+            // History is recorded based on the foreign word ID, because that's what is being learned
+            let id: String
+            if lexicon.foreignDictionary[entry.input] != nil {
+                id = entry.input
+            } else {
+                id = entry.output[entry.correctAnswerIndex]
+            }
+            if case .guessedIncorrectly = entry.state {
+                if guessHistory[id] == nil {
+                    guessHistory[id] = [-1]
+                } else {
+                    guessHistory[id]?.append(-1)
+                }
+            }
+            if case .finished(let value) = entry.state {
+                if guessHistory[id] == nil {
+                    guessHistory[id] = [value]
+                } else {
+                    guessHistory[id]?.append(value)
+                }
+            }
+        }
+        
+        log("Guess history:")
+        let numberFormatter = NumberFormatter()
+        numberFormatter.maximumFractionDigits = 1
+        _ = guessHistory.map { print("\($0.key) \($0.value.compactMap { numberFormatter.string(for: $0) }.joined(separator: " "))") }
+        
+        let knownWordsBeforeChallenge = Defaults.knownWords
+        Defaults.set(guessHistory, forKey: .wordGuessHistory)
+        let knownWordsNow = Defaults.knownWords
+        
+        wordsLearned = knownWordsNow.filter { !knownWordsBeforeChallenge.contains($0) }
     }
 }
 

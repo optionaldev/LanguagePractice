@@ -8,28 +8,31 @@ enum KanaEntryType {
     
     case hiragana
     case katakana
+    case words
 }
 
 struct EntryProvider {
     
-    static func generate(_ type: KanaEntryType) -> [AnyEntry] {
+    static func generate(_ entryType: KanaEntryType) -> [EntryProtocol] {
+        let knownEntries: [String]
+        var challengeEntries: [String]
         
-        let knownEntries: [ForeignCharacter]
-        var challengeEntries: [ForeignCharacter]
-        switch type {
+        switch entryType {
         case .hiragana:
-            knownEntries = Defaults.knownHiragana
-            challengeEntries = Hiragana.all
+            knownEntries = Defaults.knownHiragana.map { $0.roman }
+            challengeEntries = Hiragana.all.map { $0.roman }
         case .katakana:
-            knownEntries = Defaults.knownKatakana
-            challengeEntries = Katakana.all
+            knownEntries = Defaults.knownKatakana.map { $0.roman }
+            challengeEntries = Katakana.all.map { $0.roman }
+        case .words:
+            knownEntries = Defaults.knownWords
+            challengeEntries = Defaults.lexicon!.foreign.nouns.map { $0.id }
         }
         
         challengeEntries = Array(challengeEntries
             .filter { !knownEntries.contains($0) }
             .shuffled()
             .prefix(AppConstants.challengeInitialSampleSize))
-        
         
         // Handle case when there are less than 10 words left to learn
         if challengeEntries.count < AppConstants.challengeInitialSampleSize {
@@ -43,12 +46,33 @@ struct EntryProvider {
             fatalError("Invalid number of elements")
         }
         
-        let kanaClass: KanaEntryProtocol.Type = type == .hiragana ? HiraganaEntry.self : KatakanaEntry.self
-        
-        let kanaInstances = challengeEntries.flatMap { [kanaClass.init(roman: $0.roman, kanaChallengeType: .foreign),
-                                                        kanaClass.init(roman: $0.roman, kanaChallengeType: .romanToForeign),
-                                                        kanaClass.init(roman: $0.roman, kanaChallengeType: .foreignToRoman)] }
-        
-        return kanaInstances.map { AnyEntry(entry: $0) }.shuffled()
+        switch entryType {
+        case .hiragana:
+            return challengeEntries.flatMap {[
+                HiraganaEntry(roman: $0, kanaChallengeType: .foreign),
+                HiraganaEntry(roman: $0, kanaChallengeType: .romanToForeign),
+                HiraganaEntry(roman: $0, kanaChallengeType: .foreignToRoman)
+            ]}
+        case .katakana:
+            return challengeEntries.flatMap {[
+                KatakanaEntry(roman: $0, kanaChallengeType: .foreign),
+                KatakanaEntry(roman: $0, kanaChallengeType: .romanToForeign),
+                KatakanaEntry(roman: $0, kanaChallengeType: .foreignToRoman)
+            ]}
+        case .words:
+            guard var lexicon = Defaults.lexicon else {
+                fatalError()
+            }
+            return challengeEntries.flatMap {[
+                WordEntry(inputLanguage: .english,
+                          input: $0,
+                          outputLanguage: .foreign,
+                          output: lexicon.foreignDictionary[$0]?.id ?? ""),
+                WordEntry(inputLanguage: .foreign,
+                          input: lexicon.foreignDictionary[$0]?.id ?? "",
+                          outputLanguage: .english,
+                          output: $0)
+            ]}
+        }
     }
 }

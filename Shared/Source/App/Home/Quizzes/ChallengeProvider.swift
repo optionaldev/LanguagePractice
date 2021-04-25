@@ -4,44 +4,9 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-import Foundation
-
-enum QuizType {
-    
-    case pick
-    case typing
-}
-
-struct AnyChallenge: ChallengeProtocol {
-    
-    private let challenge: ChallengeProtocol
-
-    init(_ challenge: ChallengeProtocol) {
-        self.challenge = challenge
-    }
-
-    // MARK: - ChallengeProtocol conformance
-    
-    var inputType: ChallengeType {
-        return challenge.inputType
-    }
-    
-    var input: String {
-        return challenge.input
-    }
-    
-    var output: [String] {
-        return challenge.output
-    }
-    
-    var inputRepresentation: Rep {
-        return challenge.inputRepresentation
-    }
-}
-
 final class ChallengeProvider {
     
-    static func generateInputComponents(entry: AnyEntry, word: ForeignWord) -> (ChallengeType, String, Rep) {
+    static func generateInputComponents(entry: EntryProtocol, word: ForeignWord) -> (ChallengeType, String, Rep) {
         let inputType = generateInputType(for: entry)
         let input = generateInput(for: entry, inputType: inputType)
         let inputRep = generateInputRep(for: entry, inputType: inputType, input: input, word: word)
@@ -49,7 +14,7 @@ final class ChallengeProvider {
         return (inputType, input, inputRep)
     }
     
-    static func generatePick(for entry: AnyEntry, allEntries: [AnyEntry]) -> PickChallenge {
+    static func generatePick(for entry: EntryProtocol, allEntries: [EntryProtocol]) -> PickChallenge {
         guard let nextForeignWord = lexicon.foreignDictionary[entry.foreignID] else {
             log("No foreign word with ID = \"\(entry.foreignID)\" found in dictionary", type: .unexpected)
             fatalError("")
@@ -108,7 +73,7 @@ final class ChallengeProvider {
     
     static var lexicon = Defaults.lexicon!
     
-    private static func generateInputType(for entry: AnyEntry) -> ChallengeType {
+    private static func generateInputType(for entry: EntryProtocol) -> ChallengeType {
         var inputTypePossibilities = ChallengeType.allCases
         
         if entry.inputLanguage == .foreign && entry.outputLanguage == .foreign {
@@ -138,7 +103,7 @@ final class ChallengeProvider {
         }
     }
     
-    private static func generateInput(for entry: AnyEntry, inputType: ChallengeType) -> String {
+    private static func generateInput(for entry: EntryProtocol, inputType: ChallengeType) -> String {
         if inputType == .text(.foreign) || inputType == .voice(.foreign) || inputType == .simplified {
             guard let inputWord = lexicon.foreignDictionary[entry.input] else {
                 fatalError("Tried to fetch entry with ID \"\(entry.input)\" from foreign dictionary")
@@ -151,7 +116,7 @@ final class ChallengeProvider {
         }
     }
     
-    private static func generateInputRep(for entry: AnyEntry, inputType: ChallengeType, input: String, word: ForeignWord) -> Rep {
+    private static func generateInputRep(for entry: EntryProtocol, inputType: ChallengeType, input: String, word: ForeignWord) -> Rep {
         switch inputType {
         case .text(let language):
             switch language {
@@ -189,7 +154,7 @@ final class ChallengeProvider {
     
     // MARK: Output
     
-    private static func generateOutputType(for entry: AnyEntry, inputType: ChallengeType) -> ChallengeType {
+    private static func generateOutputType(for entry: EntryProtocol, inputType: ChallengeType) -> ChallengeType {
         var outputTypePossibilities: [ChallengeType]
         switch inputType {
         case .text(let language):
@@ -236,9 +201,9 @@ final class ChallengeProvider {
         return outputType
     }
     
-    private static func generateOutput(for entry: AnyEntry, outputType: ChallengeType, allEntries: [AnyEntry]) -> [String] {
+    private static func generateOutput(for entry: EntryProtocol, outputType: ChallengeType, allEntries: [EntryProtocol]) -> [String] {
         // Get a list of challenge
-        var otherSameTypeChallengeEntries = allEntries.filter { $0.sameType(as: entry) && $0 != entry }
+        var otherSameTypeChallengeEntries = allEntries.filter { $0.typeIndex == entry.typeIndex && $0.foreignID != entry.foreignID }
         if let word = lexicon.foreignDictionary[entry.foreignID] {
             let other = otherSameTypeChallengeEntries.filter { $0.english == nil ||
                                                               !word.english.contains($0.english!) }
