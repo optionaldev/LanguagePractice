@@ -4,7 +4,7 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 //
 
-enum KanaEntryType {
+enum EntryType {
     
     case hiragana
     case katakana
@@ -13,7 +13,7 @@ enum KanaEntryType {
 
 struct EntryProvider {
     
-    static func generate(_ entryType: KanaEntryType) -> [EntryProtocol] {
+    static func generate(_ entryType: EntryType) -> [EntryProtocol] {
         let knownEntries: [String]
         var challengeEntries: [String]
         

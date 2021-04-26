@@ -23,6 +23,10 @@ import struct SwiftUI.ViewBuilder
 
 struct PickQuizView: View {
     
+    init(entryType: EntryType) {
+        viewModel = PickQuizViewModel(entries: EntryProvider.generate(entryType))
+    }
+    
     var body: some View {
         QuizBody(viewModel: viewModel) { challenge in
             challengeView(challenge: challenge)
@@ -31,7 +35,7 @@ struct PickQuizView: View {
     
     // MARK: - Private
     
-    @ObservedObject private var viewModel = PickQuizViewModel(entries: EntryProvider.generate(.hiragana))
+    @ObservedObject private var viewModel: PickQuizViewModel
     
     @ViewBuilder
     private func challengeView(challenge: PickChallenge) -> some View {

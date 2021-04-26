@@ -6,21 +6,17 @@
 
 final class ChallengeProvider {
     
-    static func generateInputComponents(entry: EntryProtocol, word: ForeignWord) -> (ChallengeType, String, Rep) {
+    static func generateInputComponents(entry: EntryProtocol) -> (ChallengeType, String, Rep) {
         let inputType = generateInputType(for: entry)
         let input = generateInput(for: entry, inputType: inputType)
-        let inputRep = generateInputRep(for: entry, inputType: inputType, input: input, word: word)
+        let inputRep = generateInputRep(for: entry, inputType: inputType, input: input)
         
         return (inputType, input, inputRep)
     }
     
     static func generatePick(for entry: EntryProtocol, allEntries: [EntryProtocol]) -> PickChallenge {
-        guard let nextForeignWord = lexicon.foreignDictionary[entry.foreignID] else {
-            log("No foreign word with ID = \"\(entry.foreignID)\" found in dictionary", type: .unexpected)
-            fatalError("")
-        }
         
-        let (inputType, input, inputRep) = generateInputComponents(entry: entry, word: nextForeignWord)
+        let (inputType, input, inputRep) = generateInputComponents(entry: entry)
         
         let outputType = generateOutputType(for: entry, inputType: inputType)
         var output = generateOutput(for: entry, outputType: outputType, allEntries: allEntries)
@@ -37,7 +33,7 @@ final class ChallengeProvider {
         output.append(answerOutput)
         output.shuffle()
         
-        let outputRep = generateOutputRep(outputType: outputType, output: output, word: nextForeignWord)
+        let outputRep = generateOutputRep(for: entry, outputType: outputType, output: output)
         let correctAnswerIndex = output.firstIndex(of: answerOutput)!
         
         return PickChallenge(inputType: inputType,
@@ -49,13 +45,21 @@ final class ChallengeProvider {
                              outputRepresentations: outputRep)
     }
     
+    private static func word(for entry: EntryProtocol) -> ForeignWord {
+        guard let nextForeignWord = lexicon.foreignDictionary[entry.foreignID] else {
+            log("No foreign word with ID = \"\(entry.foreignID)\" found in dictionary", type: .unexpected)
+            fatalError("")
+        }
+        return nextForeignWord
+    }
+    
     static func generateTyping(for entry: AnyEntry, allEntries: [AnyEntry]) -> TypingChallenge {
         guard let nextForeignWord = lexicon.foreignDictionary[entry.foreignID] else {
             log("No foreign word with ID = \"\(entry.foreignID)\" found in dictionary", type: .unexpected)
             fatalError("")
         }
         
-        let (inputType, input, inputRep) = generateInputComponents(entry: entry, word: nextForeignWord)
+        let (inputType, input, inputRep) = generateInputComponents(entry: entry)
         
         let output: [String]
         switch entry.outputLanguage {
@@ -116,7 +120,7 @@ final class ChallengeProvider {
         }
     }
     
-    private static func generateInputRep(for entry: EntryProtocol, inputType: ChallengeType, input: String, word: ForeignWord) -> Rep {
+    private static func generateInputRep(for entry: EntryProtocol, inputType: ChallengeType, input: String) -> Rep {
         switch inputType {
         case .text(let language):
             switch language {
@@ -125,12 +129,12 @@ final class ChallengeProvider {
                                          language: .english))
                 
             case .foreign:
-                if word.hasKana {
-                    return .textWithFurigana(.init(text: word.characters.map { String($0) },
-                                                   furigana: word.kanaComponenets,
+                if word(for: entry).hasKana {
+                    return .textWithFurigana(.init(text: word(for: entry).characters.map { String($0) },
+                                                   furigana: word(for: entry).kanaComponenets,
                                                    english: entry.output.removingDigits()))
                 } else {
-                    return .simpleText(.init(text: word.characters,
+                    return .simpleText(.init(text: word(for: entry).characters,
                                              language: .foreign))
                 }
             }
@@ -140,13 +144,13 @@ final class ChallengeProvider {
                 return .voice(.init(text: entry.input.removingDigits(),
                                     language: .english))
             case .foreign:
-                return .voice(.init(text: word.characters,
+                return .voice(.init(text: word(for: entry).characters,
                                     language: .foreign))
             }
         case .image:
             return .image(.init(imageID: input))
         case .simplified:
-            return .textWithTranslation(.init(text: word.characters,
+            return .textWithTranslation(.init(text: word(for: entry).characters,
                                               language: .foreign,
                                               translation: entry.output.removingDigits()))
         }
@@ -261,7 +265,7 @@ final class ChallengeProvider {
         return output
     }
     
-    private static func generateOutputRep(outputType: ChallengeType, output: [String], word: ForeignWord) -> [Rep] {
+    private static func generateOutputRep(for entry: EntryProtocol, outputType: ChallengeType, output: [String]) -> [Rep] {
         let result: [Rep]
         
         switch outputType {
@@ -277,7 +281,7 @@ final class ChallengeProvider {
             case .english:
                 result = output.map { Rep.textWithTranslation(.init(text: $0.removingDigits(),
                                                                     language: .english,
-                                                                    translation: word.characters)) }
+                                                                    translation: word(for: entry).characters)) }
             case .foreign:
                 result = output.compactMap { lexicon.foreignDictionary[$0] }
                     .map { Rep.textWithFurigana(.init(text: $0.characters.map { String($0) },

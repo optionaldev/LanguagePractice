@@ -8,6 +8,7 @@ import Dispatch
 
 import struct Foundation.Date
 
+import protocol SwiftUI.ObservableObject
 
 protocol OutputQuizable: Quizable {
     
@@ -41,7 +42,7 @@ extension OutputQuizable where Challenge == PickChallenge {
    }
 }
 
-protocol Quizable: class {
+protocol Quizable: ObservableObject {
     
     associatedtype Challenge: ChallengeProtocol
     

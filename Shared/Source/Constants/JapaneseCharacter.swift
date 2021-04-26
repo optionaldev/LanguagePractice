@@ -19,20 +19,20 @@ struct ForeignCharacter: Codable, Equatable {
             return nil
         }
         self.roman = roman
-        
+
         #if JAPANESE
         guard let hiragana = roman.applyingTransform(.latinToHiragana, reverse: false) else {
             log("\"\(roman)\" not convertible to hiragana", type: .unexpected)
             return nil
         }
-        
+
         self.hiragana = hiragana
-        
+
         guard let katakana = hiragana.applyingTransform(.hiraganaToKatakana, reverse: false) else {
             log("\"\(hiragana)\" not convertible to katakana", type: .unexpected)
             return nil
         }
-        
+
         self.katakana = katakana
         #endif
     }

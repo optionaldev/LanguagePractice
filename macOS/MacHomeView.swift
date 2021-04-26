@@ -26,11 +26,11 @@ struct MacHomeView: View {
             if let quiz = viewModel.currentQuiz {
                 switch quiz {
                 case .hiragana:
-                    GenericPickQuizView(viewModel: KanaPickQuizViewModel(entries: EntryProvider.generate(.hiragana)))
+                    PickQuizView(entryType: .hiragana)
                 case .katakana:
-                    GenericPickQuizView(viewModel: KanaPickQuizViewModel(entries: EntryProvider.generate(.katakana)))
+                    PickQuizView(entryType: .katakana)
                 case .words:
-                    PickQuizView()
+                    PickQuizView(entryType: .words)
                 }
             }
         }
