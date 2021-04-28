@@ -19,11 +19,11 @@ struct EntryProvider {
         
         switch entryType {
         case .hiragana:
-            knownEntries = Defaults.knownHiragana.map { $0.roman }
-            challengeEntries = Hiragana.all.map { $0.roman }
+            knownEntries = Defaults.knownHiragana
+            challengeEntries = Defaults.lexicon!.foreign.hiragana.map { $0.id }
         case .katakana:
-            knownEntries = Defaults.knownKatakana.map { $0.roman }
-            challengeEntries = Katakana.all.map { $0.roman }
+            knownEntries = Defaults.knownKatakana
+            challengeEntries = Defaults.lexicon!.foreign.katakana.map { $0.id }
         case .words:
             knownEntries = Defaults.knownWords
             challengeEntries = Defaults.lexicon!.foreign.nouns.map { $0.id }

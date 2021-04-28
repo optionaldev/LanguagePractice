@@ -46,16 +46,16 @@ final class Defaults: DefaultsArrayProtocol,
         return Defaults.dictionary(forKey: .hiraganaGuessHistory)
     }
     
-    static var knownHiragana: [ForeignCharacter] {
-        return hiraganaGuessHistory.known().compactMap { ForeignCharacter($0) } 
+    static var knownHiragana: [String] {
+        return hiraganaGuessHistory.known()
     }
     
     static var katakanaGuessHistory: [String: [TimeInterval]] {
         return Defaults.dictionary(forKey: .katakanaGuessHistory)
     }
     
-    static var knownKatakana: [ForeignCharacter] {
-        return katakanaGuessHistory.known().compactMap { ForeignCharacter($0) }
+    static var knownKatakana: [String] {
+        return katakanaGuessHistory.known()
     }
     #endif
 }

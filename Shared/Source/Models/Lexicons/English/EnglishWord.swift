@@ -4,6 +4,6 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-protocol EnglishWord: Word {
+protocol EnglishWord: Item {
     
 }

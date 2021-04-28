@@ -6,5 +6,7 @@
 
 struct ForeignLexicon: Codable {
     
+    let hiragana: [ForeignCharacter]
+    let katakana: [ForeignCharacter]
     let nouns: [ForeignNoun]
 }

@@ -4,10 +4,7 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-protocol ForeignWord: Word {
-    
-    // The word represented in a foreign using that foreign language's alphabet(s)
-    var characters: String { get }
+protocol ForeignWord: ForeignItem {
     
     // A list of IDs representing english words that the foreign word can be translated into
     var english: [String] { get }

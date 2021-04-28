@@ -4,7 +4,7 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-protocol Word: Codable {
+protocol Item: Codable {
     
     var id: String { get }
 }
