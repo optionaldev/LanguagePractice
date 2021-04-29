@@ -60,62 +60,6 @@ extension EntryProtocol {
     }
 }
 
-struct AnyEntry: EntryProtocol, Equatable, Identifiable {
-    
-    private let entry: EntryProtocol
-    
-    init(entry: EntryProtocol) {
-        self.entry = entry
-    }
-    
-    var inputLanguage: Language {
-        return entry.inputLanguage
-    }
-    
-    var outputLanguage: Language {
-        return entry.outputLanguage
-    }
-    
-    var input: String {
-        return entry.input
-    }
-    
-    var output: String {
-        return entry.output
-    }
-    
-    var inputPossibilities: [ChallengeType] {
-        return entry.inputPossibilities
-    }
-    
-    var outputPossibilities: [ChallengeType] {
-        return entry.outputPossibilities
-    }
-    
-    var foreignID: String {
-        return entry.foreignID
-    }
-    
-    var typeIndex: Int {
-        return entry.typeIndex
-    }
-    
-    // Equatable conformance
-    
-    static func == (lhs: AnyEntry, rhs: AnyEntry) -> Bool {
-        return lhs.input == rhs.input &&
-            lhs.output == rhs.output &&
-            lhs.inputLanguage == rhs.inputLanguage &&
-            lhs.outputLanguage == rhs.outputLanguage
-    }
-    
-    // Identifiable conformance
-    
-    var id: String {
-        return input
-    }
-}
-
 enum KanaChallengeType {
     
     case foreign
@@ -220,11 +164,17 @@ struct WordEntry: EntryProtocol {
     let output: String
     
     var inputPossibilities: [ChallengeType] {
-        return ChallengeType.allCases
+        if inputLanguage == outputLanguage {
+            return [.simplified]
+        }
+        return ChallengeType.availableChallenges
     }
     
     var outputPossibilities: [ChallengeType] {
-        return ChallengeType.allCases
+        if inputLanguage == outputLanguage {
+            return [.simplified]
+        }
+        return ChallengeType.availableChallenges
     }
     
     var foreignID: String {

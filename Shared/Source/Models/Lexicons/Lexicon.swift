@@ -13,8 +13,8 @@ struct Lexicon: Codable {
         english.nouns.reduce(into: [String: EnglishWord]()) { $0[$1.id] = $1 }
     }()
     
-    lazy var foreignDictionary: [String: ForeignWord] = {
-        foreign.nouns.reduce(into: [String: ForeignWord]()) { $0[$1.id] = $1 }
+    lazy var foreignDictionary: [String: ForeignItem] = {
+        foreign.all.reduce(into: [String: ForeignItem]()) { $0[$1.id] = $1 }
     }()
     
     init(english: EnglishLexicon, foreign: ForeignLexicon) {

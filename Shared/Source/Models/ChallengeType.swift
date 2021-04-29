@@ -4,6 +4,15 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
+private struct Constants {
+    
+    // Technically, image isn't always available, but we can only check that on a per challenge basis
+    static let alwaysAvailableChallengeTypes : [ChallengeType] = [.simplified,
+                                                                  .image,
+                                                                  .text(.english),
+                                                                  .text(.foreign)]
+}
+
 enum ChallengeType: Hashable, Codable {
     
     case text(Language)
@@ -39,13 +48,17 @@ enum ChallengeType: Hashable, Codable {
         }
     }
     
-    static var allCases: [ChallengeType] {
-        return [.image,
-                .simplified,
-                .text(.english),
-                .text(.foreign),
-                .voice(.english),
-                .voice(.foreign)]
+    static var availableChallenges: [ChallengeType] {
+        var result = Constants.alwaysAvailableChallengeTypes
+        if Defaults.voiceEnabled {
+            if Language.english.voices.count != 0 {
+                result.append(.voice(.english))
+            }
+            if Language.foreign.voices.count != 0 {
+                result.append(.voice(.foreign))
+            }
+        }
+        return result
     }
     
     // MARK: - Codable conformance
@@ -54,7 +67,7 @@ enum ChallengeType: Hashable, Codable {
         let container = try decoder.singleValueContainer()
         
         let int = try container.decode(Int.self)
-        for cas in ChallengeType.allCases {
+        for cas in ChallengeType.availableChallenges {
             if cas.storeValue == int {
                 self = cas
                 return
