@@ -18,7 +18,7 @@ import struct SwiftUI.VStack
 
 
 
-struct QuizView {
+struct QuizViews {
     
     static let waveformImage = Image(systemName: "waveform.circle")
     

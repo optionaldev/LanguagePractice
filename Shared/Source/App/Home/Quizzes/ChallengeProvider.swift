@@ -22,13 +22,17 @@ final class ChallengeProvider {
         var output = generateOutput(for: entry, outputType: outputType, allEntries: allEntries)
         
         let answerOutput: String
-        // Handle the case where output is already kana in nextEntry for simplified case
-        if entry.outputLanguage == .english {
+        if entry is KanaEntryProtocol {
             answerOutput = entry.output
-        } else if entry.inputLanguage == .foreign && entry.outputLanguage == .foreign {
-            answerOutput = entry.input
         } else {
-            answerOutput = lexicon.foreignDictionary[entry.output]?.id ?? ""
+            // Handle the case where output is already kana in nextEntry for simplified case
+            if entry.outputLanguage == .english {
+                answerOutput = entry.output
+            } else if entry.inputLanguage == .foreign && entry.outputLanguage == .foreign {
+                answerOutput = entry.input
+            } else {
+                answerOutput = lexicon.foreignDictionary[entry.output]?.id ?? ""
+            }
         }
         output.append(answerOutput)
         output.shuffle()
@@ -45,7 +49,7 @@ final class ChallengeProvider {
                              outputRepresentations: outputRep)
     }
     
-    private static func item(for entry: EntryProtocol) -> ForeignItem {
+    private static func  item(for entry: EntryProtocol) -> ForeignItem {
         guard let nextForeignItem = lexicon.foreignDictionary[entry.foreignID] else {
             log("No foreign word with ID = \"\(entry.foreignID)\" found in dictionary", type: .unexpected)
             fatalError("")
@@ -80,12 +84,6 @@ final class ChallengeProvider {
     private static func generateInputType(for entry: EntryProtocol) -> ChallengeType {
         var inputTypePossibilities = entry.inputPossibilities
         
-        if entry is WordEntry && entry.inputLanguage == entry.outputLanguage {
-            return .simplified
-        } else {
-            inputTypePossibilities.removing(.simplified)
-        }
-        
         // In case there's no images found, we can't create image based challenges
         // For entries that don't have "from" as english, it doens't make sense to create an image based challenge
         // We would just end up trying to guess if an image representing a concept matching an english word,
@@ -94,13 +92,17 @@ final class ChallengeProvider {
             inputTypePossibilities.removing(.image)
         }
         
-        // `entry.to` represents the output type, but here we're trying to generate the input type
-        // and aside from simplified challenge, input & output are never the same language
-        inputTypePossibilities.removing(.voice(entry.outputLanguage))
-        inputTypePossibilities.removing(.text(entry.outputLanguage))
-        
-        if entry.english != nil {
-            inputTypePossibilities.removing(.simplified)
+        if entry is WordEntry {
+            if entry.inputLanguage == entry.outputLanguage {
+                return .simplified
+            } else {
+                inputTypePossibilities.removing(.simplified)
+                
+                // `entry.to` represents the output type, but here we're trying to generate the input type
+                // and aside from simplified challenge, input & output are never the same language
+                inputTypePossibilities.removing(.voice(entry.outputLanguage))
+                inputTypePossibilities.removing(.text(entry.outputLanguage))
+            }
         }
         
         guard let randomInputType = inputTypePossibilities.randomElement() else {
@@ -132,7 +134,6 @@ final class ChallengeProvider {
             case .english:
                 return .simpleText(.init(text: entry.input.removingDigits(),
                                          language: .english))
-                
             case .foreign:
                 if let word = nextForeignItem as? ForeignWord {
                     if word.hasKana {
@@ -144,8 +145,7 @@ final class ChallengeProvider {
                                                  language: .foreign))
                     }
                 } else {
-                    /// ???
-                    return .simpleText(.init(text: "", language: .english))
+                    return .simpleText(.init(text: entry.input, language: .foreign))
                 }
             }
         case .voice(let language):
@@ -169,47 +169,46 @@ final class ChallengeProvider {
     // MARK: Output
     
     private static func generateOutputType(for entry: EntryProtocol, inputType: ChallengeType) -> ChallengeType {
-        var outputTypePossibilities: [ChallengeType]
+        if inputType == .simplified {
+            return .simplified
+        }
+        
+        if entry is WordEntry == false {
+            guard let result = entry.outputPossibilities.without(inputType).randomElement() else {
+                fatalError("How did we get here?")
+            }
+            return result
+        }
+        
+        var validOutputTypeForInput: [ChallengeType]
         
         switch inputType {
         case .text(let language):
             switch language {
             case .english:
-                outputTypePossibilities = [.text(.foreign), .voice(.foreign)]
+                validOutputTypeForInput = [.text(.foreign), .voice(.foreign)]
             case .foreign:
-                outputTypePossibilities = [.text(.english), .image]
+                validOutputTypeForInput = [.text(.english), .image]
             }
         case .voice(let language):
             switch language {
             case .english:
-                outputTypePossibilities = [.text(.foreign), .voice(.foreign)]
+                validOutputTypeForInput = [.text(.foreign), .voice(.foreign)]
             case .foreign:
-                outputTypePossibilities = [.text(.english), .image /*TODO: draw kanji ?*/]
+                validOutputTypeForInput = [.text(.english), .image /*TODO: draw kanji ?*/]
             }
         case .image:
-            outputTypePossibilities = [.text(.foreign), .voice(.foreign)]
+            validOutputTypeForInput = [.text(.foreign), .voice(.foreign)]
         case .simplified:
-            outputTypePossibilities = [.text(.foreign)]
+            validOutputTypeForInput = [.text(.foreign)]
         }
         
-        if entry.english != nil || entry is KanaEntryProtocol {
-            outputTypePossibilities.removing(.simplified)
-        }
+        let validOutputTypeSet = Set(validOutputTypeForInput)
+        let possibleOutputTypeSet = Set(entry.outputPossibilities)
+        let outputTypeSet = possibleOutputTypeSet.intersection(validOutputTypeSet)
         
-        if entry.noImage {
-            outputTypePossibilities.removing(.image)
-        } else {
-            // TODO: handle not enough images downloaded so far
-        }
-        
-        var outputType: ChallengeType
-        if inputType == .simplified {
-            outputType = .simplified
-        } else {
-            guard let randomOutputType = outputTypePossibilities.randomElement() else {
-                fatalError("Array is empty after filters are applied")
-            }
-            outputType = randomOutputType
+        guard let outputType = outputTypeSet.randomElement() else {
+            fatalError("Set is empty after filters are applied")
         }
         
         return outputType
@@ -224,6 +223,12 @@ final class ChallengeProvider {
             let other = otherSameTypeChallengeEntries.filter { $0.english == nil ||
                                                               !word.english.contains($0.english!) }
             otherSameTypeChallengeEntries = other
+        }
+        
+        if entry is KanaEntryProtocol {
+            let challenges = otherSameTypeChallengeEntries.map { $0.output }
+            
+            return challenges.removingDuplicates().shuffled().prefix(5).map { $0 }
         }
         
         var output: [String]
@@ -263,8 +268,12 @@ final class ChallengeProvider {
             case .english:
                 output = Array(otherSameTypeChallengeEntries.map { $0.output })
             case .foreign:
-                let outputIDs = Array(otherSameTypeChallengeEntries.map { $0.output })
-                output = outputIDs.compactMap { lexicon.foreignDictionary[$0]?.id }
+                if entry is WordEntry {
+                    let outputIDs = Array(otherSameTypeChallengeEntries.map { $0.output })
+                    output = outputIDs.compactMap { lexicon.foreignDictionary[$0]?.id }
+                } else {
+                    output = otherSameTypeChallengeEntries.map { $0.output }
+                }
             }
         }
         
@@ -280,36 +289,53 @@ final class ChallengeProvider {
     private static func generateOutputRep(for entry: EntryProtocol, outputType: ChallengeType, output: [String]) -> [Rep] {
         let result: [Rep]
         
-        switch outputType {
-        case .image:
-            result = output.map { Rep.image(.init(imageID: $0)) }
-        case .simplified:
-            
-            result = output.compactMap { lexicon.foreignDictionary[$0] }
-                .compactMap { $0 as? ForeignWord }
-                .map { Rep.textWithTranslation(.init(text: $0.kana ?? "kana-miss",
-                                                     language: .foreign,
-                                                     translation: $0.english.randomElement()!.removingDigits()))}
-        case .text(let language):
-            switch language {
-            case .english:
-                result = output.map { Rep.textWithTranslation(.init(text: $0.removingDigits(),
-                                                                    language: .english,
-                                                                    translation: item(for: entry).characters)) }
-            case .foreign:
+        if entry is KanaEntryProtocol {
+            switch outputType {
+            case .text(let language):
+                result = output.map { Rep.simpleText(.init(text: $0, language: language)) }
+            case .voice(let language):
+                switch language {
+                case .english:
+                    fatalError("We don't want to read \"a\" with english voice")
+                case .foreign:
+                    result = output.map { Rep.voice(.init(text: $0, language: .foreign)) }
+                }
+            case .image, .simplified:
+                fatalError("Not possible to have these output types")
+            }
+        } else {
+        
+            switch outputType {
+            case .image:
+                result = output.map { Rep.image(.init(imageID: $0)) }
+            case .simplified:
+                
                 result = output.compactMap { lexicon.foreignDictionary[$0] }
                     .compactMap { $0 as? ForeignWord }
-                    .map { Rep.textWithFurigana(.init(text: $0.characters.map { String($0) },
-                                                      furigana: $0.kanaComponenets,
-                                                      english: $0.english.first!)) }
-            }
-        case .voice(let language):
-            switch language {
-            case .english:
-                result = output.map { Rep.voice(.init(text: $0.removingDigits(), language: .english)) }
-            case .foreign:
-                result = output.compactMap { lexicon.foreignDictionary[$0] }
-                    .map { Rep.voice(.init(text: $0.characters, language: .foreign)) }
+                    .map { Rep.textWithTranslation(.init(text: $0.kana ?? "kana-miss",
+                                                         language: .foreign,
+                                                         translation: $0.english.randomElement()!.removingDigits()))}
+            case .text(let language):
+                switch language {
+                case .english:
+                    result = output.map { Rep.textWithTranslation(.init(text: $0.removingDigits(),
+                                                                        language: .english,
+                                                                        translation: item(for: entry).characters)) }
+                case .foreign:
+                    result = output.compactMap { lexicon.foreignDictionary[$0] }
+                        .compactMap { $0 as? ForeignWord }
+                        .map { Rep.textWithFurigana(.init(text: $0.characters.map { String($0) },
+                                                          furigana: $0.kanaComponenets,
+                                                          english: $0.english.first!)) }
+                }
+            case .voice(let language):
+                switch language {
+                case .english:
+                    result = output.map { Rep.voice(.init(text: $0.removingDigits(), language: .english)) }
+                case .foreign:
+                    result = output.compactMap { lexicon.foreignDictionary[$0] }
+                        .map { Rep.voice(.init(text: $0.characters, language: .foreign)) }
+                }
             }
         }
         

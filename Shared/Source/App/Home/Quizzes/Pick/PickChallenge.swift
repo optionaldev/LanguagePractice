@@ -4,7 +4,7 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-struct PickChallenge: ChallengeProtocol, Identifiable, Equatable {
+struct PickChallenge: ChallengeProtocol {
     
     let outputType: ChallengeType
     let output: [String]
@@ -66,6 +66,6 @@ struct PickChallenge: ChallengeProtocol, Identifiable, Equatable {
     // MARK: - Identifiable conformance
     
     var id: String {
-        return input + output[correctAnswerIndex]
+        return input + output[correctAnswerIndex] + "\(inputType.storeValue) \(outputType.storeValue)"
     }
 }

@@ -9,6 +9,8 @@ import protocol SwiftUI.Scene
 
 import struct   SwiftUI.WindowGroup
 
+import Foundation
+
 @main
 struct LanguagePracticeApp: App {
 
@@ -16,6 +18,9 @@ struct LanguagePracticeApp: App {
         Logger.performInitialSetup()
 //        _ = Speech.shared
         printStatus()
+        
+        UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+        UserDefaults.standard.synchronize()
     }
     
     var body: some Scene {

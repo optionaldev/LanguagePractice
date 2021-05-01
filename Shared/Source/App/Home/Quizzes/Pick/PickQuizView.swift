@@ -24,7 +24,7 @@ import struct SwiftUI.ViewBuilder
 struct PickQuizView: View {
     
     init(entryType: EntryType) {
-        viewModel = PickQuizViewModel(entries: EntryProvider.generate(entryType))
+        viewModel = PickQuizViewModel(entryType: entryType)
     }
     
     var body: some View {
@@ -55,7 +55,7 @@ struct PickQuizView: View {
         .background(Color.green.opacity(0.3))
         #else
         HStack {
-            QuizView.inputView(rep: challenge.inputRepresentation, viewModel: viewModel)
+            QuizViews.inputView(rep: challenge.inputRepresentation, viewModel: viewModel)
                 .frame(width: 390, height: 290)
                 .background(Color.orange.opacity(0.5))
                 .cornerRadius(5)
@@ -91,9 +91,9 @@ struct PickQuizView: View {
     private func outputContent(forRepresentation representation: Rep) -> some View {
         switch representation {
         case .image(let rep):
-            QuizView.viewForImage(withRepresentation: rep, signal: .output)
+            QuizViews.viewForImage(withRepresentation: rep, signal: .output)
         case .voice:
-            QuizView.waveformImage
+            QuizViews.waveformImage
                 .resizable()
                 .aspectRatio(1, contentMode: .fit)
                 .padding(10)
@@ -111,7 +111,7 @@ struct PickQuizView: View {
                 .background(Color.blue.opacity(0.5))
                 .cornerRadius(5)
         case .textWithFurigana(let rep):
-            QuizView.textWithFurigana(representation: rep)
+            QuizViews.textWithFurigana(representation: rep)
                 .background(Color.blue.opacity(0.5))
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .cornerRadius(5)

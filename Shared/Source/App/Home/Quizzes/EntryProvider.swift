@@ -9,6 +9,17 @@ enum EntryType {
     case hiragana
     case katakana
     case words
+    
+    var defaultsDictionaryKey: DefaultsDictionaryKey {
+        switch self {
+        case .hiragana:
+            return .hiraganaGuessHistory
+        case .katakana:
+            return .katakanaGuessHistory
+        case .words:
+            return .wordGuessHistory
+        }
+    }
 }
 
 struct EntryProvider {
@@ -46,15 +57,17 @@ struct EntryProvider {
             fatalError("Invalid number of elements")
         }
         
+        let result: [EntryProtocol]
+        
         switch entryType {
         case .hiragana:
-            return challengeEntries.flatMap {[
+            result = challengeEntries.flatMap {[
                 HiraganaEntry(roman: $0, kanaChallengeType: .foreign),
                 HiraganaEntry(roman: $0, kanaChallengeType: .romanToForeign),
                 HiraganaEntry(roman: $0, kanaChallengeType: .foreignToRoman)
             ]}
         case .katakana:
-            return challengeEntries.flatMap {[
+            result = challengeEntries.flatMap {[
                 KatakanaEntry(roman: $0, kanaChallengeType: .foreign),
                 KatakanaEntry(roman: $0, kanaChallengeType: .romanToForeign),
                 KatakanaEntry(roman: $0, kanaChallengeType: .foreignToRoman)
@@ -63,7 +76,7 @@ struct EntryProvider {
             guard var lexicon = Defaults.lexicon else {
                 fatalError()
             }
-            return challengeEntries.flatMap {[
+            result = challengeEntries.flatMap {[
                 WordEntry(inputLanguage: .english,
                           input: $0,
                           outputLanguage: .foreign,
@@ -74,5 +87,7 @@ struct EntryProvider {
                           output: $0)
             ]}
         }
+        
+        return result.shuffled()
     }
 }
