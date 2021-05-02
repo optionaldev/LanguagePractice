@@ -68,14 +68,15 @@ struct QuizBody<ViewModel: Quizable, Content: View>: View {
                     LazyStack(spacing: 0) {
                         ForEach(viewModel.visibleChallenges) { challenge in
                             content(challenge)
+                                .disabled(challenge != viewModel.visibleChallenges.last)
                         }
                         if viewModel.wordsLearned.isEmpty == false {
                             resultsScreen()
                         }
                     }
-                    .onChange(of: viewModel.visibleChallenges) { val in
+                    .onChange(of: viewModel.visibleChallenges) { visibleChallenges in
                         withAnimation {
-                            value.scrollTo(val.last!.id)
+                            value.scrollTo(visibleChallenges.last!.id)
                         }
                     }
                     .onChange(of: viewModel.wordsLearned) { _ in

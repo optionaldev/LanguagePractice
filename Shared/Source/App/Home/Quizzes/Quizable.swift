@@ -7,6 +7,7 @@
 import Dispatch
 
 import struct Foundation.Date
+import struct Foundation.TimeInterval
 
 import protocol SwiftUI.ObservableObject
 
@@ -40,13 +41,17 @@ extension OutputQuizable where Challenge == PickChallenge {
            }
        }
    }
+    
+    func challengeAppeared() {
+        if !currentChallenge.inputRepresentation.voiceChallenge &&
+            !currentChallenge.outputRepresentations[0].voiceChallenge
+        {
+            challengeMeasurement.start()
+        }
+    }
 }
 
-protocol Quizable: ObservableObject {
-    
-    associatedtype Challenge: ChallengeProtocol
-    
-    var challengeEntries: [EntryProtocol] { get }
+final class ChallengeMeasurement {
     
     /// Defines the point at which the challenge measurement time starts.
     ///
@@ -60,7 +65,35 @@ protocol Quizable: ObservableObject {
     /// the value is set after the sound is heard. For input, this means after the screen is
     /// presented and the sound has been heard. For output, this means after the correct
     /// answer has been heart the firs time
-    var challengeStartTime: Date { get }
+    private var startTime: Date? = nil
+    
+    func start() {
+        if startTime == nil {
+            log("challenge measurement START >>>>>>>>")
+            startTime = Date()
+        }
+    }
+    
+    func stopAndFetchResult() -> TimeInterval {
+        if let time = startTime {
+            let measurement = time.distance(to: Date())
+            startTime = nil
+            log("challenge measurement STOP ||||||| measurement = \(measurement)")
+            return measurement
+        }
+        startTime = nil
+        log("Should always called fetch after starting", type: .unexpected)
+        return .zero
+    }
+}
+
+protocol Quizable: ObservableObject {
+    
+    associatedtype Challenge: ChallengeProtocol
+    
+    var challengeEntries: [EntryProtocol] { get }
+    
+    var challengeMeasurement: ChallengeMeasurement { get }
     
     /// Challenge that the user is currently seeing (unless the content was scrolled)
     var currentChallenge: Challenge { get }
@@ -78,8 +111,9 @@ protocol Quizable: ObservableObject {
     /// This is populated after the last challenge has been completed.
     var wordsLearned: [String] { get }
     
-    init(entries: [EntryProtocol])
+    init(entryType: EntryType)
     
+    func challengeAppeared()
     func finishedCurrentChallenge()
     func handleFinish()
     func inputTapped()
@@ -105,6 +139,7 @@ extension Quizable {
         
         if let nextChallenge = nextChallenge {
             visibleChallenges.append(nextChallenge)
+            challengeAppeared()
         } else {
             handleFinish()
         }
@@ -113,18 +148,35 @@ extension Quizable {
         nextChallenge = nil
         
         DispatchQueue.global(qos: .userInitiated).async {
-            self.prepareNextChallenge()
+            self.prepareNextChallengeIfAvailable()
         }
     }
     
     func performInitialSetup() {
-        prepareNextChallenge()
+        prepareNextChallengeIfAvailable()
         
         guard let challenge = nextChallenge else {
             log("no next challenge", type: .unexpected)
             return
         }
         visibleChallenges.append(challenge)
+        challengeAppeared()
+        
+        prepareNextChallengeIfAvailable()
+    }
+    
+    func challengeAppeared() {
+        if !currentChallenge.inputRepresentation.voiceChallenge {
+            challengeMeasurement.start()
+        }
+    }
+    
+    // MARK: - Private
+    
+    private func prepareNextChallengeIfAvailable() {
+        guard visibleChallenges.count < challengeEntries.count else {
+            return
+        }
         
         prepareNextChallenge()
     }

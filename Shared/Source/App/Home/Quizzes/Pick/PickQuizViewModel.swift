@@ -14,7 +14,9 @@ import struct Foundation.Published
 import struct Foundation.TimeInterval
 
 
-final class PickQuizViewModel: Quizable, ObservableObject {
+final class PickQuizViewModel: OutputQuizable, ObservableObject, SpeechDelegate {
+    
+    var challengeMeasurement = ChallengeMeasurement()
     
     @Published var visibleChallenges: [PickChallenge] = []
     
@@ -24,40 +26,18 @@ final class PickQuizViewModel: Quizable, ObservableObject {
     
     var nextChallenge: PickChallenge? = nil
     
-    var challengeStartTime = Date()
-    
-    init(entries: [EntryProtocol]) {
-        challengeEntries = entries
+    init(entryType: EntryType) {
+        challengeEntries = EntryProvider.generate(entryType)
         performInitialSetup()
+        
+        Speech.shared.delegate = self
     }
     
-    private var voiceLastTappedIndex: Int = -1
-    
-    func chose(index: Int) {
-        switch currentChallenge.outputRepresentations[index] {
-        case .voice(let rep):
-            // When voice is the output type of the challenge, the user first has to tap on the
-            // output button to hear the answer and tap the same output button again to choose
-            // that answer, so we always remember what the last pressed button was
-            if voiceLastTappedIndex == index && currentChallenge.correctAnswerIndex == index {
-                goToNext()
-                voiceLastTappedIndex = -1
-            } else {
-                voiceLastTappedIndex = index
-                Speech.shared.speak(string: rep.text, language: rep.language)
-            }
-        default:
-            if currentChallenge.correctAnswerIndex == index {
-                goToNext()
-            } else {
-                visibleChallenges[visibleChallenges.count - 1].state = .guessedIncorrectly
-            }
-        }
-    }
+    var voiceLastTappedIndex: Int = -1
     
     func finishedCurrentChallenge() {
         if visibleChallenges[visibleChallenges.count - 1].state != .guessedIncorrectly {
-            let challengeTime = Date().timeIntervalSince(challengeStartTime)
+            let challengeTime = challengeMeasurement.stopAndFetchResult()
             visibleChallenges[visibleChallenges.count - 1].state = .finished(challengeTime)
         }
     }
@@ -107,6 +87,18 @@ final class PickQuizViewModel: Quizable, ObservableObject {
         let knownWordsNow = Defaults.knownWords
         
         wordsLearned = knownWordsNow.filter { !knownWordsBeforeChallenge.contains($0) }
+    }
+    
+    // MARK: - SpeechDelegate conformance
+    
+    func speechEnded() {
+        if case .voice = currentChallenge.inputType {
+            challengeMeasurement.start()
+        } else if case .voice = currentChallenge.outputType,
+                  currentChallenge.correctAnswerIndex == voiceLastTappedIndex
+        {
+            challengeMeasurement.start()
+        }
     }
 }
 

@@ -136,8 +136,8 @@ extension DefaultsDictionaryProtocol {
         return result
     }
     
-    static func set<U: Saveable, V: Saveable>(_ array: [U: V], forKey key: DictionaryKeyType) {
-        defaults.set(array, forKey: key.storeValue)
+    static func set<U: Saveable, V: Saveable>(_ dictionary: [U: V], forKey key: DictionaryKeyType) {
+        defaults.set(dictionary, forKey: key.storeValue)
     }
 }
 

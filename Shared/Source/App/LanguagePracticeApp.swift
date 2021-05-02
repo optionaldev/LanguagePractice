@@ -19,8 +19,8 @@ struct LanguagePracticeApp: App {
 //        _ = Speech.shared
         printStatus()
         
-        UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
-        UserDefaults.standard.synchronize()
+//        UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+//        UserDefaults.standard.synchronize()
     }
     
     var body: some Scene {

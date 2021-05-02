@@ -77,4 +77,11 @@ enum Rep: CustomStringConvertible {
             return "voice(\(rep))"
         }
     }
+    
+    var voiceChallenge: Bool {
+        if case .voice = self {
+            return true
+        }
+        return false
+    }
 }

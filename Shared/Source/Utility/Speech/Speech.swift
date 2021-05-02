@@ -13,8 +13,14 @@ import class Foundation.NSObject
 import protocol AVFoundation.AVSpeechSynthesizerDelegate
 
 protocol SpeechDelegate: class {
+    
     func speechStarted()
     func speechEnded()
+}
+
+extension SpeechDelegate {
+    
+    func speechStarted() {}
 }
 
 final class Speech: NSObject, AVSpeechSynthesizerDelegate {
