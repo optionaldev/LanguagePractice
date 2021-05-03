@@ -12,6 +12,7 @@ import protocol SwiftUI.ViewModifier
 import struct SwiftUI.Button
 import struct SwiftUI.Color
 import struct SwiftUI.ForEach
+import struct SwiftUI.GeometryReader
 import struct SwiftUI.HStack
 import struct SwiftUI.ScrollView
 import struct SwiftUI.ScrollViewReader
@@ -31,6 +32,7 @@ import struct SwiftUI.LazyVStack
 private typealias LazyStack = LazyVStack
 #endif
 
+import SwiftUI
 
 private struct Constants {
     
@@ -70,7 +72,7 @@ struct QuizBody<ViewModel: Quizable, Content: View>: View {
                             content(challenge)
                                 .disabled(challenge != viewModel.visibleChallenges.last)
                         }
-                        if viewModel.wordsLearned.isEmpty == false {
+                        if viewModel.itemsLearned.isEmpty == false {
                             resultsScreen()
                         }
                     }
@@ -79,7 +81,7 @@ struct QuizBody<ViewModel: Quizable, Content: View>: View {
                             value.scrollTo(visibleChallenges.last!.id)
                         }
                     }
-                    .onChange(of: viewModel.wordsLearned) { _ in
+                    .onChange(of: viewModel.itemsLearned) { _ in
                         withAnimation {
                             value.scrollTo(Constants.resultsID)
                         }
@@ -94,16 +96,37 @@ struct QuizBody<ViewModel: Quizable, Content: View>: View {
     }
     
     private func resultsScreen() -> some View {
-        VStack {
-            ForEach(0..<viewModel.wordsLearned.count) { index in
-                Text(viewModel.wordsLearned[index])
-                    .padding(5)
+        GeometryReader { reader in
+            VStack {
+                ForEach(viewModel.itemsLearned) { learned in
+                    Text("\(learned.id) \(learned.time)")
+                        .padding(5)
+                }
             }
+            // Exact same frame size needs to be specified for both the ZStack and the GeometryReader
+            .frame(width: Canvas.width, height: iOS ? nil : Canvas.height)
+            .background(Color.blue)
         }
         .frame(width: Canvas.width, height: iOS ? nil : Canvas.height)
         .id(Constants.resultsID)
-        .background(Color.blue)
     }
+    
+//    private func distributtedWords(inside proxy: GeometryProxy) -> some View {
+//        switch viewModel.itemsLearned.count {
+//        case 1:
+//            return VStack {
+//                Text(viewModel.itemsLearned[0].id)
+//                Text("\(viewModel.itemsLearned[0].time)")
+//            }
+//            .position(x: proxy.size.width / 2, y: proxy.size.height / 2)
+//        case 2:
+//            return VStack {
+//
+//            }
+//        default:
+//            fatalError()
+//        }
+//    }
     
     // Used for dismissing this view
     #if os(iOS)

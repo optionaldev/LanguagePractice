@@ -9,45 +9,32 @@ enum EntryType {
     case hiragana
     case katakana
     case words
-    
-    var defaultsDictionaryKey: DefaultsDictionaryKey {
-        switch self {
-        case .hiragana:
-            return .hiraganaGuessHistory
-        case .katakana:
-            return .katakanaGuessHistory
-        case .words:
-            return .wordGuessHistory
-        }
-    }
 }
 
 struct EntryProvider {
     
     static func generate(_ entryType: EntryType) -> [EntryProtocol] {
-        let knownEntries: [String]
         var challengeEntries: [String]
         
         switch entryType {
         case .hiragana:
-            knownEntries = Defaults.knownHiragana
             challengeEntries = Defaults.lexicon!.foreign.hiragana.map { $0.id }
         case .katakana:
-            knownEntries = Defaults.knownKatakana
             challengeEntries = Defaults.lexicon!.foreign.katakana.map { $0.id }
         case .words:
-            knownEntries = Defaults.knownWords
             challengeEntries = Defaults.lexicon!.foreign.nouns.map { $0.id }
         }
         
+        let knownItems = Defaults.knownForeignItemIDs
+        
         challengeEntries = Array(challengeEntries
-            .filter { !knownEntries.contains($0) }
+            .filter { !knownItems.contains($0) }
             .shuffled()
             .prefix(AppConstants.challengeInitialSampleSize))
         
         // Handle case when there are less than 10 words left to learn
         if challengeEntries.count < AppConstants.challengeInitialSampleSize {
-            let extraHiragana = challengeEntries.filter { knownEntries.contains($0) }
+            let extraHiragana = challengeEntries.filter { knownItems.contains($0) }
                 .prefix(AppConstants.challengeInitialSampleSize - challengeEntries.count)
             
             challengeEntries.append(contentsOf: extraHiragana)

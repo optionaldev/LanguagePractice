@@ -109,7 +109,7 @@ protocol Quizable: ObservableObject {
     /// Used to display words that were considered "learned", based on different metrics.
     ///
     /// This is populated after the last challenge has been completed.
-    var wordsLearned: [String] { get }
+    var itemsLearned: [LearnedItem] { get }
     
     init(entryType: EntryType)
     

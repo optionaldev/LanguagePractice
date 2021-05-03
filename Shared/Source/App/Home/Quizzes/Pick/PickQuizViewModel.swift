@@ -16,11 +16,11 @@ import struct Foundation.TimeInterval
 
 final class PickQuizViewModel: OutputQuizable, ObservableObject, SpeechDelegate {
     
-    var challengeMeasurement = ChallengeMeasurement()
+    private(set) var challengeMeasurement = ChallengeMeasurement()
     
     @Published var visibleChallenges: [PickChallenge] = []
     
-    @Published var wordsLearned: [String] = []
+    @Published private(set) var itemsLearned: [LearnedItem] = []
     
     private(set) var challengeEntries: [EntryProtocol]
     
@@ -47,46 +47,44 @@ final class PickQuizViewModel: OutputQuizable, ObservableObject, SpeechDelegate 
     }
     
     func handleFinish() {
-        guard var lexicon = Defaults.lexicon else {
-            log("Should definitely have a lexicon if we finished the challenge", type: .unexpected)
-            return
-        }
+        var guessHistory: [String: [TimeInterval]] = Defaults.guessHistory
         
-        var guessHistory = Defaults.wordGuessHistory
-        for entry in visibleChallenges {
+        for (index, challenge) in visibleChallenges.enumerated() {
             // History is recorded based on the foreign word ID, because that's what is being learned
-            let id: String
-            if lexicon.foreignDictionary[entry.input] != nil {
-                id = entry.input
-            } else {
-                id = entry.output[entry.correctAnswerIndex]
-            }
-            if case .guessedIncorrectly = entry.state {
-                if guessHistory[id] == nil {
-                    guessHistory[id] = [-1]
-                } else {
-                    guessHistory[id]?.append(-1)
-                }
-            }
-            if case .finished(let value) = entry.state {
+            let id = challengeEntries[index].foreignID
+            
+            if let value = challenge.state?.storeValue {
                 if guessHistory[id] == nil {
                     guessHistory[id] = [value]
                 } else {
                     guessHistory[id]?.append(value)
                 }
+            } else {
+                fatalError("Should never end without a state for every challenge")
             }
         }
+        
+        // In order to prevent showing items learned for items that have been learned in the past
+        // but have made their way into the challenge because we didn't have enough non-learned
+        // items to fulfill the minimum requirement of AppConstants.challengeInitialSampleSize,
+        // we let the first `for` complete and do another one for newly learned items
         
         log("Guess history:")
         let numberFormatter = NumberFormatter()
         numberFormatter.maximumFractionDigits = 1
         _ = guessHistory.map { print("\($0.key) \($0.value.compactMap { numberFormatter.string(for: $0) }.joined(separator: " "))") }
         
-        let knownWordsBeforeChallenge = Defaults.knownWords
-        Defaults.set(guessHistory, forKey: .wordGuessHistory)
-        let knownWordsNow = Defaults.knownWords
+        let knownItemsBeforeChallenge = Set(Defaults.knownForeignItemIDs)
+        Defaults.set(guessHistory, forKey: .guessHistory)
+        let knownItemsNow = Set(Defaults.knownForeignItemIDs)
         
-        wordsLearned = knownWordsNow.filter { !knownWordsBeforeChallenge.contains($0) }
+        let newlyLearnedItemIDs = knownItemsNow.subtracting(knownItemsBeforeChallenge)
+        
+        if newlyLearnedItemIDs.isEmpty {
+            fatalError("wait just a minute pal")
+        }
+        
+        itemsLearned = newlyLearnedItemIDs.map { LearnedItem(id: $0, time: guessHistory[$0]!.challengeAverage) }
     }
     
     // MARK: - SpeechDelegate conformance

@@ -7,6 +7,7 @@
 import struct Foundation.TimeInterval
 
 private struct Constants {
+    
     static let incorrectGuessStoreValue: TimeInterval = -1
 }
 

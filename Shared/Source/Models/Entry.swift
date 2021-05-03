@@ -189,7 +189,7 @@ struct WordEntry: EntryProtocol {
 struct KatakanaEntry: KanaEntryProtocol {
     
     init(roman: String, kanaChallengeType: KanaChallengeType) {
-        self.id = roman
+        self.id = roman.removingDigits()
         self.kanaChallengeType = kanaChallengeType
     }
     

@@ -29,35 +29,17 @@ final class Defaults: DefaultsArrayProtocol,
         return nil
     }
     
-    static var wordGuessHistory: [String: [TimeInterval]] {
-        return Defaults.dictionary(forKey: .wordGuessHistory)
+    static var guessHistory: [String: [TimeInterval]] {
+        return Defaults.dictionary(forKey: .guessHistory)
     }
     
-    static var knownWords: [String] {
-        return wordGuessHistory.known()
+    static var knownForeignItemIDs: [String] {
+        return guessHistory.known()
     }
     
     static var voiceEnabled: Bool {
         return Defaults.bool(forKey: .voiceEnabled)
     }
-    
-    #if JAPANESE
-    static var hiraganaGuessHistory: [String: [TimeInterval]] {
-        return Defaults.dictionary(forKey: .hiraganaGuessHistory)
-    }
-    
-    static var knownHiragana: [String] {
-        return hiraganaGuessHistory.known()
-    }
-    
-    static var katakanaGuessHistory: [String: [TimeInterval]] {
-        return Defaults.dictionary(forKey: .katakanaGuessHistory)
-    }
-    
-    static var knownKatakana: [String] {
-        return katakanaGuessHistory.known()
-    }
-    #endif
 }
 
 private extension Dictionary where Key == String, Value == [TimeInterval] {

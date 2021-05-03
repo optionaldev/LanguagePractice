@@ -32,3 +32,10 @@ extension Array where Element: Hashable {
         return Array(Set(self).symmetricDifference(Set(other)))
     }
 }
+
+extension Array where Element == Double {
+    
+    var challengeAverage: Double {
+        return suffix(3).reduce(0, +) / 3
+    }
+}

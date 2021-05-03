@@ -13,7 +13,7 @@ enum DefaultsCodingKey: String, Storable {
 enum DefaultsArrayKey: String, Storable {
     
     // Currently unused
-    case wordsLearned
+    case itemsLearned
 }
 
 enum DefaultsBoolKey: String, Storable {
@@ -23,9 +23,7 @@ enum DefaultsBoolKey: String, Storable {
 
 enum DefaultsDictionaryKey: String, Storable {
     
-    case hiraganaGuessHistory
-    case katakanaGuessHistory
-    case wordGuessHistory
+    case guessHistory
 }
 
 enum DefaultsStringKey: String, Storable {
