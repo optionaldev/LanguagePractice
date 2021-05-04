@@ -40,6 +40,7 @@ struct HomeView: View {
         }
         #else
         MacHomeView()
+            .environment(\.imageCache, imageCache)
             .onAppear {
                 log("Home on appear triggered")
                 viewModel.requestAnyMissingItems()
@@ -50,4 +51,6 @@ struct HomeView: View {
     // MARK: - Private
     
     @ObservedObject private var viewModel = HomeViewModel()
+    
+    private let imageCache = ImageCache()
 }

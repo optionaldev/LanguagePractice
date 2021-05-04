@@ -16,11 +16,11 @@ import struct Foundation.TimeInterval
 
 final class PickQuizViewModel: OutputQuizable, ObservableObject, SpeechDelegate {
     
-    private(set) var challengeMeasurement = ChallengeMeasurement()
-    
     @Published var visibleChallenges: [PickChallenge] = []
     
     @Published private(set) var itemsLearned: [LearnedItem] = []
+    
+    private(set) var challengeMeasurement = ChallengeMeasurement()
     
     private(set) var challengeEntries: [EntryProtocol]
     
@@ -84,7 +84,8 @@ final class PickQuizViewModel: OutputQuizable, ObservableObject, SpeechDelegate 
             fatalError("wait just a minute pal")
         }
         
-        itemsLearned = newlyLearnedItemIDs.map { LearnedItem(id: $0, time: guessHistory[$0]!.challengeAverage) }
+        itemsLearned = newlyLearnedItemIDs.map { LearnedItem(character: Lexicon.shared.foreignDictionary[$0]?.characters ?? "",
+                                                             averageTime: guessHistory[$0]?.challengeAverage ?? Random.double(inRange: 1..<10)) }
     }
     
     // MARK: - SpeechDelegate conformance

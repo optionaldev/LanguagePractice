@@ -8,6 +8,11 @@ import struct Foundation.TimeInterval
 
 struct LearnedItem: Equatable, Identifiable {
     
+    init(character: String, averageTime: TimeInterval) {
+        id = character
+        challengeAverageTime = Formatters.string(forInterval: averageTime)
+    }
+    
     var id: String
-    var time: TimeInterval
+    var challengeAverageTime: String
 }

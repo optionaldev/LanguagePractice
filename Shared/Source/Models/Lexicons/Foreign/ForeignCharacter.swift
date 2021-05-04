@@ -9,6 +9,11 @@ struct ForeignCharacter: ForeignItem {
     var characters: String
     var id: String
     
+    init(id: String, characters: String) {
+        self.id = id
+        self.characters = characters
+    }
+    
     enum CodingKeys: String, CodingKey {
         
         case characters = "ch"

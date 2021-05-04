@@ -37,13 +37,12 @@ struct LanguagePracticeApp: App {
     private func printStatus() {
         #if DEBUG
         
-        if let lexicon = Defaults.lexicon {
-            let knownItems = Defaults.knownForeignItemIDs
-            if knownItems.count < 40 {
-                log("Items learned so far: \(knownItems.sorted())")
-                log("Items left to learn: \(lexicon.foreign.nouns.map { $0.id }.filter { !knownItems.contains($0) }.sorted() )")
-            }
+        let knownItems = Defaults.knownForeignItemIDs
+        if knownItems.count < 40 {
+            log("Items learned so far: \(knownItems.sorted())")
+            log("Items left to learn: \(Lexicon.shared.foreign.nouns.map { $0.id }.filter { !knownItems.contains($0) }.sorted() )")
         }
+        
         #endif
     }
 }

@@ -42,7 +42,7 @@ struct PickQuizView: View {
         // TODO: Find a better way do macros with declarative statements
         #if os(iOS)
         VStack {
-            QuizView.inputView(rep: challenge.inputRepresentation, viewModel: viewModel)
+            QuizViews.inputView(rep: challenge.inputRepresentation, viewModel: viewModel)
                 .frame(height: 200)
                 .frame(maxWidth: Canvas.width - 10)
                 .background(Color.orange.opacity(0.5))

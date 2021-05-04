@@ -14,33 +14,34 @@ enum EntryType {
 struct EntryProvider {
     
     static func generate(_ entryType: EntryType) -> [EntryProtocol] {
-        var challengeEntries: [String]
+        var source: [String]
         
         switch entryType {
         case .hiragana:
-            challengeEntries = Defaults.lexicon!.foreign.hiragana.map { $0.id }
+            source = Lexicon.shared.foreign.hiragana.map { $0.id }
         case .katakana:
-            challengeEntries = Defaults.lexicon!.foreign.katakana.map { $0.id }
+            source = Lexicon.shared.foreign.katakana.map { $0.id }
         case .words:
-            challengeEntries = Defaults.lexicon!.foreign.nouns.map { $0.id }
+            source = Lexicon.shared.foreign.nouns.map { $0.id }
         }
         
         let knownItems = Defaults.knownForeignItemIDs
         
-        challengeEntries = Array(challengeEntries
+        // We fetch all items that are yet to be learned & shuffle to prevent repetitiveness
+        source = Array(source
             .filter { !knownItems.contains($0) }
             .shuffled()
             .prefix(AppConstants.challengeInitialSampleSize))
         
-        // Handle case when there are less than 10 words left to learn
-        if challengeEntries.count < AppConstants.challengeInitialSampleSize {
-            let extraHiragana = challengeEntries.filter { knownItems.contains($0) }
-                .prefix(AppConstants.challengeInitialSampleSize - challengeEntries.count)
+        // We handle the case where there are less than 10 items left to learn
+        if source.count < AppConstants.challengeInitialSampleSize {
+            let extraItems = source.filter { knownItems.contains($0) }
+                .prefix(AppConstants.challengeInitialSampleSize - source.count)
             
-            challengeEntries.append(contentsOf: extraHiragana)
+            source.append(contentsOf: extraItems)
         }
         
-        guard challengeEntries.count == AppConstants.challengeInitialSampleSize else {
+        guard source.count == AppConstants.challengeInitialSampleSize else {
             fatalError("Invalid number of elements")
         }
         
@@ -48,33 +49,46 @@ struct EntryProvider {
         
         switch entryType {
         case .hiragana:
-            result = challengeEntries.flatMap {[
+            result = source.flatMap {[
                 HiraganaEntry(roman: $0, kanaChallengeType: .foreign),
                 HiraganaEntry(roman: $0, kanaChallengeType: .romanToForeign),
                 HiraganaEntry(roman: $0, kanaChallengeType: .foreignToRoman)
             ]}
         case .katakana:
-            result = challengeEntries.flatMap {[
+            result = source.flatMap {[
                 KatakanaEntry(roman: $0, kanaChallengeType: .foreign),
                 KatakanaEntry(roman: $0, kanaChallengeType: .romanToForeign),
                 KatakanaEntry(roman: $0, kanaChallengeType: .foreignToRoman)
             ]}
         case .words:
-            guard var lexicon = Defaults.lexicon else {
-                fatalError()
-            }
-            result = challengeEntries.flatMap {[
-                WordEntry(inputLanguage: .english,
-                          input: $0,
-                          outputLanguage: .foreign,
-                          output: lexicon.foreignDictionary[$0]?.id ?? ""),
-                WordEntry(inputLanguage: .foreign,
-                          input: lexicon.foreignDictionary[$0]?.id ?? "",
-                          outputLanguage: .english,
-                          output: $0)
-            ]}
+            result = source.flatMap { generateEntries(forForeignWordID: $0) }
         }
         
         return result.shuffled()
+    }
+    
+    private static func generateEntries(forForeignWordID id: String) -> [WordEntry] {
+        guard let foreignNoun = Lexicon.shared.foreignDictionary[id] as? ForeignWord else {
+            log("Unable to fetch and cast item with id \"\(id)\".")
+            return []
+        }
+        var result = foreignNoun.english.flatMap {
+            [WordEntry(inputLanguage: .english, input: $0, outputLanguage: .foreign, output: foreignNoun.id),
+             WordEntry(inputLanguage: .foreign, input: foreignNoun.id, outputLanguage: .english, output: $0)
+                ]
+        }
+        
+        if foreignNoun.kana != nil {
+            // For input, we could show multiple english translations, but for output only 1,
+            // so for now, display only the first and keep DB with first english translation
+            // being the most accurate one
+            guard let translation = foreignNoun.english.first else {
+                log("No english translation found for foreign word with ID \"\(foreignNoun.id)\"", type: .unexpected)
+                return result
+            }
+            
+            result.append(WordEntry(inputLanguage: .foreign, input: foreignNoun.id, outputLanguage: .foreign, output: translation))
+        }
+        return result
     }
 }

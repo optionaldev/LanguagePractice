@@ -31,7 +31,7 @@ final class ChallengeProvider {
             } else if entry.inputLanguage == .foreign && entry.outputLanguage == .foreign {
                 answerOutput = entry.input
             } else {
-                answerOutput = lexicon.foreignDictionary[entry.output]?.id ?? ""
+                answerOutput = Lexicon.shared.foreignDictionary[entry.output]?.id ?? ""
             }
         }
         output.append(answerOutput)
@@ -49,8 +49,8 @@ final class ChallengeProvider {
                              outputRepresentations: outputRep)
     }
     
-    private static func  item(for entry: EntryProtocol) -> ForeignItem {
-        guard let nextForeignItem = lexicon.foreignDictionary[entry.foreignID] else {
+    private static func item(for entry: EntryProtocol) -> ForeignItem {
+        guard let nextForeignItem = Lexicon.shared.foreignDictionary[entry.foreignID] else {
             log("No foreign word with ID = \"\(entry.foreignID)\" found in dictionary", type: .unexpected)
             fatalError("")
         }
@@ -114,7 +114,7 @@ final class ChallengeProvider {
     
     private static func generateInput(for entry: EntryProtocol, inputType: ChallengeType) -> String {
         if inputType == .text(.foreign) || inputType == .voice(.foreign) || inputType == .simplified {
-            guard let inputWord = lexicon.foreignDictionary[entry.foreignID] else {
+            guard let inputWord = Lexicon.shared.foreignDictionary[entry.foreignID] else {
                 fatalError("Tried to fetch entry with ID \"\(entry.foreignID)\" from foreign dictionary")
             }
             
@@ -237,7 +237,7 @@ final class ChallengeProvider {
             // Get a list of all input, which in our scenario can only represent english IDs
 //            let otherChallengeEntryIDs = otherSameTypeChallengeEntries.map { $0.output }
             // TODO: Handle when current challenge doesn't countain 5 images
-            let otherChallengeEntryIDs = lexicon.english.nouns.map { $0.id }
+            let otherChallengeEntryIDs = Lexicon.shared.english.nouns.map { $0.id }
             
             // Get a list of all images available for current english IDs
             output = otherChallengeEntryIDs.filter { Persistence.imagePath(id: $0) != nil }
@@ -270,7 +270,7 @@ final class ChallengeProvider {
             case .foreign:
                 if entry is WordEntry {
                     let outputIDs = Array(otherSameTypeChallengeEntries.map { $0.output })
-                    output = outputIDs.compactMap { lexicon.foreignDictionary[$0]?.id }
+                    output = outputIDs.compactMap { Lexicon.shared.foreignDictionary[$0]?.id }
                 } else {
                     output = otherSameTypeChallengeEntries.map { $0.output }
                 }
@@ -310,7 +310,7 @@ final class ChallengeProvider {
                 result = output.map { Rep.image(.init(imageID: $0)) }
             case .simplified:
                 
-                result = output.compactMap { lexicon.foreignDictionary[$0] }
+                result = output.compactMap { Lexicon.shared.foreignDictionary[$0] }
                     .compactMap { $0 as? ForeignWord }
                     .map { Rep.textWithTranslation(.init(text: $0.kana ?? "kana-miss",
                                                          language: .foreign,
@@ -322,7 +322,7 @@ final class ChallengeProvider {
                                                                         language: .english,
                                                                         translation: item(for: entry).characters)) }
                 case .foreign:
-                    result = output.compactMap { lexicon.foreignDictionary[$0] }
+                    result = output.compactMap { Lexicon.shared.foreignDictionary[$0] }
                         .compactMap { $0 as? ForeignWord }
                         .map { Rep.textWithFurigana(.init(text: $0.characters.map { String($0) },
                                                           furigana: $0.kanaComponenets,
@@ -333,7 +333,7 @@ final class ChallengeProvider {
                 case .english:
                     result = output.map { Rep.voice(.init(text: $0.removingDigits(), language: .english)) }
                 case .foreign:
-                    result = output.compactMap { lexicon.foreignDictionary[$0] }
+                    result = output.compactMap { Lexicon.shared.foreignDictionary[$0] }
                         .map { Rep.voice(.init(text: $0.characters, language: .foreign)) }
                 }
             }

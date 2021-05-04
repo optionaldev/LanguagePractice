@@ -4,6 +4,10 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
+import protocol SwiftUI.EnvironmentKey
+
+import struct SwiftUI.EnvironmentValues
+
 #if os(iOS)
 import class UIKit.UIImage
 typealias CustomImage = UIImage
@@ -11,6 +15,7 @@ typealias CustomImage = UIImage
 import class AppKit.NSImage
 typealias CustomImage = NSImage
 #endif
+
 
 final class ImageCache {
     
@@ -33,5 +38,22 @@ final class ImageCache {
         
         log("Path \"\(String(describing: Persistence.imagePath(id: id)))\" doesn't exist, but we shouldn't have created a challenge with image type", type: .unexpected)
         return nil
+    }
+}
+
+struct ImageCacheKey: EnvironmentKey {
+
+    static let defaultValue = ImageCache()
+}
+
+extension EnvironmentValues {
+
+    var imageCache: ImageCache {
+        get {
+            self[ImageCacheKey.self]
+        }
+        set {
+            self[ImageCacheKey.self] = newValue
+        }
     }
 }

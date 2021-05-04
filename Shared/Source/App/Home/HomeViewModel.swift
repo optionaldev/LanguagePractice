@@ -14,15 +14,11 @@ import struct   Foundation.Published
 
 final class HomeViewModel: ObservableObject {
     
-    init() {
-        lexiconExists = Defaults.lexicon != nil
-    }
-    
     func requestAnyMissingItems() {
         if lexiconExists {
             startDownloadingImages()
         } else {
-            LexiconsRequest().start {
+            LexiconsRequest().start { 
                 self.lexiconExists = true
                 self.startDownloadingImages()
             }
@@ -31,7 +27,7 @@ final class HomeViewModel: ObservableObject {
     
     // TODO: Quizzes such as the word pick quiz should initially be disabled
     // Once we get the lexicon, the button becomes enabled
-    @Published var lexiconExists: Bool
+    @Published var lexiconExists = Defaults.lexicon != nil
     
     // MARK: - Private
     
@@ -39,17 +35,13 @@ final class HomeViewModel: ObservableObject {
     private var imageCancellable: AnyCancellable?
     
     private func startDownloadingImages() {
-        guard let lexicon = Defaults.lexicon else {
-            log("Attempt ")
-            return
-        }
         log("start downloading images", type: .info)
         
         if let url = Persistence.imageFolderUrl {
             log("Download location: \"\(url.path)\"", type: .info)
         }
         
-        imagesToDownload = lexicon.english.nouns
+        imagesToDownload = Lexicon.shared.english.nouns
             .filter { $0.imageExists }
             .filter { Persistence.imagePath(id: $0.id) == nil }
             .map { $0.id }

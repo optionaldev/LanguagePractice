@@ -4,10 +4,12 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-struct Lexicon: Codable {
+final class Lexicon: Codable {
     
-    var english: EnglishLexicon
-    var foreign: ForeignLexicon
+    static let shared = Defaults.lexicon ?? Lexicon(english: .init(nouns: []), foreign: .init(hiragana: [], katakana: [], nouns: []))
+    
+    let english: EnglishLexicon
+    let foreign: ForeignLexicon
     
     lazy var englishDictionary: [String: EnglishWord] = {
         english.nouns.reduce(into: [String: EnglishWord]()) { $0[$1.id] = $1 }

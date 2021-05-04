@@ -99,7 +99,7 @@ struct QuizBody<ViewModel: Quizable, Content: View>: View {
         GeometryReader { reader in
             VStack {
                 ForEach(viewModel.itemsLearned) { learned in
-                    Text("\(learned.id) \(learned.time)")
+                    Text("\(learned.id) \(learned.challengeAverageTime)")
                         .padding(5)
                 }
             }

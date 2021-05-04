@@ -9,13 +9,13 @@ import Dispatch
 import protocol SwiftUI.View
 
 import struct SwiftUI.Color
+import struct SwiftUI.Environment
 import struct SwiftUI.ForEach
 import struct SwiftUI.HStack
 import struct SwiftUI.Image
 import struct SwiftUI.Text
 import struct SwiftUI.ViewBuilder
 import struct SwiftUI.VStack
-
 
 
 struct QuizViews {
@@ -91,6 +91,5 @@ struct QuizViews {
         }
     }
     
-    // TODO: Replace with environment var / object
-    private static let imageCache = ImageCache()
+    @Environment(\.imageCache) private static var imageCache
 }
