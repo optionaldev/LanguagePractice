@@ -7,12 +7,12 @@
 import struct SwiftUI.Image
 
 extension Image {
-    
-    init(customImage: CustomImage) {
-        #if os(iOS)
-        self.init(uiImage: customImage)
-        #else
-        self.init(nsImage: customImage)
-        #endif
-    }
+  
+  init(customImage: CustomImage) {
+    #if os(iOS)
+    self.init(uiImage: customImage)
+    #else
+    self.init(nsImage: customImage)
+    #endif
+  }
 }

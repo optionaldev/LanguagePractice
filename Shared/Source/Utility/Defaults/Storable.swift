@@ -5,20 +5,20 @@
 // 
 
 private struct Constants {
-    
-    // Main reason for using an underscore is because all rawValues appended start with lowercase letter
-    // and it's not worth going through the trouble of uppercasing it
-    static let storeValuePrefix = "LanguagePracticeUserDefaults_"
+  
+  // Main reason for using an underscore is because all rawValues appended start with lowercase letter
+  // and it's not worth going through the trouble of uppercasing it
+  static let storeValuePrefix = "LanguagePracticeUserDefaults_"
 }
 
 protocol Storable {
-    
-    var storeValue: String { get }
+  
+  var storeValue: String { get }
 }
 
 extension Storable where Self: RawRepresentable, Self.RawValue: StringProtocol {
-    
-    var storeValue: String {
-        return Constants.storeValuePrefix + rawValue
-    }
+  
+  var storeValue: String {
+    return Constants.storeValuePrefix + rawValue
+  }
 }

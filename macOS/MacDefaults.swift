@@ -7,10 +7,10 @@
 import Foundation
 
 extension Defaults {
+  
+  final class macOS: DefaultsBoolProtocol {
     
-    final class macOS: DefaultsBoolProtocol {
-        
-        typealias BoolKeyType = MacDefaultsBoolKey
-        
-    }
+    typealias BoolKeyType = MacDefaultsBoolKey
+    
+  }
 }

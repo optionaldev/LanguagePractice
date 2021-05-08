@@ -5,28 +5,28 @@
 // 
 
 enum DefaultsCodingKey: String, Storable {
-    
-    case englishLexicon
-    case foreignLexicon
+  
+  case englishLexicon
+  case foreignLexicon
 }
 
 enum DefaultsArrayKey: String, Storable {
-    
-    // Currently unused
-    case itemsLearned
+  
+  // Currently unused
+  case itemsLearned
 }
 
 enum DefaultsBoolKey: String, Storable {
-    
-    case voiceEnabled
+  
+  case voiceEnabled
 }
 
 enum DefaultsDictionaryKey: String, Storable {
-    
-    case guessHistory
+  
+  case guessHistory
 }
 
 enum DefaultsStringKey: String, Storable {
-    
-    case kanjiFontName
+  
+  case kanjiFontName
 }

@@ -9,6 +9,6 @@ import protocol SwiftUI.ObservableObject
 import struct SwiftUI.Published
 
 final class MacHomeViewModel: ObservableObject {
-    
-    @Published var currentQuiz: HomeQuiz?
+  
+  @Published var currentQuiz: HomeQuiz?
 }

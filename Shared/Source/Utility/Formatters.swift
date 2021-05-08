@@ -10,11 +10,11 @@ import class Foundation.NSNumber
 import struct Foundation.TimeInterval
 
 final class Formatters {
-    
-    private static let numberFormatter = NumberFormatter()
-    
-    static func string(forInterval interval: TimeInterval, maxDigits: Int = 1) -> String {
-        numberFormatter.maximumFractionDigits = maxDigits
-        return numberFormatter.string(from: NSNumber(value: interval)) ?? "0.0"
-    }
+  
+  private static let numberFormatter = NumberFormatter()
+  
+  static func string(forInterval interval: TimeInterval, maxDigits: Int = 1) -> String {
+    numberFormatter.maximumFractionDigits = maxDigits
+    return numberFormatter.string(from: NSNumber(value: interval)) ?? "0.0"
+  }
 }

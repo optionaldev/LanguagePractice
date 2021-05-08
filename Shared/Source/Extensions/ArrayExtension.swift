@@ -5,37 +5,37 @@
 // 
 
 extension Array where Element: Equatable {
-    
-    mutating func removing(_ element: Element) {
-        self = filter { $0 != element }
-    }
-    
-    func without(_ element: Element) -> [Element] {
-        return self.filter { $0 != element }
-    }
+  
+  mutating func removing(_ element: Element) {
+    self = filter { $0 != element }
+  }
+  
+  func without(_ element: Element) -> [Element] {
+    return self.filter { $0 != element }
+  }
 }
 
 extension Array where Element: Hashable {
-    
-    func removingDuplicates() -> Array {
-        var array = Array()
-        var set = Set<Element>()
-        for elem in self where !array.contains(elem) {
-            array.append(elem)
-            set.insert(elem)
-        }
-        return array
+  
+  func removingDuplicates() -> Array {
+    var array = Array()
+    var set = Set<Element>()
+    for elem in self where !array.contains(elem) {
+      array.append(elem)
+      set.insert(elem)
     }
-    
-    /** Returns elements in `self` that are */
-    func difference(from other: [Element]) -> [Element] {
-        return Array(Set(self).symmetricDifference(Set(other)))
-    }
+    return array
+  }
+  
+  /** Returns elements in `self` that are */
+  func difference(from other: [Element]) -> [Element] {
+    return Array(Set(self).symmetricDifference(Set(other)))
+  }
 }
 
 extension Array where Element == Double {
-    
-    var challengeAverage: Double {
-        return suffix(3).reduce(0, +) / 3
-    }
+  
+  var challengeAverage: Double {
+    return suffix(3).reduce(0, +) / 3
+  }
 }

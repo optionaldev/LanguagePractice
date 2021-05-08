@@ -6,6 +6,6 @@
 
 
 enum MacDefaultsBoolKey: String, Storable {
-    
-    case sideMenuShowLabels
+  
+  case sideMenuShowLabels
 }

@@ -5,6 +5,6 @@
 // 
 
 struct EnglishLexicon: Codable {
-    
-    let nouns: [EnglishNoun]
+  
+  let nouns: [EnglishNoun]
 }

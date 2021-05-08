@@ -52,7 +52,7 @@
 		6E1B7A5F26411DD3002D0A82 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1B7A5D26411DD3002D0A82 /* Formatters.swift */; };
 		6E1B7A6926412E9B002D0A82 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1B7A6826412E9B002D0A82 /* Random.swift */; };
 		6E1B7A6A26412E9B002D0A82 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1B7A6826412E9B002D0A82 /* Random.swift */; };
-		6E1B7A7A2641333B002D0A82 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1B7A792641333B002D0A82 /* Random.swift */; };
+		6E1B7A7A2641333B002D0A82 /* UnitRandom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1B7A792641333B002D0A82 /* UnitRandom.swift */; };
 		6E1BA93425FA07BD00D64435 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1BA93325FA07BD00D64435 /* ArrayExtension.swift */; };
 		6E1BA93525FA07BD00D64435 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1BA93325FA07BD00D64435 /* ArrayExtension.swift */; };
 		6E1E8AA725F8B694008839BA /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1E8AA625F8B694008839BA /* Entry.swift */; };
@@ -213,7 +213,7 @@
 		6E1B7A5D26411DD3002D0A82 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		6E1B7A6826412E9B002D0A82 /* Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		6E1B7A772641333B002D0A82 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		6E1B7A792641333B002D0A82 /* Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
+		6E1B7A792641333B002D0A82 /* UnitRandom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitRandom.swift; sourceTree = "<group>"; };
 		6E1B7A7B2641333B002D0A82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6E1BA93325FA07BD00D64435 /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		6E1E8AA625F8B694008839BA /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
@@ -419,7 +419,7 @@
 		6E1B7A782641333B002D0A82 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				6E1B7A792641333B002D0A82 /* Random.swift */,
+				6E1B7A792641333B002D0A82 /* UnitRandom.swift */,
 				6E1B7A7B2641333B002D0A82 /* Info.plist */,
 			);
 			path = UnitTests;
@@ -832,7 +832,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E1B7A7A2641333B002D0A82 /* Random.swift in Sources */,
+				6E1B7A7A2641333B002D0A82 /* UnitRandom.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1037,7 +1037,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = UnitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1046,7 +1047,10 @@
 					"@loader_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.optionaldev.UnitTests;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1058,7 +1062,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = UnitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1067,7 +1072,10 @@
 					"@loader_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.optionaldev.UnitTests;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

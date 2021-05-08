@@ -13,36 +13,36 @@ import Foundation
 
 @main
 struct LanguagePracticeApp: App {
-
-    init() {
-        Logger.performInitialSetup()
-//        _ = Speech.shared
-        printStatus()
-        
-//        UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
-//        UserDefaults.standard.synchronize()
+  
+  init() {
+    Logger.performInitialSetup()
+    //        _ = Speech.shared
+    printStatus()
+    
+    //        UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+    //        UserDefaults.standard.synchronize()
+  }
+  
+  var body: some Scene {
+    WindowGroup {
+      #if os(iOS)
+      PhoneTabView()
+      #else
+      SideMenuView()
+      #endif
+    }
+  }
+  
+  // MARK: - Private
+  private func printStatus() {
+    #if DEBUG
+    
+    let knownItems = Defaults.knownForeignItemIDs
+    if knownItems.count < 40 {
+      log("Items learned so far: \(knownItems.sorted())")
+      log("Items left to learn: \(Lexicon.shared.foreign.nouns.map { $0.id }.filter { !knownItems.contains($0) }.sorted() )")
     }
     
-    var body: some Scene {
-        WindowGroup {
-            #if os(iOS)
-            PhoneTabView()
-            #else
-            SideMenuView()
-            #endif
-        }
-    }
-    
-    // MARK: - Private
-    private func printStatus() {
-        #if DEBUG
-        
-        let knownItems = Defaults.knownForeignItemIDs
-        if knownItems.count < 40 {
-            log("Items learned so far: \(knownItems.sorted())")
-            log("Items left to learn: \(Lexicon.shared.foreign.nouns.map { $0.id }.filter { !knownItems.contains($0) }.sorted() )")
-        }
-        
-        #endif
-    }
+    #endif
+  }
 }

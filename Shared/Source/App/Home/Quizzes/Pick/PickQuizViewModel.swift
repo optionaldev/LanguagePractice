@@ -15,90 +15,90 @@ import struct Foundation.TimeInterval
 
 
 final class PickQuizViewModel: OutputQuizable, ObservableObject, SpeechDelegate {
+  
+  @Published var visibleChallenges: [PickChallenge] = []
+  
+  @Published private(set) var itemsLearned: [LearnedItem] = []
+  
+  private(set) var challengeMeasurement = ChallengeMeasurement()
+  
+  private(set) var challengeEntries: [EntryProtocol]
+  
+  var nextChallenge: PickChallenge? = nil
+  
+  init(entryType: EntryType) {
+    challengeEntries = EntryProvider.generate(entryType)
+    performInitialSetup()
     
-    @Published var visibleChallenges: [PickChallenge] = []
-    
-    @Published private(set) var itemsLearned: [LearnedItem] = []
-    
-    private(set) var challengeMeasurement = ChallengeMeasurement()
-    
-    private(set) var challengeEntries: [EntryProtocol]
-    
-    var nextChallenge: PickChallenge? = nil
-    
-    init(entryType: EntryType) {
-        challengeEntries = EntryProvider.generate(entryType)
-        performInitialSetup()
-        
-        Speech.shared.delegate = self
+    Speech.shared.delegate = self
+  }
+  
+  var voiceLastTappedIndex: Int = -1
+  
+  func finishedCurrentChallenge() {
+    if visibleChallenges[visibleChallenges.count - 1].state != .guessedIncorrectly {
+      let challengeTime = challengeMeasurement.stopAndFetchResult()
+      visibleChallenges[visibleChallenges.count - 1].state = .finished(challengeTime)
     }
+  }
+  
+  func prepareNextChallenge() {
+    nextChallenge = ChallengeProvider.generatePick(for: challengeEntries[visibleChallenges.count], allEntries: challengeEntries)
+  }
+  
+  func handleFinish() {
+    var guessHistory: [String: [TimeInterval]] = Defaults.guessHistory
     
-    var voiceLastTappedIndex: Int = -1
-    
-    func finishedCurrentChallenge() {
-        if visibleChallenges[visibleChallenges.count - 1].state != .guessedIncorrectly {
-            let challengeTime = challengeMeasurement.stopAndFetchResult()
-            visibleChallenges[visibleChallenges.count - 1].state = .finished(challengeTime)
+    for (index, challenge) in visibleChallenges.enumerated() {
+      // History is recorded based on the foreign word ID, because that's what is being learned
+      let id = challengeEntries[index].foreignID
+      
+      if let value = challenge.state?.storeValue {
+        if guessHistory[id] == nil {
+          guessHistory[id] = [value]
+        } else {
+          guessHistory[id]?.append(value)
         }
+      } else {
+        fatalError("Should never end without a state for every challenge")
+      }
     }
     
-    func prepareNextChallenge() {
-        nextChallenge = ChallengeProvider.generatePick(for: challengeEntries[visibleChallenges.count], allEntries: challengeEntries)
+    // In order to prevent showing items learned for items that have been learned in the past
+    // but have made their way into the challenge because we didn't have enough non-learned
+    // items to fulfill the minimum requirement of AppConstants.challengeInitialSampleSize,
+    // we let the first `for` complete and do another one for newly learned items
+    
+    log("Guess history:")
+    let numberFormatter = NumberFormatter()
+    numberFormatter.maximumFractionDigits = 1
+    _ = guessHistory.map { print("\($0.key) \($0.value.compactMap { numberFormatter.string(for: $0) }.joined(separator: " "))") }
+    
+    let knownItemsBeforeChallenge = Set(Defaults.knownForeignItemIDs)
+    Defaults.set(guessHistory, forKey: .guessHistory)
+    let knownItemsNow = Set(Defaults.knownForeignItemIDs)
+    
+    let newlyLearnedItemIDs = knownItemsNow.subtracting(knownItemsBeforeChallenge)
+    
+    if newlyLearnedItemIDs.isEmpty {
+      fatalError("wait just a minute pal")
     }
     
-    func handleFinish() {
-        var guessHistory: [String: [TimeInterval]] = Defaults.guessHistory
-        
-        for (index, challenge) in visibleChallenges.enumerated() {
-            // History is recorded based on the foreign word ID, because that's what is being learned
-            let id = challengeEntries[index].foreignID
-            
-            if let value = challenge.state?.storeValue {
-                if guessHistory[id] == nil {
-                    guessHistory[id] = [value]
-                } else {
-                    guessHistory[id]?.append(value)
-                }
-            } else {
-                fatalError("Should never end without a state for every challenge")
-            }
-        }
-        
-        // In order to prevent showing items learned for items that have been learned in the past
-        // but have made their way into the challenge because we didn't have enough non-learned
-        // items to fulfill the minimum requirement of AppConstants.challengeInitialSampleSize,
-        // we let the first `for` complete and do another one for newly learned items
-        
-        log("Guess history:")
-        let numberFormatter = NumberFormatter()
-        numberFormatter.maximumFractionDigits = 1
-        _ = guessHistory.map { print("\($0.key) \($0.value.compactMap { numberFormatter.string(for: $0) }.joined(separator: " "))") }
-        
-        let knownItemsBeforeChallenge = Set(Defaults.knownForeignItemIDs)
-        Defaults.set(guessHistory, forKey: .guessHistory)
-        let knownItemsNow = Set(Defaults.knownForeignItemIDs)
-        
-        let newlyLearnedItemIDs = knownItemsNow.subtracting(knownItemsBeforeChallenge)
-        
-        if newlyLearnedItemIDs.isEmpty {
-            fatalError("wait just a minute pal")
-        }
-        
-        itemsLearned = newlyLearnedItemIDs.map { LearnedItem(character: Lexicon.shared.foreignDictionary[$0]?.characters ?? "",
-                                                             averageTime: guessHistory[$0]?.challengeAverage ?? Random.double(inRange: 1..<10)) }
+    itemsLearned = newlyLearnedItemIDs.map { LearnedItem(character: Lexicon.shared.foreignDictionary[$0]?.characters ?? "",
+                                                         averageTime: guessHistory[$0]?.challengeAverage ?? Random.double(inRange: 1..<10)) }
+  }
+  
+  // MARK: - SpeechDelegate conformance
+  
+  func speechEnded() {
+    if case .voice = currentChallenge.inputType {
+      challengeMeasurement.start()
+    } else if case .voice = currentChallenge.outputType,
+              currentChallenge.correctAnswerIndex == voiceLastTappedIndex
+    {
+      challengeMeasurement.start()
     }
-    
-    // MARK: - SpeechDelegate conformance
-    
-    func speechEnded() {
-        if case .voice = currentChallenge.inputType {
-            challengeMeasurement.start()
-        } else if case .voice = currentChallenge.outputType,
-                  currentChallenge.correctAnswerIndex == voiceLastTappedIndex
-        {
-            challengeMeasurement.start()
-        }
-    }
+  }
 }
 
 //final class PickQuizViewModel: ObservableObject {

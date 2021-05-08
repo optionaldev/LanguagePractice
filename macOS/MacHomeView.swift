@@ -15,41 +15,41 @@ import struct SwiftUI.ViewBuilder
 import struct SwiftUI.ZStack
 
 struct MacHomeView: View {
-    
-    var body: some View {
-        ZStack {
-            homeView()
-            
-            // Not a perfect solution, but for now, if let in combination with @StateObject
-            // is the only that that not only allows for `dismiss` actions in other views,
-            // but also remembers where the view was if the user switches tabs
-            if let quiz = viewModel.currentQuiz {
-                switch quiz {
-                case .hiragana:
-                    PickQuizView(entryType: .hiragana)
-                case .katakana:
-                    PickQuizView(entryType: .katakana)
-                case .words:
-                    PickQuizView(entryType: .words)
-                }
-            }
+  
+  var body: some View {
+    ZStack {
+      homeView()
+      
+      // Not a perfect solution, but for now, if let in combination with @StateObject
+      // is the only that that not only allows for `dismiss` actions in other views,
+      // but also remembers where the view was if the user switches tabs
+      if let quiz = viewModel.currentQuiz {
+        switch quiz {
+          case .hiragana:
+            PickQuizView(entryType: .hiragana)
+          case .katakana:
+            PickQuizView(entryType: .katakana)
+          case .words:
+            PickQuizView(entryType: .words)
         }
-        .environmentObject(viewModel)
+      }
     }
-    
-    // MARK: - Private
-    
-    @StateObject private var viewModel: MacHomeViewModel = MacHomeViewModel()
-    
-    private func homeView() -> some View {
-        List {
-            ForEach(HomeQuiz.allCases) { quiz in
-                Button(action: {
-                    viewModel.currentQuiz = quiz
-                }, label: {
-                    Text(quiz.title)
-                })
-            }
-        }
+    .environmentObject(viewModel)
+  }
+  
+  // MARK: - Private
+  
+  @StateObject private var viewModel: MacHomeViewModel = MacHomeViewModel()
+  
+  private func homeView() -> some View {
+    List {
+      ForEach(HomeQuiz.allCases) { quiz in
+        Button(action: {
+          viewModel.currentQuiz = quiz
+        }, label: {
+          Text(quiz.title)
+        })
+      }
     }
+  }
 }

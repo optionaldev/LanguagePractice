@@ -7,24 +7,24 @@
 import AVFoundation
 
 struct VoiceHandler {
+  
+  init(_ language: Language) {
+    self.voices = language.voices
     
-    init(_ language: Language) {
-        self.voices = language.voices
-        
-        log("Initialized \(language) with voices: \(voices.map { $0.name })", type: .info)
+    log("Initialized \(language) with voices: \(voices.map { $0.name })", type: .info)
+  }
+  
+  mutating func next() -> AVSpeechSynthesisVoice {
+    if index == voices.count {
+      index = 0
     }
-    
-    mutating func next() -> AVSpeechSynthesisVoice {
-        if index == voices.count {
-            index = 0
-        }
-        let currentIndex = index
-        index += 1
-        return voices[currentIndex]
-    }
-    
-    // MARK: - Private
-    
-    private var index = 0
-    private var voices: [AVSpeechSynthesisVoice]
+    let currentIndex = index
+    index += 1
+    return voices[currentIndex]
+  }
+  
+  // MARK: - Private
+  
+  private var index = 0
+  private var voices: [AVSpeechSynthesisVoice]
 }

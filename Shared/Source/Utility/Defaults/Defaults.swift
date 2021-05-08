@@ -11,47 +11,47 @@ final class Defaults: DefaultsArrayProtocol,
                       DefaultsCodingProtocol,
                       DefaultsDictionaryProtocol,
                       DefaultsStringProtocol {
+  
+  typealias ArrayKeyType      = DefaultsArrayKey
+  typealias BoolKeyType       = DefaultsBoolKey
+  typealias DecodeKeyType     = DefaultsCodingKey
+  typealias DictionaryKeyType = DefaultsDictionaryKey
+  typealias StringKeyType     = DefaultsStringKey
+  
+  static var lexicon: Lexicon? {
+    let english: EnglishLexicon? = Defaults.decodable(forKey: .englishLexicon)
+    let foreign: ForeignLexicon? = Defaults.decodable(forKey: .foreignLexicon)
     
-    typealias ArrayKeyType      = DefaultsArrayKey
-    typealias BoolKeyType       = DefaultsBoolKey
-    typealias DecodeKeyType     = DefaultsCodingKey
-    typealias DictionaryKeyType = DefaultsDictionaryKey
-    typealias StringKeyType     = DefaultsStringKey
-    
-    static var lexicon: Lexicon? {
-        let english: EnglishLexicon? = Defaults.decodable(forKey: .englishLexicon)
-        let foreign: ForeignLexicon? = Defaults.decodable(forKey: .foreignLexicon)
-        
-        if let englishLexicon = english, let foreignLexicon = foreign {
-            return Lexicon(english: englishLexicon, foreign: foreignLexicon)
-        }
-        
-        return nil
+    if let englishLexicon = english, let foreignLexicon = foreign {
+      return Lexicon(english: englishLexicon, foreign: foreignLexicon)
     }
     
-    static var guessHistory: [String: [TimeInterval]] {
-        return Defaults.dictionary(forKey: .guessHistory)
-    }
-    
-    static var knownForeignItemIDs: [String] {
-        return guessHistory.known()
-    }
-    
-    static var voiceEnabled: Bool {
-        return Defaults.bool(forKey: .voiceEnabled)
-    }
+    return nil
+  }
+  
+  static var guessHistory: [String: [TimeInterval]] {
+    return Defaults.dictionary(forKey: .guessHistory)
+  }
+  
+  static var knownForeignItemIDs: [String] {
+    return guessHistory.known()
+  }
+  
+  static var voiceEnabled: Bool {
+    return Defaults.bool(forKey: .voiceEnabled)
+  }
 }
 
 private extension Dictionary where Key == String, Value == [TimeInterval] {
-    
-    func known() -> [String] {
-        self.filter {
-            // We take the last 3 values and if they're all below our success threshold
-            // the word is considered to be known
-            $0.value.suffix(3).filter {
-                // Check if all 3 of our values are within success range
-                AppConstants.successRange ~= $0
-            }.count == 3
-        }.map { $0.key }
-    }
+  
+  func known() -> [String] {
+    self.filter {
+      // We take the last 3 values and if they're all below our success threshold
+      // the word is considered to be known
+      $0.value.suffix(3).filter {
+        // Check if all 3 of our values are within success range
+        AppConstants.successRange ~= $0
+      }.count == 3
+    }.map { $0.key }
+  }
 }

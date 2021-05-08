@@ -5,23 +5,23 @@
 // 
 
 struct ForeignNoun: ForeignWord, Hashable {
+  
+  let id: String
+  let characters: String
+  let english: [String]
+  
+  #if JAPANESE
+  let furigana: String?
+  #endif
+  
+  enum CodingKeys: String, CodingKey {
     
-    let id: String
-    let characters: String
-    let english: [String]
+    case id
+    case characters = "ch"
+    case english    = "en"
     
     #if JAPANESE
-    let furigana: String?
+    case furigana   = "fg"
     #endif
-    
-    enum CodingKeys: String, CodingKey {
-        
-        case id
-        case characters = "ch"
-        case english    = "en"
-        
-        #if JAPANESE
-        case furigana   = "fg"
-        #endif
-    }
+  }
 }

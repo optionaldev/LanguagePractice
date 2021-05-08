@@ -5,32 +5,32 @@
 // 
 
 extension String {
-    
-    func removingDigits() -> String {
-        return self.filter { !$0.isNumber }
+  
+  func removingDigits() -> String {
+    return self.filter { !$0.isNumber }
+  }
+  
+  #if JAPANESE
+  func toHiragana() -> String {
+    guard let hiragana = applyingTransform(.latinToHiragana, reverse: false) else {
+      log("Found string that couldn't be converted to hiragana = \"\(self)\"")
+      return self
     }
     
-    #if JAPANESE
-    func toHiragana() -> String {
-        guard let hiragana = applyingTransform(.latinToHiragana, reverse: false) else {
-            log("Found string that couldn't be converted to hiragana = \"\(self)\"")
-            return self
-        }
-        
-        return hiragana
+    return hiragana
+  }
+  
+  func toKatakana() -> String {
+    guard let katakana = applyingTransform(.latinToKatakana, reverse: false) else {
+      log("Found string that couldn't be converted to hiragana = \"\(self)\"")
+      return self
     }
     
-    func toKatakana() -> String {
-        guard let katakana = applyingTransform(.latinToKatakana, reverse: false) else {
-            log("Found string that couldn't be converted to hiragana = \"\(self)\"")
-            return self
-        }
-        
-        return katakana
-    }
-    
-    var containsKanji: Bool {
-        return first(where: { !$0.isHiragana }) != nil
-    }
-    #endif
+    return katakana
+  }
+  
+  var containsKanji: Bool {
+    return first(where: { !$0.isHiragana }) != nil
+  }
+  #endif
 }

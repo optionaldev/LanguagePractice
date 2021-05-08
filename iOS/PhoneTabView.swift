@@ -15,36 +15,36 @@ import struct SwiftUI.ViewBuilder
 
 
 private extension Tab {
-    
-    @ViewBuilder
-    var view: some View {
-        switch self {
-        case .home:
-            HomeView()
-        case .dictionary:
-            Text("Dictionary view")
-        case .settings:
-            SettingsView()
-        }
+  
+  @ViewBuilder
+  var view: some View {
+    switch self {
+      case .home:
+        HomeView()
+      case .dictionary:
+        Text("Dictionary view")
+      case .settings:
+        SettingsView()
     }
+  }
 }
 
 
 struct PhoneTabView: View {
- 
-    var body: some View {
-        TabView {
-            ForEach(Tab.allCases) { item in
-                item.view
-                    .tabItem {
-                        Image(systemName: item.icon(selected: item == tab))
-                        Text(item.name)
-                    }
-            }
-        }
+  
+  var body: some View {
+    TabView {
+      ForEach(Tab.allCases) { item in
+        item.view
+          .tabItem {
+            Image(systemName: item.icon(selected: item == tab))
+            Text(item.name)
+          }
+      }
     }
-    
-    // MARK: - Private
-    
-    @State private var tab: Tab = .home
+  }
+  
+  // MARK: - Private
+  
+  @State private var tab: Tab = .home
 }

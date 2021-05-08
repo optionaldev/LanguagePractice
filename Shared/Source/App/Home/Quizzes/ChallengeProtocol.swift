@@ -5,10 +5,10 @@
 // 
 
 protocol ChallengeProtocol: Equatable, Identifiable {
-    
-    var inputType: ChallengeType { get }
-    var input: String { get }
-    var inputRepresentation: Rep { get }
-    
-    var output: [String] { get }
+  
+  var inputType: ChallengeType { get }
+  var input: String { get }
+  var inputRepresentation: Rep { get }
+  
+  var output: [String] { get }
 }

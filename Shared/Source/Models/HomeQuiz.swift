@@ -5,25 +5,25 @@
 // 
 
 enum HomeQuiz: String, CaseIterable, Identifiable {
-    
-    case hiragana
-    case katakana
-    case words
-    
-    var title: String {
-        switch self {
-        case .hiragana:
-            return "Basic Hiragana"
-        case .katakana:
-            return "Basic Katakana"
-        case .words:
-            return "Simple words"
-        }
+  
+  case hiragana
+  case katakana
+  case words
+  
+  var title: String {
+    switch self {
+      case .hiragana:
+        return "Basic Hiragana"
+      case .katakana:
+        return "Basic Katakana"
+      case .words:
+        return "Simple words"
     }
-    
-    // MARK: - Identifiable conformance
-    
-    var id: String {
-        return rawValue
-    }
+  }
+  
+  // MARK: - Identifiable conformance
+  
+  var id: String {
+    return rawValue
+  }
 }

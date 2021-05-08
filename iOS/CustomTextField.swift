@@ -24,62 +24,62 @@ import protocol UIKit.UITextFieldDelegate
 import struct SwiftUI.Binding
 import struct SwiftUI.UIViewRepresentableContext
 
-
 struct CustomTextField: UIViewRepresentable {
-
-    class Coordinator: NSObject, UITextFieldDelegate {
-
-        @Binding var text: String
-        
-        var didBecomeFirstResponder = false
-
-        init(text: Binding<String>) {
-            self._text = text
-        }
-    }
-
+  
+  class Coordinator: NSObject, UITextFieldDelegate {
+    
     @Binding var text: String
     
-    var isFirstResponder: Bool = true
+    var didBecomeFirstResponder = false
     
-    func makeUIView(context: UIViewRepresentableContext<CustomTextField>) -> UITextField {
-        let textField = UITextField(frame: .zero)
-        textField.delegate = context.coordinator
-        textField.textAlignment = .center
-        textField.autocapitalizationType = .none
-        
-        NotificationCenter.default.addObserver(
-            forName: UITextField.textDidChangeNotification,
-            object: nil,
-            queue: .main)
-        { notification in
-            self.backwardUpdate(textField: textField)
-        }
-        
-        return textField
+    init(text: Binding<String>) {
+      self._text = text
     }
-
-    func makeCoordinator() -> CustomTextField.Coordinator {
-        return Coordinator(text: $text)
-    }
-
-    func updateUIView(_ uiView: UITextField, context: UIViewRepresentableContext<CustomTextField>) {
-        forwardUpdate(textField: uiView)
-        if isFirstResponder && !context.coordinator.didBecomeFirstResponder  {
-            uiView.becomeFirstResponder()
-            context.coordinator.didBecomeFirstResponder = true
-        }
+  }
+  
+  @Binding var text: String
+  
+  var isFirstResponder: Bool = true
+  
+  func makeUIView(context: UIViewRepresentableContext<CustomTextField>) -> UITextField {
+    let textField = UITextField(frame: .zero)
+    textField.delegate = context.coordinator
+    textField.textAlignment = .center
+    textField.autocapitalizationType = .none
+    
+    NotificationCenter.default.addObserver(
+      forName: UITextField.textDidChangeNotification,
+      object: nil,
+      queue: .main)
+    { notification in
+      self.backwardUpdate(textField: textField)
     }
     
-    private func forwardUpdate(textField: UITextField) {
-        if textField.text != text && text == "" {
-            textField.text = ""
-        }
+    return textField
+  }
+  
+  func makeCoordinator() -> CustomTextField.Coordinator {
+    return Coordinator(text: $text)
+  }
+  
+  func updateUIView(_ uiView: UITextField,
+                    context: UIViewRepresentableContext<CustomTextField>) { 
+    forwardUpdate(textField: uiView)
+    if isFirstResponder && !context.coordinator.didBecomeFirstResponder  {
+      uiView.becomeFirstResponder()
+      context.coordinator.didBecomeFirstResponder = true
     }
-    
-    private func backwardUpdate(textField: UITextField) {
-        if textField.text == "" || textField.text == nil || textField.text != text {
-            text = textField.text ?? ""
-        }
+  }
+  
+  private func forwardUpdate(textField: UITextField) {
+    if textField.text != text && text == "" {
+      textField.text = ""
     }
+  }
+  
+  private func backwardUpdate(textField: UITextField) {
+    if textField.text == "" || textField.text == nil || textField.text != text {
+      text = textField.text ?? ""
+    }
+  }
 }

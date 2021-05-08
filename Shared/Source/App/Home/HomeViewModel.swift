@@ -13,67 +13,67 @@ import struct   Foundation.Published
 
 
 final class HomeViewModel: ObservableObject {
+  
+  func requestAnyMissingItems() {
+    if lexiconExists {
+      startDownloadingImages()
+    } else {
+      LexiconsRequest().start { 
+        self.lexiconExists = true
+        self.startDownloadingImages()
+      }
+    }
+  }
+  
+  // TODO: Quizzes such as the word pick quiz should initially be disabled
+  // Once we get the lexicon, the button becomes enabled
+  @Published var lexiconExists = Defaults.lexicon != nil
+  
+  // MARK: - Private
+  
+  private var imagesToDownload: [String] = []
+  private var imageCancellable: AnyCancellable?
+  
+  private func startDownloadingImages() {
+    log("start downloading images", type: .info)
     
-    func requestAnyMissingItems() {
-        if lexiconExists {
-            startDownloadingImages()
-        } else {
-            LexiconsRequest().start { 
-                self.lexiconExists = true
-                self.startDownloadingImages()
-            }
-        }
+    if let url = Persistence.imageFolderUrl {
+      log("Download location: \"\(url.path)\"", type: .info)
     }
     
-    // TODO: Quizzes such as the word pick quiz should initially be disabled
-    // Once we get the lexicon, the button becomes enabled
-    @Published var lexiconExists = Defaults.lexicon != nil
+    imagesToDownload = Lexicon.shared.english.nouns
+      .filter { $0.imageExists }
+      .filter { Persistence.imagePath(id: $0.id) == nil }
+      .map { $0.id }
     
-    // MARK: - Private
-    
-    private var imagesToDownload: [String] = []
-    private var imageCancellable: AnyCancellable?
-    
-    private func startDownloadingImages() {
-        log("start downloading images", type: .info)
-        
-        if let url = Persistence.imageFolderUrl {
-            log("Download location: \"\(url.path)\"", type: .info)
-        }
-        
-        imagesToDownload = Lexicon.shared.english.nouns
-            .filter { $0.imageExists }
-            .filter { Persistence.imagePath(id: $0.id) == nil }
-            .map { $0.id }
-        
-        checkForImagesToDownload()
+    checkForImagesToDownload()
+  }
+  
+  // TODO: Investigate how we can improve how fast the user gets to see images
+  // 1.0) Add some images with the app launch, enough for the first few challenges
+  // 1.1) User might never have internet, so 1.0 might still not be enough
+  // 2.0) Download based on how the current challenge words have been shuffled
+  // 3.0) Prepare shuffle first and then start image download
+  private func checkForImagesToDownload() {
+    if let imageID = imagesToDownload.last {
+      downloadImage(id: imageID)
+    } else {
+      log("Finished downloading all images", type: .info)
+    }
+  }
+  
+  private func downloadImage(id: String) {
+    guard let url = UrlBuilder.imageUrl(forID: id) else {
+      log("Unable to get URL for id = \"\(id)\"", type: .unexpected)
+      return
     }
     
-    // TODO: Investigate how we can improve how fast the user gets to see images
-    // 1.0) Add some images with the app launch, enough for the first few challenges
-    // 1.1) User might never have internet, so 1.0 might still not be enough
-    // 2.0) Download based on how the current challenge words have been shuffled
-    // 3.0) Prepare shuffle first and then start image download
-    private func checkForImagesToDownload() {
-        if let imageID = imagesToDownload.last {
-            downloadImage(id: imageID)
-        } else {
-            log("Finished downloading all images", type: .info)
-        }
-    }
-    
-    private func downloadImage(id: String) {
-        guard let url = UrlBuilder.imageUrl(forID: id) else {
-            log("Unable to get URL for id = \"\(id)\"", type: .unexpected)
-            return
-        }
-        
-        imageCancellable = Network.fetchImageData(from: url).sink(receiveCompletion: { error in
-            log(error)
-        }, receiveValue: { (data: Data) in
-            Persistence.write(word: id, imageData: data)
-            self.imagesToDownload.removeLast()
-            self.checkForImagesToDownload()
-        })
-    }
+    imageCancellable = Network.fetchImageData(from: url).sink(receiveCompletion: { error in
+      log(error)
+    }, receiveValue: { (data: Data) in
+      Persistence.write(word: id, imageData: data)
+      self.imagesToDownload.removeLast()
+      self.checkForImagesToDownload()
+    })
+  }
 }

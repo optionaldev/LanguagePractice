@@ -18,42 +18,44 @@ import struct SwiftUI.ZStack
 
 
 struct FontSelectionView: View {
-    
-    @ObservedObject var viewModel: FontSelectionViewModel
-    
-    var font: Font {
-        if let fontName = viewModel.fontName {
-            return .custom(fontName, size: 30)
-        }
-        return .system(size: 30)
+  
+  var font: Font {
+    if let fontName = viewModel.fontName {
+      return .custom(fontName, size: 30)
     }
-    
-    var body: some View {
-        ZStack {
-            VStack {
-                VStack {
-                    Text("日一大年中会人本月長")
-                        .font(font)
-                    Text("国出上十生子分東三")
-                        .font(font)
-                    Text("行同今高金時手見市力")
-                        .font(font)
-                }
-                .frame(height: 130)
-                Spacer()
-            }
-            List {
-                Button("Default") {
-                    viewModel.setFont(nil)
-                }
-                ForEach(viewModel.fontViewModels) { fontViewModel in
-                    Button("\(fontViewModel.name)") {
-                        viewModel.setFont(fontViewModel)
-                    }
-                }
-            }
-            .padding(.top, 130)
+    return .system(size: 30)
+  }
+  
+  var body: some View {
+    ZStack {
+      VStack {
+        VStack {
+          Text("日一大年中会人本月長")
+            .font(font)
+          Text("国出上十生子分東三")
+            .font(font)
+          Text("行同今高金時手見市力")
+            .font(font)
         }
-        .padding(.top, 15)
+        .frame(height: 130)
+        Spacer()
+      }
+      List {
+        Button("Default") {
+          viewModel.setFont(nil)
+        }
+        ForEach(viewModel.fontViewModels) { fontViewModel in
+          Button("\(fontViewModel.name)") {
+            viewModel.setFont(fontViewModel)
+          }
+        }
+      }
+      .padding(.top, 130)
     }
+    .padding(.top, 15)
+  }
+  
+  // MARK: - Private
+  
+  @ObservedObject private var viewModel = FontSelectionViewModel()
 }

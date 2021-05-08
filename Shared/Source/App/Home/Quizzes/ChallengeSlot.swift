@@ -5,7 +5,7 @@
 // 
 
 enum ChallengeSlot {
-    
-    case input
-    case output
+  
+  case input
+  case output
 }

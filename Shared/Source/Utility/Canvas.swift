@@ -12,25 +12,25 @@ import struct UIKit.CGFloat
 
 import struct SwiftUI.CGFloat
 /**
-    Typically represents the area where the challenge appears.
-    on iOS, this is the Screen width in portrait mode (landscape mode TBD how to dela with)
-    on MacOS, this is the portion of the window where the challenge is displayed
+ Typically represents the area where the challenge appears.
+ on iOS, this is the Screen width in portrait mode (landscape mode TBD how to dela with)
+ on MacOS, this is the portion of the window where the challenge is displayed
  */
 final class Canvas {
-    
-    static var height: CGFloat {
-        #if os(iOS)
-        return UIScreen.main.bounds.height
-        #else
-        return 300
-        #endif
-    }
-    
-    static var width: CGFloat {
-        #if os(iOS)
-        return UIScreen.main.bounds.width
-        #else
-        return 700
-        #endif
-    }
+  
+  static var height: CGFloat {
+    #if os(iOS)
+    return UIScreen.main.bounds.height
+    #else
+    return 300
+    #endif
+  }
+  
+  static var width: CGFloat {
+    #if os(iOS)
+    return UIScreen.main.bounds.width
+    #else
+    return 700
+    #endif
+  }
 }

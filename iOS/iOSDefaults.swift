@@ -5,8 +5,8 @@
 // 
 
 extension Defaults {
+  
+  final class iOS {
     
-    final class iOS {
-        
-    }
+  }
 }
