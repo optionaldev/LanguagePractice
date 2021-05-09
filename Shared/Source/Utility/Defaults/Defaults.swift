@@ -18,6 +18,17 @@ final class Defaults: DefaultsArrayProtocol,
   typealias DictionaryKeyType = DefaultsDictionaryKey
   typealias StringKeyType     = DefaultsStringKey
   
+  static func performInitialSetup() {
+    if !bool(forKey: .initialSetupDone) {
+      // On iOS simulator, voices are initially not available or get deleted after some time
+      // which results in app crashing because missing voices aren't handled yet
+      // On MacOS however, voices don't seem to ever be deleted once installed
+      set(iOS ? false : true, forKey: .voiceEnabled)
+      
+      set(true, forKey: .initialSetupDone)
+    }
+  }
+  
   static var lexicon: Lexicon? {
     let english: EnglishLexicon? = Defaults.decodable(forKey: .englishLexicon)
     let foreign: ForeignLexicon? = Defaults.decodable(forKey: .foreignLexicon)
@@ -30,7 +41,7 @@ final class Defaults: DefaultsArrayProtocol,
   }
   
   static var guessHistory: [String: [TimeInterval]] {
-    return Defaults.dictionary(forKey: .guessHistory)
+    return dictionary(forKey: .guessHistory)
   }
   
   static var knownForeignItemIDs: [String] {
@@ -38,7 +49,7 @@ final class Defaults: DefaultsArrayProtocol,
   }
   
   static var voiceEnabled: Bool {
-    return Defaults.bool(forKey: .voiceEnabled)
+    return bool(forKey: .voiceEnabled)
   }
 }
 

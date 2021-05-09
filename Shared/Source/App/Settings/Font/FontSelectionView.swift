@@ -6,7 +6,9 @@
 
 import protocol SwiftUI.View
 
+import struct SwiftUI.Binding
 import struct SwiftUI.Button
+import struct SwiftUI.Color
 import struct SwiftUI.Font
 import struct SwiftUI.ForEach
 import struct SwiftUI.List
@@ -16,6 +18,9 @@ import struct SwiftUI.Text
 import struct SwiftUI.VStack
 import struct SwiftUI.ZStack
 
+#if os(macOS)
+import struct SwiftUI.HStack
+#endif
 
 struct FontSelectionView: View {
   
@@ -40,7 +45,7 @@ struct FontSelectionView: View {
         .frame(height: 130)
         Spacer()
       }
-      List {
+      VStack {
         Button("Default") {
           viewModel.setFont(nil)
         }
@@ -51,9 +56,27 @@ struct FontSelectionView: View {
         }
       }
       .padding(.top, 130)
+      
+      #if os(macOS)
+      VStack {
+        HStack {
+          Button("Back") {
+            presented = false
+          }
+          .padding(10)
+          Spacer()
+        }
+        Spacer()
+      }
+      #endif
     }
+    .background(iOS ? Color.clear : Color.blue)
     .padding(.top, 15)
   }
+  
+  #if os(macOS)
+  @Binding var presented: Bool
+  #endif
   
   // MARK: - Private
   

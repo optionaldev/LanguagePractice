@@ -18,6 +18,7 @@ enum DefaultsArrayKey: String, Storable {
 
 enum DefaultsBoolKey: String, Storable {
   
+  case initialSetupDone
   case voiceEnabled
 }
 

@@ -19,6 +19,7 @@ struct LanguagePracticeApp: App {
     //        _ = Speech.shared
     printStatus()
     
+    Defaults.performInitialSetup()
     //        UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
     //        UserDefaults.standard.synchronize()
   }

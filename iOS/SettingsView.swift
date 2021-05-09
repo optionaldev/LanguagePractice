@@ -18,13 +18,13 @@ struct SettingsView: View {
   
   @ViewBuilder
   var body: some View {
-    #if os(iOS)
+    
     content()
       .navigationBarTitleDisplayMode(.inline)
       .navigationBarTitle("Settings")
-    #else
-    content()
-    #endif
+    
+//    content()
+    
   }
   
   // MARK: - Private
