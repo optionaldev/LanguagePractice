@@ -19,6 +19,7 @@ struct EntryProvider {
     switch entryType {
       case .hiragana:
         source = Lexicon.shared.foreign.hiragana.map { $0.id }
+        
       case .katakana:
         source = Lexicon.shared.foreign.katakana.map { $0.id }
       case .words:

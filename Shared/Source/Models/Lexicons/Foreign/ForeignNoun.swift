@@ -14,14 +14,24 @@ struct ForeignNoun: ForeignWord, Hashable {
   let furigana: String?
   #endif
   
+  var shouldReadKana: Bool {
+    return readKana == true
+  }
+  
   enum CodingKeys: String, CodingKey {
     
     case id
     case characters = "ch"
     case english    = "en"
+    case readKana   = "rk"
     
     #if JAPANESE
     case furigana   = "fg"
     #endif
   }
+  
+  // MARK: - Private
+  
+  /// Absence of this value means we should just read the characters
+  private var readKana: Bool?
 }

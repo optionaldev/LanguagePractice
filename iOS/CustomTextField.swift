@@ -82,4 +82,8 @@ struct CustomTextField: UIViewRepresentable {
       text = textField.text ?? ""
     }
   }
+  
+  static func dismantleUIView(_ uiView: UITextField, coordinator: Coordinator) {
+    NotificationCenter.default.removeObserver(self)
+  }
 }

@@ -9,6 +9,10 @@ struct ForeignCharacter: ForeignItem {
   var characters: String
   var id: String
   
+  var speech: String {
+    return characters
+  }
+  
   init(id: String, characters: String) {
     self.id = id
     self.characters = characters
