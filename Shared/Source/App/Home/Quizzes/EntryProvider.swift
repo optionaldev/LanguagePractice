@@ -29,20 +29,20 @@ struct EntryProvider {
     let knownItems = Defaults.knownForeignItemIDs
     
     // We fetch all items that are yet to be learned & shuffle to prevent repetitiveness
-    source = Array(source
-                    .filter { !knownItems.contains($0) }
-                    .shuffled()
-                    .prefix(AppConstants.challengeInitialSampleSize))
+    var unknownItem = Array(source
+                              .filter { !knownItems.contains($0) }
+                              .shuffled()
+                              .prefix(AppConstants.challengeInitialSampleSize))
     
     // We handle the case where there are less than 10 items left to learn
-    if source.count < AppConstants.challengeInitialSampleSize {
+    if unknownItem.count < AppConstants.challengeInitialSampleSize {
       let extraItems = source.filter { knownItems.contains($0) }
-        .prefix(AppConstants.challengeInitialSampleSize - source.count)
+        .prefix(AppConstants.challengeInitialSampleSize - unknownItem.count)
       
-      source.append(contentsOf: extraItems)
+      unknownItem.append(contentsOf: extraItems)
     }
     
-    guard source.count == AppConstants.challengeInitialSampleSize else {
+    guard unknownItem.count == AppConstants.challengeInitialSampleSize else {
       fatalError("Invalid number of elements")
     }
     

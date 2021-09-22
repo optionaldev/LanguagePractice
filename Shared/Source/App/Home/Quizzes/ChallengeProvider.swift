@@ -188,14 +188,22 @@ final class ChallengeProvider {
           case .english:
             validOutputTypeForInput = [.text(.foreign), .voice(.foreign)]
           case .foreign:
-            validOutputTypeForInput = [.text(.english), .image]
+            validOutputTypeForInput = [.text(.english)]
+            if Persistence.imagePath(id: entry.output) != nil {
+              validOutputTypeForInput.append(.image)
+            }
         }
       case .voice(let language):
         switch language {
           case .english:
             validOutputTypeForInput = [.text(.foreign), .voice(.foreign)]
           case .foreign:
-            validOutputTypeForInput = [.text(.english), .image /*TODO: draw kanji ?*/]
+            validOutputTypeForInput = [.text(.english)]
+            
+            if Persistence.imagePath(id: entry.output) != nil {
+              validOutputTypeForInput.append(.image)
+            }
+            // TODO: draw kanji option maybe?
         }
       case .image:
         validOutputTypeForInput = [.text(.foreign), .voice(.foreign)]
