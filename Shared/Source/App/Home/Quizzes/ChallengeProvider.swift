@@ -67,9 +67,9 @@ final class ChallengeProvider {
       case .foreign:
         let nextForeignItem = item(for: entry)
         if let word = nextForeignItem as? ForeignWord {
-          output = [word.id.removingDigits(), word.kana, word.characters].compactMap { $0 }
+          output = [word.id.removingIdentifier(), word.kana, word.characters].compactMap { $0 }
         } else {
-          output = [nextForeignItem.id.removingDigits()]
+          output = [nextForeignItem.id.removingIdentifier()]
         }
     }
     
@@ -132,14 +132,14 @@ final class ChallengeProvider {
       case .text(let language):
         switch language {
           case .english:
-            return .simpleText(.init(text: entry.input.removingDigits(),
+            return .simpleText(.init(text: entry.input.removingIdentifier(),
                                      language: .english))
           case .foreign:
             if let word = nextForeignItem as? ForeignWord {
               if word.hasKana {
                 return .textWithFurigana(.init(text: word.characters.map { String($0) },
                                                furigana: word.kanaComponenets,
-                                               english: entry.output.removingDigits()))
+                                               english: entry.output.removingIdentifier()))
               } else {
                 return .simpleText(.init(text: nextForeignItem.characters,
                                          language: .foreign))
@@ -151,7 +151,7 @@ final class ChallengeProvider {
       case .voice(let language):
         switch language {
           case .english:
-            return .voice(.init(text: entry.input.removingDigits(),
+            return .voice(.init(text: entry.input.removingIdentifier(),
                                 language: .english))
           case .foreign:
             return .voice(.init(text: nextForeignItem.characters,
@@ -162,7 +162,7 @@ final class ChallengeProvider {
       case .simplified:
         return .textWithTranslation(.init(text: nextForeignItem.characters,
                                           language: .foreign,
-                                          translation: entry.output.removingDigits()))
+                                          translation: entry.output.removingIdentifier()))
     }
   }
   
@@ -322,11 +322,11 @@ final class ChallengeProvider {
             .compactMap { $0 as? ForeignWord }
             .map { Rep.textWithTranslation(.init(text: $0.kana ?? "kana-miss",
                                                  language: .foreign,
-                                                 translation: $0.english.randomElement()!.removingDigits()))}
+                                                 translation: $0.english.randomElement()!.removingIdentifier()))}
         case .text(let language):
           switch language {
             case .english:
-              result = output.map { Rep.textWithTranslation(.init(text: $0.removingDigits(),
+              result = output.map { Rep.textWithTranslation(.init(text: $0.removingIdentifier(),
                                                                   language: .english,
                                                                   translation: item(for: entry).characters)) }
             case .foreign:
@@ -339,7 +339,7 @@ final class ChallengeProvider {
         case .voice(let language):
           switch language {
             case .english:
-              result = output.map { Rep.voice(.init(text: $0.removingDigits(), language: .english)) }
+              result = output.map { Rep.voice(.init(text: $0.removingIdentifier(), language: .english)) }
             case .foreign:
               result = output.compactMap { Lexicon.shared.foreignDictionary[$0] }
                 .map { Rep.voice(.init(text: $0.characters, language: .foreign)) }

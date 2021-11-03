@@ -6,8 +6,8 @@
 
 extension String {
   
-  func removingDigits() -> String {
-    return self.filter { !$0.isNumber }
+  func removingIdentifier() -> String {
+    return self.replacingOccurrences(of: "_[0-9]{1,}", with: "", options: CompareOptions.regularExpression, range: self.range(of: self))
   }
   
   #if JAPANESE

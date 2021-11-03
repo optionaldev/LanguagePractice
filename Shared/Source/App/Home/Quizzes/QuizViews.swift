@@ -87,7 +87,7 @@ struct QuizViews {
         .cornerRadius(5)
     } else {
       // Should never end up on the else branch, but just in case
-      Text(rep.imageID.removingDigits())
+      Text(rep.imageID.removingIdentifier())
     }
   }
   

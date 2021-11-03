@@ -20,7 +20,7 @@ extension Item {
   /// To use *id* as a unique identifier, *id* often contains digits
   /// to separate words that are written exactly the same
   var roman: String {
-    return id.removingDigits()
+    return id.removingIdentifier()
   }
   
   var speech: String {
