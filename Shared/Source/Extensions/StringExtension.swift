@@ -6,7 +6,7 @@
 
 extension String {
   
-  func removingIdentifier() -> String {
+  func removingUniqueness() -> String {
     return self.replacingOccurrences(of: "_[0-9]{1,}", with: "", options: CompareOptions.regularExpression, range: self.range(of: self))
   }
   

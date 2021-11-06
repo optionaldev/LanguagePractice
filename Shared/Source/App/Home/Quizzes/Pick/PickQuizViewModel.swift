@@ -84,7 +84,7 @@ final class PickQuizViewModel: OutputQuizable, ObservableObject, SpeechDelegate 
       fatalError("wait just a minute pal")
     }
     
-    itemsLearned = newlyLearnedItemIDs.map { LearnedItem(character: Lexicon.shared.foreignDictionary[$0]?.characters ?? "",
+    itemsLearned = newlyLearnedItemIDs.map { LearnedItem(character: Lexicon.shared.foreignDictionary[$0]?.written ?? "",
                                                          averageTime: guessHistory[$0]?.challengeAverage ?? Random.double(inRange: 1..<10)) }
   }
   

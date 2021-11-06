@@ -6,21 +6,17 @@
 
 struct ForeignCharacter: ForeignItem {
   
-  var characters: String
   var id: String
-  
-  var speech: String {
-    return characters
-  }
+  var written: String
   
   init(id: String, characters: String) {
     self.id = id
-    self.characters = characters
+    self.written = characters
   }
   
   enum CodingKeys: String, CodingKey {
     
-    case characters = "ch"
     case id
+    case written = "ch"
   }
 }

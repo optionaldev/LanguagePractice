@@ -67,9 +67,9 @@ final class ChallengeProvider {
       case .foreign:
         let nextForeignItem = item(for: entry)
         if let word = nextForeignItem as? ForeignWord {
-          output = [word.id.removingIdentifier(), word.kana, word.characters].compactMap { $0 }
+          output = [word.romaji, word.kana, word.written].compactMap { $0 }
         } else {
-          output = [nextForeignItem.id.removingIdentifier()]
+          output = [nextForeignItem.romaji]
         }
     }
     
@@ -132,16 +132,16 @@ final class ChallengeProvider {
       case .text(let language):
         switch language {
           case .english:
-            return .simpleText(.init(text: entry.input.removingIdentifier(),
+            return .simpleText(.init(text: entry.input.removingUniqueness(),
                                      language: .english))
           case .foreign:
             if let word = nextForeignItem as? ForeignWord {
               if word.hasKana {
-                return .textWithFurigana(.init(text: word.characters.map { String($0) },
+                return .textWithFurigana(.init(text: word.written.map { String($0) },
                                                furigana: word.kanaComponenets,
-                                               english: entry.output.removingIdentifier()))
+                                               english: entry.output.removingUniqueness()))
               } else {
-                return .simpleText(.init(text: nextForeignItem.characters,
+                return .simpleText(.init(text: nextForeignItem.written,
                                          language: .foreign))
               }
             } else {
@@ -151,18 +151,18 @@ final class ChallengeProvider {
       case .voice(let language):
         switch language {
           case .english:
-            return .voice(.init(text: entry.input.removingIdentifier(),
+            return .voice(.init(text: entry.input.removingUniqueness(),
                                 language: .english))
           case .foreign:
-            return .voice(.init(text: nextForeignItem.characters,
+            return .voice(.init(text: nextForeignItem.written,
                                 language: .foreign))
         }
       case .image:
         return .image(.init(imageID: input))
       case .simplified:
-        return .textWithTranslation(.init(text: nextForeignItem.characters,
+        return .textWithTranslation(.init(text: nextForeignItem.written,
                                           language: .foreign,
-                                          translation: entry.output.removingIdentifier()))
+                                          translation: entry.output.removingUniqueness()))
     }
   }
   
@@ -322,27 +322,27 @@ final class ChallengeProvider {
             .compactMap { $0 as? ForeignWord }
             .map { Rep.textWithTranslation(.init(text: $0.kana ?? "kana-miss",
                                                  language: .foreign,
-                                                 translation: $0.english.randomElement()!.removingIdentifier()))}
+                                                 translation: $0.english.randomElement()!.removingUniqueness()))}
         case .text(let language):
           switch language {
             case .english:
-              result = output.map { Rep.textWithTranslation(.init(text: $0.removingIdentifier(),
+              result = output.map { Rep.textWithTranslation(.init(text: $0.removingUniqueness(),
                                                                   language: .english,
-                                                                  translation: item(for: entry).characters)) }
+                                                                  translation: item(for: entry).written)) }
             case .foreign:
               result = output.compactMap { Lexicon.shared.foreignDictionary[$0] }
                 .compactMap { $0 as? ForeignWord }
-                .map { Rep.textWithFurigana(.init(text: $0.characters.map { String($0) },
+                .map { Rep.textWithFurigana(.init(text: $0.written.map { String($0) },
                                                   furigana: $0.kanaComponenets,
                                                   english: $0.english.first!)) }
           }
         case .voice(let language):
           switch language {
             case .english:
-              result = output.map { Rep.voice(.init(text: $0.removingIdentifier(), language: .english)) }
+              result = output.map { Rep.voice(.init(text: $0.removingUniqueness(), language: .english)) }
             case .foreign:
               result = output.compactMap { Lexicon.shared.foreignDictionary[$0] }
-                .map { Rep.voice(.init(text: $0.characters, language: .foreign)) }
+                .map { Rep.voice(.init(text: $0.written, language: .foreign)) }
           }
       }
     }

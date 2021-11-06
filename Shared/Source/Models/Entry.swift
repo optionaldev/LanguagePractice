@@ -90,7 +90,7 @@ struct HiraganaEntry: KanaEntryProtocol {
       case .foreign:
         return id.toHiragana()
       case .romanToForeign:
-        return id.removingIdentifier()
+        return id.removingUniqueness()
       case .foreignToRoman:
         return id.toHiragana()
     }
@@ -103,7 +103,7 @@ struct HiraganaEntry: KanaEntryProtocol {
       case .romanToForeign:
         return id.toHiragana()
       case .foreignToRoman:
-        return id.removingIdentifier()
+        return id.removingUniqueness()
     }
   }
   
@@ -195,7 +195,7 @@ struct WordEntry: EntryProtocol {
 struct KatakanaEntry: KanaEntryProtocol {
   
   init(roman: String, kanaChallengeType: KanaChallengeType) {
-    self.id = roman.removingIdentifier()
+    self.id = roman.removingUniqueness()
     self.kanaChallengeType = kanaChallengeType
   }
   
@@ -215,7 +215,7 @@ struct KatakanaEntry: KanaEntryProtocol {
       case .foreign:
         return id.toKatakana()
       case .romanToForeign:
-        return id.removingIdentifier()
+        return id.removingUniqueness()
       case .foreignToRoman:
         return id.toKatakana()
     }
@@ -228,7 +228,7 @@ struct KatakanaEntry: KanaEntryProtocol {
       case .romanToForeign:
         return id.toKatakana()
       case .foreignToRoman:
-        return id.removingIdentifier()
+        return id.removingUniqueness()
     }
   }
   

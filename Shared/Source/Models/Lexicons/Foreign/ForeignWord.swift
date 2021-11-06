@@ -37,12 +37,12 @@ extension ForeignWord {
       return nil
     }
     
-    if characters.filter({ !$0.isHiragana }).count == furiganaStrings.count {
-      return characters.map { String($0) }
+    if written.filter({ !$0.isHiragana }).count == furiganaStrings.count {
+      return written.map { String($0) }
         .map { $0.first?.isHiragana == true ? $0 : furiganaStrings.removeFirst() }
         .joined()
     } else {
-      log("kana generation special or unhandled case characters = \"\(characters)\" \"\(furiganaStrings)\"")
+      log("kana generation special or unhandled case characters = \"\(written)\" \"\(furiganaStrings)\"")
       if furiganaStrings.count == 1 {
         // Special case where it is rather unknown which kanji has what reading
         return furiganaStrings.first
@@ -62,12 +62,12 @@ extension ForeignWord {
       return []
     }
     
-    if characters.filter({ !$0.isHiragana }).count == furiganaStrings.count {
-      return characters.map { String($0) }
+    if written.filter({ !$0.isHiragana }).count == furiganaStrings.count {
+      return written.map { String($0) }
         .compactMap { $0.first?.isHiragana == true ? " " : furiganaStrings.removeFirst() }
       
     } else {
-      log("kana generation special or unhandled case characters = \"\(characters)\" \"\(furiganaStrings)\"")
+      log("kana generation special or unhandled case characters = \"\(written)\" \"\(furiganaStrings)\"")
       if furiganaStrings.count == 1,
          let first = furiganaStrings.first {
         // Special case where it is rather unknown which kanji has what reading

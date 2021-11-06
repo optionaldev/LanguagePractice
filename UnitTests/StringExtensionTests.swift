@@ -10,7 +10,7 @@ import XCTest
 
 class StringExtensionTests: XCTestCase {
   
-  func testRandomDouble() throws {
+  func testUniqueIndetifier() throws {
     let possibleKeys = [
       "Number 1",
       "hot_1",

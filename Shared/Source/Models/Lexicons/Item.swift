@@ -10,7 +10,9 @@ protocol Item: Codable {
   
   var roman: String { get }
   
-  var speech: String { get }
+  var spoken: String { get }
+  
+  var written: String { get }
 }
 
 extension Item {
@@ -20,10 +22,14 @@ extension Item {
   /// To use *id* as a unique identifier, *id* often contains digits
   /// to separate words that are written exactly the same
   var roman: String {
-    return id.removingIdentifier()
+    return id.removingUniqueness()
   }
   
-  var speech: String {
+  var spoken: String {
+    return roman
+  }
+  
+  var written: String {
     return roman
   }
 }

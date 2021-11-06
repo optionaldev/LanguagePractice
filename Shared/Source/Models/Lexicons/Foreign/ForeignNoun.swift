@@ -7,7 +7,7 @@
 struct ForeignNoun: ForeignWord, Hashable {
   
   let id: String
-  let characters: String
+  let written: String
   let english: [String]
   
   #if JAPANESE
@@ -15,15 +15,15 @@ struct ForeignNoun: ForeignWord, Hashable {
   #endif
   
   var shouldReadKana: Bool {
-    return readKana == true
+    return readKana == 1
   }
   
   enum CodingKeys: String, CodingKey {
     
     case id
-    case characters = "ch"
-    case english    = "en"
-    case readKana   = "rk"
+    case written  = "ch"
+    case english  = "en"
+    case readKana = "rk"
     
     #if JAPANESE
     case furigana   = "fg"
@@ -33,5 +33,5 @@ struct ForeignNoun: ForeignWord, Hashable {
   // MARK: - Private
   
   /// Absence of this value means we should just read the characters
-  private var readKana: Bool?
+  private var readKana: Int?
 }

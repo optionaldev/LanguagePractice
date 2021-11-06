@@ -6,6 +6,16 @@
 
 protocol ForeignItem: Item {
   
-  /// The word represented in a foreign using that foreign language's alphabet(s)
-  var characters: String { get }
+  #if JAPANESE
+  var romaji: String { get }
+  #endif
+}
+
+extension ForeignItem {
+    
+  #if JAPANESE
+  var romaji: String {
+    return roman
+  }
+  #endif
 }
