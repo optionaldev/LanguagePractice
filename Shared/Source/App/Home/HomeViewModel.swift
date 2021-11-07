@@ -17,8 +17,10 @@ final class HomeViewModel: ObservableObject {
   func requestAnyMissingItems() {
     if lexiconExists {
       startDownloadingImages()
+      checkForDuplicateEntries()
     } else {
-      LexiconsRequest().start { 
+      LexiconsRequest().start {
+        self.checkForDuplicateEntries()
         self.lexiconExists = true
         self.startDownloadingImages()
       }
@@ -75,5 +77,24 @@ final class HomeViewModel: ObservableObject {
       self.imagesToDownload.removeLast()
       self.checkForImagesToDownload()
     })
+  }
+  
+  private func checkForDuplicateEntries() {
+    checkForDuplicateEntries(Lexicon.shared.english.nouns)
+    checkForDuplicateEntries(Lexicon.shared.foreign.nouns)
+  }
+  
+  private func checkForDuplicateEntries(_ items: [Item]) {
+    #if DEBUG
+    var dictionary: [String: Int] = [:]
+    
+    for item in items {
+      if dictionary[item.id] == nil {
+        dictionary[item.id] = 1
+      } else {
+        log("Found duplicate for \(item.id)", type: .unexpected)
+      }
+    }
+    #endif
   }
 }

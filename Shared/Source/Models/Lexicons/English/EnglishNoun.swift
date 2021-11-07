@@ -14,12 +14,14 @@ struct EnglishNoun: EnglishWord {
     return _imageExists == 1
   }
   
-  private let _imageExists: UInt8?
-  
   enum CodingKeys: String, CodingKey {
     case id
     case _imageExists  = "ie"
     case clarification = "cl"
     case reference     = "rf"
   }
+  
+  // MARK: - Private
+  
+  private let _imageExists: UInt8?
 }

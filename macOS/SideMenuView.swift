@@ -60,7 +60,7 @@ struct SideMenuView: View {
         // the views be persistent
         HomeView()
           .opacity(selectedItem == .home ? 1 : 0)
-        Text("Mac Dictionary")
+        LexiconView()
           .opacity(selectedItem == .dictionary ? 1 : 0)
         SettingsView()
           .opacity(selectedItem == .settings ? 1 : 0)

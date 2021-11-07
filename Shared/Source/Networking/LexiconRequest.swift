@@ -62,6 +62,7 @@ final class LexiconsRequest {
     {
       return
     }
+    
     Defaults.set(englishLexicon, forKey: .englishLexicon)
     Defaults.set(foreignLexicon, forKey: .foreignLexicon)
     completion?()

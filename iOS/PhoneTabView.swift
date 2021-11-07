@@ -22,7 +22,7 @@ private extension Tab {
       case .home:
         HomeView()
       case .dictionary:
-        Text("Dictionary view")
+        LexiconView()
       case .settings:
         SettingsView()
     }
