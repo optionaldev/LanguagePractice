@@ -14,19 +14,18 @@ import struct SwiftUI.ScrollView
 import struct SwiftUI.Text
 import struct SwiftUI.VStack
 
+import SwiftUI
+import UIKit
+
 struct LexiconView: View {
   
-  private let displayedItems: [Item]
-  
-  init() {
-    displayedItems = Lexicon.shared.english.nouns.sorted(by: { (first, second) -> Bool in
-      return first.id.lowercased() < second.id.lowercased()
-    })
-  }
-  
   var body: some View {
-    List(displayedItems, id: \.id) { item in
-      Text(item.id)
+    VStack {
+      CustomTextField(text: $viewModel.searchString)
+        .frame(width: UIScreen.main.bounds.width - 30, height: 40)
+      List(viewModel.displayedItems, id: \.id) { item in
+        CustomLabel(text: NSAttributedString(string: item.id))
+      }
     }
   }
   

@@ -10,5 +10,26 @@ import struct SwiftUI.Published
 
 final class LexiconViewModel: ObservableObject {
   
-  @Published var searchString = ""
+  @Published var searchString = "" {
+    didSet {
+      updateDisplayedItems()
+    }
+  }
+  
+  @Published private(set) var displayedItems: [Item]
+  
+  init() {
+    initialItems = Lexicon.shared.english.nouns.sorted(by: { (first, second) -> Bool in
+      return first.id.lowercased() < second.id.lowercased()
+    })
+    displayedItems = initialItems
+  }
+  
+  // MARK: - Private
+  
+  private let initialItems: [Item]
+  
+  private func updateDisplayedItems() {
+    displayedItems = initialItems.filter { $0.id.contains(searchString) }
+  }
 }
