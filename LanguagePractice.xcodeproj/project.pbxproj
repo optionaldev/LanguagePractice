@@ -156,6 +156,8 @@
 		6EEAA8AD2627799B007DF1BA /* FontSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EEAA8A726277980007DF1BA /* FontSelectionViewModel.swift */; };
 		6EEAF94A260B2EE4005EE9CC /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EEAF949260B2EE4005EE9CC /* ImageExtension.swift */; };
 		6EEAF94B260B2EE4005EE9CC /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EEAF949260B2EE4005EE9CC /* ImageExtension.swift */; };
+		6EF41E9E273E4AFF007F67F4 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF41E9D273E4AFF007F67F4 /* Screen.swift */; };
+		6EF41E9F273E4AFF007F67F4 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF41E9D273E4AFF007F67F4 /* Screen.swift */; };
 		6EF4E3E025D4A47A00CDCC40 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF4E3DF25D4A47A00CDCC40 /* AppConstants.swift */; };
 		6EF4E3E125D4A47A00CDCC40 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF4E3DF25D4A47A00CDCC40 /* AppConstants.swift */; };
 		6EF4E3E725D4A48D00CDCC40 /* Hiragana.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF4E3E625D4A48D00CDCC40 /* Hiragana.swift */; };
@@ -286,6 +288,7 @@
 		6EE81CE425D89EC000667CE5 /* EnglishWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishWord.swift; sourceTree = "<group>"; };
 		6EEAA8A726277980007DF1BA /* FontSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSelectionViewModel.swift; sourceTree = "<group>"; };
 		6EEAF949260B2EE4005EE9CC /* ImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
+		6EF41E9D273E4AFF007F67F4 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		6EF4E3DF25D4A47A00CDCC40 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		6EF4E3E625D4A48D00CDCC40 /* Hiragana.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hiragana.swift; sourceTree = "<group>"; };
 		6EF4E3ED25D4A49F00CDCC40 /* HiraganaRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiraganaRow.swift; sourceTree = "<group>"; };
@@ -561,6 +564,7 @@
 				6E112BA825E717BF005CE59B /* Logger.swift */,
 				6E522F3A25F4079D00DA229C /* Persistence.swift */,
 				6E1B7A6826412E9B002D0A82 /* Random.swift */,
+				6EF41E9D273E4AFF007F67F4 /* Screen.swift */,
 				6E07D52D25D9754A00310B17 /* Defaults */,
 				6EB3818A25D5D5F400114B83 /* Speech */,
 			);
@@ -893,6 +897,7 @@
 				6ED5CC11261D09520021C378 /* GenericPickQuizBody.swift in Sources */,
 				6E1B7A5E26411DD3002D0A82 /* Formatters.swift in Sources */,
 				6E55549C25D20674000565F2 /* PhoneTabView.swift in Sources */,
+				6EF41E9E273E4AFF007F67F4 /* Screen.swift in Sources */,
 				6E96205025F24EA200E4278B /* DefaultsProtocol.swift in Sources */,
 				6E15F67026294B66008BDFB4 /* FontSelectionView.swift in Sources */,
 				6EC81A9D260AB1400029854B /* ImageCache.swift in Sources */,
@@ -975,6 +980,7 @@
 				6E2B22DB25DC899F001B8A77 /* Network.swift in Sources */,
 				6E275D1725F7738D00617262 /* PickChallenge.swift in Sources */,
 				6E42CE6026329FAD008BD2ED /* Quizable.swift in Sources */,
+				6EF41E9F273E4AFF007F67F4 /* Screen.swift in Sources */,
 				6E0354EF261AFB6A00F562C9 /* KanaPickQuizViewModel.swift in Sources */,
 				6EE81CB225D89DCA00667CE5 /* EnglishLexicon.swift in Sources */,
 				6E1B7A5F26411DD3002D0A82 /* Formatters.swift in Sources */,

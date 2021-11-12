@@ -18,18 +18,41 @@ final class LexiconViewModel: ObservableObject {
   
   @Published private(set) var displayedItems: [Item]
   
+  @Published var selection: Language = .english {
+    didSet {
+      switchLanguage()
+    }
+  }
+  
   init() {
-    initialItems = Lexicon.shared.english.nouns.sorted(by: { (first, second) -> Bool in
+    let funct = { (first: Item, second: Item) -> Bool in
       return first.id.lowercased() < second.id.lowercased()
-    })
-    displayedItems = initialItems
+    }
+    
+    initialEnglishItems = Lexicon.shared.english.nouns.sorted(by: funct)
+    initialForeignItems = Lexicon.shared.foreign.nouns.sorted(by: funct)
+    displayedItems = initialEnglishItems
   }
   
   // MARK: - Private
   
-  private let initialItems: [Item]
+  private let initialEnglishItems: [Item]
+  private let initialForeignItems: [Item]
   
   private func updateDisplayedItems() {
-    displayedItems = initialItems.filter { $0.id.contains(searchString) }
+    displayedItems = currentLanguageItems.filter { $0.id.contains(searchString) }
+  }
+  
+  private var currentLanguageItems: [Item] {
+    switch selection {
+      case .english:
+        return initialEnglishItems
+      case .foreign:
+        return initialForeignItems
+    }
+  }
+  
+  private func switchLanguage() {
+    displayedItems = currentLanguageItems
   }
 }
