@@ -195,6 +195,7 @@ struct WordEntry: EntryProtocol {
 struct KatakanaEntry: KanaEntryProtocol {
   
   init(roman: String, kanaChallengeType: KanaChallengeType) {
+    self.foreignID = roman
     self.id = roman.removingUniqueness()
     self.kanaChallengeType = kanaChallengeType
   }
@@ -254,9 +255,7 @@ struct KatakanaEntry: KanaEntryProtocol {
     }
   }
   
-  var foreignID: String {
-    return id
-  }
+  let foreignID: String 
   
   var typeIndex: Int {
     switch kanaChallengeType {

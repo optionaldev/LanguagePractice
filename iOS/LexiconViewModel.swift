@@ -55,7 +55,8 @@ final class LexiconViewModel: ObservableObject {
     if searchString.isEmpty {
       displayedItems = currentLanguageItems
     } else {
-      displayedItems = currentLanguageItems.filter { $0.id.contains(searchString) }
+      let lowercasedSearchString = searchString.lowercased()
+      displayedItems = currentLanguageItems.filter { $0.id.lowercased().contains(lowercasedSearchString) }
       
       for (index, item) in displayedItems.enumerated() {
         displayedItems[index] = highlightUpdated(item: item)

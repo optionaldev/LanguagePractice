@@ -23,6 +23,6 @@ struct CustomLabel: UIViewRepresentable {
   }
   
   func updateUIView(_ uiView: UILabel, context: UIViewRepresentableContext<CustomLabel>) {
-    // no implementation required
+    uiView.attributedText = text
   }
 }
