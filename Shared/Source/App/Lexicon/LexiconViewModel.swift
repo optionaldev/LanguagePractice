@@ -56,6 +56,15 @@ final class LexiconViewModel: ObservableObject {
     displayedItems = initialEnglishItems
   }
   
+  func realItem(for item: LexiconDisplayedItem) -> Item {
+    switch selection {
+      case .english:
+        return Lexicon.shared.englishDictionary[item.id]!
+      case .foreign:
+        return Lexicon.shared.foreignDictionary[item.id]!
+    }
+  }
+  
   // MARK: - Private
   
   private let initialEnglishItems: [LexiconDisplayedItem]

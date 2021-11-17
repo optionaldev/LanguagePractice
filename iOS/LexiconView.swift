@@ -10,9 +10,23 @@ import struct SwiftUI.List
 import struct SwiftUI.ObservedObject
 import struct SwiftUI.Picker
 import struct SwiftUI.SegmentedPickerStyle
+import struct SwiftUI.State
 import struct SwiftUI.Text
 import struct SwiftUI.VStack
 
+import SwiftUI
+
+extension Bool: Identifiable {
+  
+  public var id: Int {
+    switch self {
+      case true:
+        return 1
+      case false:
+        return 0
+    }
+  }
+}
 
 struct LexiconView: View {
   
@@ -26,11 +40,23 @@ struct LexiconView: View {
         .frame(width: Screen.width - 30, height: 40)
         List(viewModel.displayedItems, id: \.id) { item in
           CustomLabel(text: item.text)
+//          Button("", action: {
+//
+//          })
+          .sheet(isPresented: $itemViewPresented, content: {
+            LexiconItemView(item: viewModel.realItem(for: item))
+          })
+//            .sheet(item: $itemViewPresented, content: <#T##(Identifiable) -> View#>)
+//            .sheet(item: $itemViewPresented) {
+//              LexiconItemView(item: Lexicon.shared.english.nouns.first!)
+//            }
         }
     }
   }
   
   // MARK: - Private
+  
+  @State private var itemViewPresented = false
   
   @ObservedObject private var viewModel = LexiconViewModel()
 }
