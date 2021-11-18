@@ -31,26 +31,25 @@ extension Bool: Identifiable {
 struct LexiconView: View {
   
   var body: some View {
-    VStack {
-      Picker("", selection: $viewModel.selection) {
-        Text("English").tag(Language.english)
-        Text("Foreign").tag(Language.foreign)
-      }.pickerStyle(SegmentedPickerStyle())
-      CustomTextField(text: $viewModel.searchString)
-        .frame(width: Screen.width - 30, height: 40)
+    NavigationView {
+      VStack {
+        Picker("", selection: $viewModel.selection) {
+          Text("English").tag(Language.english)
+          Text("Foreign").tag(Language.foreign)
+        }.pickerStyle(SegmentedPickerStyle())
+        CustomTextField(text: $viewModel.searchString)
+          .frame(width: Screen.width - 30, height: 40)
         List(viewModel.displayedItems, id: \.id) { item in
           CustomLabel(text: item.text)
-//          Button("", action: {
-//
-//          })
-          .sheet(isPresented: $itemViewPresented, content: {
-            LexiconItemView(item: viewModel.realItem(for: item))
-          })
-//            .sheet(item: $itemViewPresented, content: <#T##(Identifiable) -> View#>)
-//            .sheet(item: $itemViewPresented) {
-//              LexiconItemView(item: Lexicon.shared.english.nouns.first!)
-//            }
+            .onTapGesture {
+              itemViewPresented = true
+            }
+          NavigationLink(
+            destination: LexiconItemView(item: viewModel.realItem(for: item)),
+            isActive: $itemViewPresented) {}
         }
+      }
+      .navigationBarHidden(true)
     }
   }
   
