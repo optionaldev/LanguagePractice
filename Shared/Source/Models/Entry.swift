@@ -110,20 +110,20 @@ struct HiraganaEntry: KanaEntryProtocol {
   var inputPossibilities: [ChallengeType] {
     switch kanaChallengeType {
       case .foreign:
-        return [.text(.foreign), .voice(.foreign)]
+        return Defaults.voiceEnabled ? [.text(.foreign), .voice(.foreign)] : [.text(.foreign)]
       case .romanToForeign:
         return [.text(.english)]
       case .foreignToRoman:
-        return [.text(.foreign), .voice(.foreign)]
+        return Defaults.voiceEnabled ? [.text(.foreign), .voice(.foreign)] : [.text(.foreign)]
     }
   }
   
   var outputPossibilities: [ChallengeType] {
     switch kanaChallengeType {
       case .foreign:
-        return [.text(.foreign), .voice(.foreign)]
+        return Defaults.voiceEnabled ? [.text(.foreign), .voice(.foreign)] : [.text(.foreign)]
       case .romanToForeign:
-        return [.text(.foreign), .voice(.foreign)]
+        return Defaults.voiceEnabled ? [.text(.foreign), .voice(.foreign)] : [.text(.foreign)]
       case .foreignToRoman:
         return [.text(.english)]
     }

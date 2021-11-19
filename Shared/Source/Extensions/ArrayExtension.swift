@@ -6,6 +6,12 @@
 
 extension Array where Element: Equatable {
   
+  func appending(_ element: Element) -> [Element] {
+    var result = self
+    result.append(element)
+    return result
+  }
+  
   mutating func removing(_ element: Element) {
     self = filter { $0 != element }
   }

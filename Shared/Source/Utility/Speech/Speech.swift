@@ -38,9 +38,11 @@ final class Speech: NSObject, AVSpeechSynthesizerDelegate {
     
     synthesizer.delegate = self
     
-    // If utterance is used for the first time in the app, there's a ~1 second delay
-    // Do a 0 volume utterance in order to prevent that initial delay during challenges
-    speak(string: "", language: .english, volume: 0)
+    if Defaults.voiceEnabled {
+      // If utterance is used for the first time in the app, there's a ~1 second delay
+      // Do a 0 volume utterance in order to prevent that initial delay during challenges
+      speak(string: "", language: .english, volume: 0)
+    }
   }
   
   func speak(string: String, language: Language, volume: Float = 1.0, rate: Float = 0.5) {
