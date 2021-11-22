@@ -16,12 +16,12 @@ struct LanguagePracticeApp: App {
   
   init() {
     Logger.performInitialSetup()
-    //        _ = Speech.shared
+    _ = Speech.shared
     printStatus()
     
     Defaults.performInitialSetup()
-    //        UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
-    //        UserDefaults.standard.synchronize()
+//    UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+//    UserDefaults.standard.synchronize()
   }
   
   var body: some Scene {

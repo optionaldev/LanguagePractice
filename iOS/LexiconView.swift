@@ -16,41 +16,39 @@ import struct SwiftUI.VStack
 
 import SwiftUI
 
-extension Bool: Identifiable {
-  
-  public var id: Int {
-    switch self {
-      case true:
-        return 1
-      case false:
-        return 0
-    }
-  }
-}
-
 struct LexiconView: View {
   
   var body: some View {
-    NavigationView {
-      VStack {
-        Picker("", selection: $viewModel.selection) {
-          Text("English").tag(Language.english)
-          Text("Foreign").tag(Language.foreign)
-        }.pickerStyle(SegmentedPickerStyle())
-        CustomTextField(text: $viewModel.searchString)
-          .frame(width: Screen.width - 30, height: 40)
-        List(viewModel.displayedItems, id: \.id) { item in
-          CustomLabel(text: item.text)
-            .onTapGesture {
-              itemViewPresented = true
-            }
-          NavigationLink(
-            destination: LexiconItemView(item: viewModel.realItem(for: item)),
-            isActive: $itemViewPresented) {}
-        }
+    
+    TabView {
+//      VStack {
+//        Picker("", selection: $viewModel.selection) {
+//          Text("English").tag(Language.english)
+//          Text("Foreign").tag(Language.foreign)
+//        }.pickerStyle(SegmentedPickerStyle())
+//        CustomTextField(text: $viewModel.searchString)
+//          .frame(width: Screen.width - 30, height: 40)
+//        List(viewModel.displayedItems, id: \.id) { item in
+//          CustomLabel(text: item.text)
+//            .onTapGesture {
+//              Speech.shared.speak(string: item.id.removingUniqueness(), language: viewModel.selection)
+//            }
+//        }
+//      }
+//      .frame(width: Screen.width)
+      MatrixView(rows: 11, columns: 5) { count in
+        Text(Lexicon.shared.foreign.hiragana.filter { hiragana in
+              let computed = hiragana.position.first! * 5 + hiragana.position.last!
+          if computed == count {
+            log("Found character for \(count): \(hiragana.id)")
+          }
+              return computed == count }
+                .first?.id ?? "")
+          .frame(width: 50, height: 50)
       }
-      .navigationBarHidden(true)
-    }
+      .frame(width: Screen.width)
+      .background(Color.blue)
+    }.tabViewStyle(PageTabViewStyle())
   }
   
   // MARK: - Private

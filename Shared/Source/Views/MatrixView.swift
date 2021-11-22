@@ -10,22 +10,19 @@ import struct SwiftUI.HStack
 import struct SwiftUI.ForEach
 import struct SwiftUI.VStack
 
+
 struct MatrixView<Content: View>: View {
   
-  let columns: Int
   let rows: Int
-  let content: (Int) -> Content
-  
-  private var total: Int {
-    return columns * rows
-  }
+  let columns: Int
+  let content: (Int, Int) -> Content
   
   var body: some View {
-    HStack(spacing: 0) {
-      ForEach(0 ..< columns) { column in
-        VStack(spacing: 0) {
-          ForEach(0 ..< rows) { row in
-            content(rows * column + row)
+    VStack(spacing: 0) {
+      ForEach(0 ..< rows) { row in
+        HStack(spacing: 0) {
+          ForEach(0 ..< columns) { column in
+            content(row, column)
           }
         }
       }
