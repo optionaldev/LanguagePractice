@@ -71,7 +71,7 @@ struct PickQuizView: View {
   // MARK: - Output
   
   private func pickChallengeOutput(outputType: ChallengeType, representations: [Rep]) -> some View {
-    MatrixView(rows: 3, columns: 2) { index in
+    GridView(rows: 3, columns: 2) { index in
       Button {
         viewModel.chose(index: index)
       } label: {

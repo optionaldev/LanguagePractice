@@ -36,14 +36,8 @@ struct LexiconView: View {
 //        }
 //      }
 //      .frame(width: Screen.width)
-      MatrixView(rows: 11, columns: 5) { count in
-        Text(Lexicon.shared.foreign.hiragana.filter { hiragana in
-              let computed = hiragana.position.first! * 5 + hiragana.position.last!
-          if computed == count {
-            log("Found character for \(count): \(hiragana.id)")
-          }
-              return computed == count }
-                .first?.id ?? "")
+      MatrixView(rows: 11, columns: 5) { row, column in
+        Text(Lexicon.shared.foreign.hiragana.filter { $0.position.first == row && $0.position.last == column }.first?.id ?? "")
           .frame(width: 50, height: 50)
       }
       .frame(width: Screen.width)
