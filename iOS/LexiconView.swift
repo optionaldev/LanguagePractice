@@ -19,30 +19,13 @@ import SwiftUI
 struct LexiconView: View {
   
   var body: some View {
-    
-    TabView {
-//      VStack {
-//        Picker("", selection: $viewModel.selection) {
-//          Text("English").tag(Language.english)
-//          Text("Foreign").tag(Language.foreign)
-//        }.pickerStyle(SegmentedPickerStyle())
-//        CustomTextField(text: $viewModel.searchString)
-//          .frame(width: Screen.width - 30, height: 40)
-//        List(viewModel.displayedItems, id: \.id) { item in
-//          CustomLabel(text: item.text)
-//            .onTapGesture {
-//              Speech.shared.speak(string: item.id.removingUniqueness(), language: viewModel.selection)
-//            }
-//        }
-//      }
-//      .frame(width: Screen.width)
-      MatrixView(rows: 11, columns: 5) { row, column in
-        Text(Lexicon.shared.foreign.hiragana.filter { $0.position.first == row && $0.position.last == column }.first?.id ?? "")
-          .frame(width: 50, height: 50)
+    // TODO: Find alternative to TabView because this guy initializes the tables waaaay too many times (more SwiftUI nonsense)
+      TabView {
+        hiraganaTable
+        katakanaTable
+        wordsTable
       }
-      .frame(width: Screen.width)
-      .background(Color.blue)
-    }.tabViewStyle(PageTabViewStyle())
+      .tabViewStyle(PageTabViewStyle())
   }
   
   // MARK: - Private
@@ -50,4 +33,44 @@ struct LexiconView: View {
   @State private var itemViewPresented = false
   
   @ObservedObject private var viewModel = LexiconViewModel()
+  
+  private var hiraganaTable: some View {
+    MatrixView(rows: 11, columns: 5) { row, column in
+      Text(Lexicon.shared.foreign.hiragana.filter { $0.position.first == row && $0.position.last == column }.first?.written ?? "")
+        .frame(width: 45, height: 45)
+        .onAppear {
+          log("requested for \(row) \(column)")
+        }
+    }
+    .frame(width: Screen.width, height: Screen.height)
+  }
+  
+  private var katakanaTable: some View {
+    MatrixView(rows: 11, columns: 5) { row, column in
+      Text(Lexicon.shared.foreign.katakana.filter { $0.position.first == row && $0.position.last == column }.first?.written ?? "")
+        .frame(width: 45, height: 45)
+        .onAppear {
+          log("requested for \(row) \(column)")
+        }
+    }
+    .frame(width: Screen.width, height: Screen.height)
+  }
+  
+  private var wordsTable: some View {
+    VStack {
+      Picker("", selection: $viewModel.selection) {
+        Text("English").tag(Language.english)
+        Text("Foreign").tag(Language.foreign)
+      }.pickerStyle(SegmentedPickerStyle())
+      CustomTextField(text: $viewModel.searchString)
+        .frame(width: Screen.width - 30, height: 40)
+      List(viewModel.displayedItems, id: \.id) { item in
+        CustomLabel(text: item.text)
+          .onTapGesture {
+            Speech.shared.speak(string: item.id.removingUniqueness(), language: viewModel.selection)
+          }
+      }
+    }
+    .frame(width: Screen.width, height: Screen.height)
+  }
 }
