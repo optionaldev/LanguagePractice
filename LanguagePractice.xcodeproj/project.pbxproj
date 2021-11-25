@@ -101,6 +101,10 @@
 		6E6AEA6D273981C50079E211 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6AEA6C273981C50079E211 /* CustomLabel.swift */; };
 		6E77660D2742F169007C3651 /* LexiconViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA9A7A72737DDCA004AD26A /* LexiconViewModel.swift */; };
 		6E7766192745AEF3007C3651 /* LexiconItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7766182745AEF3007C3651 /* LexiconItemView.swift */; };
+		6E7B154027501CFC007595D8 /* japanese.json in Resources */ = {isa = PBXBuildFile; fileRef = 6E7B153E27501CFC007595D8 /* japanese.json */; };
+		6E7B154127501CFC007595D8 /* japanese.json in Resources */ = {isa = PBXBuildFile; fileRef = 6E7B153E27501CFC007595D8 /* japanese.json */; };
+		6E7B154227501CFC007595D8 /* english.json in Resources */ = {isa = PBXBuildFile; fileRef = 6E7B153F27501CFC007595D8 /* english.json */; };
+		6E7B154327501CFC007595D8 /* english.json in Resources */ = {isa = PBXBuildFile; fileRef = 6E7B153F27501CFC007595D8 /* english.json */; };
 		6E7EBAF82732E1FC00A15B25 /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7EBAF72732E1FC00A15B25 /* StringExtensionTests.swift */; };
 		6E88495C2634692100C447EF /* ChallengeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E88495B2634692100C447EF /* ChallengeProvider.swift */; };
 		6E88495D2634692100C447EF /* ChallengeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E88495B2634692100C447EF /* ChallengeProvider.swift */; };
@@ -261,6 +265,8 @@
 		6E675E8C25CEFE1B002D8D98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6E6AEA6C273981C50079E211 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		6E7766182745AEF3007C3651 /* LexiconItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LexiconItemView.swift; sourceTree = "<group>"; };
+		6E7B153E27501CFC007595D8 /* japanese.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = japanese.json; sourceTree = "<group>"; };
+		6E7B153F27501CFC007595D8 /* english.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = english.json; sourceTree = "<group>"; };
 		6E7EBAF72732E1FC00A15B25 /* StringExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
 		6E88495B2634692100C447EF /* ChallengeProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengeProvider.swift; sourceTree = "<group>"; };
 		6E8C0DC125D34E1E006C399E /* ChallengeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeType.swift; sourceTree = "<group>"; };
@@ -473,6 +479,7 @@
 		6E675E6025CEFE1A002D8D98 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				6E7B153C27501CFC007595D8 /* Resources */,
 				6E1B1D6625D4970B00F59F91 /* Source */,
 				6E675E6625CEFE1B002D8D98 /* Assets.xcassets */,
 			);
@@ -539,6 +546,23 @@
 				6E675E8C25CEFE1B002D8D98 /* Info.plist */,
 			);
 			path = "Tests macOS";
+			sourceTree = "<group>";
+		};
+		6E7B153C27501CFC007595D8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6E7B153D27501CFC007595D8 /* Data */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		6E7B153D27501CFC007595D8 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				6E7B153E27501CFC007595D8 /* japanese.json */,
+				6E7B153F27501CFC007595D8 /* english.json */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		6E8C0DC025D34E09006C399E /* Models */ = {
@@ -835,6 +859,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E7B154027501CFC007595D8 /* japanese.json in Resources */,
+				6E7B154227501CFC007595D8 /* english.json in Resources */,
 				6E675E9525CEFE1B002D8D98 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -843,6 +869,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E7B154127501CFC007595D8 /* japanese.json in Resources */,
+				6E7B154327501CFC007595D8 /* english.json in Resources */,
 				6E675E9625CEFE1B002D8D98 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

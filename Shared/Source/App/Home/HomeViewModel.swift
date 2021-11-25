@@ -4,12 +4,15 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-import class    Combine.AnyCancellable
+import class Combine.AnyCancellable
+import class Foundation.Bundle
+import class Foundation.JSONDecoder
 
 import protocol Foundation.ObservableObject
 
-import struct   Foundation.Data
-import struct   Foundation.Published
+import struct Foundation.Data
+import struct Foundation.Published
+import struct Foundation.URL
 
 
 final class HomeViewModel: ObservableObject {
@@ -19,10 +22,27 @@ final class HomeViewModel: ObservableObject {
       startDownloadingImages()
       checkForDuplicateEntries()
     } else {
-      LexiconsRequest().start {
-        self.checkForDuplicateEntries()
-        self.lexiconExists = true
-        self.startDownloadingImages()
+      if let englishPath = path(forLanguage: .english) {
+        do {
+          var data = try Data(contentsOf: URL(fileURLWithPath: englishPath), options: .mappedIfSafe)
+          let englishLexicon = try JSONDecoder().decode(EnglishLexicon.self, from: data)
+          
+          if let foreignPath = path(forLanguage: .foreign) {
+            data = try Data(contentsOf: URL(fileURLWithPath: foreignPath), options: .mappedIfSafe)
+            let foreignLexicon = try JSONDecoder().decode(ForeignLexicon.self, from: data)
+            
+            Defaults.set(englishLexicon, forKey: .englishLexicon)
+            Defaults.set(foreignLexicon, forKey: .foreignLexicon)
+          } 
+        } catch {
+          log(error)
+        }
+      } else {
+        LexiconsRequest().start {
+          self.checkForDuplicateEntries()
+          self.lexiconExists = true
+          self.startDownloadingImages()
+        }
       }
     }
   }
@@ -35,6 +55,10 @@ final class HomeViewModel: ObservableObject {
   
   private var imagesToDownload: [String] = []
   private var imageCancellable: AnyCancellable?
+  
+  private func path(forLanguage language: Language) -> String? {
+    return Bundle.main.path(forResource: language.rawValue, ofType: "json")
+  }
   
   private func startDownloadingImages() {
     log("start downloading images", type: .info)
