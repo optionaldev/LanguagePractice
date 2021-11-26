@@ -7,6 +7,14 @@
 protocol ForeignItem: Item {
   
   #if JAPANESE
+  /**
+   Roman representation of japanese characters. Equivalent to _roman_ for Japanese words.
+   
+   Examples:
+   - **りんご** → **ringo**
+   - **テレビ** → **terebi**
+   - **自転車** → **jitensha**
+   */
   var romaji: String { get }
   #endif
 }

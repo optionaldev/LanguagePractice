@@ -18,10 +18,10 @@ import struct Foundation.URL
 final class HomeViewModel: ObservableObject {
   
   func requestAnyMissingItems() {
-    if lexiconExists {
-      startDownloadingImages()
-      checkForDuplicateEntries()
-    } else {
+//    if lexiconExists {
+//      startDownloadingImages()
+//      checkForDuplicateEntries()
+//    } else {
       if let englishPath = path(forLanguage: .english) {
         do {
           var data = try Data(contentsOf: URL(fileURLWithPath: englishPath), options: .mappedIfSafe)
@@ -44,7 +44,7 @@ final class HomeViewModel: ObservableObject {
           self.startDownloadingImages()
         }
       }
-    }
+//    }
   }
   
   // TODO: Quizzes such as the word pick quiz should initially be disabled

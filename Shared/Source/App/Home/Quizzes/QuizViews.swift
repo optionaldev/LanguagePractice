@@ -60,13 +60,6 @@ struct QuizViews {
   
   static func textWithFurigana(representation: TextWithFuriganaRep) -> some View {
     HStack(spacing: 0) {
-      if representation.furigana.count == 1 {
-        Text(representation.furigana[0])
-          .foregroundColor(Color.black)
-          .font(.system(size: 15))
-          .opacity(AppConstants.defaultOpacity)
-          .background(Color.blue.opacity(0.3))
-      }
       ForEach(0..<representation.text.count, id: \.self) { index in
         VStack(alignment: .center, spacing: 0) {
           if representation.furigana.isEmpty == false && representation.furigana.count != 1 {

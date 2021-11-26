@@ -6,21 +6,21 @@
 
 protocol Item: Codable {
   
+  /// Unique identifier across all items from one lexicon.
   var id: String { get }
   
+  /// The actual letters, extracted from the ID by removing the part that makes it unique.
   var roman: String { get }
   
+  /// The spelling of the word, not the phonetical way, but the way it's provided to the speech feature.
   var spoken: String { get }
   
+  /// The most common way for this item to be written.
   var written: String { get }
 }
 
 extension Item {
   
-  /// Returns the roman representation of this word.
-  ///
-  /// To use *id* as a unique identifier, *id* often contains digits
-  /// to separate words that are written exactly the same
   var roman: String {
     return id.removingUniqueness()
   }

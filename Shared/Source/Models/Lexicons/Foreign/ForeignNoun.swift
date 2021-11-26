@@ -12,26 +12,37 @@ struct ForeignNoun: ForeignWord, Hashable {
   
   #if JAPANESE
   let furigana: String?
-  #endif
+  
+  var groupFurigana: Bool {
+    return irregularKana == 1
+  }
   
   var shouldReadKana: Bool {
     return readKana == 1
   }
+  #endif
   
   enum CodingKeys: String, CodingKey {
     
     case id
     case written  = "ch"
     case english  = "en"
-    case readKana = "rk"
     
     #if JAPANESE
-    case furigana   = "fg"
+    case furigana      = "fg"
+    case irregularKana = "ik"
+    case readKana      = "rk"
     #endif
   }
   
   // MARK: - Private
   
+  #if JAPANESE
   /// Absence of this value means we should just read the characters
   private var readKana: Int?
+  
+  /// Irregular furigana means that not every kanji has an equivalent hiragana representation
+  /// Instead, the hiragana representation applies to all kanjis combined
+  private var irregularKana: Int?
+  #endif
 }

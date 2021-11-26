@@ -136,10 +136,16 @@ final class ChallengeProvider {
                                      language: .english))
           case .foreign:
             if let word = nextForeignItem as? ForeignWord {
-              if word.hasKana {
-                return .textWithFurigana(.init(text: word.written.map { String($0) },
-                                               furigana: word.kanaComponenets,
-                                               english: entry.output.removingUniqueness()))
+              if word.hasFurigana {
+                if word.groupFurigana {
+                  return .textWithFurigana(.init(text: [word.written],
+                                                 furigana: word.kanaComponenets,
+                                                 english: entry.output.removingUniqueness()))
+                } else {
+                  return .textWithFurigana(.init(text: word.written.map { String($0) },
+                                                 furigana: word.kanaComponenets,
+                                                 english: entry.output.removingUniqueness()))
+                }
               } else {
                 return .simpleText(.init(text: nextForeignItem.written,
                                          language: .foreign))
