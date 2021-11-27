@@ -16,4 +16,8 @@ struct ForeignCharacter: ForeignItem {
     case written  = "ch"
     case position = "po"
   }
+  
+  var spoken: String {
+    return written
+  }
 }

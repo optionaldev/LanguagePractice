@@ -36,8 +36,13 @@ struct LexiconView: View {
   
   private var hiraganaTable: some View {
     MatrixView(rows: 11, columns: 5) { row, column in
-      Text(Lexicon.shared.foreign.hiragana.filter { $0.position.first == row && $0.position.last == column }.first?.written ?? "")
+      Text(fetchHiragana(row: row, column: column)?.written ?? "")
         .frame(width: 45, height: 45)
+        .onTapGesture {
+          if let hiragana = fetchHiragana(row: row, column: column) {
+            Speech.shared.speak(string: hiragana.spoken, language: .foreign)
+          }
+        }
         .onAppear {
           log("requested for \(row) \(column)")
         }
@@ -47,8 +52,13 @@ struct LexiconView: View {
   
   private var katakanaTable: some View {
     MatrixView(rows: 11, columns: 5) { row, column in
-      Text(Lexicon.shared.foreign.katakana.filter { $0.position.first == row && $0.position.last == column }.first?.written ?? "")
+      Text(fetchKatakana(row: row, column: column)?.written ?? "")
         .frame(width: 45, height: 45)
+        .onTapGesture {
+          if let katakana = fetchKatakana(row: row, column: column) {
+            Speech.shared.speak(string: katakana.spoken, language: .foreign)
+          }
+        }
         .onAppear {
           log("requested for \(row) \(column)")
         }
@@ -72,5 +82,19 @@ struct LexiconView: View {
       }
     }
     .frame(width: Screen.width, height: Screen.height)
+  }
+  
+  private func fetchHiragana(row: Int, column: Int) -> ForeignItem? {
+    guard let item = Lexicon.shared.foreign.hiragana.filter({ $0.position.first == row && $0.position.last == column }).first else {
+      return nil
+    }
+    return item
+  }
+  
+  private func fetchKatakana(row: Int, column: Int) -> ForeignItem? {
+    guard let item = Lexicon.shared.foreign.katakana.filter({ $0.position.first == row && $0.position.last == column }).first else {
+      return nil
+    }
+    return item
   }
 }

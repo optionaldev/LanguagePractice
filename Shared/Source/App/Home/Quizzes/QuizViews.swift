@@ -62,7 +62,7 @@ struct QuizViews {
     HStack(spacing: 0) {
       ForEach(0..<representation.text.count, id: \.self) { index in
         VStack(alignment: .center, spacing: 0) {
-          if representation.furigana.isEmpty == false && representation.furigana.count != 1 {
+          if representation.furigana.isEmpty == false {
             Text(representation.furigana[index])
               .foregroundColor(Color.black)
               .font(.system(size: 15))
