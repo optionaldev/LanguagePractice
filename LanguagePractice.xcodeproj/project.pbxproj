@@ -92,6 +92,10 @@
 		6E5D631525EEFB4E0062E564 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5D631325EEFB4E0062E564 /* HomeView.swift */; };
 		6E5D631B25EEFB580062E564 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5D631A25EEFB580062E564 /* HomeViewModel.swift */; };
 		6E5D631C25EEFB580062E564 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5D631A25EEFB580062E564 /* HomeViewModel.swift */; };
+		6E6529982755778800042745 /* TypingChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6529972755778800042745 /* TypingChallengeView.swift */; };
+		6E6529992755778800042745 /* TypingChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6529972755778800042745 /* TypingChallengeView.swift */; };
+		6E6529A0275578F300042745 /* TypingQuizViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E65299F275578F300042745 /* TypingQuizViewModel.swift */; };
+		6E6529A1275578F300042745 /* TypingQuizViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E65299F275578F300042745 /* TypingQuizViewModel.swift */; };
 		6E675E8025CEFE1B002D8D98 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E675E7F25CEFE1B002D8D98 /* Tests_iOS.swift */; };
 		6E675E8B25CEFE1B002D8D98 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E675E8A25CEFE1B002D8D98 /* Tests_macOS.swift */; };
 		6E675E8F25CEFE1B002D8D98 /* LanguagePracticeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E675E6325CEFE1A002D8D98 /* LanguagePracticeApp.swift */; };
@@ -250,6 +254,8 @@
 		6E57EDD22622E87600A4EE41 /* HomeQuiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeQuiz.swift; sourceTree = "<group>"; };
 		6E5D631325EEFB4E0062E564 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		6E5D631A25EEFB580062E564 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		6E6529972755778800042745 /* TypingChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingChallengeView.swift; sourceTree = "<group>"; };
+		6E65299F275578F300042745 /* TypingQuizViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingQuizViewModel.swift; sourceTree = "<group>"; };
 		6E675E6325CEFE1A002D8D98 /* LanguagePracticeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePracticeApp.swift; sourceTree = "<group>"; };
 		6E675E6625CEFE1B002D8D98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6E675E6B25CEFE1B002D8D98 /* LanguagePractice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LanguagePractice.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -619,6 +625,8 @@
 				6EE60CB2262FFAC700011E03 /* TypingChallenge.swift */,
 				6E19C15D2631407E00AE993D /* TypingChallengeState.swift */,
 				6E42CE6526329FEE008BD2ED /* TypingQuizState.swift */,
+				6E6529972755778800042745 /* TypingChallengeView.swift */,
+				6E65299F275578F300042745 /* TypingQuizViewModel.swift */,
 			);
 			path = Typing;
 			sourceTree = "<group>";
@@ -913,6 +921,7 @@
 				6E275D0625F61A2E00617262 /* Representation.swift in Sources */,
 				6EE81CB125D89DCA00667CE5 /* EnglishLexicon.swift in Sources */,
 				6EE81CB825D89DD900667CE5 /* ForeignLexicon.swift in Sources */,
+				6E6529982755778800042745 /* TypingChallengeView.swift in Sources */,
 				6E9BADB0260029E900E32924 /* Canvas.swift in Sources */,
 				6E1B7A6926412E9B002D0A82 /* Random.swift in Sources */,
 				6E7766192745AEF3007C3651 /* LexiconItemView.swift in Sources */,
@@ -972,6 +981,7 @@
 				6EB702872635DAF900E46268 /* ChallengeSlot.swift in Sources */,
 				6E19C15E2631407E00AE993D /* TypingChallengeState.swift in Sources */,
 				6E8C0DC925D34E6B006C399E /* Language.swift in Sources */,
+				6E6529A0275578F300042745 /* TypingQuizViewModel.swift in Sources */,
 				6E24753525E867A900AC64B9 /* LexiconRequest.swift in Sources */,
 				6E14EB9925F61412008800C6 /* NavigationLazyView.swift in Sources */,
 				6EEAA8A826277980007DF1BA /* FontSelectionViewModel.swift in Sources */,
@@ -1001,6 +1011,7 @@
 				6E056326261271C100F0605F /* Saveable.swift in Sources */,
 				6E14EBAC25F616C1008800C6 /* ChallengeProtocol.swift in Sources */,
 				6EB702882635DAF900E46268 /* ChallengeSlot.swift in Sources */,
+				6E6529992755778800042745 /* TypingChallengeView.swift in Sources */,
 				6E1B7A6A26412E9B002D0A82 /* Random.swift in Sources */,
 				6E24753625E867A900AC64B9 /* LexiconRequest.swift in Sources */,
 				6E32E8B22639F71A00775B65 /* ForeignCharacter.swift in Sources */,
@@ -1040,6 +1051,7 @@
 				6E5D631C25EEFB580062E564 /* HomeViewModel.swift in Sources */,
 				6E18FC3225D73E3D00EEEB42 /* CharacterExtension.swift in Sources */,
 				6E1E8AA825F8B694008839BA /* Entry.swift in Sources */,
+				6E6529A1275578F300042745 /* TypingQuizViewModel.swift in Sources */,
 				6E1B7A54263FE774002D0A82 /* LearnedItem.swift in Sources */,
 				6E42CE6726329FEE008BD2ED /* TypingQuizState.swift in Sources */,
 				6EE81CCA25D89E4E00667CE5 /* ForeignNoun.swift in Sources */,

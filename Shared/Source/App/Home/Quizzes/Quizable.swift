@@ -111,8 +111,6 @@ protocol Quizable: ObservableObject {
   /// This is populated after the last challenge has been completed.
   var itemsLearned: [LearnedItem] { get }
   
-  init(entryType: EntryType)
-  
   func challengeAppeared()
   func finishedCurrentChallenge()
   func handleFinish()
