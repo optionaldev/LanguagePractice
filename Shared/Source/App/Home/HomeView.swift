@@ -36,6 +36,8 @@ struct HomeView: View {
           .navigationBarHidden(true)
         NavigationLink("Katakana", destination: NavigationLazyView(PickQuizView(entryType: .katakana)))
           .navigationBarHidden(true)
+        NavigationLink("Typing", destination: NavigationLazyView(TypingQuizView()))
+          .navigationBarHidden(true)
       }
     }
     #else

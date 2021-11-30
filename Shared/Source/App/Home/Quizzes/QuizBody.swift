@@ -32,12 +32,12 @@ import struct SwiftUI.LazyVStack
 private typealias LazyStack = LazyVStack
 #endif
 
-import SwiftUI
 
 private struct Constants {
   
   static let resultsID = "results_screen"
 }
+
 
 struct QuizBody<ViewModel: Quizable, Content: View>: View {
   
@@ -47,9 +47,7 @@ struct QuizBody<ViewModel: Quizable, Content: View>: View {
   var body: some View {
     #if os(iOS)
     bodyContent
-      // Makes navigation bar smaller on iOS
-      // TODO: Hide navigation bar entirely and replace with custom bar
-      .navigationBarTitle("", displayMode: .inline)
+      .navigationBarHidden(true)
     #else
     bodyContent
     #endif
@@ -110,23 +108,6 @@ struct QuizBody<ViewModel: Quizable, Content: View>: View {
     .frame(width: Canvas.width, height: iOS ? nil : Canvas.height)
     .id(Constants.resultsID)
   }
-  
-  //    private func distributtedWords(inside proxy: GeometryProxy) -> some View {
-  //        switch viewModel.itemsLearned.count {
-  //        case 1:
-  //            return VStack {
-  //                Text(viewModel.itemsLearned[0].id)
-  //                Text("\(viewModel.itemsLearned[0].time)")
-  //            }
-  //            .position(x: proxy.size.width / 2, y: proxy.size.height / 2)
-  //        case 2:
-  //            return VStack {
-  //
-  //            }
-  //        default:
-  //            fatalError()
-  //        }
-  //    }
   
   // Used for dismissing this view
   #if os(iOS)

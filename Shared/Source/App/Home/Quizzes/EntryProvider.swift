@@ -19,53 +19,67 @@ struct EntryProvider {
     switch entryType {
       case .hiragana:
         source = Lexicon.shared.foreign.hiragana.map { $0.id }
-        
       case .katakana:
         source = Lexicon.shared.foreign.katakana.map { $0.id }
       case .words:
         source = Lexicon.shared.foreign.nouns.map { $0.id }
     }
     
-    let knownItems = Defaults.knownForeignItemIDs
-    
-    // We fetch all items that are yet to be learned & shuffle to prevent repetitiveness
-    var unknownItem = Array(source
-                              .filter { !knownItems.contains($0) }
-                              .shuffled()
-                              .prefix(AppConstants.challengeInitialSampleSize))
-    
-    // We handle the case where there are less than 10 items left to learn
-    if unknownItem.count < AppConstants.challengeInitialSampleSize {
-      let extraItems = source.filter { knownItems.contains($0) }
-        .prefix(AppConstants.challengeInitialSampleSize - unknownItem.count)
-      
-      unknownItem.append(contentsOf: extraItems)
-    }
-    
-    guard unknownItem.count == AppConstants.challengeInitialSampleSize else {
-      fatalError("Invalid number of elements")
-    }
+    let unknownItems = generateUnknown(source: source, for: .picking)
     
     let result: [EntryProtocol]
     
     switch entryType {
       case .hiragana:
-        result = source.flatMap {[
+        result = unknownItems.flatMap {[
           HiraganaEntry(roman: $0, kanaChallengeType: .foreign),
           HiraganaEntry(roman: $0, kanaChallengeType: .romanToForeign),
           HiraganaEntry(roman: $0, kanaChallengeType: .foreignToRoman)
         ]}
       case .katakana:
-        result = source.flatMap {[
+        result = unknownItems.flatMap {[
           KatakanaEntry(roman: $0, kanaChallengeType: .foreign),
           KatakanaEntry(roman: $0, kanaChallengeType: .romanToForeign),
           KatakanaEntry(roman: $0, kanaChallengeType: .foreignToRoman)
         ]}
       case .words:
-        result = source.flatMap { generateEntries(forForeignWordID: $0) }
+        result = unknownItems.flatMap { generateEntries(forForeignWordID: $0) }
     }
     
     return result.shuffled()
+  }
+  
+  static func generateTyping() -> [EntryProtocol] {
+    let source = Lexicon.shared.foreign.nouns.map { $0.id }
+    let unknownItems = generateUnknown(source: source, for: .typing)
+    let result = unknownItems.flatMap { generateEntries(forForeignWordID: $0) }
+    return result.shuffled()
+  }
+  
+  // MARK: - Private
+  
+  private static func generateUnknown(source: [String], for type: KnowledgeType) -> [String] {
+    let knownItems = Defaults.knownIds(for: type)
+    
+    // We fetch all items that are yet to be learned & shuffle to prevent repetitiveness
+    var unknownItems = Array(source
+                              .filter { !knownItems.contains($0) }
+                              .shuffled()
+                              .prefix(AppConstants.challengeInitialSampleSize))
+    
+    // We handle the case where there are less than 10 items left to learn
+    if unknownItems.count < AppConstants.challengeInitialSampleSize {
+      let extraItems = source.filter { knownItems.contains($0) }
+        .prefix(AppConstants.challengeInitialSampleSize - unknownItems.count)
+      
+      unknownItems.append(contentsOf: extraItems)
+    }
+    
+    guard unknownItems.count == AppConstants.challengeInitialSampleSize else {
+      fatalError("Invalid number of elements")
+    }
+    
+    return unknownItems
   }
   
   private static func generateEntries(forForeignWordID id: String) -> [WordEntry] {

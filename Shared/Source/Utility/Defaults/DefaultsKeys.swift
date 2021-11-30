@@ -25,6 +25,8 @@ enum DefaultsBoolKey: String, Storable {
 enum DefaultsDictionaryKey: String, Storable {
   
   case guessHistory
+  case typingHistory
+  case speakingHistory
 }
 
 enum DefaultsStringKey: String, Storable {

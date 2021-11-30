@@ -47,7 +47,7 @@ final class PickQuizViewModel: OutputQuizable, ObservableObject, SpeechDelegate 
   }
   
   func handleFinish() {
-    var guessHistory: [String: [TimeInterval]] = Defaults.guessHistory
+    var guessHistory: [String: [TimeInterval]] = Defaults.history(for: .picking)
     
     for (index, challenge) in visibleChallenges.enumerated() {
       // History is recorded based on the foreign word ID, because that's what is being learned
@@ -74,9 +74,9 @@ final class PickQuizViewModel: OutputQuizable, ObservableObject, SpeechDelegate 
     numberFormatter.maximumFractionDigits = 1
     _ = guessHistory.map { print("\($0.key) \($0.value.compactMap { numberFormatter.string(for: $0) }.joined(separator: " "))") }
     
-    let knownItemsBeforeChallenge = Set(Defaults.knownForeignItemIDs)
+    let knownItemsBeforeChallenge = Set(Defaults.knownIds(for: .picking))
     Defaults.set(guessHistory, forKey: .guessHistory)
-    let knownItemsNow = Set(Defaults.knownForeignItemIDs)
+    let knownItemsNow = Set(Defaults.knownIds(for: .picking))
     
     let newlyLearnedItemIDs = knownItemsNow.subtracting(knownItemsBeforeChallenge)
     

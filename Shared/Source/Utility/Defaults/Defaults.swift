@@ -1,10 +1,17 @@
-//
+de//
 // The LanguagePractice project.
 // Created by optionaldev on 14/02/2021.
 // Copyright © 2021 optionaldev. All rights reserved.
 //
 
 import struct Foundation.TimeInterval
+
+enum KnowledgeType {
+  
+  case picking
+  case typing
+  case speaking
+}
 
 final class Defaults: DefaultsArrayProtocol,
                       DefaultsBoolProtocol,
@@ -40,16 +47,30 @@ final class Defaults: DefaultsArrayProtocol,
     return nil
   }
   
-  static var guessHistory: [String: [TimeInterval]] {
-    return dictionary(forKey: .guessHistory)
-  }
-  
-  static var knownForeignItemIDs: [String] {
-    return guessHistory.known()
-  }
-  
   static var voiceEnabled: Bool {
     return bool(forKey: .voiceEnabled)
+  }
+  
+  static func history(for type: KnowledgeType) -> [String: [TimeInterval]] {
+    switch type {
+      case .picking:
+        return dictionary(forKey: .guessHistory)
+      case .typing:
+        return dictionary(forKey: .typingHistory)
+      case .speaking:
+        return dictionary(forKey: .speakingHistory)
+    }
+  }
+  
+  static func knownIds(for type: KnowledgeType) -> [String] {
+    switch type {
+      case .picking:
+        return dictionary(forKey: .guessHistory).known()
+      case .typing:
+        return dictionary(forKey: .typingHistory).known()
+      case .speaking:
+        return dictionary(forKey: .speakingHistory).known()
+    }
   }
 }
 

@@ -22,11 +22,12 @@ final class TypingQuizViewModel: OutputQuizable, ObservableObject, SpeechDelegat
   
   private(set) var challengeMeasurement = ChallengeMeasurement()
   
-  private(set) var challengeEntries: [EntryProtocol] = []
+  private(set) var challengeEntries: [EntryProtocol]
   
   var nextChallenge: TypingChallenge? = nil
   
   init() {
+    challengeEntries = EntryProvider.generateTyping()
     performInitialSetup()
     
     Speech.shared.delegate = self

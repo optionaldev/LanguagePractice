@@ -23,7 +23,7 @@ struct TypingQuizView: View {
   
   // MARK: - Private
   
-  @ObservedObject private var viewModel: TypingQuizViewModel
+  @ObservedObject private var viewModel = TypingQuizViewModel()
   
   @ViewBuilder
   private func challengeView(challenge: TypingChallenge) -> some View {
