@@ -34,6 +34,9 @@ struct TypingQuizView: View {
         .background(Color.orange.opacity(0.5))
         .cornerRadius(5)
       Spacer()
+        .onTapGesture {
+          Keyboard.dismiss()
+        }
     }
     .frame(width: Canvas.width)
     .background(Color.green.opacity(0.3))
