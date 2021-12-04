@@ -9,7 +9,9 @@ import protocol SwiftUI.Scene
 
 import struct   SwiftUI.WindowGroup
 
-import Foundation
+import class Foundation.Bundle
+import class Foundation.UserDefaults
+
 
 @main
 struct LanguagePracticeApp: App {

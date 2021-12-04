@@ -51,64 +51,57 @@ extension OutputQuizable where Challenge == PickChallenge {
   }
 }
 
-final class ChallengeMeasurement {
-  
-  /// Defines the point at which the challenge measurement time starts.
-  ///
-  /// When a challenge starts is different based on the type of challenge the user is given.
-  ///
-  /// For challenges where information is instantly visible (e.g: text challenges, image
-  /// challenges), the value is set as soon as all the challenge elements are visible
-  /// (taking animation into consideration)
-  ///
-  /// For challenges where information is not instantly visible (e.g: voice challenges)
-  /// the value is set after the sound is heard. For input, this means after the screen is
-  /// presented and the sound has been heard. For output, this means after the correct
-  /// answer has been heart the firs time
-  private var startTime: Date? = nil
-  
-  func start() {
-    if startTime == nil {
-      log("challenge measurement START >>>>>>>>")
-      startTime = Date()
-    }
-  }
-  
-  func stopAndFetchResult() -> TimeInterval {
-    if let time = startTime {
-      let measurement = time.distance(to: Date())
-      startTime = nil
-      log("challenge measurement STOP ||||||| measurement = \(measurement)")
-      return measurement
-    }
-    startTime = nil
-    log("Should always called fetch after starting", type: .unexpected)
-    return .zero
-  }
-}
-
 protocol Quizable: ObservableObject {
   
   associatedtype Challenge: ChallengeProtocol
   
+  /**
+   An immutable list of challenge entries. These reflect the baseline for the quiz
+   at hand. The actual challenges that are presented to the user are based on the
+   entries.
+   
+   The reason why the actual challenges are not generated at the beginning of the
+   quiz is because we might have for example an image that is currently being
+   downloaded or in queue to be downloaded and we can't assume it will finish
+   by the time the challenge is reached. Instead if we postpone the challenge
+   generation, we can simply verify if the image download is finish and if not
+   we generate a different type of challenge for that word.
+   */
   var challengeEntries: [EntryProtocol] { get }
   
+  /**
+   In order to have stats to display to the user, measurements are made for each
+   challenge and based on these measurements, we adjust not only our expectations
+   from the user, but also if a challenge should be deemed completed or not.
+   
+   For someone that grinds all day, his version of a challenge being completed
+   might be in under 2 seconds even for a long word. For someone that casually
+   uses the app for 10 minutes a week, even 10 seconds might be within expectations.
+   */
   var challengeMeasurement: ChallengeMeasurement { get }
   
-  /// Challenge that the user is currently seeing (unless the content was scrolled)
+  /**
+   Challenge that the user is currently being done.
+   */
   var currentChallenge: Challenge { get }
   
-  /// Challenge that was prepared for when the user finished the current one. When the
-  /// value is nil, there are no more challenges and the results screen should be prepared.
+  /**
+   Challenge that was prepared while the user was completing the current one. If __nil__,
+   there are no more challenges and the results screen should be shown.
+   */
   var nextChallenge: Challenge? { get set }
   
-  /// Holds all the challenge that have been completed and the challenge that is currently
-  /// being done.
+  /**
+   Holds all the challenge that have been completed and the challenge that is currently
+   being done. The user can scroll through all of these challenges at any give time.
+   */
+  
   var visibleChallenges: [Challenge] { get set }
   
-  /// Used to display words that were considered "learned", based on different metrics.
-  ///
-  /// This is populated after the last challenge has been completed.
+  /**
+   Used to display words that were considered "learned", based on different metrics.
+   This is populated after the last challenge has been completed.
+   */
   var itemsLearned: [LearnedItem] { get }
   
   func challengeAppeared()

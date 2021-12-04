@@ -4,8 +4,8 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-import Foundation
-import SwiftUI
+import func Foundation.arc4random_uniform
+
 
 private struct Constants {
   
@@ -14,11 +14,12 @@ private struct Constants {
 
 final class Random {
   
-  /// Random double in specified range.
-  ///
-  /// Only works for positive numbers.
-  ///
-  /// Returns a double >= to the lowerBound and < than the upperBound.
+  /**
+   Random double in specified range.
+   
+   Only works for positive numbers.
+   Returns a double >= to the lowerBound and < than the upperBound.
+   */
   static func double(inRange range: Range<Double>) -> Double {
     let upperBound = UInt32((range.upperBound - range.lowerBound) * Constants.divisor)
     let division = Double(arc4random_uniform(upperBound)) / Constants.divisor

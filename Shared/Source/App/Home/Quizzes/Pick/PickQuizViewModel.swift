@@ -26,6 +26,7 @@ final class PickQuizViewModel: OutputQuizable, ObservableObject, SpeechDelegate 
   
   var nextChallenge: PickChallenge? = nil
   
+  
   init(entryType: EntryType) {
     challengeEntries = EntryProvider.generate(entryType)
     performInitialSetup()
@@ -43,7 +44,7 @@ final class PickQuizViewModel: OutputQuizable, ObservableObject, SpeechDelegate 
   }
   
   func prepareNextChallenge() {
-    nextChallenge = ChallengeProvider.generatePick(for: challengeEntries[visibleChallenges.count], allEntries: challengeEntries)
+    nextChallenge = ChallengeProvider.generatePick(pool: challengeEntries, index: visibleChallenges.count)
   }
   
   func handleFinish() {

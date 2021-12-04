@@ -14,12 +14,12 @@ final class ChallengeProvider {
     return (inputType, input, inputRep)
   }
   
-  static func generatePick(for entry: EntryProtocol, allEntries: [EntryProtocol]) -> PickChallenge {
-    
+  static func generatePick(pool: [EntryProtocol], index: Int) -> PickChallenge {
+    let entry = pool[index]
     let (inputType, input, inputRep) = generateInputComponents(entry: entry)
     
     let outputType = generateOutputType(for: entry, inputType: inputType)
-    var output = generateOutput(for: entry, outputType: outputType, allEntries: allEntries)
+    var output = generateOutput(for: entry, outputType: outputType, pool: pool)
     
     let answerOutput: String
     if entry is KanaEntryProtocol {
@@ -57,7 +57,8 @@ final class ChallengeProvider {
     return nextForeignItem
   }
   
-  static func generateTyping(for entry: EntryProtocol, allEntries: [EntryProtocol]) -> TypingChallenge {
+  static func generateTyping(pool: [EntryProtocol], index: Int) -> TypingChallenge {
+    let entry = pool[index]
     let (inputType, input, inputRep) = generateInputComponents(entry: entry)
     
     let output: [String]
@@ -228,11 +229,11 @@ final class ChallengeProvider {
     return outputType
   }
   
-  private static func generateOutput(for entry: EntryProtocol, outputType: ChallengeType, allEntries: [EntryProtocol]) -> [String] {
+  private static func generateOutput(for entry: EntryProtocol, outputType: ChallengeType, pool: [EntryProtocol]) -> [String] {
     
     let nextItem = item(for: entry)
     
-    var otherSameTypeChallengeEntries = allEntries.filter { $0.typeIndex == entry.typeIndex && $0.foreignID != entry.foreignID }
+    var otherSameTypeChallengeEntries = pool.filter { $0.typeIndex == entry.typeIndex && $0.foreignID != entry.foreignID }
     if let word = nextItem as? ForeignWord {
       let other = otherSameTypeChallengeEntries.filter { $0.english == nil ||
         !word.english.contains($0.english!) }

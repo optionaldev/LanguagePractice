@@ -33,6 +33,7 @@ struct TypingQuizView: View {
         .frame(maxWidth: Canvas.width - 10)
         .background(Color.orange.opacity(0.5))
         .cornerRadius(5)
+      CustomTextField(text: $viewModel.currentText)
       Spacer()
         .onTapGesture {
           Keyboard.dismiss()

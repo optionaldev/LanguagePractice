@@ -13,7 +13,6 @@ struct TypingChallenge: ChallengeProtocol, Identifiable, Equatable {
                                                             language: .english,
                                                             translation: ""))
   
-  
   init(inputType: ChallengeType,
        input: String,
        inputRepresentation: Rep,
