@@ -48,6 +48,7 @@ final class Speech: NSObject, AVSpeechSynthesizerDelegate {
   func speak(string: String, language: Language, volume: Float = 1.0, rate: Float = 0.5) {
     
     guard Defaults.voiceEnabled else {
+      log("Voice is disabled.", type: .info)
       return
     }
     
@@ -65,6 +66,11 @@ final class Speech: NSObject, AVSpeechSynthesizerDelegate {
     
     let utterance = AVSpeechUtterance(string: string)
     utterance.voice = language == .english ? englishVoice.next() : foreignVoice.next()
+    
+    guard utterance.voice != nil else {
+      log("No voices available")
+      return
+    }
     
     if language == .english && utterance.voice?.misspronounces(word: string) == true {
       utterance.voice = englishVoice.next()

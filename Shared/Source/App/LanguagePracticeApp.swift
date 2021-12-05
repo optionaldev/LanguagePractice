@@ -22,8 +22,8 @@ struct LanguagePracticeApp: App {
     printStatus()
     
     Defaults.performInitialSetup()
-    UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
-    UserDefaults.standard.synchronize()
+//    UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+//    UserDefaults.standard.synchronize()
   }
   
   var body: some Scene {

@@ -9,22 +9,21 @@ import AVFoundation
 struct VoiceHandler {
   
   init(_ language: Language) {
-    self.voices = language.voices
-    
-    log("Initialized \(language) with voices: \(voices.map { $0.name })", type: .info)
+    self.language = language
   }
   
-  mutating func next() -> AVSpeechSynthesisVoice {
+  mutating func next() -> AVSpeechSynthesisVoice? {
+    let voices = language.voices
     if index == voices.count {
       index = 0
     }
     let currentIndex = index
     index += 1
-    return voices[currentIndex]
+    return currentIndex < voices.count ? voices[currentIndex] : nil
   }
   
   // MARK: - Private
   
   private var index = 0
-  private var voices: [AVSpeechSynthesisVoice]
+  private let language: Language
 }

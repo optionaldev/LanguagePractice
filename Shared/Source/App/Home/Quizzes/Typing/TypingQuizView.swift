@@ -7,10 +7,14 @@
 import protocol SwiftUI.View
 
 import struct SwiftUI.Color
+import struct SwiftUI.ForEach
+import struct SwiftUI.HStack
 import struct SwiftUI.ObservedObject
 import struct SwiftUI.Spacer
+import struct SwiftUI.Text
 import struct SwiftUI.ViewBuilder
 import struct SwiftUI.VStack
+import struct SwiftUI.ZStack
 
 
 struct TypingQuizView: View {
@@ -28,12 +32,24 @@ struct TypingQuizView: View {
   @ViewBuilder
   private func challengeView(challenge: TypingChallenge) -> some View {
     VStack {
-      QuizViews.inputView(rep: challenge.inputRepresentation, viewModel: viewModel)
-        .frame(height: 200)
-        .frame(maxWidth: Canvas.width - 10)
-        .background(Color.orange.opacity(0.5))
-        .cornerRadius(5)
+      ZStack {
+        QuizViews.inputView(rep: challenge.inputRepresentation, viewModel: viewModel)
+        VStack {
+          Spacer()
+          HStack {
+            ForEach(viewModel.currentChallenge.output, id: \.self) { output in
+              Text(output)
+            }
+          }
+        }
+        .opacity(viewModel.challengeState == .forfeited(3) ? 1 : 0)
+      }
+      .frame(height: 200)
+      .frame(maxWidth: Canvas.width - 10)
+      .background(Color.orange.opacity(0.5))
+      .cornerRadius(5)
       CustomTextField(text: $viewModel.currentText)
+        .frame(height: 50)
       Spacer()
         .onTapGesture {
           Keyboard.dismiss()

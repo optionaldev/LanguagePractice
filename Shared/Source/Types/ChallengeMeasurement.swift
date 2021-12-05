@@ -7,6 +7,7 @@
 import struct Foundation.Date
 import struct Foundation.TimeInterval
 
+
 final class ChallengeMeasurement {
   
   func start() {
