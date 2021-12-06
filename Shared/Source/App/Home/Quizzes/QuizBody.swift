@@ -73,9 +73,9 @@ struct QuizBody<ViewModel: Quizable, Content: View>: View {
               resultsScreen()
             }
           }
-          .onChange(of: viewModel.visibleChallenges) { visibleChallenges in
+          .onChange(of: viewModel.visibleChallenges) { _ in
             withAnimation {
-              value.scrollTo(visibleChallenges.last!.id)
+              value.scrollTo(viewModel.currentChallenge.id)
             }
           }
           .onChange(of: viewModel.itemsLearned) { _ in

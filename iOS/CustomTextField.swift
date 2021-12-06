@@ -47,6 +47,7 @@ struct CustomTextField: UIViewRepresentable {
     textField.delegate = context.coordinator
     textField.textAlignment = .center
     textField.autocapitalizationType = .none
+    textField.autocorrectionType = .no
     
     NotificationCenter.default.addObserver(
       forName: UITextField.textDidChangeNotification,

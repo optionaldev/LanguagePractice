@@ -63,18 +63,18 @@ final class TypingQuizViewModel: Quizable, ObservableObject, SpeechDelegate {
   func handleFinish() {
   }
   
-  // MARK: - Private
-  
-  private func forfeitCurrentWord() {
+  func forfeitCurrentChallenge() {
     currentText = ""
     challengeState = .forfeited(AppConstants.forfeitRetriesCount)
   }
+  
+  // MARK: - Private
   
   private func verifyText() {
     // To make it easy to practice in simulator (maybe macOS too)
     // make § key (above Tab key) a quick forfeit
     if currentText.contains("§") {
-      forfeitCurrentWord()
+      forfeitCurrentChallenge()
       return
     }
     

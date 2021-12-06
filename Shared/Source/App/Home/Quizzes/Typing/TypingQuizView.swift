@@ -6,6 +6,7 @@
 
 import protocol SwiftUI.View
 
+import struct SwiftUI.Button
 import struct SwiftUI.Color
 import struct SwiftUI.ForEach
 import struct SwiftUI.HStack
@@ -37,19 +38,30 @@ struct TypingQuizView: View {
         VStack {
           Spacer()
           HStack {
-            ForEach(viewModel.currentChallenge.output, id: \.self) { output in
+            ForEach(challenge.output, id: \.self) { output in
               Text(output)
             }
           }
         }
         .opacity(viewModel.challengeState == .forfeited(3) ? 1 : 0)
+        VStack {
+          HStack {
+            Spacer()
+            Button("Forfeit") {
+              viewModel.forfeitCurrentChallenge()
+            }
+            .padding(10)
+          }
+          Spacer()
+        }
       }
       .frame(height: 200)
       .frame(maxWidth: Canvas.width - 10)
       .background(Color.orange.opacity(0.5))
       .cornerRadius(5)
       CustomTextField(text: $viewModel.currentText)
-        .frame(height: 50)
+        .frame(width: 200, height: 50)
+        .background(Color.red)
       Spacer()
         .onTapGesture {
           Keyboard.dismiss()
