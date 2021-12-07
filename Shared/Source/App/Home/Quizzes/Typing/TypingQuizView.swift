@@ -21,9 +21,25 @@ import struct SwiftUI.ZStack
 struct TypingQuizView: View {
   
   var body: some View {
-    QuizBody(viewModel: viewModel) { challenge in
-      challengeView(challenge: challenge)
+    VStack {
+      ZStack {
+        QuizBody(viewModel: viewModel) { challenge in
+          challengeView(challenge: challenge)
+        }
+        forfeitButton
+      }
+      .frame(width: Canvas.width, height: 200)
+      .background(Color.blue.opacity(0.3))
+      CustomTextField(text: $viewModel.currentText)
+        .frame(width: 200, height: 50)
+        .background(Color.red.opacity(0.3))
+      Spacer()
+        .onTapGesture {
+          Keyboard.dismiss()
+        }
     }
+    .frame(width: Canvas.width)
+    .background(Color.red.opacity(0.3))
   }
   
   // MARK: - Private
@@ -32,42 +48,38 @@ struct TypingQuizView: View {
   
   @ViewBuilder
   private func challengeView(challenge: TypingChallenge) -> some View {
+    ZStack {
+      QuizViews.inputView(rep: challenge.inputRepresentation, viewModel: viewModel)
+      forfeitAnswers(forChallenge: challenge)
+    }
+    .frame(width: Canvas.width - 10, height: 200)
+    .background(Color.orange.opacity(0.5))
+    .padding(5)
+    .cornerRadius(10)
+  }
+  
+  private func forfeitAnswers(forChallenge challenge: TypingChallenge) -> some View {
     VStack {
-      ZStack {
-        QuizViews.inputView(rep: challenge.inputRepresentation, viewModel: viewModel)
-        VStack {
-          Spacer()
-          HStack {
-            ForEach(challenge.output, id: \.self) { output in
-              Text(output)
-            }
-          }
-        }
-        .opacity(viewModel.challengeState == .forfeited(3) ? 1 : 0)
-        VStack {
-          HStack {
-            Spacer()
-            Button("Forfeit") {
-              viewModel.forfeitCurrentChallenge()
-            }
-            .padding(10)
-          }
-          Spacer()
+      Spacer()
+      HStack {
+        ForEach(challenge.output, id: \.self) { output in
+          Text(output)
         }
       }
-      .frame(height: 200)
-      .frame(maxWidth: Canvas.width - 10)
-      .background(Color.orange.opacity(0.5))
-      .cornerRadius(5)
-      CustomTextField(text: $viewModel.currentText)
-        .frame(width: 200, height: 50)
-        .background(Color.red)
-      Spacer()
-        .onTapGesture {
-          Keyboard.dismiss()
-        }
     }
-    .frame(width: Canvas.width)
-    .background(Color.green.opacity(0.3))
+    .opacity(viewModel.challengeState == .forfeited(3) ? 1 : 0)
+  }
+  
+  private var forfeitButton: some View {
+    VStack {
+      HStack {
+        Spacer()
+        Button("Forfeit") {
+          viewModel.forfeitCurrentChallenge()
+        }
+        .padding(10)
+      }
+      Spacer()
+    }
   }
 }

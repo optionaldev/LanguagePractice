@@ -20,7 +20,7 @@ protocol EntryProtocol {
   var inputPossibilities: [ChallengeType] { get}
   var outputPossibilities: [ChallengeType] { get }
   
-  /// We're always learned some word or characters and this is how we identify it
+  /// We're always learning some word or characters and this is how we identify it
   var foreignID: String { get }
   
   var noImage: Bool { get }
@@ -47,7 +47,7 @@ extension EntryProtocol {
     if let english = english {
       return Persistence.imagePath(id: english) == nil
     }
-    return false
+    return true
   }
   
   var english: String? {

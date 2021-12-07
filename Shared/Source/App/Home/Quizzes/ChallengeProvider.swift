@@ -64,10 +64,11 @@ final class ChallengeProvider {
     let output: [String]
     switch entry.outputLanguage {
       case .english:
-        output = [entry.english].compactMap { $0 }
+        output = entry.output.split(separator: ",").map { String($0) }
       case .foreign:
         let nextForeignItem = item(for: entry)
         if let word = nextForeignItem as? ForeignWord {
+          // TODO: Add option in settings for switching between output types
           output = [word.romaji, word.kana, word.written].compactMap { $0 }
         } else {
           output = [nextForeignItem.romaji]

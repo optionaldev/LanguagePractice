@@ -33,7 +33,7 @@ final class TypingQuizViewModel: Quizable, ObservableObject, SpeechDelegate {
   
   @Published var currentText: String = "" {
     didSet {
-      log("currentText = \(currentText)")
+//      log("currentText = \(currentText)")
       if currentText != "" {
         verifyText()
       }
@@ -41,7 +41,13 @@ final class TypingQuizViewModel: Quizable, ObservableObject, SpeechDelegate {
   }
   
   init() {
-    challengeEntries = EntryProvider.generateTyping()
+    let entries = EntryProvider.generateTyping()
+    
+    // We want to take entries in the order of their language during a typing challenge
+    // so that the user only has to change his keyboard language once
+    let englishEntries = entries.filter { $0.inputLanguage == .english }
+    let foreignEntries = entries.filter { $0.inputLanguage == .foreign }
+    challengeEntries = englishEntries + foreignEntries
     performInitialSetup()
     
     Speech.shared.delegate = self
@@ -105,7 +111,7 @@ final class TypingQuizViewModel: Quizable, ObservableObject, SpeechDelegate {
           handleReset(remaining: remainingGuessesNeeded - 1)
       }
     } else {
-      log("currentText \"\(currentText)\" not part of valid answers: \(currentChallenge.output)")
+//      log("currentText \"\(currentText)\" not part of valid answers: \(currentChallenge.output)")
     }
   }
   

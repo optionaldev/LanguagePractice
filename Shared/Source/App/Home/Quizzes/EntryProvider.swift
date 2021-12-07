@@ -64,7 +64,8 @@ struct EntryProvider {
     // We fetch all items that are yet to be learned & shuffle to prevent repetitiveness
     var unknownItems = Array(source
                               .filter { !knownItems.contains($0) }
-                              .shuffled()
+                             // TODO: Decide on whether we should shuffle or have a lexicon predefined order based on certain criteria
+//                              .shuffled()
                               .prefix(AppConstants.challengeInitialSampleSize))
     
     // We handle the case where there are less than 10 items left to learn
@@ -82,28 +83,28 @@ struct EntryProvider {
     return unknownItems
   }
   
-  private static func generateEntries(forForeignWordID id: String) -> [WordEntry] {
+  private static func generateEntries(forForeignWordID id: String) -> [EntryProtocol] {
     guard let foreignNoun = Lexicon.shared.foreignDictionary[id] as? ForeignWord else {
       log("Unable to fetch and cast item with id \"\(id)\".")
       return []
     }
-    var result = foreignNoun.english.flatMap {
-      [WordEntry(inputLanguage: .english, input: $0, outputLanguage: .foreign, output: foreignNoun.id),
-       WordEntry(inputLanguage: .foreign, input: foreignNoun.id, outputLanguage: .english, output: $0)
-      ]
-    }
     
-    if foreignNoun.kana != nil {
-      // For input, we could show multiple english translations, but for output only 1,
-      // so for now, display only the first and keep DB with first english translation
-      // being the most accurate one
-      guard let translation = foreignNoun.english.first else {
-        log("No english translation found for foreign word with ID \"\(foreignNoun.id)\"", type: .unexpected)
-        return result
-      }
-      
-      result.append(WordEntry(inputLanguage: .foreign, input: foreignNoun.id, outputLanguage: .foreign, output: translation))
+    var result = foreignNoun.english.flatMap {
+      [WordEntry(inputLanguage: .english, input: $0, outputLanguage: .foreign, output: foreignNoun.id)]
     }
+    result.append(WordEntry(inputLanguage: .foreign, input: foreignNoun.id, outputLanguage: .english, output: foreignNoun.english.joined(separator: ",")))
+    
+//    if foreignNoun.kana != nil {
+//      // For input, we could show multiple english translations, but for output only 1,
+//      // so for now, display only the first and keep DB with first english translation
+//      // being the most accurate one
+//      guard let translation = foreignNoun.english.first else {
+//        log("No english translation found for foreign word with ID \"\(foreignNoun.id)\"", type: .unexpected)
+//        return result
+//      }
+//
+//      result.append(WordEntry(inputLanguage: .foreign, input: foreignNoun.id, outputLanguage: .foreign, output: translation))
+//    }
     return result
   }
 }

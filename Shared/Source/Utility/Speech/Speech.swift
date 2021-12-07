@@ -12,7 +12,7 @@ import class Foundation.NSObject
 
 import protocol AVFoundation.AVSpeechSynthesizerDelegate
 
-protocol SpeechDelegate: class {
+protocol SpeechDelegate: AnyObject {
   
   func speechStarted()
   func speechEnded()
