@@ -43,7 +43,7 @@ struct EntryProvider {
           KatakanaEntry(roman: $0, kanaChallengeType: .foreignToRoman)
         ]}
       case .words:
-        result = unknownItems.flatMap { generateEntries(forForeignWordID: $0) }
+        result = unknownItems.flatMap { generateEntries(forForeignWordID: $0, multiOutput: true, foreignToForeign: true) }
     }
     
     return result.shuffled()
@@ -52,7 +52,7 @@ struct EntryProvider {
   static func generateTyping() -> [EntryProtocol] {
     let source = Lexicon.shared.foreign.nouns.map { $0.id }
     let unknownItems = generateUnknown(source: source, for: .typing)
-    let result = unknownItems.flatMap { generateEntries(forForeignWordID: $0) }
+    let result = unknownItems.flatMap { generateEntries(forForeignWordID: $0, multiOutput: false, foreignToForeign: false) }
     return result.shuffled()
   }
   
@@ -83,7 +83,19 @@ struct EntryProvider {
     return unknownItems
   }
   
-  private static func generateEntries(forForeignWordID id: String) -> [EntryProtocol] {
+  /**
+   Generates challenge entries for a particular foreign word.
+   
+   Based on the type of challenge, we want to generate different challenge entries.
+   
+   - Parameters:
+    - id: ID of the foreign word that we generate entries for.
+    - multiOutput: If __true__ we will generate a challenge entry for each output available. If __false__ we
+                   will combine all outputs into a single string, where outputs are separated by a comma.
+    - foreignToForeign: If __true__ we will generate challenge that are foreign -> foreign, which can happen
+                        for languages where the written language is not based off of the English alphabet.
+   */
+  private static func generateEntries(forForeignWordID id: String, multiOutput: Bool, foreignToForeign: Bool) -> [EntryProtocol] {
     guard let foreignNoun = Lexicon.shared.foreignDictionary[id] as? ForeignWord else {
       log("Unable to fetch and cast item with id \"\(id)\".")
       return []
@@ -92,19 +104,26 @@ struct EntryProvider {
     var result = foreignNoun.english.flatMap {
       [WordEntry(inputLanguage: .english, input: $0, outputLanguage: .foreign, output: foreignNoun.id)]
     }
-    result.append(WordEntry(inputLanguage: .foreign, input: foreignNoun.id, outputLanguage: .english, output: foreignNoun.english.joined(separator: ",")))
     
-//    if foreignNoun.kana != nil {
-//      // For input, we could show multiple english translations, but for output only 1,
-//      // so for now, display only the first and keep DB with first english translation
-//      // being the most accurate one
-//      guard let translation = foreignNoun.english.first else {
-//        log("No english translation found for foreign word with ID \"\(foreignNoun.id)\"", type: .unexpected)
-//        return result
-//      }
-//
-//      result.append(WordEntry(inputLanguage: .foreign, input: foreignNoun.id, outputLanguage: .foreign, output: translation))
-//    }
+    if multiOutput {
+      result.append(contentsOf: foreignNoun.english.flatMap {
+        [WordEntry(inputLanguage: .foreign, input: foreignNoun.id, outputLanguage: .english, output: $0)]
+      })
+    } else {
+      result.append(WordEntry(inputLanguage: .foreign, input: foreignNoun.id, outputLanguage: .english, output: foreignNoun.english.joined(separator: ",")))
+    }
+    
+    if foreignToForeign && foreignNoun.kana != nil {
+      // For input, we could show multiple english translations, but for output only 1,
+      // so for now, display only the first and keep DB with first english translation
+      // being the most accurate one
+      guard let translation = foreignNoun.english.first else {
+        log("No english translation found for foreign word with ID \"\(foreignNoun.id)\"", type: .unexpected)
+        return result
+      }
+
+      result.append(WordEntry(inputLanguage: .foreign, input: foreignNoun.id, outputLanguage: .foreign, output: translation))
+    }
     return result
   }
 }

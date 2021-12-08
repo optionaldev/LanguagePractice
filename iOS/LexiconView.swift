@@ -20,12 +20,23 @@ struct LexiconView: View {
   
   var body: some View {
     // TODO: Find alternative to TabView because this guy initializes the tables waaaay too many times (more SwiftUI nonsense)
+    ZStack {
+      // Background for the PageTabViewStyle dots at the bottom
+      VStack {
+        Spacer()
+        Rectangle()
+          .frame(width: 66, height: 20)
+          .background(Color.gray.opacity(0.2))
+          .cornerRadius(15)
+          .padding(15)
+      }
       TabView {
         hiraganaTable
         katakanaTable
         wordsTable
       }
       .tabViewStyle(PageTabViewStyle())
+    }
   }
   
   // MARK: - Private
