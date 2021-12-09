@@ -9,6 +9,7 @@ import protocol SwiftUI.View
 import struct SwiftUI.List
 import struct SwiftUI.NavigationLink
 import struct SwiftUI.NavigationView
+import struct SwiftUI.Spacer
 import struct SwiftUI.State
 import struct SwiftUI.Text
 import struct SwiftUI.Toggle
@@ -20,11 +21,6 @@ struct SettingsView: View {
   var body: some View {
     
     content()
-      .navigationBarTitleDisplayMode(.inline)
-      .navigationBarTitle("Settings")
-    
-//    content()
-    
   }
   
   // MARK: - Private
@@ -39,10 +35,10 @@ struct SettingsView: View {
         }
         Toggle("Voice enabled", isOn: $voiceEnabled)
       }
+      .navigationBarHidden(true)
       .onChange(of: voiceEnabled, perform: { _ in
         Defaults.set(voiceEnabled, forKey: .voiceEnabled)
       })
-      .padding(.top, 10)
     }
   }
 }
