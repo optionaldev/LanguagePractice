@@ -7,4 +7,8 @@
 struct EnglishLexicon: Codable {
   
   let nouns: [EnglishNoun]
+  
+  init() {
+    nouns = []
+  }
 }

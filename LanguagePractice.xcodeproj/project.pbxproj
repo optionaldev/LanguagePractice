@@ -74,6 +74,12 @@
 		6E42CE6626329FEE008BD2ED /* TypingQuizState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E42CE6526329FEE008BD2ED /* TypingQuizState.swift */; };
 		6E42CE6726329FEE008BD2ED /* TypingQuizState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E42CE6526329FEE008BD2ED /* TypingQuizState.swift */; };
 		6E44AAB0275B871400177A71 /* ChallengeMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E44AAAF275B871400177A71 /* ChallengeMeasurement.swift */; };
+		6E4738A32763D7DB000B96CD /* ForeignVerb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4738A22763D7DB000B96CD /* ForeignVerb.swift */; };
+		6E4738A42763D7DB000B96CD /* ForeignVerb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4738A22763D7DB000B96CD /* ForeignVerb.swift */; };
+		6E4738A72763DBF0000B96CD /* VerbPickChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4738A62763DBF0000B96CD /* VerbPickChallenge.swift */; };
+		6E4738A82763DBF0000B96CD /* VerbPickChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4738A62763DBF0000B96CD /* VerbPickChallenge.swift */; };
+		6E4738AA2763DFB3000B96CD /* EntryProv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4738A92763DFB3000B96CD /* EntryProv.swift */; };
+		6E4738AB2763DFB3000B96CD /* EntryProv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4738A92763DFB3000B96CD /* EntryProv.swift */; };
 		6E522F3B25F4079D00DA229C /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E522F3A25F4079D00DA229C /* Persistence.swift */; };
 		6E522F3C25F4079D00DA229C /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E522F3A25F4079D00DA229C /* Persistence.swift */; };
 		6E55549525D2026A000565F2 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E55549425D2026A000565F2 /* Tab.swift */; };
@@ -232,6 +238,9 @@
 		6E42CE5E26329FAD008BD2ED /* Quizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quizable.swift; sourceTree = "<group>"; };
 		6E42CE6526329FEE008BD2ED /* TypingQuizState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingQuizState.swift; sourceTree = "<group>"; };
 		6E44AAAF275B871400177A71 /* ChallengeMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeMeasurement.swift; sourceTree = "<group>"; };
+		6E4738A22763D7DB000B96CD /* ForeignVerb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignVerb.swift; sourceTree = "<group>"; };
+		6E4738A62763DBF0000B96CD /* VerbPickChallenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerbPickChallenge.swift; sourceTree = "<group>"; };
+		6E4738A92763DFB3000B96CD /* EntryProv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryProv.swift; sourceTree = "<group>"; };
 		6E522F3A25F4079D00DA229C /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		6E55549425D2026A000565F2 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		6E55549B25D20674000565F2 /* PhoneTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneTabView.swift; sourceTree = "<group>"; };
@@ -388,6 +397,7 @@
 				6EB7027F2635CB9A00E46268 /* QuizViews.swift */,
 				6E14EB7F25F61255008800C6 /* Pick */,
 				6EE60CA6262FFA7B00011E03 /* Typing */,
+				6E4738A52763DBDB000B96CD /* VerbPick */,
 			);
 			path = Quizzes;
 			sourceTree = "<group>";
@@ -452,6 +462,15 @@
 				6E55549425D2026A000565F2 /* Tab.swift */,
 			);
 			path = Types;
+			sourceTree = "<group>";
+		};
+		6E4738A52763DBDB000B96CD /* VerbPick */ = {
+			isa = PBXGroup;
+			children = (
+				6E4738A62763DBF0000B96CD /* VerbPickChallenge.swift */,
+				6E4738A92763DFB3000B96CD /* EntryProv.swift */,
+			);
+			path = VerbPick;
 			sourceTree = "<group>";
 		};
 		6E5D632D25EEFD0F0062E564 /* Home */ = {
@@ -661,6 +680,7 @@
 				6E32E8A12639F5EB00775B65 /* ForeignItem.swift */,
 				6EE81CB725D89DD900667CE5 /* ForeignLexicon.swift */,
 				6EE81CC825D89E4E00667CE5 /* ForeignNoun.swift */,
+				6E4738A22763D7DB000B96CD /* ForeignVerb.swift */,
 				6EE81CCF25D89E7F00667CE5 /* ForeignWord.swift */,
 			);
 			path = Foreign;
@@ -944,12 +964,15 @@
 				6ED070AF275823A200FF33FF /* Keyboard.swift in Sources */,
 				6E23CD0626041E9A00D022B2 /* MatrixView.swift in Sources */,
 				6E056325261271C100F0605F /* Saveable.swift in Sources */,
+				6E4738A72763DBF0000B96CD /* VerbPickChallenge.swift in Sources */,
+				6E4738A32763D7DB000B96CD /* ForeignVerb.swift in Sources */,
 				6EE81CD725D89E9300667CE5 /* Item.swift in Sources */,
 				6E1E8AA725F8B694008839BA /* Entry.swift in Sources */,
 				6E42CE5F26329FAD008BD2ED /* Quizable.swift in Sources */,
 				6E18FC2625D73E1E00EEEB42 /* StringExtension.swift in Sources */,
 				6E275D1D25F774B700617262 /* PickChallengeState.swift in Sources */,
 				6EE81CC925D89E4E00667CE5 /* ForeignNoun.swift in Sources */,
+				6E4738AA2763DFB3000B96CD /* EntryProv.swift in Sources */,
 				6EEAF94A260B2EE4005EE9CC /* ImageExtension.swift in Sources */,
 				6EB3819725D5D68900114B83 /* VoiceHandler.swift in Sources */,
 				6EB702802635CB9A00E46268 /* QuizViews.swift in Sources */,
@@ -989,12 +1012,15 @@
 				6EE81CD125D89E7F00667CE5 /* ForeignWord.swift in Sources */,
 				6EF89085274BB3D5003E0BCA /* GridView.swift in Sources */,
 				6EF4E3E125D4A47A00CDCC40 /* AppConstants.swift in Sources */,
+				6E4738A42763D7DB000B96CD /* ForeignVerb.swift in Sources */,
 				6EFE92F426131AB200A162BC /* Canvas.swift in Sources */,
 				6E14EB8C25F61285008800C6 /* PickQuizView.swift in Sources */,
+				6E4738AB2763DFB3000B96CD /* EntryProv.swift in Sources */,
 				6E056326261271C100F0605F /* Saveable.swift in Sources */,
 				6E14EBAC25F616C1008800C6 /* ChallengeProtocol.swift in Sources */,
 				6EB702882635DAF900E46268 /* ChallengeSlot.swift in Sources */,
 				6E6529992755778800042745 /* TypingQuizView.swift in Sources */,
+				6E4738A82763DBF0000B96CD /* VerbPickChallenge.swift in Sources */,
 				6E1B7A6A26412E9B002D0A82 /* Random.swift in Sources */,
 				6E24753625E867A900AC64B9 /* LexiconRequest.swift in Sources */,
 				6E32E8B22639F71A00775B65 /* ForeignCharacter.swift in Sources */,
