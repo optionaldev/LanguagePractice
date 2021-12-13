@@ -80,6 +80,8 @@
 		6E4738A82763DBF0000B96CD /* VerbPickChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4738A62763DBF0000B96CD /* VerbPickChallenge.swift */; };
 		6E4738AA2763DFB3000B96CD /* EntryProv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4738A92763DFB3000B96CD /* EntryProv.swift */; };
 		6E4738AB2763DFB3000B96CD /* EntryProv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4738A92763DFB3000B96CD /* EntryProv.swift */; };
+		6E4738B42766348E000B96CD /* WordPickEntryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4738B32766348E000B96CD /* WordPickEntryProvider.swift */; };
+		6E4738B52766348E000B96CD /* WordPickEntryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4738B32766348E000B96CD /* WordPickEntryProvider.swift */; };
 		6E522F3B25F4079D00DA229C /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E522F3A25F4079D00DA229C /* Persistence.swift */; };
 		6E522F3C25F4079D00DA229C /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E522F3A25F4079D00DA229C /* Persistence.swift */; };
 		6E55549525D2026A000565F2 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E55549425D2026A000565F2 /* Tab.swift */; };
@@ -241,6 +243,7 @@
 		6E4738A22763D7DB000B96CD /* ForeignVerb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignVerb.swift; sourceTree = "<group>"; };
 		6E4738A62763DBF0000B96CD /* VerbPickChallenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerbPickChallenge.swift; sourceTree = "<group>"; };
 		6E4738A92763DFB3000B96CD /* EntryProv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryProv.swift; sourceTree = "<group>"; };
+		6E4738B32766348E000B96CD /* WordPickEntryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPickEntryProvider.swift; sourceTree = "<group>"; };
 		6E522F3A25F4079D00DA229C /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		6E55549425D2026A000565F2 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		6E55549B25D20674000565F2 /* PhoneTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneTabView.swift; sourceTree = "<group>"; };
@@ -398,6 +401,7 @@
 				6E14EB7F25F61255008800C6 /* Pick */,
 				6EE60CA6262FFA7B00011E03 /* Typing */,
 				6E4738A52763DBDB000B96CD /* VerbPick */,
+				6E4738B62767C43E000B96CD /* WordPick */,
 			);
 			path = Quizzes;
 			sourceTree = "<group>";
@@ -471,6 +475,14 @@
 				6E4738A92763DFB3000B96CD /* EntryProv.swift */,
 			);
 			path = VerbPick;
+			sourceTree = "<group>";
+		};
+		6E4738B62767C43E000B96CD /* WordPick */ = {
+			isa = PBXGroup;
+			children = (
+				6E4738B32766348E000B96CD /* WordPickEntryProvider.swift */,
+			);
+			path = WordPick;
 			sourceTree = "<group>";
 		};
 		6E5D632D25EEFD0F0062E564 /* Home */ = {
@@ -989,6 +1001,7 @@
 				6E15F66526294B04008BDFB4 /* SettingsView.swift in Sources */,
 				6EB702872635DAF900E46268 /* ChallengeSlot.swift in Sources */,
 				6E19C15E2631407E00AE993D /* TypingChallengeState.swift in Sources */,
+				6E4738B42766348E000B96CD /* WordPickEntryProvider.swift in Sources */,
 				6E8C0DC925D34E6B006C399E /* Language.swift in Sources */,
 				6E6529A0275578F300042745 /* TypingQuizViewModel.swift in Sources */,
 				6E24753525E867A900AC64B9 /* LexiconRequest.swift in Sources */,
@@ -1022,6 +1035,7 @@
 				6E6529992755778800042745 /* TypingQuizView.swift in Sources */,
 				6E4738A82763DBF0000B96CD /* VerbPickChallenge.swift in Sources */,
 				6E1B7A6A26412E9B002D0A82 /* Random.swift in Sources */,
+				6E4738B52766348E000B96CD /* WordPickEntryProvider.swift in Sources */,
 				6E24753625E867A900AC64B9 /* LexiconRequest.swift in Sources */,
 				6E32E8B22639F71A00775B65 /* ForeignCharacter.swift in Sources */,
 				6E275D1E25F774B700617262 /* PickChallengeState.swift in Sources */,
