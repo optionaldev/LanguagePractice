@@ -67,7 +67,7 @@ enum KanaChallengeType {
   case foreignToRoman
 }
 
-struct HiraganaEntry: KanaEntryProtocol {
+struct OldHiraganaEntry: KanaEntryProtocol {
   
   init(roman: String, kanaChallengeType: KanaChallengeType) {
     self.id = roman

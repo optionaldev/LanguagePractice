@@ -11,7 +11,7 @@ enum EntryType {
   case words
 }
 
-struct EntryProvider {
+struct OldEntryProvider {
   
   static func generate(_ entryType: EntryType) -> [EntryProtocol] {
     var source: [String]
@@ -22,7 +22,7 @@ struct EntryProvider {
       case .katakana:
         source = Lexicon.shared.foreign.katakana.map { $0.id }
       case .words:
-        source = Lexicon.shared.foreign.nouns.map { $0.id }
+        source = Lexicon.shared.foreign.all.map { $0.id }
     }
     
     let unknownItems = generateUnknown(source: source, for: .picking)
@@ -32,9 +32,9 @@ struct EntryProvider {
     switch entryType {
       case .hiragana:
         result = unknownItems.flatMap {[
-          HiraganaEntry(roman: $0, kanaChallengeType: .foreign),
-          HiraganaEntry(roman: $0, kanaChallengeType: .romanToForeign),
-          HiraganaEntry(roman: $0, kanaChallengeType: .foreignToRoman)
+          OldHiraganaEntry(roman: $0, kanaChallengeType: .foreign),
+          OldHiraganaEntry(roman: $0, kanaChallengeType: .romanToForeign),
+          OldHiraganaEntry(roman: $0, kanaChallengeType: .foreignToRoman)
         ]}
       case .katakana:
         result = unknownItems.flatMap {[

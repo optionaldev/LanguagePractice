@@ -41,7 +41,7 @@ final class TypingQuizViewModel: Quizable, ObservableObject, SpeechDelegate {
   }
   
   init() {
-    let entries = EntryProvider.generateTyping()
+    let entries = OldEntryProvider.generateTyping()
     
     // We want to take entries in the order of their language during a typing challenge
     // so that the user only has to change his keyboard language once

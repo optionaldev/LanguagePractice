@@ -27,7 +27,7 @@ final class PickQuizViewModel: OutputQuizable, ObservableObject, SpeechDelegate 
   var nextChallenge: PickChallenge? = nil
   
   init(entryType: EntryType) {
-    challengeEntries = EntryProvider.generate(entryType)
+    challengeEntries = OldEntryProvider.generate(entryType)
     performInitialSetup()
     
     Speech.shared.delegate = self
