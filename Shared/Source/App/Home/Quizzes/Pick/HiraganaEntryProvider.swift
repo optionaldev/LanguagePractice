@@ -20,8 +20,9 @@ final class HiraganaEntryProvider {
   private let lexicon: Lexicon
   
   private func generateHiragana(forCharacter character: ForeignCharacter) -> [HiraganaEntry] {
-    return [
-      .hiraganaToRomaji(
-    ]
+    return HiraganaEntry.Category.allCases
+      .shuffled()
+      .prefix(2)
+      .map { HiraganaEntry(id: character.id, category: $0) }
   }
 }
