@@ -12,7 +12,6 @@ final class HiraganaEntryProvider {
   
   func generate() -> [HiraganaEntry] {
     return lexicon.foreign.hiragana.flatMap { generateHiragana(forCharacter: $0) }
-    
   }
   
   // MARK: - Private

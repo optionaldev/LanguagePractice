@@ -36,22 +36,3 @@ struct HiraganaEntry {
   let category: Category
 }
 
-struct HiraganaRep {
-  
-  enum Category {
-    case image
-    case text
-    case voice
-  }
-  
-  let category: Category
-  let string: String
-}
-
-struct HiraganaChallenge {
-  
-  let inputRep: HiraganaRep
-  let outputRep: [HiraganaRep] // x4 or x6
-  
-  let correctAnswerIndex: Int
-}
