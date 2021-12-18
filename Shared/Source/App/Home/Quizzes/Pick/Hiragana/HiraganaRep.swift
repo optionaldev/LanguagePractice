@@ -7,7 +7,6 @@
 struct HiraganaRep: Equatable {
   
   enum Category {
-    case image
     case text
     case voice
   }

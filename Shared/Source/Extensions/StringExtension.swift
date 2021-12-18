@@ -6,6 +6,10 @@
 
 extension String {
   
+  func detectLanguage() -> Language {
+    return self.first?.isASCII == true ? .english : .foreign
+  }
+  
   func removingUniqueness() -> String {
     return self.replacingOccurrences(of: "_[0-9]{1,}", with: "", options: CompareOptions.regularExpression, range: self.range(of: self))
   }

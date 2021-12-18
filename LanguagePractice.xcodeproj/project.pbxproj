@@ -145,6 +145,14 @@
 		6EC7F072276BC9FE007AB5DF /* HiraganaChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC7F070276BC9FE007AB5DF /* HiraganaChallenge.swift */; };
 		6EC7F074276BD187007AB5DF /* HiraganaRep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC7F073276BD187007AB5DF /* HiraganaRep.swift */; };
 		6EC7F075276BD187007AB5DF /* HiraganaRep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC7F073276BD187007AB5DF /* HiraganaRep.swift */; };
+		6EC7F077276E30DA007AB5DF /* HiraganaPickQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC7F076276E30DA007AB5DF /* HiraganaPickQuizView.swift */; };
+		6EC7F078276E30DA007AB5DF /* HiraganaPickQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC7F076276E30DA007AB5DF /* HiraganaPickQuizView.swift */; };
+		6EC7F07A276E30FB007AB5DF /* HiraganaPickQuizViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC7F079276E30FB007AB5DF /* HiraganaPickQuizViewModel.swift */; };
+		6EC7F07B276E30FB007AB5DF /* HiraganaPickQuizViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC7F079276E30FB007AB5DF /* HiraganaPickQuizViewModel.swift */; };
+		6EC7F07D276E3DFC007AB5DF /* HiraganaQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC7F07C276E3DFC007AB5DF /* HiraganaQuizView.swift */; };
+		6EC7F07E276E3DFC007AB5DF /* HiraganaQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC7F07C276E3DFC007AB5DF /* HiraganaQuizView.swift */; };
+		6EC7F080276E4E8C007AB5DF /* HiraganaQuizBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC7F07F276E4E8C007AB5DF /* HiraganaQuizBody.swift */; };
+		6EC7F081276E4E8C007AB5DF /* HiraganaQuizBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC7F07F276E4E8C007AB5DF /* HiraganaQuizBody.swift */; };
 		6EC81A9D260AB1400029854B /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC81A9C260AB1400029854B /* ImageCache.swift */; };
 		6EC81A9E260AB1400029854B /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC81A9C260AB1400029854B /* ImageCache.swift */; };
 		6ED070AF275823A200FF33FF /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED070AE275823A200FF33FF /* Keyboard.swift */; };
@@ -300,6 +308,10 @@
 		6EC7F06D276BC9DF007AB5DF /* HiraganaChallengeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiraganaChallengeProvider.swift; sourceTree = "<group>"; };
 		6EC7F070276BC9FE007AB5DF /* HiraganaChallenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiraganaChallenge.swift; sourceTree = "<group>"; };
 		6EC7F073276BD187007AB5DF /* HiraganaRep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiraganaRep.swift; sourceTree = "<group>"; };
+		6EC7F076276E30DA007AB5DF /* HiraganaPickQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiraganaPickQuizView.swift; sourceTree = "<group>"; };
+		6EC7F079276E30FB007AB5DF /* HiraganaPickQuizViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiraganaPickQuizViewModel.swift; sourceTree = "<group>"; };
+		6EC7F07C276E3DFC007AB5DF /* HiraganaQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiraganaQuizView.swift; sourceTree = "<group>"; };
+		6EC7F07F276E4E8C007AB5DF /* HiraganaQuizBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiraganaQuizBody.swift; sourceTree = "<group>"; };
 		6EC81A9C260AB1400029854B /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		6ED070AE275823A200FF33FF /* Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
 		6ED070C02758244E00FF33FF /* KnowledgeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeType.swift; sourceTree = "<group>"; };
@@ -664,7 +676,11 @@
 				6EC7F06D276BC9DF007AB5DF /* HiraganaChallengeProvider.swift */,
 				6E45651127692B35006496D0 /* HiraganaEntry.swift */,
 				6E45651427692CB2006496D0 /* HiraganaEntryProvider.swift */,
+				6EC7F076276E30DA007AB5DF /* HiraganaPickQuizView.swift */,
+				6EC7F079276E30FB007AB5DF /* HiraganaPickQuizViewModel.swift */,
 				6EC7F073276BD187007AB5DF /* HiraganaRep.swift */,
+				6EC7F07C276E3DFC007AB5DF /* HiraganaQuizView.swift */,
+				6EC7F07F276E4E8C007AB5DF /* HiraganaQuizBody.swift */,
 			);
 			path = Hiragana;
 			sourceTree = "<group>";
@@ -983,6 +999,7 @@
 				6EF89084274BB3D5003E0BCA /* GridView.swift in Sources */,
 				6E14EB9225F612B9008800C6 /* PickQuizViewModel.swift in Sources */,
 				6E18FC3125D73E3D00EEEB42 /* CharacterExtension.swift in Sources */,
+				6EC7F077276E30DA007AB5DF /* HiraganaPickQuizView.swift in Sources */,
 				6E10FF6925DDE41F00F8EDBD /* UrlBuilder.swift in Sources */,
 				6EB381A625D5D70900114B83 /* SpeechBlacklist.swift in Sources */,
 				6E44AAB0275B871400177A71 /* ChallengeMeasurement.swift in Sources */,
@@ -1017,6 +1034,7 @@
 				6E4738AA2763DFB3000B96CD /* EntryProv.swift in Sources */,
 				6EEAF94A260B2EE4005EE9CC /* ImageExtension.swift in Sources */,
 				6EB3819725D5D68900114B83 /* VoiceHandler.swift in Sources */,
+				6EC7F07A276E30FB007AB5DF /* HiraganaPickQuizViewModel.swift in Sources */,
 				6EC7F06E276BC9DF007AB5DF /* HiraganaChallengeProvider.swift in Sources */,
 				6EB702802635CB9A00E46268 /* QuizViews.swift in Sources */,
 				6EE81CE525D89EC000667CE5 /* EnglishWord.swift in Sources */,
@@ -1042,6 +1060,8 @@
 				6E07D52725D9751D00310B17 /* Defaults.swift in Sources */,
 				6EE81CD025D89E7F00667CE5 /* ForeignWord.swift in Sources */,
 				6E45651527692CB2006496D0 /* HiraganaEntryProvider.swift in Sources */,
+				6EC7F080276E4E8C007AB5DF /* HiraganaQuizBody.swift in Sources */,
+				6EC7F07D276E3DFC007AB5DF /* HiraganaQuizView.swift in Sources */,
 				6E32E8B12639F71A00775B65 /* ForeignCharacter.swift in Sources */,
 				6EF4E3E025D4A47A00CDCC40 /* AppConstants.swift in Sources */,
 				6E289FDA262F5CB40081E38E /* CustomTextField.swift in Sources */,
@@ -1086,7 +1106,9 @@
 				6E18FC2725D73E1E00EEEB42 /* StringExtension.swift in Sources */,
 				6E2B22DB25DC899F001B8A77 /* Network.swift in Sources */,
 				6E275D1725F7738D00617262 /* PickChallenge.swift in Sources */,
+				6EC7F07E276E3DFC007AB5DF /* HiraganaQuizView.swift in Sources */,
 				6EC7F075276BD187007AB5DF /* HiraganaRep.swift in Sources */,
+				6EC7F07B276E30FB007AB5DF /* HiraganaPickQuizViewModel.swift in Sources */,
 				6E42CE6026329FAD008BD2ED /* Quizable.swift in Sources */,
 				6EE81CB225D89DCA00667CE5 /* EnglishLexicon.swift in Sources */,
 				6E45651327692B35006496D0 /* HiraganaEntry.swift in Sources */,
@@ -1097,6 +1119,7 @@
 				6EB702812635CB9A00E46268 /* QuizViews.swift in Sources */,
 				6E07D53A25D975DF00310B17 /* MacDefaults.swift in Sources */,
 				6E076A2426016E8D00043E35 /* MacHomeView.swift in Sources */,
+				6EC7F078276E30DA007AB5DF /* HiraganaPickQuizView.swift in Sources */,
 				6E112BAA25E717BF005CE59B /* Logger.swift in Sources */,
 				6E15F67126294B66008BDFB4 /* FontSelectionView.swift in Sources */,
 				6EB381A725D5D70900114B83 /* SpeechBlacklist.swift in Sources */,
@@ -1125,6 +1148,7 @@
 				6E32E8A32639F5EB00775B65 /* ForeignItem.swift in Sources */,
 				6E14EB9A25F61412008800C6 /* NavigationLazyView.swift in Sources */,
 				6EE81CE625D89EC000667CE5 /* EnglishWord.swift in Sources */,
+				6EC7F081276E4E8C007AB5DF /* HiraganaQuizBody.swift in Sources */,
 				6EB3819825D5D68900114B83 /* VoiceHandler.swift in Sources */,
 				6E07D56225D988AC00310B17 /* MacDefaultsKeys.swift in Sources */,
 				6E77660D2742F169007C3651 /* LexiconViewModel.swift in Sources */,
