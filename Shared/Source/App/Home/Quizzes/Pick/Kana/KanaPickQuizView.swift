@@ -21,14 +21,14 @@ import struct SwiftUI.VStack
 import struct SwiftUI.ViewBuilder
 
 
-struct HiraganaPickQuizView: View {
+struct KanaPickQuizView: View {
   
   init() {
     viewModel = HiraganaPickQuizViewModel()
   }
   
   var body: some View {
-    HiraganaQuizBody(viewModel: viewModel) { challenge in
+    KanaQuizBody(viewModel: viewModel) { challenge in
       challengeView(challenge: challenge)
     }
   }
@@ -38,11 +38,11 @@ struct HiraganaPickQuizView: View {
   @ObservedObject private var viewModel: HiraganaPickQuizViewModel
   
   @ViewBuilder
-  private func challengeView(challenge: HiraganaChallenge) -> some View {
+  private func challengeView(challenge: KanaPickChallenge) -> some View {
     // TODO: Find a better way do macros with declarative statements
 #if os(iOS)
     VStack {
-      HiraganaQuizViews.inputView(rep: challenge.inputRep, viewModel: viewModel)
+      KanaQuizViews.inputView(rep: challenge.inputRep, viewModel: viewModel)
         .frame(height: 200)
         .frame(maxWidth: Canvas.width - 10)
         .background(Color.orange.opacity(0.5))
@@ -70,7 +70,7 @@ struct HiraganaPickQuizView: View {
   
   // MARK: - Output
   
-  private func pickChallengeOutput(outputType: HiraganaRep.Category, representations: [HiraganaRep]) -> some View {
+  private func pickChallengeOutput(outputType: KanaRepresentation.Category, representations: [KanaRepresentation]) -> some View {
     GridView(rows: 3, columns: 2) { index in
       Button {
         viewModel.chose(index: index)
@@ -88,7 +88,7 @@ struct HiraganaPickQuizView: View {
   }
   
   @ViewBuilder
-  private func outputContent(forRepresentation representation: HiraganaRep) -> some View {
+  private func outputContent(forRepresentation representation: KanaRepresentation) -> some View {
     switch representation.category {
 //      case .image(let rep):
 //        QuizViews.viewForImage(withRepresentation: rep, signal: .output)

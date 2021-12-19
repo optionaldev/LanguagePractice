@@ -14,12 +14,15 @@ struct VoiceHandler {
   
   mutating func next() -> AVSpeechSynthesisVoice? {
     let voices = language.voices
-    if index == voices.count {
+    guard !voices.isEmpty else {
+      return nil
+    }
+    if index >= voices.count {
       index = 0
     }
     let currentIndex = index
     index += 1
-    return currentIndex < voices.count ? voices[currentIndex] : nil
+    return voices[currentIndex]
   }
   
   // MARK: - Private

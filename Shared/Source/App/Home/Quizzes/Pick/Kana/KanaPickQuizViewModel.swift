@@ -34,17 +34,17 @@ protocol Quizzical {
 
 final class HiraganaPickQuizViewModel: Quizzical, ObservableObject, SpeechDelegate {
   
-  @Published var visibleChallenges: [HiraganaChallenge] = []
+  @Published var visibleChallenges: [KanaPickChallenge] = []
   
   @Published private(set) var itemsLearned: [LearnedItem] = []
   
   private(set) var challengeMeasurement = ChallengeMeasurement()
   
-  private(set) var challengeEntries: [HiraganaEntry]
+  private(set) var challengeEntries: [KanaEntry]
   
-  var nextChallenge: HiraganaChallenge? = nil
+  var nextChallenge: KanaPickChallenge? = nil
   
-  private let challengeProvider = HiraganaChallengeProvider()
+  private let challengeProvider = KanaPickChallengeProvider()
   
   private var challengeResults: [PickChallengeState] = []
   
@@ -54,7 +54,7 @@ final class HiraganaPickQuizViewModel: Quizzical, ObservableObject, SpeechDelega
   init(lexicon: Lexicon = Lexicon.shared, speech: Speech = Speech.shared) {
     self.lexicon = lexicon
     self.speech = speech
-    challengeEntries = HiraganaEntryProvider().generate()
+    challengeEntries = KanaEntryProvider().generate()
     performInitialSetup()
     
     Speech.shared.delegate = self
@@ -63,8 +63,10 @@ final class HiraganaPickQuizViewModel: Quizzical, ObservableObject, SpeechDelega
   var voiceLastTappedIndex: Int = -1
   
   func finishedCurrentChallenge() {
-    if challengeResults[currentIndex] != .guessedIncorrectly {
-      let challengeTime = challengeMeasurement.stopAndFetchResult()
+    let challengeTime = challengeMeasurement.stopAndFetchResult()
+    if challengeResults.count <= currentIndex {
+      challengeResults.append(.finished(challengeTime))
+    } else if challengeResults[currentIndex] != .guessedIncorrectly {
       challengeResults[currentIndex] = .finished(challengeTime)
     }
   }
@@ -90,7 +92,9 @@ final class HiraganaPickQuizViewModel: Quizzical, ObservableObject, SpeechDelega
         if currentChallenge.correctAnswerIndex == index {
           goToNext()
         } else {
-          challengeResults[currentIndex] = .guessedIncorrectly
+          if challengeResults.count <= currentIndex {
+            challengeResults.append(.guessedIncorrectly)
+          }
         }
     }
   }
@@ -155,11 +159,11 @@ final class HiraganaPickQuizViewModel: Quizzical, ObservableObject, SpeechDelega
     }
   }
   
-  var currentChallenge: HiraganaChallenge {
+  var currentChallenge: KanaPickChallenge {
     return visibleChallenges[currentIndex]
   }
   
-  var currentEntry: HiraganaEntry {
+  var currentEntry: KanaEntry {
     return challengeEntries[currentIndex]
   }
         

@@ -40,7 +40,7 @@ private struct Constants {
   static let resultsID = "results_screen"
 }
 
-struct HiraganaQuizBody<ViewModel: Quizzical, Content: View>: View {
+struct KanaQuizBody<ViewModel: Quizzical, Content: View>: View {
   
   var viewModel: ViewModel
   let content: (ViewModel.Challenge) -> Content

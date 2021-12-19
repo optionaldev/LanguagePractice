@@ -4,14 +4,14 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-struct HiraganaChallenge: Challengeable {
+struct KanaPickChallenge: Challengeable {
   
-  let inputRep: HiraganaRep
-  let outputRep: [HiraganaRep] // x4 or x6
+  let inputRep: KanaRepresentation
+  let outputRep: [KanaRepresentation] // x4 or x6
   
   let correctAnswerIndex: Int
   
-  var correctOutput: HiraganaRep {
+  var correctOutput: KanaRepresentation {
     return outputRep[correctAnswerIndex]
   }
   

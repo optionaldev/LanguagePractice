@@ -19,12 +19,12 @@ import struct SwiftUI.ViewBuilder
 import struct SwiftUI.VStack
 
 
-struct HiraganaQuizViews {
+struct KanaQuizViews {
   
   static let waveformImage = Image(systemName: "waveform.circle")
   
   @ViewBuilder
-  static func inputView<ViewModel: Quizzical>(rep: HiraganaRep, viewModel: ViewModel) -> some View {
+  static func inputView<ViewModel: Quizzical>(rep: KanaRepresentation, viewModel: ViewModel) -> some View {
     switch rep.category {
       case .voice:
         waveformImage

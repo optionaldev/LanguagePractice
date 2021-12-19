@@ -4,7 +4,7 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-struct HiraganaRep: Equatable {
+struct KanaRepresentation: Equatable {
   
   enum Category {
     case text
