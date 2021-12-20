@@ -19,6 +19,8 @@ struct LanguagePracticeApp: App {
   init() {
     Logger.performInitialSetup()
     _ = Speech.shared
+    HomeViewModel().requestAnyMissingItems()
+    
     printStatus()
     
     Defaults.performInitialSetup()

@@ -30,9 +30,33 @@ final class KanaPickChallengeProvider {
             .prefix(5)
             .map { $0 }
     
-    let inputType = entry.category.input(voiceEnabled: Defaults.voiceEnabled)
+    let voiceEnabled = entry.category.voiceValid && Defaults.voiceEnabled
+    
+    let inputType: Possibility  //= entry.category.input(voiceEnabled: Defaults.voiceEnabled)
+    switch entry.category {
+      case .foreign:
+        inputType = voiceEnabled ? [.voice, .text].randomElement()! : .text
+      case .english:
+        inputType = .text
+    }
+    
+    
     let input: KanaRepresentation
-    let outputType = entry.category.output(forInput: inputType, voiceEnabled: Defaults.voiceEnabled)
+    let outputType: Possibility  //entry.category.output(forInput: inputType, voiceEnabled: Defaults.voiceEnabled)
+    
+    switch inputType {
+      case .image:
+        fatalError("Not possible")
+      case .text:
+        switch entry.category {
+          case .english:
+            outputType = .text
+          case .foreign:
+            outputType = voiceEnabled ? [.voice, .text].randomElement()! : .text
+        }
+      case .voice:
+        outputType = .text
+    }
     
     let correctOutput: KanaRepresentation
     var otherOutput: [KanaRepresentation]
@@ -67,13 +91,13 @@ final class KanaPickChallengeProvider {
         }
       case .voice:
         input = .init(category: .voice, string: character.spoken)
-        switch entry.category.validOutput {
+        switch entry.category {
           case .foreign:
-            correctOutput = .init(category: .text, string: character.written)
-            otherOutput = otherCharacters.map { .init(category: .text, string: $0.written) }
-          case .english:
             correctOutput = .init(category: .text, string: character.romaji)
             otherOutput = otherCharacters.map { .init(category: .text, string: $0.romaji) }
+          case .english:
+            correctOutput = .init(category: .text, string: character.written)
+            otherOutput = otherCharacters.map { .init(category: .text, string: $0.written) }
         }
       case .image:
         fatalError("Can't have images in this type of challenge")

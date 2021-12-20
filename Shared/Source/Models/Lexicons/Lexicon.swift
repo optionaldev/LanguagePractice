@@ -6,7 +6,7 @@
 
 final class Lexicon: Codable {
   
-  static let shared = Defaults.lexicon ?? Lexicon(english: .init(), foreign: .init())
+  static let shared = Defaults.lexicon!
   
   let english: EnglishLexicon
   let foreign: ForeignLexicon

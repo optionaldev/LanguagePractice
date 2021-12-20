@@ -6,11 +6,14 @@
 
 struct KanaEntry {
   
+  let id: String
+  let category: Category
+  
   enum Category: CaseIterable {
     case foreign
     case english
     
-    private var voiceValid: Bool {
+    var voiceValid: Bool {
       switch self {
         case .foreign:
           return true
@@ -18,42 +21,5 @@ struct KanaEntry {
           return false
       }
     }
-    
-    var validOutput: Self {
-      switch self {
-        case .foreign:
-          return .english
-        case .english:
-          return .foreign
-      }
-    }
-    
-    func input(voiceEnabled: Bool) -> Possibility {
-      switch self {
-        case .foreign:
-          return voiceEnabled && voiceValid ? [.text, .voice].randomElement()! : .text
-        case .english:
-          return .text
-      }
-    }
-    
-    func output(forInput input: Possibility, voiceEnabled: Bool) -> Possibility {
-      switch input {
-        case .image:
-          fatalError("not possible")
-        case .text:
-          switch validOutput {
-            case .foreign:
-              return voiceEnabled && validOutput.voiceValid ? [.text, .voice].randomElement()! : .text
-            case .english:
-              return .text
-          }
-        case .voice:
-          return .text
-      }
-    }
   }
-  
-  let id: String
-  let category: Category
 }

@@ -41,7 +41,7 @@ final class LexiconViewModel: ObservableObject {
     }
   }
   
-  init() {
+  init(lexicon: Lexicon = .shared) {
     // Sort items in alphabetic order and bypass ASCII ardering a-z before A-Z
     let sortFunction = { (first: LexiconDisplayedItem, second: LexiconDisplayedItem) -> Bool in
       return first.id.lowercased() < second.id.lowercased()
@@ -51,8 +51,8 @@ final class LexiconViewModel: ObservableObject {
       return items.map { LexiconDisplayedItem(id: $0.id, text: NSAttributedString(string: $0.id)) }.sorted(by: sortFunction)
     }
     
-    initialEnglishItems = processItems(Lexicon.shared.english.nouns)
-    initialForeignItems = processItems(Lexicon.shared.foreign.nouns)
+    initialEnglishItems = processItems(lexicon.english.nouns)
+    initialForeignItems = processItems(lexicon.foreign.nouns)
     displayedItems = initialEnglishItems
   }
   
