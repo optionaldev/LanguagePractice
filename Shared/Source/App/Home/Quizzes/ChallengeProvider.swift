@@ -94,7 +94,7 @@ final class ChallengeProvider {
       inputTypePossibilities.removing(.image)
     }
     
-    if entry is WordEntry {
+    if entry is OldWordEntry {
       if entry.inputLanguage == entry.outputLanguage {
         return .simplified
       } else {
@@ -181,7 +181,7 @@ final class ChallengeProvider {
       return .simplified
     }
     
-    if entry is WordEntry == false {
+    if entry is OldWordEntry == false {
       guard let result = entry.outputPossibilities.without(inputType).randomElement() else {
         fatalError("How did we get here?")
       }
@@ -284,7 +284,7 @@ final class ChallengeProvider {
           case .english:
             output = Array(otherSameTypeChallengeEntries.map { $0.output })
           case .foreign:
-            if entry is WordEntry {
+            if entry is OldWordEntry {
               let outputIDs = Array(otherSameTypeChallengeEntries.map { $0.output })
               output = outputIDs.compactMap { Lexicon.shared.foreignDictionary[$0]?.id }
             } else {

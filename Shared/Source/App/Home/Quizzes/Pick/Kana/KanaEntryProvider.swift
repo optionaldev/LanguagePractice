@@ -13,7 +13,7 @@ final class KanaEntryProvider {
   func generate() -> [KanaEntry] {
     return lexicon.foreign.hiragana
       .prefix(AppConstants.challengeInitialSampleSize)
-      .flatMap { generateHiragana(forCharacter: $0) }
+      .flatMap { generateEntries(forCharacter: $0) }
       .shuffled()
   }
   
@@ -21,7 +21,7 @@ final class KanaEntryProvider {
   
   private let lexicon: Lexicon
   
-  private func generateHiragana(forCharacter character: ForeignCharacter) -> [KanaEntry] {
+  private func generateEntries(forCharacter character: ForeignCharacter) -> [KanaEntry] {
     return KanaEntry.Category.allCases
       .map { KanaEntry(id: character.id, category: $0) }
   }

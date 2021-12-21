@@ -102,15 +102,15 @@ struct OldEntryProvider {
     }
     
     var result = foreignNoun.english.flatMap {
-      [WordEntry(inputLanguage: .english, input: $0, outputLanguage: .foreign, output: foreignNoun.id)]
+      [OldWordEntry(inputLanguage: .english, input: $0, outputLanguage: .foreign, output: foreignNoun.id)]
     }
     
     if multiOutput {
       result.append(contentsOf: foreignNoun.english.flatMap {
-        [WordEntry(inputLanguage: .foreign, input: foreignNoun.id, outputLanguage: .english, output: $0)]
+        [OldWordEntry(inputLanguage: .foreign, input: foreignNoun.id, outputLanguage: .english, output: $0)]
       })
     } else {
-      result.append(WordEntry(inputLanguage: .foreign, input: foreignNoun.id, outputLanguage: .english, output: foreignNoun.english.joined(separator: ",")))
+      result.append(OldWordEntry(inputLanguage: .foreign, input: foreignNoun.id, outputLanguage: .english, output: foreignNoun.english.joined(separator: ",")))
     }
     
     if foreignToForeign && foreignNoun.kana != nil {
@@ -122,7 +122,7 @@ struct OldEntryProvider {
         return result
       }
 
-      result.append(WordEntry(inputLanguage: .foreign, input: foreignNoun.id, outputLanguage: .foreign, output: translation))
+      result.append(OldWordEntry(inputLanguage: .foreign, input: foreignNoun.id, outputLanguage: .foreign, output: translation))
     }
     return result
   }

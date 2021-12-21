@@ -145,7 +145,7 @@ struct OldHiraganaEntry: KanaEntryProtocol {
   }
 }
 
-struct WordEntry: EntryProtocol {
+struct OldWordEntry: EntryProtocol {
   
   init(inputLanguage: Language, input: String, outputLanguage: Language, output: String) {
     self.inputLanguage = inputLanguage
