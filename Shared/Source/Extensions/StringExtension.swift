@@ -14,6 +14,12 @@ extension String {
     return self.replacingOccurrences(of: "_[0-9]{1,}", with: "", options: CompareOptions.regularExpression, range: self.range(of: self))
   }
   
+  func removingLast() -> String {
+    var result = self
+    result.remove(at: index(before: endIndex))
+    return result
+  }
+  
   #if JAPANESE
   func toHiragana() -> String {
     guard let hiragana = applyingTransform(.latinToHiragana, reverse: false) else {
