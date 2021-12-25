@@ -98,6 +98,8 @@
 		6E52894027757CD900DBAF6D /* VerbEntryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E52893E27757CD900DBAF6D /* VerbEntryProvider.swift */; };
 		6E52894227757E3600DBAF6D /* VerbTense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E52894127757E3600DBAF6D /* VerbTense.swift */; };
 		6E52894327757E3600DBAF6D /* VerbTense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E52894127757E3600DBAF6D /* VerbTense.swift */; };
+		6E5289452777BDD500DBAF6D /* Vowel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5289442777BDD500DBAF6D /* Vowel.swift */; };
+		6E5289462777BDD500DBAF6D /* Vowel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5289442777BDD500DBAF6D /* Vowel.swift */; };
 		6E55549525D2026A000565F2 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E55549425D2026A000565F2 /* Tab.swift */; };
 		6E55549C25D20674000565F2 /* PhoneTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E55549B25D20674000565F2 /* PhoneTabView.swift */; };
 		6E57EDBD2622AE0D00A4EE41 /* OldEntryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E57EDBC2622AE0D00A4EE41 /* OldEntryProvider.swift */; };
@@ -284,6 +286,7 @@
 		6E52893B27757B9700DBAF6D /* VerbEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerbEntry.swift; sourceTree = "<group>"; };
 		6E52893E27757CD900DBAF6D /* VerbEntryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerbEntryProvider.swift; sourceTree = "<group>"; };
 		6E52894127757E3600DBAF6D /* VerbTense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerbTense.swift; sourceTree = "<group>"; };
+		6E5289442777BDD500DBAF6D /* Vowel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vowel.swift; sourceTree = "<group>"; };
 		6E55549425D2026A000565F2 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		6E55549B25D20674000565F2 /* PhoneTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneTabView.swift; sourceTree = "<group>"; };
 		6E57EDBC2622AE0D00A4EE41 /* OldEntryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldEntryProvider.swift; sourceTree = "<group>"; };
@@ -516,6 +519,7 @@
 				6E275D0525F61A2E00617262 /* Representation.swift */,
 				6E55549425D2026A000565F2 /* Tab.swift */,
 				6E52894127757E3600DBAF6D /* VerbTense.swift */,
+				6E5289442777BDD500DBAF6D /* Vowel.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1098,6 +1102,7 @@
 				6EF6178125EF910C0027354F /* DefaultsKeys.swift in Sources */,
 				6EB3818025D5D5DA00114B83 /* Speech.swift in Sources */,
 				6E15F66526294B04008BDFB4 /* SettingsView.swift in Sources */,
+				6E5289452777BDD500DBAF6D /* Vowel.swift in Sources */,
 				6EB702872635DAF900E46268 /* ChallengeSlot.swift in Sources */,
 				6E19C15E2631407E00AE993D /* TypingChallengeState.swift in Sources */,
 				6E4738B42766348E000B96CD /* WordPickEntryProvider.swift in Sources */,
@@ -1172,6 +1177,7 @@
 				6E1B7A5F26411DD3002D0A82 /* Formatters.swift in Sources */,
 				6E45651627692CB2006496D0 /* KanaEntryProvider.swift in Sources */,
 				6EC81A9E260AB1400029854B /* ImageCache.swift in Sources */,
+				6E5289462777BDD500DBAF6D /* Vowel.swift in Sources */,
 				6EE81CB925D89DD900667CE5 /* ForeignLexicon.swift in Sources */,
 				6EC7F088276F35E0007AB5DF /* WordEntry.swift in Sources */,
 				6EB702812635CB9A00E46268 /* QuizViews.swift in Sources */,

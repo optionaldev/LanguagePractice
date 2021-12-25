@@ -9,21 +9,21 @@ private struct Constants {
   static let formalEnding = "ます"
 }
 
+enum ForeignVerbCategory: String, Codable {
+  
+  case regular
+  
+#if JAPANESE
+  case iruEru
+#endif
+}
+
 struct ForeignVerb: ForeignWord {
   
   let id: String
   let written: String
   let english: [String]
-  let category: Category
-  
-  enum Category: String, Codable {
-    
-    case regular
-    
-    #if JAPANESE
-    case iruEru
-    #endif
-  }
+  let category: ForeignVerbCategory
   
 #if JAPANESE
   let furigana: String?
@@ -50,20 +50,20 @@ struct ForeignVerb: ForeignWord {
 #endif
   }
   
-  func conjugate(tense: VerbTense, formal: Bool) -> String {
+  func conjugate(tense: VerbTense, formal: Bool, negative: Bool) -> String {
     switch tense {
       case .present:
-        return conjugatePresent(formal: formal)
+        return conjugatePresent(formal: formal, negative: negative)
       case .past:
-        return conjugatePast(formal: formal)
+        return conjugatePast(formal: formal, negative: negative)
       case .future:
-        return conjugateFuture(formal: formal)
+        return conjugateFuture(formal: formal, negative: negative)
       case .want:
-        return conjugateWant(formal: formal)
+        return conjugateWant(formal: formal, negative: negative)
       case .can:
-        return conjugateCan(formal: formal)
+        return conjugateCan(formal: formal, negative: negative)
       case .presentContinuous:
-        return conjugatePresentContinuous(formal: formal)
+        return conjugatePresentContinuous(formal: formal, negative: negative)
     }
   }
   
@@ -73,7 +73,28 @@ struct ForeignVerb: ForeignWord {
   
   private var irregularKana: Int?
   
-  private func conjugatePresent(formal: Bool) -> String {
+  private func baseForm(vowel: Vowel) -> String {
+    switch category {
+      case .regular:
+        guard let lastSyllable = written.last else {
+          fatalError("Not possible for a word to not have a last syllable")
+        }
+        guard let char = Lexicon.shared.foreign.hiragana.filter({ $0.written == String(lastSyllable) }).first else {
+          fatalError("Not possible")
+        }
+        let row = char.position[0]
+        let column = vowel.column
+        
+        guard let result = Lexicon.shared.foreign.hiragana.filter({ $0.position == [row, column] }).first else {
+          fatalError("Didn't find character with row \(row) column \(column)")
+        }
+        return result.written
+      case .iruEru:
+        return written.removingLast()
+    }
+  }
+  
+  private func conjugatePresent(formal: Bool, negative: Bool) -> String {
     if formal {
       switch category {
         case .regular:
@@ -110,36 +131,45 @@ struct ForeignVerb: ForeignWord {
           return written.removingLast().appending(Constants.formalEnding)
       }
     } else {
-      return written
+      if negative {
+        switch category {
+          case .regular:
+            return baseForm(vowel: .a)
+          case .iruEru:
+            return written.removingLast().appending("ない")
+        }
+      } else {
+        return written
+      }
     }
   }
   
-  private func conjugatePast(formal: Bool) -> String {
+  private func conjugatePast(formal: Bool, negative: Bool) -> String {
     
     // TODO
     return ""
   }
   
-  private func conjugateFuture(formal: Bool) -> String {
+  private func conjugateFuture(formal: Bool, negative: Bool) -> String {
     
     // TODO
     return ""
   }
   
-  private func conjugateWant(formal: Bool) -> String {
+  private func conjugateWant(formal: Bool, negative: Bool) -> String {
     
     // TODO
     return ""
   }
   
   
-  private func conjugateCan(formal: Bool) -> String {
+  private func conjugateCan(formal: Bool, negative: Bool) -> String {
     
     // TODO
     return ""
   }
   
-  private func conjugatePresentContinuous(formal: Bool) -> String {
+  private func conjugatePresentContinuous(formal: Bool, negative: Bool) -> String {
     
     // TODO
     return ""
