@@ -99,45 +99,23 @@ struct ForeignVerb: ForeignWord {
       switch category {
         case .regular:
           var result = written
-          let lastCharacter = result.removeLast()
-          
-          let postfix: String
-          
-          switch lastCharacter {
-            case "う":
-              postfix = "い"
-            case "く":
-              postfix = "き"
-            case "す":
-              postfix = "し"
-            case "つ":
-              postfix = "ち"
-            case "ぬ":
-              postfix = "に"
-            case "ふ":
-              postfix = "ひ"
-            case "む":
-              postfix = "み"
-            case "る":
-              postfix = "り"
-            default:
-              fatalError("What case is this?")
-          }
+          let postfix = baseForm(vowel: .i)
           result.append(postfix)
           result.append(Constants.formalEnding)
           return result
-          
         case .iruEru:
           return written.removingLast().appending(Constants.formalEnding)
       }
     } else {
       if negative {
+        let base: String
         switch category {
           case .regular:
-            return baseForm(vowel: .a)
+            base = baseForm(vowel: .a)
           case .iruEru:
-            return written.removingLast().appending("ない")
+            base = written.removingLast()
         }
+        return base.appending("ない")
       } else {
         return written
       }
@@ -151,9 +129,7 @@ struct ForeignVerb: ForeignWord {
   }
   
   private func conjugateFuture(formal: Bool, negative: Bool) -> String {
-    
-    // TODO
-    return ""
+    return conjugatePresent(formal: formal, negative: negative)
   }
   
   private func conjugateWant(formal: Bool, negative: Bool) -> String {
