@@ -1,24 +1,23 @@
 //
 // The LanguagePractice project.
-// Created by optionaldev on 10/12/2021.
+// Created by optionaldev on 29/12/2021.
 // Copyright © 2021 optionaldev. All rights reserved.
-//
+// 
 
-enum ForeignVerbCategory: String, Codable {
+enum ForeignAdjectiveCategory: String, Codable {
   
-  case regular
-  
-#if JAPANESE
-  case iruEru
-#endif
+  #if JAPANESE
+  case i
+  case na
+  #endif
 }
 
-struct ForeignVerb: ForeignWord {
+struct ForeignAdjective: ForeignWord {
   
   let id: String
   let written: String
   let english: [String]
-  let category: ForeignVerbCategory
+  let category: ForeignAdjectiveCategory
   
 #if JAPANESE
   let furigana: String?
@@ -34,14 +33,14 @@ struct ForeignVerb: ForeignWord {
   
   enum CodingKeys: String, CodingKey {
     case id
-    case written = "ch"
-    case english = "en"
+    case written  = "ch"
+    case english  = "en"
     case category = "ca"
     
 #if JAPANESE
-    case furigana = "fg"
+    case furigana      = "fg"
     case irregularKana = "ik"
-    case readKana = "rk"
+    case readKana      = "rk"
 #endif
   }
   
@@ -68,53 +67,25 @@ struct ForeignVerb: ForeignWord {
   
   private var irregularKana: Int?
   
-  private func baseForm(vowel: Vowel) -> String {
-    switch category {
-      case .regular:
-        guard let lastSyllable = written.last else {
-          fatalError("Not possible for a word to not have a last syllable")
-        }
-        guard let char = Lexicon.shared.foreign.hiragana.filter({ $0.written == String(lastSyllable) }).first else {
-          fatalError("Not possible")
-        }
-        let row = char.position[0]
-        let column = vowel.column
-        
-        guard let result = Lexicon.shared.foreign.hiragana.filter({ $0.position == [row, column] }).first else {
-          fatalError("Didn't find character with row \(row) column \(column)")
-        }
-        return result.written
-      case .iruEru:
-        return written.removingLast()
-    }
-  }
-  
   private func conjugatePresent(formal: Bool, negative: Bool) -> String {
-    if formal {
-      switch category {
-        case .regular:
-          var result = written
-          let postfix = baseForm(vowel: .i)
-          result.append(postfix)
-          result.append(AppConstants.formalEnding)
-          return result
-        case .iruEru:
-          return written.removingLast().appending(AppConstants.formalEnding)
-      }
-    } else {
-      if negative {
-        let base: String
-        switch category {
-          case .regular:
-            base = baseForm(vowel: .a)
-          case .iruEru:
-            base = written.removingLast()
+    var result: String
+    switch category {
+      case .i:
+        if negative {
+          result = written.removingLast()
+        } else {
+          result = written
         }
-        return base.appending("ない")
-      } else {
-        return written
-      }
+      case .na:
+        result = written
+        if negative {
+          result.append(" じゃない")
+        }
     }
+    if formal {
+      result.append(" です")
+    }
+    return result
   }
   
   private func conjugatePast(formal: Bool, negative: Bool) -> String {

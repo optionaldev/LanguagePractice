@@ -39,4 +39,6 @@ struct AppConstants {
   
   /// Default number of times the user has to complete the typing challenge to go to the next word
   static let forfeitRetriesCount = 3
+  
+  static let formalEnding = "ます"
 }
