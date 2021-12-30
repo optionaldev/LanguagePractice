@@ -72,26 +72,39 @@ struct ForeignAdjective: ForeignWord {
     switch category {
       case .i:
         if negative {
-          result = written.removingLast()
+          result = written.removingLast().appending("くない")
         } else {
           result = written
         }
       case .na:
         result = written
         if negative {
-          result.append(" じゃない")
+          result.append("じゃない")
         }
     }
     if formal {
-      result.append(" です")
+      result.append("です")
     }
     return result
   }
   
   private func conjugatePast(formal: Bool, negative: Bool) -> String {
-    
-    // TODO
-    return ""
+    var result: String
+    switch category {
+      case .i:
+        if negative {
+          result = written.removingLast().appending("くなくなった")
+        } else {
+          result = written.removingLast().appending("かった")
+        }
+      case .na:
+        if negative {
+          result = written.appending("じゃなかった")
+        } else {
+          result = written.appending("だった")
+        }
+    }
+    return result
   }
   
   private func conjugateFuture(formal: Bool, negative: Bool) -> String {
