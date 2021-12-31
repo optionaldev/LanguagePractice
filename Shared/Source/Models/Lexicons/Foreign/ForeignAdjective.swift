@@ -44,20 +44,12 @@ struct ForeignAdjective: ForeignWord {
 #endif
   }
   
-  func conjugate(tense: VerbTense, formal: Bool, negative: Bool) -> String {
+  func conjugate(tense: AdjectiveTense, negative: Bool, conjugation: ConjugationType) -> String {
     switch tense {
-      case .present:
-        return conjugatePresent(formal: formal, negative: negative)
+      case .present, .future:
+        return conjugatePresent(negative: negative, conjugation: conjugation)
       case .past:
-        return conjugatePast(formal: formal, negative: negative)
-      case .future:
-        return conjugateFuture(formal: formal, negative: negative)
-      case .want:
-        return conjugateWant(formal: formal, negative: negative)
-      case .can:
-        return conjugateCan(formal: formal, negative: negative)
-      case .presentContinuous:
-        return conjugatePresentContinuous(formal: formal, negative: negative)
+        return conjugatePast(negative: negative, conjugation: conjugation)
     }
   }
   
@@ -67,66 +59,81 @@ struct ForeignAdjective: ForeignWord {
   
   private var irregularKana: Int?
   
-  private func conjugatePresent(formal: Bool, negative: Bool) -> String {
-    var result: String
+  private func conjugatePresent(negative: Bool, conjugation: ConjugationType) -> String {
+    var result = written
     switch category {
       case .i:
         if negative {
-          result = written.removingLast().appending("くない")
-        } else {
-          result = written
+          result.removeLast()
+          result.append("くない")
+        }
+        switch conjugation {
+          case .regular, .informalEnding:
+            break
+          case .formalEnding:
+            result.append(AppConstants.formalEnding)
         }
       case .na:
-        result = written
         if negative {
           result.append("じゃない")
         }
-    }
-    if formal {
-      result.append("です")
+        switch conjugation {
+          case .regular:
+            if !negative {
+              result.append("な")
+            }
+          case .formalEnding:
+            result.append(AppConstants.formalEnding)
+          case .informalEnding:
+            result.append(AppConstants.informalEnding)
+        }
     }
     return result
   }
   
-  private func conjugatePast(formal: Bool, negative: Bool) -> String {
-    var result: String
+  private func conjugatePast(negative: Bool, conjugation: ConjugationType) -> String {
+    var result = written
     switch category {
       case .i:
+        result.removeLast()
         if negative {
-          result = written.removingLast().appending("くなくなった")
+          result.append("くなかった")
         } else {
-          result = written.removingLast().appending("かった")
+          result.append("くない")
+        }
+        switch conjugation {
+          case .regular:
+            break
+          case .formalEnding:
+            result.append(AppConstants.formalEnding)
+          case .informalEnding:
+            result.append(AppConstants.informalEnding)
         }
       case .na:
         if negative {
-          result = written.appending("じゃなかった")
-        } else {
-          result = written.appending("だった")
+          result.append("じゃなかった")
+        }
+        switch conjugation {
+          case .regular:
+            if negative {
+              break
+            } else {
+              fatalError("Not a possible combo")
+            }
+          case .formalEnding:
+            if negative {
+              result.append(AppConstants.formalEnding)
+            } else {
+              result.append("でした")
+            }
+          case .informalEnding:
+            if negative {
+              result.append(AppConstants.informalEnding)
+            } else {
+              result.append("だった")
+            }
         }
     }
     return result
-  }
-  
-  private func conjugateFuture(formal: Bool, negative: Bool) -> String {
-    return conjugatePresent(formal: formal, negative: negative)
-  }
-  
-  private func conjugateWant(formal: Bool, negative: Bool) -> String {
-    
-    // TODO
-    return ""
-  }
-  
-  
-  private func conjugateCan(formal: Bool, negative: Bool) -> String {
-    
-    // TODO
-    return ""
-  }
-  
-  private func conjugatePresentContinuous(formal: Bool, negative: Bool) -> String {
-    
-    // TODO
-    return ""
   }
 }

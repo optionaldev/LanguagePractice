@@ -41,4 +41,5 @@ struct AppConstants {
   static let forfeitRetriesCount = 3
   
   static let formalEnding = "ます"
+  static let informalEnding = "だ"
 }
