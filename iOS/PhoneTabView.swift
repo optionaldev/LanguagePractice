@@ -34,7 +34,7 @@ struct PhoneTabView: View {
   
   var body: some View {
     TabView {
-      ForEach(Tab.allCases) { item in
+      ForEach(Tab.allCases, id:\.id) { item in
         item.view
           .tabItem {
             Image(systemName: item.icon(selected: item == tab))

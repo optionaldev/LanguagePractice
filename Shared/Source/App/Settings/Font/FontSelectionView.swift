@@ -49,7 +49,7 @@ struct FontSelectionView: View {
         Button("Default") {
           viewModel.setFont(nil)
         }
-        ForEach(viewModel.fontViewModels) { fontViewModel in
+        ForEach(viewModel.fontViewModels, id:\.id) { fontViewModel in
           Button("\(fontViewModel.name)") {
             viewModel.setFont(fontViewModel)
           }

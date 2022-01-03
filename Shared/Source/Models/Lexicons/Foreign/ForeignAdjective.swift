@@ -12,7 +12,7 @@ enum ForeignAdjectiveCategory: String, Codable {
   #endif
 }
 
-struct ForeignAdjective: ForeignWord {
+struct ForeignAdjective: ForeignWord, ForeignConjugatable {
   
   let id: String
   let written: String
@@ -42,6 +42,10 @@ struct ForeignAdjective: ForeignWord {
     case irregularKana = "ik"
     case readKana      = "rk"
 #endif
+  }
+  
+  func conjugate(tense: Tense) -> Conjugation? {
+    return nil
   }
   
   func conjugate(tense: AdjectiveTense, negative: Bool, conjugation: ConjugationType) -> String {

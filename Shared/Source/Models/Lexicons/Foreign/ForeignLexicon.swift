@@ -10,6 +10,7 @@ struct ForeignLexicon: Codable {
   let katakana: [ForeignCharacter]
   let nouns: [ForeignNoun]
   let verbs: [ForeignVerb]
+  let adjectives: [ForeignAdjective]
   
   var all: [ForeignItem] {
     return nouns as [ForeignItem] + hiragana as [ForeignItem] + katakana as [ForeignItem]
@@ -20,5 +21,6 @@ struct ForeignLexicon: Codable {
     katakana = []
     nouns = []
     verbs = []
+    adjectives = []
   }
 }

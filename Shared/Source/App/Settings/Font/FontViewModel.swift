@@ -8,6 +8,6 @@ import struct Foundation.UUID
 
 struct FontViewModel: Identifiable {
   
-  let id = UUID()
+  let id = UUID().uuidString
   let name: String
 }

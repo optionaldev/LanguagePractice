@@ -65,7 +65,7 @@ struct QuizBody<ViewModel: Quizable, Content: View>: View {
       ScrollView(iOS ? .horizontal : .vertical, showsIndicators: iOS ? true : false) {
         ScrollViewReader { value in
           LazyStack(spacing: 0) {
-            ForEach(viewModel.visibleChallenges) { challenge in
+            ForEach(viewModel.visibleChallenges, id:\.id) { challenge in
               content(challenge)
                 .disabled(challenge != viewModel.visibleChallenges.last)
             }
@@ -95,7 +95,7 @@ struct QuizBody<ViewModel: Quizable, Content: View>: View {
   private func resultsScreen() -> some View {
     GeometryReader { reader in
       VStack {
-        ForEach(viewModel.itemsLearned) { learned in
+        ForEach(viewModel.itemsLearned, id:\.id) { learned in
           Text("\(learned.id) \(learned.challengeAverageTime)")
             .padding(5)
         }
