@@ -92,6 +92,12 @@ final class Speech: NSObject, AVSpeechSynthesizerDelegate {
     synthesizer.speak(utterance)
   }
   
+  func voicePossible<T: Entryable>(forEntry entry: T) -> Bool {
+    return entry.category.voiceValid && Defaults.voiceEnabled &&
+    foreignVoice.hasVoices && englishVoice.hasVoices
+    // TODO: Need a way to distinguish between having voices for foreign and having voices for english
+  }
+  
   // MARK: - AVSpeechSynthesizerDelegate conformance
   
   func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {

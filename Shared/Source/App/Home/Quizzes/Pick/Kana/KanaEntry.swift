@@ -4,22 +4,23 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 //
 
-struct KanaEntry {
+enum KanaEntryCategory: CategoryProtocol {
   
-  let id: String
-  let category: Category
+  case foreign
+  case english
   
-  enum Category: CaseIterable {
-    case foreign
-    case english
-    
-    var voiceValid: Bool {
-      switch self {
-        case .foreign:
-          return true
-        case .english:
-          return false
-      }
+  var voiceValid: Bool {
+    switch self {
+      case .foreign:
+        return true
+      case .english:
+        return false
     }
   }
+}
+
+struct KanaEntry: Entryable {
+  
+  let id: String
+  let category: KanaEntryCategory
 }

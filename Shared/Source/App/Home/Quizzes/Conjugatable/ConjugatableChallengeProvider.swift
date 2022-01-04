@@ -6,9 +6,9 @@
 
 final class ConjugatableChallengeProvider {
   
-  
-  init(lexicon: Lexicon = .shared) {
+  init(lexicon: Lexicon = .shared, speech: Speech = .shared) {
     self.lexicon = lexicon
+    self.speech = speech
   }
   
   func generate(fromPool pool: [ConjugatableEntry], index: Int) -> ConjugatablePickChallenge {
@@ -28,48 +28,42 @@ final class ConjugatableChallengeProvider {
     let otherConjugatables = source
       .compactMap { $0 as? ForeignConjugatable }
       .filter { $0.id != conjugatable.id }
+      .shuffled()
+      .prefix(5)
+      .map { $0 }
     
+    // TODO: Improve
+    let voiceEnabled = speech.voicePossible(forEntry: entry)
+    
+    let inputType: Possibility = voiceEnabled ? [.voice, .text].randomElement()! : .text
+    
+    let input: Representation
+    let outputType: Possibility = voiceEnabled ? [.voice, .text].randomElement()! : .text
+    
+    let correctOutput: Representation
+    var otherOutput: Representation
+//    
+//    switch inputType {
+//      case .image:
+//        fatalError("Not possible")
+//      case .text:
+//        switch entry.category {
+//          case .askTense:
+//            input = .init(category: .text, string: conjugatable)
+//        }
+//      case .voice:
+//        <#code#>
+//    }
+//    
     return ConjugatablePickChallenge(inputRep: .init(category: .text, string: ""), outputRep: [], correctAnswerIndex: 0)
   }
   
   // MARK: - Private
   
   private let lexicon: Lexicon
+  private let speech: Speech
 }
 /*
-    let otherCharacters = lexicon.foreign.hiragana
-      .filter { $0.id != character.id }
-      .shuffled()
-      .prefix(5)
-      .map { $0 }
-    
-    let voiceEnabled = entry.category.voiceValid && Defaults.voiceEnabled
-    
-    let inputType: Possibility  //= entry.category.input(voiceEnabled: Defaults.voiceEnabled)
-    switch entry.category {
-      case .foreign:
-        inputType = voiceEnabled ? [.voice, .text].randomElement()! : .text
-      case .english:
-        inputType = .text
-    }
-    
-    
-    let input: KanaRepresentation
-    let outputType: Possibility  //entry.category.output(forInput: inputType, voiceEnabled: Defaults.voiceEnabled)
-    
-    switch inputType {
-      case .image:
-        fatalError("Not possible")
-      case .text:
-        switch entry.category {
-          case .english:
-            outputType = .text
-          case .foreign:
-            outputType = voiceEnabled ? [.voice, .text].randomElement()! : .text
-        }
-      case .voice:
-        outputType = .text
-    }
     
     let correctOutput: KanaRepresentation
     var otherOutput: [KanaRepresentation]

@@ -18,9 +18,12 @@ struct Conjugation {
   
   let id: String
   let tense: Tense
+  let negative: Bool
+  let type: ConjugationType
 }
 
 protocol ForeignConjugatable: Identifiable {
   
+  func conjugate(tense: Tense, negative: Bool, type: ConjugationType) -> Conjugation
 }
 

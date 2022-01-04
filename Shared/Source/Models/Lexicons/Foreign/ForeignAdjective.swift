@@ -44,26 +44,13 @@ struct ForeignAdjective: ForeignWord, ForeignConjugatable {
 #endif
   }
   
-  func conjugate(tense: Tense) -> Conjugation? {
-    return nil
-  }
-  
-  func conjugate(tense: AdjectiveTense, negative: Bool, conjugation: ConjugationType) -> String {
-    switch tense {
-      case .present, .future:
-        return conjugatePresent(negative: negative, conjugation: conjugation)
-      case .past:
-        return conjugatePast(negative: negative, conjugation: conjugation)
-    }
-  }
-  
   // MARK: - Private
   
   private var readKana: Int?
   
   private var irregularKana: Int?
   
-  private func conjugatePresent(negative: Bool, conjugation: ConjugationType) -> String {
+  private func conjugatePresent(negative: Bool, type conjugationType: ConjugationType) -> String {
     var result = written
     switch category {
       case .i:
@@ -71,7 +58,7 @@ struct ForeignAdjective: ForeignWord, ForeignConjugatable {
           result.removeLast()
           result.append("くない")
         }
-        switch conjugation {
+        switch conjugationType {
           case .regular, .informalEnding:
             break
           case .formalEnding:
@@ -81,7 +68,7 @@ struct ForeignAdjective: ForeignWord, ForeignConjugatable {
         if negative {
           result.append("じゃない")
         }
-        switch conjugation {
+        switch conjugationType {
           case .regular:
             if !negative {
               result.append("な")
@@ -95,7 +82,7 @@ struct ForeignAdjective: ForeignWord, ForeignConjugatable {
     return result
   }
   
-  private func conjugatePast(negative: Bool, conjugation: ConjugationType) -> String {
+  private func conjugatePast(negative: Bool, type conjugationType: ConjugationType) -> String {
     var result = written
     switch category {
       case .i:
@@ -105,7 +92,7 @@ struct ForeignAdjective: ForeignWord, ForeignConjugatable {
         } else {
           result.append("くない")
         }
-        switch conjugation {
+        switch conjugationType {
           case .regular:
             break
           case .formalEnding:
@@ -117,7 +104,7 @@ struct ForeignAdjective: ForeignWord, ForeignConjugatable {
         if negative {
           result.append("じゃなかった")
         }
-        switch conjugation {
+        switch conjugationType {
           case .regular:
             if negative {
               break
@@ -140,4 +127,23 @@ struct ForeignAdjective: ForeignWord, ForeignConjugatable {
     }
     return result
   }
+  
+  // MARK: - ForeignConjugatable conformance
+  
+  func conjugate(tense: Tense, negative: Bool, type conjugationType: ConjugationType) -> Conjugation {
+    let conjugatedString: String
+    switch tense {
+      case .present, .future:
+        conjugatedString = conjugatePresent(negative: negative, type: conjugationType)
+      case .past:
+        conjugatedString = conjugatePast(negative: negative, type: conjugationType)
+      case .can, .want, .presentContinuous:
+        fatalError("TODO: Implement")
+    }
+    return Conjugation(id: conjugatedString,
+                       tense: tense,
+                       negative: negative,
+                       type: conjugationType)
+  }
+  
 }

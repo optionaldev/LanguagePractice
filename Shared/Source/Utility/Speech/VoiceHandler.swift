@@ -4,7 +4,7 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-import AVFoundation
+import class AVFoundation.AVSpeechSynthesisVoice
 
 struct VoiceHandler {
   
@@ -23,6 +23,10 @@ struct VoiceHandler {
     let currentIndex = index
     index += 1
     return voices[currentIndex]
+  }
+  
+  var hasVoices: Bool {
+    return language.voices.count != 0
   }
   
   // MARK: - Private
