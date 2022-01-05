@@ -4,7 +4,7 @@
 // Copyright © 2022 optionaldev. All rights reserved.
 //
 
-enum Tense {
+enum Tense: String, CaseIterable {
   
   case present
   case past

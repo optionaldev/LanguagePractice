@@ -18,6 +18,10 @@ final class ConjugatableChallengeProvider {
       fatalError("Couldn't find conjugatable with id: \"\(entry.id)\"")
     }
     
+    guard let word = lexicon.foreignDictionary[entry.id] as? ForeignWord else {
+      fatalError("Couldn't find word with id: \"\(entry.id)\"")
+    }
+    
     let source: [ForeignWord]
     if conjugatable is ForeignAdjective {
       source = lexicon.foreign.adjectives
@@ -41,75 +45,41 @@ final class ConjugatableChallengeProvider {
     let outputType: Possibility = voiceEnabled ? [.voice, .text].randomElement()! : .text
     
     let correctOutput: Representation
-    var otherOutput: Representation
-//    
-//    switch inputType {
-//      case .image:
-//        fatalError("Not possible")
-//      case .text:
-//        switch entry.category {
-//          case .askTense:
-//            input = .init(category: .text, string: conjugatable)
-//        }
-//      case .voice:
-//        <#code#>
-//    }
-//    
-    return ConjugatablePickChallenge(inputRep: .init(category: .text, string: ""), outputRep: [], correctAnswerIndex: 0)
-  }
-  
-  // MARK: - Private
-  
-  private let lexicon: Lexicon
-  private let speech: Speech
-}
-/*
-    
-    let correctOutput: KanaRepresentation
-    var otherOutput: [KanaRepresentation]
+    var otherOutput: [Representation]
     
     switch inputType {
+      case .image:
+        fatalError("Not possible")
       case .text:
         switch entry.category {
-          case .foreign:
-            input = .init(category: .text, string: character.written)
+          case .askTense:
+            let string = conjugatable.conjugate(tense: .present, negative: .random(), type: .regular).id
+            let text = "Tense of\n\"\(string)\""
+            input = .init(category: .text, string: text)
             switch outputType {
+              case .image, .voice:
+                fatalError("Not possible")
               case .text:
-                correctOutput = .init(category: .text, string: character.romaji)
-                otherOutput = otherCharacters.map { .init(category: .text, string: $0.romaji) }
-              case .voice:
-                correctOutput = .init(category: .voice, string: character.spoken)
-                otherOutput = otherCharacters.map { .init(category: .voice, string: $0.spoken) }
-              case .image:
-                fatalError("Can't have images in this type of challenge")
+                otherOutput = Tense.allCases.without(.present).map { Representation(category: .text, string: $0.rawValue) }
+                correctOutput = Representation(category: .text, string: "present")
             }
-          case .english:
-            input = .init(category: .text, string: character.romaji)
+          case .askCorrectForm:
+            let text = "Present form of\n\"\(word.written)\""
+            input = .init(category: .text, string: text)
             switch outputType {
-              case .text:
-                correctOutput = .init(category: .text, string: character.written)
-                otherOutput = otherCharacters.map { .init(category: .text, string: $0.written) }
-              case .voice:
-                correctOutput = .init(category: .voice, string: character.spoken)
-                otherOutput = otherCharacters.map { .init(category: .voice, string: $0.spoken) }
               case .image:
-                fatalError("Can't have images in this type of challenge")
+                fatalError("Not possible")
+              case .text:
+                otherOutput = Tense.allCases.without(.present).map { Representation(category: .text, string: conjugatable.conjugate(tense: $0, negative: .random(), type: .regular).id) }
+                correctOutput = Representation(category: .text, string: conjugatable.conjugate(tense: .present, negative: false, type: .regular).id)
+              case .voice:
+                otherOutput = Tense.allCases.without(.present).map { Representation(category: .voice, string: conjugatable.conjugate(tense: $0, negative: .random(), type: .regular).id) }
+                correctOutput = Representation(category: .voice, string: conjugatable.conjugate(tense: .present, negative: false, type: .regular).id)
             }
         }
       case .voice:
-        input = .init(category: .voice, string: character.spoken)
-        switch entry.category {
-          case .foreign:
-            correctOutput = .init(category: .text, string: character.romaji)
-            otherOutput = otherCharacters.map { .init(category: .text, string: $0.romaji) }
-          case .english:
-            correctOutput = .init(category: .text, string: character.written)
-            otherOutput = otherCharacters.map { .init(category: .text, string: $0.written) }
-        }
-      case .image:
-        fatalError("Can't have images in this type of challenge")
+        fatalError("TODO")
     }
-    
     otherOutput.append(correctOutput)
     otherOutput.shuffle()
     
@@ -123,5 +93,5 @@ final class ConjugatableChallengeProvider {
   // MARK: - Private
   
   private let lexicon: Lexicon
+  private let speech: Speech
 }
-*/
