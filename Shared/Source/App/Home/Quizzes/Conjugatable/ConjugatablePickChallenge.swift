@@ -4,20 +4,18 @@
 // Copyright © 2022 optionaldev. All rights reserved.
 // 
 
-typealias Representation = KanaRepresentation
-
 struct ConjugatablePickChallenge {
   
-  let inputRep: Representation
-  let outputRep: [Representation] // x4 or x6
+  let inputRep: InputRepresentation
+  let outputRep: [OutputRepresentation] // x4 or x6
   
   let correctAnswerIndex: Int
   
-  var correctOutput: Representation {
+  var correctOutput: OutputRepresentation {
     return outputRep[correctAnswerIndex]
   }
   
   var id: String {
-    inputRep.string + outputRep.map { $0.string }.joined()
+    inputRep.description + outputRep.map { $0.description }.joined()
   }
 }
