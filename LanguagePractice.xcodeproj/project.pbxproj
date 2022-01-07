@@ -57,7 +57,6 @@
 		6E1FF04A277F312A00DC54EA /* AdjectiveTense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1FF048277F312A00DC54EA /* AdjectiveTense.swift */; };
 		6E1FF04C277F39C000DC54EA /* ConjugationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1FF04B277F39C000DC54EA /* ConjugationType.swift */; };
 		6E1FF04D277F39C000DC54EA /* ConjugationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1FF04B277F39C000DC54EA /* ConjugationType.swift */; };
-		6E21B1F32782E76800296579 /* AdjectiveEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E21B1F22782E76800296579 /* AdjectiveEntry.swift */; };
 		6E21B1F62782EF2100296579 /* ConjugatableEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E21B1F52782EF2100296579 /* ConjugatableEntry.swift */; };
 		6E21B1F82782F01800296579 /* ConjugatableEntryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E21B1F72782F01800296579 /* ConjugatableEntryProvider.swift */; };
 		6E21B1FA2782F17600296579 /* ConjugatableChallengeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E21B1F92782F17600296579 /* ConjugatableChallengeProvider.swift */; };
@@ -95,10 +94,6 @@
 		6E45651627692CB2006496D0 /* KanaEntryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E45651427692CB2006496D0 /* KanaEntryProvider.swift */; };
 		6E4738A32763D7DB000B96CD /* ForeignVerb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4738A22763D7DB000B96CD /* ForeignVerb.swift */; };
 		6E4738A42763D7DB000B96CD /* ForeignVerb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4738A22763D7DB000B96CD /* ForeignVerb.swift */; };
-		6E4738A72763DBF0000B96CD /* VerbPickChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4738A62763DBF0000B96CD /* VerbPickChallenge.swift */; };
-		6E4738A82763DBF0000B96CD /* VerbPickChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4738A62763DBF0000B96CD /* VerbPickChallenge.swift */; };
-		6E4738AA2763DFB3000B96CD /* EntryProv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4738A92763DFB3000B96CD /* EntryProv.swift */; };
-		6E4738AB2763DFB3000B96CD /* EntryProv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4738A92763DFB3000B96CD /* EntryProv.swift */; };
 		6E4738B42766348E000B96CD /* WordPickEntryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4738B32766348E000B96CD /* WordPickEntryProvider.swift */; };
 		6E4738B52766348E000B96CD /* WordPickEntryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4738B32766348E000B96CD /* WordPickEntryProvider.swift */; };
 		6E522F3B25F4079D00DA229C /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E522F3A25F4079D00DA229C /* Persistence.swift */; };
@@ -107,10 +102,6 @@
 		6E5289372773BD1300DBAF6D /* WordPickChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5289352773BD1300DBAF6D /* WordPickChallenge.swift */; };
 		6E5289392773BD2200DBAF6D /* WordRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5289382773BD2200DBAF6D /* WordRepresentation.swift */; };
 		6E52893A2773BD2200DBAF6D /* WordRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5289382773BD2200DBAF6D /* WordRepresentation.swift */; };
-		6E52893C27757B9700DBAF6D /* VerbEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E52893B27757B9700DBAF6D /* VerbEntry.swift */; };
-		6E52893D27757B9700DBAF6D /* VerbEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E52893B27757B9700DBAF6D /* VerbEntry.swift */; };
-		6E52893F27757CD900DBAF6D /* VerbEntryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E52893E27757CD900DBAF6D /* VerbEntryProvider.swift */; };
-		6E52894027757CD900DBAF6D /* VerbEntryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E52893E27757CD900DBAF6D /* VerbEntryProvider.swift */; };
 		6E52894227757E3600DBAF6D /* VerbTense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E52894127757E3600DBAF6D /* VerbTense.swift */; };
 		6E52894327757E3600DBAF6D /* VerbTense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E52894127757E3600DBAF6D /* VerbTense.swift */; };
 		6E5289452777BDD500DBAF6D /* Vowel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5289442777BDD500DBAF6D /* Vowel.swift */; };
@@ -281,7 +272,6 @@
 		6E1E8AA625F8B694008839BA /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 		6E1FF048277F312A00DC54EA /* AdjectiveTense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjectiveTense.swift; sourceTree = "<group>"; };
 		6E1FF04B277F39C000DC54EA /* ConjugationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConjugationType.swift; sourceTree = "<group>"; };
-		6E21B1F22782E76800296579 /* AdjectiveEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjectiveEntry.swift; sourceTree = "<group>"; };
 		6E21B1F52782EF2100296579 /* ConjugatableEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConjugatableEntry.swift; sourceTree = "<group>"; };
 		6E21B1F72782F01800296579 /* ConjugatableEntryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConjugatableEntryProvider.swift; sourceTree = "<group>"; };
 		6E21B1F92782F17600296579 /* ConjugatableChallengeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConjugatableChallengeProvider.swift; sourceTree = "<group>"; };
@@ -305,14 +295,10 @@
 		6E45651127692B35006496D0 /* KanaEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanaEntry.swift; sourceTree = "<group>"; };
 		6E45651427692CB2006496D0 /* KanaEntryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanaEntryProvider.swift; sourceTree = "<group>"; };
 		6E4738A22763D7DB000B96CD /* ForeignVerb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignVerb.swift; sourceTree = "<group>"; };
-		6E4738A62763DBF0000B96CD /* VerbPickChallenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerbPickChallenge.swift; sourceTree = "<group>"; };
-		6E4738A92763DFB3000B96CD /* EntryProv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryProv.swift; sourceTree = "<group>"; };
 		6E4738B32766348E000B96CD /* WordPickEntryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPickEntryProvider.swift; sourceTree = "<group>"; };
 		6E522F3A25F4079D00DA229C /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		6E5289352773BD1300DBAF6D /* WordPickChallenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPickChallenge.swift; sourceTree = "<group>"; };
 		6E5289382773BD2200DBAF6D /* WordRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordRepresentation.swift; sourceTree = "<group>"; };
-		6E52893B27757B9700DBAF6D /* VerbEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerbEntry.swift; sourceTree = "<group>"; };
-		6E52893E27757CD900DBAF6D /* VerbEntryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerbEntryProvider.swift; sourceTree = "<group>"; };
 		6E52894127757E3600DBAF6D /* VerbTense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerbTense.swift; sourceTree = "<group>"; };
 		6E5289442777BDD500DBAF6D /* Vowel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vowel.swift; sourceTree = "<group>"; };
 		6E55549425D2026A000565F2 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
@@ -481,7 +467,6 @@
 				6E21B1F42782EF1000296579 /* Conjugatable */,
 				6E14EB7F25F61255008800C6 /* Pick */,
 				6EE60CA6262FFA7B00011E03 /* Typing */,
-				6E4738A52763DBDB000B96CD /* VerbPick */,
 				6E4738B62767C43E000B96CD /* WordPick */,
 			);
 			path = Quizzes;
@@ -494,9 +479,7 @@
 				6E275D1C25F774B700617262 /* PickChallengeState.swift */,
 				6E14EB8A25F61285008800C6 /* PickQuizView.swift */,
 				6E14EB9125F612B9008800C6 /* PickQuizViewModel.swift */,
-				6E21B1F12782E75100296579 /* Adjective */,
 				6EC7F06C276BC9C2007AB5DF /* Kana */,
-				6EC7F08C2772569B007AB5DF /* Verb */,
 				6EC7F082276F313C007AB5DF /* Word */,
 			);
 			path = Pick;
@@ -538,14 +521,6 @@
 			path = UnitTests;
 			sourceTree = "<group>";
 		};
-		6E21B1F12782E75100296579 /* Adjective */ = {
-			isa = PBXGroup;
-			children = (
-				6E21B1F22782E76800296579 /* AdjectiveEntry.swift */,
-			);
-			path = Adjective;
-			sourceTree = "<group>";
-		};
 		6E21B1F42782EF1000296579 /* Conjugatable */ = {
 			isa = PBXGroup;
 			children = (
@@ -578,15 +553,6 @@
 				6E35D83827877FAF00263564 /* OutputRepresentation.swift */,
 			);
 			path = Types;
-			sourceTree = "<group>";
-		};
-		6E4738A52763DBDB000B96CD /* VerbPick */ = {
-			isa = PBXGroup;
-			children = (
-				6E4738A62763DBF0000B96CD /* VerbPickChallenge.swift */,
-				6E4738A92763DFB3000B96CD /* EntryProv.swift */,
-			);
-			path = VerbPick;
 			sourceTree = "<group>";
 		};
 		6E4738B62767C43E000B96CD /* WordPick */ = {
@@ -778,15 +744,6 @@
 				6E5289382773BD2200DBAF6D /* WordRepresentation.swift */,
 			);
 			path = Word;
-			sourceTree = "<group>";
-		};
-		6EC7F08C2772569B007AB5DF /* Verb */ = {
-			isa = PBXGroup;
-			children = (
-				6E52893B27757B9700DBAF6D /* VerbEntry.swift */,
-				6E52893E27757CD900DBAF6D /* VerbEntryProvider.swift */,
-			);
-			path = Verb;
 			sourceTree = "<group>";
 		};
 		6EE60CA6262FFA7B00011E03 /* Typing */ = {
@@ -1115,7 +1072,6 @@
 				6EB381A625D5D70900114B83 /* SpeechBlacklist.swift in Sources */,
 				6E44AAB0275B871400177A71 /* ChallengeMeasurement.swift in Sources */,
 				6E55549525D2026A000565F2 /* Tab.swift in Sources */,
-				6E52893F27757CD900DBAF6D /* VerbEntryProvider.swift in Sources */,
 				6EA9A7C42737DE83004AD26A /* LexiconViewModel.swift in Sources */,
 				6E0ECD462604CB4100AA223A /* QuizBody.swift in Sources */,
 				6E57EDBD2622AE0D00A4EE41 /* OldEntryProvider.swift in Sources */,
@@ -1123,7 +1079,6 @@
 				6E1B7A5E26411DD3002D0A82 /* Formatters.swift in Sources */,
 				6E55549C25D20674000565F2 /* PhoneTabView.swift in Sources */,
 				6E1FF049277F312A00DC54EA /* AdjectiveTense.swift in Sources */,
-				6E21B1F32782E76800296579 /* AdjectiveEntry.swift in Sources */,
 				6EF41E9E273E4AFF007F67F4 /* Screen.swift in Sources */,
 				6E96205025F24EA200E4278B /* DefaultsProtocol.swift in Sources */,
 				6E15F67026294B66008BDFB4 /* FontSelectionView.swift in Sources */,
@@ -1138,7 +1093,6 @@
 				6ED070AF275823A200FF33FF /* Keyboard.swift in Sources */,
 				6E23CD0626041E9A00D022B2 /* MatrixView.swift in Sources */,
 				6E056325261271C100F0605F /* Saveable.swift in Sources */,
-				6E4738A72763DBF0000B96CD /* VerbPickChallenge.swift in Sources */,
 				6EBFBCAF277D024300ED6571 /* ForeignAdjective.swift in Sources */,
 				6E4738A32763D7DB000B96CD /* ForeignVerb.swift in Sources */,
 				6EE81CD725D89E9300667CE5 /* Item.swift in Sources */,
@@ -1148,7 +1102,6 @@
 				6E18FC2625D73E1E00EEEB42 /* StringExtension.swift in Sources */,
 				6E275D1D25F774B700617262 /* PickChallengeState.swift in Sources */,
 				6EE81CC925D89E4E00667CE5 /* ForeignNoun.swift in Sources */,
-				6E4738AA2763DFB3000B96CD /* EntryProv.swift in Sources */,
 				6EEAF94A260B2EE4005EE9CC /* ImageExtension.swift in Sources */,
 				6EB3819725D5D68900114B83 /* VoiceHandler.swift in Sources */,
 				6EC7F07A276E30FB007AB5DF /* KanaPickQuizViewModel.swift in Sources */,
@@ -1157,7 +1110,6 @@
 				6EE81CE525D89EC000667CE5 /* EnglishWord.swift in Sources */,
 				6EC7F071276BC9FE007AB5DF /* KanaPickChallenge.swift in Sources */,
 				6E42CE6626329FEE008BD2ED /* TypingQuizState.swift in Sources */,
-				6E52893C27757B9700DBAF6D /* VerbEntry.swift in Sources */,
 				6E1B7A53263FE774002D0A82 /* LearnedItem.swift in Sources */,
 				6E35D83627877F3700263564 /* InputRepresentation.swift in Sources */,
 				6E5D631B25EEFB580062E564 /* HomeViewModel.swift in Sources */,
@@ -1209,19 +1161,16 @@
 				6E4738A42763D7DB000B96CD /* ForeignVerb.swift in Sources */,
 				6EFE92F426131AB200A162BC /* Canvas.swift in Sources */,
 				6E14EB8C25F61285008800C6 /* PickQuizView.swift in Sources */,
-				6E4738AB2763DFB3000B96CD /* EntryProv.swift in Sources */,
 				6E056326261271C100F0605F /* Saveable.swift in Sources */,
 				6E14EBAC25F616C1008800C6 /* ChallengeProtocol.swift in Sources */,
 				6EB702882635DAF900E46268 /* ChallengeSlot.swift in Sources */,
 				6EC7F08B2772566F007AB5DF /* WordEntryProvider.swift in Sources */,
 				6E6529992755778800042745 /* TypingQuizView.swift in Sources */,
 				6E52894327757E3600DBAF6D /* VerbTense.swift in Sources */,
-				6E4738A82763DBF0000B96CD /* VerbPickChallenge.swift in Sources */,
 				6EC7F06F276BC9DF007AB5DF /* KanaPickChallengeProvider.swift in Sources */,
 				6E1B7A6A26412E9B002D0A82 /* Random.swift in Sources */,
 				6E4738B52766348E000B96CD /* WordPickEntryProvider.swift in Sources */,
 				6E24753625E867A900AC64B9 /* LexiconRequest.swift in Sources */,
-				6E52894027757CD900DBAF6D /* VerbEntryProvider.swift in Sources */,
 				6E32E8B22639F71A00775B65 /* ForeignCharacter.swift in Sources */,
 				6E275D1E25F774B700617262 /* PickChallengeState.swift in Sources */,
 				6E675E9025CEFE1B002D8D98 /* LanguagePracticeApp.swift in Sources */,
@@ -1237,7 +1186,6 @@
 				6E18FC2725D73E1E00EEEB42 /* StringExtension.swift in Sources */,
 				6E2B22DB25DC899F001B8A77 /* Network.swift in Sources */,
 				6E275D1725F7738D00617262 /* PickChallenge.swift in Sources */,
-				6E52893D27757B9700DBAF6D /* VerbEntry.swift in Sources */,
 				6EC7F07E276E3DFC007AB5DF /* KanaQuizView.swift in Sources */,
 				6EC7F075276BD187007AB5DF /* KanaRepresentation.swift in Sources */,
 				6EC7F07B276E30FB007AB5DF /* KanaPickQuizViewModel.swift in Sources */,
