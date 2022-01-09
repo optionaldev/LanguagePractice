@@ -22,13 +22,6 @@ final class ConjugatableChallengeProvider {
       fatalError("Couldn't find word with id: \"\(entry.id)\"")
     }
     
-    let source: [ForeignWord]
-    if conjugatable is ForeignAdjective {
-      source = lexicon.foreign.adjectives
-    } else {
-      source = lexicon.foreign.verbs
-    }
-    
     // TODO: Improve
     let voiceEnabled = speech.voicePossible(forEntry: entry)
     

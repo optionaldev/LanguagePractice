@@ -16,7 +16,7 @@ import struct Foundation.TimeInterval
 
 final class PickQuizViewModel: OutputQuizable, ObservableObject, SpeechDelegate {
   
-  @Published var visibleChallenges: [PickChallenge] = []
+  @Published var visibleChallenges: [OldPickChallenge] = []
   
   @Published private(set) var itemsLearned: [LearnedItem] = []
   
@@ -24,7 +24,7 @@ final class PickQuizViewModel: OutputQuizable, ObservableObject, SpeechDelegate 
   
   private(set) var challengeEntries: [EntryProtocol]
   
-  var nextChallenge: PickChallenge? = nil
+  var nextChallenge: OldPickChallenge? = nil
   
   init(entryType: EntryType) {
     challengeEntries = OldEntryProvider.generate(entryType)

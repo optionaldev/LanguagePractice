@@ -14,7 +14,7 @@ final class ChallengeProvider {
     return (inputType, input, inputRep)
   }
   
-  static func generatePick(pool: [EntryProtocol], index: Int) -> PickChallenge {
+  static func generatePick(pool: [EntryProtocol], index: Int) -> OldPickChallenge {
     let entry = pool[index]
     let (inputType, input, inputRep) = generateInputComponents(entry: entry)
     
@@ -40,13 +40,13 @@ final class ChallengeProvider {
     let outputRep = generateOutputRep(for: entry, outputType: outputType, output: output)
     let correctAnswerIndex = output.firstIndex(of: answerOutput)!
     
-    return PickChallenge(inputType: inputType,
-                         input: input,
-                         outputType: outputType,
-                         output: output,
-                         correctAnswerIndex: correctAnswerIndex,
-                         inputRepresentations: inputRep,
-                         outputRepresentations: outputRep)
+    return OldPickChallenge(inputType: inputType,
+                            input: input,
+                            outputType: outputType,
+                            output: output,
+                            correctAnswerIndex: correctAnswerIndex,
+                            inputRepresentations: inputRep,
+                            outputRepresentations: outputRep)
   }
   
   private static func item(for entry: EntryProtocol) -> ForeignItem {

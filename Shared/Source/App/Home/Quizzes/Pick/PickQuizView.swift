@@ -38,7 +38,7 @@ struct PickQuizView: View {
   @ObservedObject private var viewModel: PickQuizViewModel
   
   @ViewBuilder
-  private func challengeView(challenge: PickChallenge) -> some View {
+  private func challengeView(challenge: OldPickChallenge) -> some View {
     // TODO: Find a better way do macros with declarative statements
     #if os(iOS)
     VStack {

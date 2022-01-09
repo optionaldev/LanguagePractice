@@ -46,7 +46,7 @@ final class HiraganaPickQuizViewModel: Quizzical, ObservableObject, SpeechDelega
   
   private let challengeProvider = KanaPickChallengeProvider()
   
-  private var challengeResults: [PickChallengeState] = []
+  private var challengeResults: [OldPickChallengeState] = []
   
   private let speech: Speech
   private let lexicon: Lexicon

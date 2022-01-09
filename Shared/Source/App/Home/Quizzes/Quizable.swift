@@ -18,7 +18,7 @@ protocol OutputQuizable: Quizable {
   func chose(index: Int)
 }
 
-extension OutputQuizable where Challenge == PickChallenge {
+extension OutputQuizable where Challenge == OldPickChallenge {
   
   func chose(index: Int) {
     switch currentChallenge.outputRepresentations[index] {

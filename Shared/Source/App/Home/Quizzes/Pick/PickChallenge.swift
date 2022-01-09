@@ -4,13 +4,13 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-struct PickChallenge: ChallengeProtocol {
+struct OldPickChallenge: ChallengeProtocol {
   
   let outputType: ChallengeType
   let output: [String]
   let correctAnswerIndex: Int
   
-  var state: PickChallengeState?
+  var state: OldPickChallengeState?
   
   // inputRepresentation and outputRepresentation can change during a challenge
   // so they're not part of what we save

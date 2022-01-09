@@ -4,6 +4,12 @@
 // Copyright © 2022 optionaldev. All rights reserved.
 // 
 
+struct ConjugatableEntry: Entryable {
+  
+  let id: String
+  let category: ConjugatableEntryCategory
+}
+
 enum ConjugatableEntryCategory: CategoryProtocol {
   
   case askCorrectForm
@@ -12,10 +18,4 @@ enum ConjugatableEntryCategory: CategoryProtocol {
   var voiceValid: Bool {
     return true
   }
-}
-
-struct ConjugatableEntry: Entryable {
-  
-  let id: String
-  let category: ConjugatableEntryCategory
 }
