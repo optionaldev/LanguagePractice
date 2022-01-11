@@ -38,7 +38,7 @@ struct KanaPickQuizView: View {
   @ObservedObject private var viewModel: HiraganaPickQuizViewModel
   
   @ViewBuilder
-  private func challengeView(challenge: KanaPickChallenge) -> some View {
+  private func challengeView(challenge: PickChallenge) -> some View {
     // TODO: Find a better way do macros with declarative statements
 #if os(iOS)
     VStack {
@@ -47,7 +47,7 @@ struct KanaPickQuizView: View {
         .frame(maxWidth: Canvas.width - 10)
         .background(Color.orange.opacity(0.5))
         .cornerRadius(5)
-      pickChallengeOutput(outputType: challenge.correctOutput.category, representations: challenge.outputRep)
+      pickChallengeOutput(outputType: challenge.correctOutput, representations: challenge.outputRep)
         .frame(maxWidth: Canvas.width - 10, maxHeight: .infinity)
         .padding(0)
     }
@@ -70,7 +70,7 @@ struct KanaPickQuizView: View {
   
   // MARK: - Output
   
-  private func pickChallengeOutput(outputType: KanaRepresentation.Category, representations: [KanaRepresentation]) -> some View {
+  private func pickChallengeOutput(outputType: OutputRepresentation, representations: [OutputRepresentation]) -> some View {
     GridView(rows: 3, columns: 2) { index in
       Button {
         viewModel.chose(index: index)
@@ -88,8 +88,8 @@ struct KanaPickQuizView: View {
   }
   
   @ViewBuilder
-  private func outputContent(forRepresentation representation: KanaRepresentation) -> some View {
-    switch representation.category {
+  private func outputContent(forRepresentation representation: OutputRepresentation) -> some View {
+    switch representation {
 //      case .image(let rep):
 //        QuizViews.viewForImage(withRepresentation: rep, signal: .output)
       case .voice:
@@ -115,12 +115,14 @@ struct KanaPickQuizView: View {
 //          .background(Color.blue.opacity(0.5))
 //          .frame(maxWidth: .infinity, maxHeight: .infinity)
 //          .cornerRadius(5)
-      case .text:
-        Text(representation.string)
+      case .text(let text):
+        Text(text)
           .font(.system(size: 20))
           .background(Color.blue.opacity(0.5))
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .cornerRadius(5)
+      default:
+        fatalError("Nope")
     }
   }
 }

@@ -4,9 +4,9 @@
 // Copyright © 2022 optionaldev. All rights reserved.
 // 
 
-enum OutputRepresentation {
+enum OutputRepresentation: Equatable {
   
-  case simpleText(_ text: String)
+  case text(_ text: String)
   case textWithTranslation(TextWithTranslationRep)
   case textWithFurigana(TextWithFuriganaRep)
   case image(_ id: String)
@@ -14,7 +14,7 @@ enum OutputRepresentation {
   
   var description: String {
     switch self {
-      case .simpleText(let rep):
+      case .text(let rep):
         return "simpleText(\(rep))"
       case .textWithTranslation(let rep):
         return "textWithTranslation(\(rep))"
@@ -25,5 +25,9 @@ enum OutputRepresentation {
       case .voice(let rep):
         return "voice(\(rep))"
     }
+  }
+  
+  static func ==(lhs: Self, rhs: Self) -> Bool {
+    return lhs.description != rhs.description
   }
 }

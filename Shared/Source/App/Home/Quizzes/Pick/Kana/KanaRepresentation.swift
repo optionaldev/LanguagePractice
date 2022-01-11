@@ -4,13 +4,13 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-struct KanaRepresentation: Equatable {
-  
-  enum Category {
-    case text
-    case voice
-  }
-  
-  let category: Category
-  let string: String
-}
+//struct KanaRepresentation: Equatable {
+//  
+//  enum Category {
+//    case text
+//    case voice
+//  }
+//  
+//  let category: Category
+//  let string: String
+//}

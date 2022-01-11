@@ -34,7 +34,7 @@ protocol Quizzical {
 
 final class HiraganaPickQuizViewModel: Quizzical, ObservableObject, SpeechDelegate {
   
-  @Published var visibleChallenges: [KanaPickChallenge] = []
+  @Published var visibleChallenges: [PickChallenge] = []
   
   @Published private(set) var itemsLearned: [LearnedItem] = []
   
@@ -42,7 +42,7 @@ final class HiraganaPickQuizViewModel: Quizzical, ObservableObject, SpeechDelega
   
   private(set) var challengeEntries: [KanaEntry]
   
-  var nextChallenge: KanaPickChallenge? = nil
+  var nextChallenge: PickChallenge? = nil
   
   private let challengeProvider = KanaPickChallengeProvider()
   
@@ -76,8 +76,8 @@ final class HiraganaPickQuizViewModel: Quizzical, ObservableObject, SpeechDelega
   }
   
   func chose(index: Int) {
-    switch currentChallenge.correctOutput.category {
-      case .voice:
+    switch currentChallenge.correctOutput {
+      case .voice(let spoken):
         // When voice is the output type of the challenge, the user first has to tap on the
         // output button to hear the answer and tap the same output button again to choose
         // that answer, so we always remember what the last pressed button was
@@ -86,7 +86,7 @@ final class HiraganaPickQuizViewModel: Quizzical, ObservableObject, SpeechDelega
           voiceLastTappedIndex = -1
         } else {
           voiceLastTappedIndex = index
-          Speech.shared.speak(string: currentChallenge.outputRep[index].string)
+          Speech.shared.speak(string: spoken)
         }
       case .text:
         if currentChallenge.correctAnswerIndex == index {
@@ -96,13 +96,18 @@ final class HiraganaPickQuizViewModel: Quizzical, ObservableObject, SpeechDelega
             challengeResults.append(.guessedIncorrectly)
           }
         }
+      default:
+        fatalError("Ds")
     }
   }
   
   func challengeAppeared() {
-    if currentChallenge.inputRep.category != .voice && currentChallenge.correctOutput.category != .voice {
-      challengeMeasurement.start()
+    if case .voice(_) = currentChallenge.inputRep {
+      return
+    } else if case .voice(_) = currentChallenge.correctOutput {
+      return
     }
+    challengeMeasurement.start()
   }
   
   func handleFinish() {
@@ -151,15 +156,17 @@ final class HiraganaPickQuizViewModel: Quizzical, ObservableObject, SpeechDelega
   
   
   func speechEnded() {
-    if currentChallenge.inputRep.category == .voice ||
-       (voiceLastTappedIndex == currentChallenge.correctAnswerIndex &&
-        currentChallenge.correctOutput.category == .voice)
+    if case .voice(_) = currentChallenge.inputRep {
+      challengeMeasurement.start()
+    }
+    if case .voice(_) = currentChallenge.correctOutput,
+       voiceLastTappedIndex == currentChallenge.correctAnswerIndex
     {
       challengeMeasurement.start()
     }
   }
   
-  var currentChallenge: KanaPickChallenge {
+  var currentChallenge: PickChallenge {
     return visibleChallenges[currentIndex]
   }
   
@@ -179,7 +186,7 @@ final class HiraganaPickQuizViewModel: Quizzical, ObservableObject, SpeechDelega
   }
   
   func inputTapped() {
-    if currentChallenge.inputRep.category == .voice {
+    if case .voice(_) = currentChallenge.inputRep {
       speech.speak(string: currentCharacter.spoken, language: .foreign)
     }
   }

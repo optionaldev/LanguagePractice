@@ -11,7 +11,7 @@ final class ConjugatableChallengeProvider {
     self.speech = speech
   }
   
-  func generate(fromPool pool: [ConjugatableEntry], index: Int) -> ConjugatablePickChallenge {
+  func generate(fromPool pool: [ConjugatableEntry], index: Int) -> PickChallenge {
     let entry = pool[index]
     
     guard let conjugatable = lexicon.foreignDictionary[entry.id] as? ForeignConjugatable else {
@@ -41,24 +41,24 @@ final class ConjugatableChallengeProvider {
           case .askTense:
             let string = conjugatable.conjugate(tense: .present, negative: .random(), type: .regular).id
             let text = "Tense of\n\"\(string)\""
-            input = .simpleText(text)
+            input = .text(text)
             switch outputType {
               case .image, .voice:
                 fatalError("Not possible")
               case .text:
                 otherOutput = Tense.allCases.without(.present).map {
-                  .simpleText($0.rawValue) }
-                correctOutput = .simpleText("present")
+                  .text($0.rawValue) }
+                correctOutput = .text("present")
             }
           case .askCorrectForm:
             let text = "Present form of\n\"\(word.written)\""
-            input = .simpleText(text)
+            input = .text(text)
             switch outputType {
               case .image:
                 fatalError("Not possible")
               case .text:
-                otherOutput = Tense.allCases.without(.present).map { .simpleText(conjugatable.conjugate(tense: $0, negative: .random(), type: .regular).id) }
-                correctOutput = .simpleText(conjugatable.conjugate(tense: .present, negative: false, type: .regular).id)
+                otherOutput = Tense.allCases.without(.present).map { .text(conjugatable.conjugate(tense: $0, negative: .random(), type: .regular).id) }
+                correctOutput = .text(conjugatable.conjugate(tense: .present, negative: false, type: .regular).id)
               case .voice:
                 otherOutput = Tense.allCases.without(.present).map { .voice(conjugatable.conjugate(tense: $0, negative: .random(), type: .regular).id) }
                 correctOutput = .voice(conjugatable.conjugate(tense: .present, negative: false, type: .regular).id)
@@ -74,18 +74,18 @@ final class ConjugatableChallengeProvider {
               case .image, .voice:
                 fatalError("Not possible")
               case .text:
-                otherOutput = Tense.allCases.without(.present).map { .simpleText($0.rawValue) }
-                correctOutput = .simpleText("present")
+                otherOutput = Tense.allCases.without(.present).map { .text($0.rawValue) }
+                correctOutput = .text("present")
             }
           case .askCorrectForm:
             let text = "Present form of\n\"\(word.written)\""
-            input = .simpleText(text)
+            input = .text(text)
             switch outputType {
               case .image:
                 fatalError("Not possible")
               case .text:
-                otherOutput = Tense.allCases.without(.present).map { .simpleText(conjugatable.conjugate(tense: $0, negative: .random(), type: .regular).id) }
-                correctOutput = .simpleText(conjugatable.conjugate(tense: .present, negative: false, type: .regular).id)
+                otherOutput = Tense.allCases.without(.present).map { .text(conjugatable.conjugate(tense: $0, negative: .random(), type: .regular).id) }
+                correctOutput = .text(conjugatable.conjugate(tense: .present, negative: false, type: .regular).id)
               case .voice:
                 otherOutput = Tense.allCases.without(.present).map { .voice(conjugatable.conjugate(tense: $0, negative: .random(), type: .regular).id) }
                 correctOutput = .voice(conjugatable.conjugate(tense: .present, negative: false, type: .regular).id)

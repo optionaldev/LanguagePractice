@@ -17,7 +17,7 @@ final class KanaPickChallengeProvider {
     self.lexicon = lexicon
   }
   
-  func generate(fromPool pool: [KanaEntry], index: Int) -> KanaPickChallenge {
+  func generate(fromPool pool: [KanaEntry], index: Int) -> PickChallenge {
     let entry = pool[index]
     
     guard let character = lexicon.foreignDictionary[entry.id] as? ForeignCharacter else {
@@ -41,7 +41,7 @@ final class KanaPickChallengeProvider {
     }
     
     
-    let input: KanaRepresentation
+    let input: InputRepresentation
     let outputType: Possibility  //entry.category.output(forInput: inputType, voiceEnabled: Defaults.voiceEnabled)
     
     switch inputType {
@@ -58,46 +58,46 @@ final class KanaPickChallengeProvider {
         outputType = .text
     }
     
-    let correctOutput: KanaRepresentation
-    var otherOutput: [KanaRepresentation]
+    let correctOutput: OutputRepresentation
+    var otherOutput: [OutputRepresentation]
     
     switch inputType {
       case .text:
         switch entry.category {
           case .foreign:
-            input = .init(category: .text, string: character.written)
+            input = .text(character.written)
             switch outputType {
               case .text:
-                correctOutput = .init(category: .text, string: character.romaji)
-                otherOutput = otherCharacters.map { .init(category: .text, string: $0.romaji) }
+                correctOutput = .text(character.romaji)
+                otherOutput = otherCharacters.map { .text($0.romaji) }
               case .voice:
-                correctOutput = .init(category: .voice, string: character.spoken)
-                otherOutput = otherCharacters.map { .init(category: .voice, string: $0.spoken) }
+                correctOutput = .voice(character.spoken)
+                otherOutput = otherCharacters.map { .voice($0.spoken) }
               case .image:
                 fatalError("Can't have images in this type of challenge")
             }
           case .english:
-            input = .init(category: .text, string: character.romaji)
+            input = .text(character.romaji)
             switch outputType {
               case .text:
-                correctOutput = .init(category: .text, string: character.written)
-                otherOutput = otherCharacters.map { .init(category: .text, string: $0.written) }
+                correctOutput = .text(character.written)
+                otherOutput = otherCharacters.map { .text($0.written) }
               case .voice:
-                correctOutput = .init(category: .voice, string: character.spoken)
-                otherOutput = otherCharacters.map { .init(category: .voice, string: $0.spoken) }
+                correctOutput = .voice(character.spoken)
+                otherOutput = otherCharacters.map { .voice($0.spoken) }
               case .image:
                 fatalError("Can't have images in this type of challenge")
             }
         }
       case .voice:
-        input = .init(category: .voice, string: character.spoken)
+        input = .voice(character.spoken)
         switch entry.category {
           case .foreign:
-            correctOutput = .init(category: .text, string: character.romaji)
-            otherOutput = otherCharacters.map { .init(category: .text, string: $0.romaji) }
+            correctOutput = .text(character.romaji)
+            otherOutput = otherCharacters.map { .text($0.romaji) }
           case .english:
-            correctOutput = .init(category: .text, string: character.written)
-            otherOutput = otherCharacters.map { .init(category: .text, string: $0.written) }
+            correctOutput = .text(character.written)
+            otherOutput = otherCharacters.map { .text($0.written) }
         }
       case .image:
         fatalError("Can't have images in this type of challenge")

@@ -4,7 +4,7 @@
 // Copyright © 2022 optionaldev. All rights reserved.
 // 
 
-struct ConjugatablePickChallenge {
+struct PickChallenge: Challengeable {
   
   let inputRep: InputRepresentation
   let outputRep: [OutputRepresentation] // x4 or x6
@@ -17,5 +17,9 @@ struct ConjugatablePickChallenge {
   
   var id: String {
     inputRep.description + outputRep.map { $0.description }.joined()
+  }
+  
+  static func ==(lhs: Self, rhs: Self) -> Bool {
+    return true
   }
 }

@@ -24,8 +24,8 @@ struct KanaQuizViews {
   static let waveformImage = Image(systemName: "waveform.circle")
   
   @ViewBuilder
-  static func inputView<ViewModel: Quizzical>(rep: KanaRepresentation, viewModel: ViewModel) -> some View {
-    switch rep.category {
+  static func inputView<ViewModel: Quizzical>(rep: InputRepresentation, viewModel: ViewModel) -> some View {
+    switch rep {
       case .voice:
         waveformImage
           .resizable()
@@ -46,8 +46,8 @@ struct KanaQuizViews {
 //          Text(rep.translation)
 //            .opacity(AppConstants.defaultOpacity)
 //        }
-      case .text:
-        Text(rep.string)
+      case .text(let text):
+        Text(text)
           .font(.system(size: 30))
 //      case .textWithFurigana(let rep):
 //        textWithFurigana(representation: rep)
@@ -56,6 +56,8 @@ struct KanaQuizViews {
 //          .cornerRadius(5)
 //      case .image(let rep):
 //        viewForImage(withRepresentation: rep, signal: .output)
+      default:
+        fatalError("Nope")
     }
   }
   
