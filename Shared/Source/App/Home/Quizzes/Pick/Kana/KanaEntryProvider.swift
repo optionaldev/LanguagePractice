@@ -22,7 +22,7 @@ final class KanaEntryProvider {
   private let lexicon: Lexicon
   
   private func generateEntries(forCharacter character: ForeignCharacter) -> [KanaEntry] {
-    return KanaEntry.Category.allCases
+    return KanaEntry.Category.all
       .map { KanaEntry(id: character.id, category: $0) }
   }
 }

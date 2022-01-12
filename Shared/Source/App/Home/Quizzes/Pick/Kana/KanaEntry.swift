@@ -17,6 +17,10 @@ enum KanaEntryCategory: CategoryProtocol {
         return false
     }
   }
+  
+  static var all: [Self] {
+    return [.english, .foreign]
+  }
 }
 
 struct KanaEntry: Entryable {

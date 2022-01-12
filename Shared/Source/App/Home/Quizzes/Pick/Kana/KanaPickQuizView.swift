@@ -93,7 +93,7 @@ struct KanaPickQuizView: View {
 //      case .image(let rep):
 //        QuizViews.viewForImage(withRepresentation: rep, signal: .output)
       case .voice:
-        QuizViews.waveformImage
+        OldQuizViews.waveformImage
           .resizable()
           .aspectRatio(1, contentMode: .fit)
           .padding(10)

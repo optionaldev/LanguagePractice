@@ -18,4 +18,8 @@ enum ConjugatableEntryCategory: CategoryProtocol {
   var voiceValid: Bool {
     return true
   }
+  
+  static var all: [Self] {
+    return [.askTense, .askCorrectForm]
+  }
 }

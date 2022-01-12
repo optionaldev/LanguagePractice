@@ -1,7 +1,7 @@
 //
 // The LanguagePractice project.
-// Created by optionaldev on 18/12/2021.
-// Copyright © 2021 optionaldev. All rights reserved.
+// Created by optionaldev on 12/01/2022.
+// Copyright © 2022 optionaldev. All rights reserved.
 // 
 
 import func SwiftUI.withAnimation
@@ -38,7 +38,7 @@ private struct Constants {
   static let resultsID = "results_screen"
 }
 
-struct KanaQuizBody<ViewModel: Quizzical, Content: View>: View {
+struct QuizBody<ViewModel: Quizable, Content: View>: View {
   
   var viewModel: ViewModel
   let content: (ViewModel.Challenge) -> Content
@@ -65,7 +65,7 @@ struct KanaQuizBody<ViewModel: Quizzical, Content: View>: View {
       ScrollView(iOS ? .horizontal : .vertical, showsIndicators: iOS ? true : false) {
         ScrollViewReader { value in
           LazyStack(spacing: 0) {
-            ForEach(viewModel.visibleChallenges, id: \.id) { challenge in
+            ForEach(viewModel.visibleChallenges, id:\.id) { challenge in
               content(challenge)
                 .disabled(challenge != viewModel.visibleChallenges.last)
             }
@@ -95,7 +95,7 @@ struct KanaQuizBody<ViewModel: Quizzical, Content: View>: View {
   private func resultsScreen() -> some View {
     GeometryReader { reader in
       VStack {
-        ForEach(viewModel.itemsLearned, id: \.id) { learned in
+        ForEach(viewModel.itemsLearned, id:\.id) { learned in
           Text("\(learned.id) \(learned.challengeAverageTime)")
             .padding(5)
         }

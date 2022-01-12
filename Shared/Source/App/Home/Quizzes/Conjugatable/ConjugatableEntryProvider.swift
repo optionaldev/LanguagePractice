@@ -36,7 +36,7 @@ final class ConjugatableEntryProvider {
   private let lexicon: Lexicon
   
   private func generateEntries(forWord word: ForeignWord) -> [ConjugatableEntry] {
-    return ConjugatableEntryCategory.allCases
+    return ConjugatableEntryCategory.all
       .map { ConjugatableEntry(id: word.id, category: $0) }
   }
 }

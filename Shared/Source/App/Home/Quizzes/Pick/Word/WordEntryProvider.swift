@@ -23,7 +23,7 @@ final class WordEntryProvider {
   private let lexicon: Lexicon
 
   private func generateEntries(forWord word: ForeignWord) -> [WordEntry] {
-    return WordEntry.Category.allCases
+    return WordEntry.Category.all
       .map { WordEntry(id: word.id, category: $0) }
   }
 }

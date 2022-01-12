@@ -28,7 +28,7 @@ struct PickQuizView: View {
   }
   
   var body: some View {
-    QuizBody(viewModel: viewModel) { challenge in
+    OldQuizBody(viewModel: viewModel) { challenge in
       challengeView(challenge: challenge)
     }
   }
@@ -42,7 +42,7 @@ struct PickQuizView: View {
     // TODO: Find a better way do macros with declarative statements
     #if os(iOS)
     VStack {
-      QuizViews.inputView(rep: challenge.inputRepresentation, viewModel: viewModel)
+      OldQuizViews.inputView(rep: challenge.inputRepresentation, viewModel: viewModel)
         .frame(height: 200)
         .frame(maxWidth: Canvas.width - 10)
         .background(Color.orange.opacity(0.5))
@@ -55,7 +55,7 @@ struct PickQuizView: View {
     .background(Color.green.opacity(0.3))
     #else
     HStack {
-      QuizViews.inputView(rep: challenge.inputRepresentation, viewModel: viewModel)
+      OldQuizViews.inputView(rep: challenge.inputRepresentation, viewModel: viewModel)
         .frame(width: 390, height: 290)
         .background(Color.orange.opacity(0.5))
         .cornerRadius(5)
@@ -91,9 +91,9 @@ struct PickQuizView: View {
   private func outputContent(forRepresentation representation: Rep) -> some View {
     switch representation {
       case .image(let rep):
-        QuizViews.viewForImage(withRepresentation: rep, signal: .output)
+        OldQuizViews.viewForImage(withRepresentation: rep, signal: .output)
       case .voice:
-        QuizViews.waveformImage
+        OldQuizViews.waveformImage
           .resizable()
           .aspectRatio(1, contentMode: .fit)
           .padding(10)
@@ -111,7 +111,7 @@ struct PickQuizView: View {
           .background(Color.blue.opacity(0.5))
           .cornerRadius(5)
       case .textWithFurigana(let rep):
-        QuizViews.textWithFurigana(representation: rep)
+        OldQuizViews.textWithFurigana(representation: rep)
           .background(Color.blue.opacity(0.5))
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .cornerRadius(5)

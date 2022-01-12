@@ -12,7 +12,9 @@ protocol Entryable {
   var category: Category { get }
 }
 
-protocol CategoryProtocol: CaseIterable {
+protocol CategoryProtocol {
   
   var voiceValid: Bool { get }
+  
+  static var all: [Self] { get }
 }

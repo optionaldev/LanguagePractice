@@ -23,7 +23,7 @@ struct TypingQuizView: View {
   var body: some View {
     VStack {
       ZStack {
-        QuizBody(viewModel: viewModel) { challenge in
+        OldQuizBody(viewModel: viewModel) { challenge in
           challengeView(challenge: challenge)
         }
         forfeitButton
@@ -49,7 +49,7 @@ struct TypingQuizView: View {
   @ViewBuilder
   private func challengeView(challenge: TypingChallenge) -> some View {
     ZStack {
-      QuizViews.inputView(rep: challenge.inputRepresentation, viewModel: viewModel)
+      OldQuizViews.inputView(rep: challenge.inputRepresentation, viewModel: viewModel)
       forfeitAnswers(forChallenge: challenge)
     }
     .frame(width: Canvas.width - 10, height: 200)

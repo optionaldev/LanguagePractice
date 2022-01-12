@@ -18,8 +18,8 @@
 		6E07D54B25D9774800310B17 /* Storable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E07D54A25D9774800310B17 /* Storable.swift */; };
 		6E07D54C25D9774800310B17 /* Storable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E07D54A25D9774800310B17 /* Storable.swift */; };
 		6E07D56225D988AC00310B17 /* MacDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E07D56125D988AC00310B17 /* MacDefaultsKeys.swift */; };
-		6E0ECD462604CB4100AA223A /* QuizBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0ECD452604CB4100AA223A /* QuizBody.swift */; };
-		6E0ECD472604CB4100AA223A /* QuizBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0ECD452604CB4100AA223A /* QuizBody.swift */; };
+		6E0ECD462604CB4100AA223A /* OldQuizBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0ECD452604CB4100AA223A /* OldQuizBody.swift */; };
+		6E0ECD472604CB4100AA223A /* OldQuizBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0ECD452604CB4100AA223A /* OldQuizBody.swift */; };
 		6E10FF6925DDE41F00F8EDBD /* UrlBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E10FF6825DDE41F00F8EDBD /* UrlBuilder.swift */; };
 		6E10FF6A25DDE41F00F8EDBD /* UrlBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E10FF6825DDE41F00F8EDBD /* UrlBuilder.swift */; };
 		6E112BA925E717BF005CE59B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E112BA825E717BF005CE59B /* Logger.swift */; };
@@ -85,6 +85,12 @@
 		6E35D83A27877FAF00263564 /* OutputRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E35D83827877FAF00263564 /* OutputRepresentation.swift */; };
 		6E35D83C278B8DA800263564 /* EntryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E35D83B278B8DA800263564 /* EntryProtocol.swift */; };
 		6E35D83D278B8DA800263564 /* EntryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E35D83B278B8DA800263564 /* EntryProtocol.swift */; };
+		6E35D840278F434C00263564 /* QuizViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E35D83F278F434C00263564 /* QuizViews.swift */; };
+		6E35D841278F434C00263564 /* QuizViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E35D83F278F434C00263564 /* QuizViews.swift */; };
+		6E35D843278F439600263564 /* Tappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E35D842278F439600263564 /* Tappable.swift */; };
+		6E35D844278F439600263564 /* Tappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E35D842278F439600263564 /* Tappable.swift */; };
+		6E35D846278F446B00263564 /* QuizBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E35D845278F446B00263564 /* QuizBody.swift */; };
+		6E35D847278F446B00263564 /* QuizBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E35D845278F446B00263564 /* QuizBody.swift */; };
 		6E42CE5F26329FAD008BD2ED /* Quizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E42CE5E26329FAD008BD2ED /* Quizable.swift */; };
 		6E42CE6026329FAD008BD2ED /* Quizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E42CE5E26329FAD008BD2ED /* Quizable.swift */; };
 		6E42CE6626329FEE008BD2ED /* TypingQuizState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E42CE6526329FEE008BD2ED /* TypingQuizState.swift */; };
@@ -149,8 +155,8 @@
 		6EB3819825D5D68900114B83 /* VoiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB3819625D5D68900114B83 /* VoiceHandler.swift */; };
 		6EB381A625D5D70900114B83 /* SpeechBlacklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB381A525D5D70900114B83 /* SpeechBlacklist.swift */; };
 		6EB381A725D5D70900114B83 /* SpeechBlacklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB381A525D5D70900114B83 /* SpeechBlacklist.swift */; };
-		6EB702802635CB9A00E46268 /* QuizViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB7027F2635CB9A00E46268 /* QuizViews.swift */; };
-		6EB702812635CB9A00E46268 /* QuizViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB7027F2635CB9A00E46268 /* QuizViews.swift */; };
+		6EB702802635CB9A00E46268 /* OldQuizViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB7027F2635CB9A00E46268 /* OldQuizViews.swift */; };
+		6EB702812635CB9A00E46268 /* OldQuizViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB7027F2635CB9A00E46268 /* OldQuizViews.swift */; };
 		6EB702872635DAF900E46268 /* ChallengeSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB702862635DAF900E46268 /* ChallengeSlot.swift */; };
 		6EB702882635DAF900E46268 /* ChallengeSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB702862635DAF900E46268 /* ChallengeSlot.swift */; };
 		6EBFBCAF277D024300ED6571 /* ForeignAdjective.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBFBCAE277D024300ED6571 /* ForeignAdjective.swift */; };
@@ -243,7 +249,7 @@
 		6E07D53925D975DF00310B17 /* MacDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacDefaults.swift; sourceTree = "<group>"; };
 		6E07D54A25D9774800310B17 /* Storable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storable.swift; sourceTree = "<group>"; };
 		6E07D56125D988AC00310B17 /* MacDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacDefaultsKeys.swift; sourceTree = "<group>"; };
-		6E0ECD452604CB4100AA223A /* QuizBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizBody.swift; sourceTree = "<group>"; };
+		6E0ECD452604CB4100AA223A /* OldQuizBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldQuizBody.swift; sourceTree = "<group>"; };
 		6E10FF6825DDE41F00F8EDBD /* UrlBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlBuilder.swift; sourceTree = "<group>"; };
 		6E112BA825E717BF005CE59B /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		6E14EB8A25F61285008800C6 /* PickQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickQuizView.swift; sourceTree = "<group>"; };
@@ -284,6 +290,9 @@
 		6E35D83527877F3700263564 /* InputRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputRepresentation.swift; sourceTree = "<group>"; };
 		6E35D83827877FAF00263564 /* OutputRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputRepresentation.swift; sourceTree = "<group>"; };
 		6E35D83B278B8DA800263564 /* EntryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryProtocol.swift; sourceTree = "<group>"; };
+		6E35D83F278F434C00263564 /* QuizViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViews.swift; sourceTree = "<group>"; };
+		6E35D842278F439600263564 /* Tappable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tappable.swift; sourceTree = "<group>"; };
+		6E35D845278F446B00263564 /* QuizBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizBody.swift; sourceTree = "<group>"; };
 		6E42CE5E26329FAD008BD2ED /* Quizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quizable.swift; sourceTree = "<group>"; };
 		6E42CE6526329FEE008BD2ED /* TypingQuizState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingQuizState.swift; sourceTree = "<group>"; };
 		6E44AAAF275B871400177A71 /* ChallengeMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeMeasurement.swift; sourceTree = "<group>"; };
@@ -331,7 +340,7 @@
 		6EB3818B25D5D5FF00114B83 /* Voices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voices.swift; sourceTree = "<group>"; };
 		6EB3819625D5D68900114B83 /* VoiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceHandler.swift; sourceTree = "<group>"; };
 		6EB381A525D5D70900114B83 /* SpeechBlacklist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechBlacklist.swift; sourceTree = "<group>"; };
-		6EB7027F2635CB9A00E46268 /* QuizViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViews.swift; sourceTree = "<group>"; };
+		6EB7027F2635CB9A00E46268 /* OldQuizViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldQuizViews.swift; sourceTree = "<group>"; };
 		6EB702862635DAF900E46268 /* ChallengeSlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeSlot.swift; sourceTree = "<group>"; };
 		6EBFBCAE277D024300ED6571 /* ForeignAdjective.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignAdjective.swift; sourceTree = "<group>"; };
 		6EC7F06D276BC9DF007AB5DF /* KanaPickChallengeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanaPickChallengeProvider.swift; sourceTree = "<group>"; };
@@ -454,8 +463,8 @@
 				6E1B7A52263FE774002D0A82 /* LearnedItem.swift */,
 				6E57EDBC2622AE0D00A4EE41 /* OldEntryProvider.swift */,
 				6E42CE5E26329FAD008BD2ED /* Quizable.swift */,
-				6E0ECD452604CB4100AA223A /* QuizBody.swift */,
-				6EB7027F2635CB9A00E46268 /* QuizViews.swift */,
+				6E0ECD452604CB4100AA223A /* OldQuizBody.swift */,
+				6EB7027F2635CB9A00E46268 /* OldQuizViews.swift */,
 				6E21B1F42782EF1000296579 /* Conjugatable */,
 				6E35D83E278E2A5200263564 /* New */,
 				6E14EB7F25F61255008800C6 /* Pick */,
@@ -527,6 +536,8 @@
 			isa = PBXGroup;
 			children = (
 				6E21B1FD2783008300296579 /* PickChallenge.swift */,
+				6E35D83F278F434C00263564 /* QuizViews.swift */,
+				6E35D845278F446B00263564 /* QuizBody.swift */,
 			);
 			path = New;
 			sourceTree = "<group>";
@@ -550,6 +561,7 @@
 				6E5289442777BDD500DBAF6D /* Vowel.swift */,
 				6E35D83527877F3700263564 /* InputRepresentation.swift */,
 				6E35D83827877FAF00263564 /* OutputRepresentation.swift */,
+				6E35D842278F439600263564 /* Tappable.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1055,13 +1067,14 @@
 				6E18FC3125D73E3D00EEEB42 /* CharacterExtension.swift in Sources */,
 				6EC7F08A2772566F007AB5DF /* WordEntryProvider.swift in Sources */,
 				6E35D83927877FAF00263564 /* OutputRepresentation.swift in Sources */,
+				6E35D846278F446B00263564 /* QuizBody.swift in Sources */,
 				6EC7F077276E30DA007AB5DF /* KanaPickQuizView.swift in Sources */,
 				6E10FF6925DDE41F00F8EDBD /* UrlBuilder.swift in Sources */,
 				6EB381A625D5D70900114B83 /* SpeechBlacklist.swift in Sources */,
 				6E44AAB0275B871400177A71 /* ChallengeMeasurement.swift in Sources */,
 				6E55549525D2026A000565F2 /* Tab.swift in Sources */,
 				6EA9A7C42737DE83004AD26A /* LexiconViewModel.swift in Sources */,
-				6E0ECD462604CB4100AA223A /* QuizBody.swift in Sources */,
+				6E0ECD462604CB4100AA223A /* OldQuizBody.swift in Sources */,
 				6E57EDBD2622AE0D00A4EE41 /* OldEntryProvider.swift in Sources */,
 				6E14EB8B25F61285008800C6 /* PickQuizView.swift in Sources */,
 				6E1B7A5E26411DD3002D0A82 /* Formatters.swift in Sources */,
@@ -1094,13 +1107,14 @@
 				6EB3819725D5D68900114B83 /* VoiceHandler.swift in Sources */,
 				6EC7F07A276E30FB007AB5DF /* KanaPickQuizViewModel.swift in Sources */,
 				6EC7F06E276BC9DF007AB5DF /* KanaPickChallengeProvider.swift in Sources */,
-				6EB702802635CB9A00E46268 /* QuizViews.swift in Sources */,
+				6EB702802635CB9A00E46268 /* OldQuizViews.swift in Sources */,
 				6EE81CE525D89EC000667CE5 /* EnglishWord.swift in Sources */,
 				6E42CE6626329FEE008BD2ED /* TypingQuizState.swift in Sources */,
 				6E1B7A53263FE774002D0A82 /* LearnedItem.swift in Sources */,
 				6E35D83627877F3700263564 /* InputRepresentation.swift in Sources */,
 				6E5D631B25EEFB580062E564 /* HomeViewModel.swift in Sources */,
 				6E522F3B25F4079D00DA229C /* Persistence.swift in Sources */,
+				6E35D843278F439600263564 /* Tappable.swift in Sources */,
 				6E2B22DA25DC899F001B8A77 /* Network.swift in Sources */,
 				6EA9A7B92737DE80004AD26A /* LexiconView.swift in Sources */,
 				6EB3818C25D5D5FF00114B83 /* Voices.swift in Sources */,
@@ -1123,6 +1137,7 @@
 				6EC7F07D276E3DFC007AB5DF /* KanaQuizView.swift in Sources */,
 				6E32E8B12639F71A00775B65 /* ForeignCharacter.swift in Sources */,
 				6EF4E3E025D4A47A00CDCC40 /* AppConstants.swift in Sources */,
+				6E35D840278F434C00263564 /* QuizViews.swift in Sources */,
 				6E1FF04C277F39C000DC54EA /* ConjugationType.swift in Sources */,
 				6E21B1FA2782F17600296579 /* ConjugatableChallengeProvider.swift in Sources */,
 				6E289FDA262F5CB40081E38E /* CustomTextField.swift in Sources */,
@@ -1153,6 +1168,7 @@
 				6E1B7A6A26412E9B002D0A82 /* Random.swift in Sources */,
 				6E24753625E867A900AC64B9 /* LexiconRequest.swift in Sources */,
 				6E32E8B22639F71A00775B65 /* ForeignCharacter.swift in Sources */,
+				6E35D841278F434C00263564 /* QuizViews.swift in Sources */,
 				6E275D1E25F774B700617262 /* PickChallengeState.swift in Sources */,
 				6E675E9025CEFE1B002D8D98 /* LanguagePracticeApp.swift in Sources */,
 				6E10FF6A25DDE41F00F8EDBD /* UrlBuilder.swift in Sources */,
@@ -1163,6 +1179,7 @@
 				6EEAA8AD2627799B007DF1BA /* FontSelectionViewModel.swift in Sources */,
 				6EEAF94B260B2EE4005EE9CC /* ImageExtension.swift in Sources */,
 				6E14EB9325F612B9008800C6 /* PickQuizViewModel.swift in Sources */,
+				6E35D847278F446B00263564 /* QuizBody.swift in Sources */,
 				6EB3818125D5D5DA00114B83 /* Speech.swift in Sources */,
 				6E18FC2725D73E1E00EEEB42 /* StringExtension.swift in Sources */,
 				6E2B22DB25DC899F001B8A77 /* Network.swift in Sources */,
@@ -1180,17 +1197,18 @@
 				6E5289462777BDD500DBAF6D /* Vowel.swift in Sources */,
 				6EE81CB925D89DD900667CE5 /* ForeignLexicon.swift in Sources */,
 				6EC7F088276F35E0007AB5DF /* WordEntry.swift in Sources */,
-				6EB702812635CB9A00E46268 /* QuizViews.swift in Sources */,
+				6EB702812635CB9A00E46268 /* OldQuizViews.swift in Sources */,
 				6E07D53A25D975DF00310B17 /* MacDefaults.swift in Sources */,
 				6E076A2426016E8D00043E35 /* MacHomeView.swift in Sources */,
 				6EC7F078276E30DA007AB5DF /* KanaPickQuizView.swift in Sources */,
+				6E35D844278F439600263564 /* Tappable.swift in Sources */,
 				6E112BAA25E717BF005CE59B /* Logger.swift in Sources */,
 				6E15F67126294B66008BDFB4 /* FontSelectionView.swift in Sources */,
 				6EB381A725D5D70900114B83 /* SpeechBlacklist.swift in Sources */,
 				6E23CD0726041E9A00D022B2 /* MatrixView.swift in Sources */,
 				6EB3818D25D5D5FF00114B83 /* Voices.swift in Sources */,
 				6ED070B0275823A200FF33FF /* Keyboard.swift in Sources */,
-				6E0ECD472604CB4100AA223A /* QuizBody.swift in Sources */,
+				6E0ECD472604CB4100AA223A /* OldQuizBody.swift in Sources */,
 				6E96205125F24EA200E4278B /* DefaultsProtocol.swift in Sources */,
 				6EE681C326480941000554BE /* SettingsView.swift in Sources */,
 				6E35D83D278B8DA800263564 /* EntryProtocol.swift in Sources */,

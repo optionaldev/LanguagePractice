@@ -1,7 +1,7 @@
 //
 // The LanguagePractice project.
-// Created by optionaldev on 25/04/2021.
-// Copyright © 2021 optionaldev. All rights reserved.
+// Created by optionaldev on 12/01/2022.
+// Copyright © 2022 optionaldev. All rights reserved.
 // 
 
 import Dispatch
@@ -23,7 +23,7 @@ struct QuizViews {
   static let waveformImage = Image(systemName: "waveform.circle")
   
   @ViewBuilder
-  static func inputView<ViewModel: Quizable>(rep: Rep, viewModel: ViewModel) -> some View {
+  static func inputView(rep: Rep, viewModel: Tappable) -> some View {
     switch rep {
       case .voice:
         waveformImage
