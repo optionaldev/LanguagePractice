@@ -80,7 +80,7 @@ extension ForeignWord {
   // For our UI, in order to display the kana of the kanji directly above the kanji, we
   // construct a string where the translation is approximately above the kanji character
   // and the hiragana is replaced by empty spaces
-  var kanaComponenets: [String] {
+  var kanaComponents: [String] {
     guard var furiganaStrings = furigana?.split(separator: " ").map({ String($0) }) else {
       return []
     }

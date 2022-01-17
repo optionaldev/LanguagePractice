@@ -40,6 +40,11 @@ final class Defaults: DefaultsArrayProtocol,
     return nil
   }
   
+  static var outputCount: Int {
+    // To be possibly changed in the future as a choice to the user, between 4 and 6
+    return 6
+  }
+  
   static var voiceEnabled: Bool {
     return bool(forKey: .voiceEnabled)
   }

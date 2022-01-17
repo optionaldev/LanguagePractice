@@ -141,11 +141,11 @@ final class ChallengeProvider {
               if word.hasFurigana {
                 if word.groupFurigana {
                   return .textWithFurigana(.init(text: [word.written],
-                                                 furigana: word.kanaComponenets,
+                                                 furigana: word.kanaComponents,
                                                  english: entry.output.removingUniqueness()))
                 } else {
                   return .textWithFurigana(.init(text: word.written.map { String($0) },
-                                                 furigana: word.kanaComponenets,
+                                                 furigana: word.kanaComponents,
                                                  english: entry.output.removingUniqueness()))
                 }
               } else {
@@ -341,7 +341,7 @@ final class ChallengeProvider {
               result = output.compactMap { Lexicon.shared.foreignDictionary[$0] }
                 .compactMap { $0 as? ForeignWord }
                 .map { Rep.textWithFurigana(.init(text: $0.written.map { String($0) },
-                                                  furigana: $0.kanaComponenets,
+                                                  furigana: $0.kanaComponents,
                                                   english: $0.english.first!)) }
           }
         case .voice(let language):

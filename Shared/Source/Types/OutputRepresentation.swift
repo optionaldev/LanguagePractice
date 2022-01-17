@@ -2,13 +2,20 @@
 // The LanguagePractice project.
 // Created by optionaldev on 06/01/2022.
 // Copyright © 2022 optionaldev. All rights reserved.
-// 
+//
+
+struct FuriganaRep {
+  
+  var text: [String]
+  var groups: [String]
+}
 
 enum OutputRepresentation: Equatable {
   
   case text(_ text: String)
   case textWithTranslation(TextWithTranslationRep)
-  case textWithFurigana(TextWithFuriganaRep)
+  case textWithRegularFurigana(FuriganaRep)
+  case textWithIrregularFurigana(FuriganaRep)
   case image(_ id: String)
   case voice(_ spoken: String)
   
@@ -18,8 +25,10 @@ enum OutputRepresentation: Equatable {
         return "simpleText(\(rep))"
       case .textWithTranslation(let rep):
         return "textWithTranslation(\(rep))"
-      case .textWithFurigana(let rep):
-        return "textWithFurigana(\(rep))"
+      case .textWithRegularFurigana(let rep):
+        return "textWithRegularFurigana(\(rep))"
+      case .textWithIrregularFurigana(let rep):
+        return "textWithIrregularFurigana(\(rep))"
       case .image(let rep):
         return "image(\(rep))"
       case .voice(let rep):
