@@ -22,7 +22,7 @@ struct Conjugation {
   let type: ConjugationType
 }
 
-protocol ForeignConjugatable: Identifiable {
+protocol ForeignConjugatable: Distinguishable {
   
   func conjugate(tense: Tense, negative: Bool, type: ConjugationType) -> Conjugation
 }

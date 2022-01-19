@@ -13,7 +13,9 @@ import struct Foundation.Date
 import struct Foundation.Published
 import struct Foundation.TimeInterval
 
-protocol Challengeable: Equatable {
+protocol Challengeable: Distinguishable, Equatable {
+  
+  var inputRep: InputRepresentation { get }
   
   var id: String { get }
 }

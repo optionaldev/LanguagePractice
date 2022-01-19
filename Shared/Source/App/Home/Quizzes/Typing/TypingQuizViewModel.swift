@@ -18,7 +18,7 @@ import struct Foundation.TimeInterval
 
 final class TypingQuizViewModel: Quizable, ObservableObject, SpeechDelegate {
   
-  @Published var visibleChallenges: [TypingChallenge] = []
+  @Published var visibleChallenges: [OldTypingChallenge] = []
   
   @Published private(set) var itemsLearned: [LearnedItem] = []
   
@@ -29,7 +29,7 @@ final class TypingQuizViewModel: Quizable, ObservableObject, SpeechDelegate {
   
   private(set) var challengeEntries: [EntryProtocol]
   
-  var nextChallenge: TypingChallenge? = nil
+  var nextChallenge: OldTypingChallenge? = nil
   
   @Published var currentText: String = "" {
     didSet {

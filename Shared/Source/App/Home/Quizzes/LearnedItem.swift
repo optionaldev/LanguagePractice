@@ -6,7 +6,7 @@
 
 import struct Foundation.TimeInterval
 
-struct LearnedItem: Equatable, Identifiable {
+struct LearnedItem: Equatable, Distinguishable {
   
   init(character: String, averageTime: TimeInterval) {
     id = character

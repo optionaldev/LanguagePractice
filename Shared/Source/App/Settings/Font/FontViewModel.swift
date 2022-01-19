@@ -6,7 +6,7 @@
 
 import struct Foundation.UUID
 
-struct FontViewModel: Identifiable {
+struct FontViewModel: Distinguishable {
   
   let id = UUID().uuidString
   let name: String

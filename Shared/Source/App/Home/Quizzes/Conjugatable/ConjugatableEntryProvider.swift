@@ -10,33 +10,40 @@ enum ConjugateableType {
   case verb
 }
 
-final class ConjugatableEntryProvider {
+final class ConjugatableAdjectiveEntryProvider: ConjugatableEntryProvider, EntryProvidable {
+  
+  func generate() -> [Distinguishable] {
+    return generate(source: lexicon.foreign.adjectives)
+  }
+}
+
+final class ConjugatableVerbsEntryProvider: ConjugatableEntryProvider, EntryProvidable {
+  
+  func generate() -> [Distinguishable] {
+    return generate(source: lexicon.foreign.verbs)
+  }
+}
+
+class ConjugatableEntryProvider {
   
   init(lexicon: Lexicon = .shared) {
     self.lexicon = lexicon
   }
   
-  func generate(type: ConjugateableType) -> [ConjugatableEntry] {
-    let source: [ForeignItem]
-    switch type {
-      case .adjective:
-        source = lexicon.foreign.adjectives
-      case .verb:
-        source = lexicon.foreign.verbs
-    }
+  func generate(source: [ForeignWord]) -> [Distinguishable] {
     return source
       .prefix(AppConstants.challengeInitialSampleSize)
-      .compactMap { $0 as? ForeignWord }
       .flatMap { generateEntries(forWord: $0) }
       .shuffled()
   }
   
   // MARK: - Private
   
-  private let lexicon: Lexicon
+  let lexicon: Lexicon
   
-  private func generateEntries(forWord word: ForeignWord) -> [ConjugatableEntry] {
+  private func generateEntries(forWord word: ForeignWord) -> [Distinguishable] {
     return ConjugatableEntryCategory.all
       .map { ConjugatableEntry(id: word.id, category: $0) }
+      .compactMap { $0 as? Distinguishable }
   }
 }

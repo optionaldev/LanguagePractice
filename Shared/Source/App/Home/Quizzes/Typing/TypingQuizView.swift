@@ -47,7 +47,7 @@ struct TypingQuizView: View {
   @ObservedObject private var viewModel = TypingQuizViewModel()
   
   @ViewBuilder
-  private func challengeView(challenge: TypingChallenge) -> some View {
+  private func challengeView(challenge: OldTypingChallenge) -> some View {
     ZStack {
       OldQuizViews.inputView(rep: challenge.inputRepresentation, viewModel: viewModel)
       forfeitAnswers(forChallenge: challenge)
@@ -58,7 +58,7 @@ struct TypingQuizView: View {
     .cornerRadius(10)
   }
   
-  private func forfeitAnswers(forChallenge challenge: TypingChallenge) -> some View {
+  private func forfeitAnswers(forChallenge challenge: OldTypingChallenge) -> some View {
     VStack {
       Spacer()
       HStack {

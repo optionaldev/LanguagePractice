@@ -4,7 +4,7 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-enum HomeQuiz: String, CaseIterable, Identifiable {
+enum HomeQuiz: String, CaseIterable, Distinguishable {
   
   case hiragana
   case katakana
@@ -21,7 +21,7 @@ enum HomeQuiz: String, CaseIterable, Identifiable {
     }
   }
   
-  // MARK: - Identifiable conformance
+  // MARK: - Distinguishable conformance
   
   var id: String {
     return rawValue

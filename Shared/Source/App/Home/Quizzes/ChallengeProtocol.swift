@@ -4,7 +4,7 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 //
 
-protocol ChallengeProtocol: Equatable, Identifiable {
+protocol ChallengeProtocol: Equatable, Distinguishable {
   
   var inputType: ChallengeType { get }
   var input: String { get }

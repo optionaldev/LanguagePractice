@@ -11,7 +11,7 @@ private struct Constants {
   static let incorrectGuessStoreValue: String = "-"
 }
 
-enum TypingChallengeState: Hashable, Codable {
+enum OldTypingChallengeState: Hashable, Codable {
   
   case guessedIncorrectly
   case finished(_ interval: TimeInterval, _ answerIndex: Int)

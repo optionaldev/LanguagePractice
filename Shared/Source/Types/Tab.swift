@@ -10,7 +10,7 @@ import struct SwiftUI.Text
 import struct SwiftUI.ViewBuilder
 
 
-enum Tab: Int, CaseIterable, Identifiable {
+enum Tab: Int, CaseIterable, Distinguishable {
   
   case home
   case dictionary
@@ -23,11 +23,6 @@ enum Tab: Int, CaseIterable, Identifiable {
     }
     return iconName
   }
-  
-  var id: String {
-    return "\(rawValue)"
-  }
-  
   var name: String {
     switch self {
       case .home:
@@ -38,6 +33,13 @@ enum Tab: Int, CaseIterable, Identifiable {
         return "Settings"
     }
   }
+  
+  // MARK: - Distinguishable conformance
+  
+  var id: String {
+    return "\(rawValue)"
+  }
+  
   
   // MARK: - Private
   

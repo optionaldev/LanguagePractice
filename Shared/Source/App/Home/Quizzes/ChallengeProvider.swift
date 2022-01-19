@@ -57,7 +57,7 @@ final class ChallengeProvider {
     return nextForeignItem
   }
   
-  static func generateTyping(pool: [EntryProtocol], index: Int) -> TypingChallenge {
+  static func generateTyping(pool: [EntryProtocol], index: Int) -> OldTypingChallenge {
     let entry = pool[index]
     let (inputType, input, inputRep) = generateInputComponents(entry: entry)
     
@@ -75,7 +75,7 @@ final class ChallengeProvider {
         }
     }
     
-    return TypingChallenge(inputType: inputType,
+    return OldTypingChallenge(inputType: inputType,
                            input: input,
                            inputRepresentation: inputRep,
                            output: output)

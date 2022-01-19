@@ -4,7 +4,7 @@
 // Copyright © 2022 optionaldev. All rights reserved.
 // 
 
-protocol Entryable {
+protocol Entryable: Distinguishable {
   
   associatedtype Category: CategoryProtocol
   

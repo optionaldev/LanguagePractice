@@ -63,7 +63,7 @@ struct OldPickChallenge: ChallengeProtocol {
       lhs.state == rhs.state
   }
   
-  // MARK: - Identifiable conformance
+  // MARK: - Distinguishable conformance
   
   var id: String {
     return input + output[correctAnswerIndex] + "\(inputType.storeValue) \(outputType.storeValue)"

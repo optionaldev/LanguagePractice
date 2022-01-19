@@ -4,10 +4,10 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-struct TypingChallenge: ChallengeProtocol, Identifiable, Equatable {
+struct OldTypingChallenge: ChallengeProtocol, Distinguishable, Equatable {
   
   let output: [String]
-  var state: TypingChallengeState?
+  var state: OldTypingChallengeState?
   
   var inputRepresentation: Rep = .textWithTranslation(.init(text: "-",
                                                             language: .english,
@@ -46,7 +46,7 @@ struct TypingChallenge: ChallengeProtocol, Identifiable, Equatable {
       lhs.state == rhs.state
   }
   
-  // MARK: - Identifiable conformance
+  // MARK: - Distinguishable conformance
   
   var id: String {
     return input

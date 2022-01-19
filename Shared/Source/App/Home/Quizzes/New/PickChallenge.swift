@@ -15,11 +15,33 @@ struct PickChallenge: Challengeable {
     return outputRep[correctAnswerIndex]
   }
   
+  // MARK: - Distinguishable conformance
+  
   var id: String {
     inputRep.description + outputRep.map { $0.description }.joined()
   }
   
+  // MARK: - Equatable conformance
+  
   static func ==(lhs: Self, rhs: Self) -> Bool {
-    return true
+    return lhs.id == rhs.id
+  }
+}
+
+struct TypingChallenge: Challengeable {
+ 
+  let inputRep: InputRepresentation
+  let output: [String]
+  
+  // MARK: - Distinguishable conformance
+  
+  var id: String {
+    inputRep.description + output.joined()
+  }
+  
+  // MARK: - Equatable conformance
+  
+  static func ==(lhs: Self, rhs: Self) -> Bool {
+    return lhs.id == rhs.id
   }
 }
