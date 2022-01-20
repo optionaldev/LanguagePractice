@@ -44,6 +44,5 @@ class ConjugatableEntryProvider {
   private func generateEntries(forWord word: ForeignWord) -> [Distinguishable] {
     return ConjugatableEntryCategory.all
       .map { ConjugatableEntry(id: word.id, category: $0) }
-      .compactMap { $0 as? Distinguishable }
   }
 }

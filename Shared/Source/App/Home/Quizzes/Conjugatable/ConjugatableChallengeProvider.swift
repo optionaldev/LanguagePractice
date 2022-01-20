@@ -4,7 +4,7 @@
 // Copyright © 2022 optionaldev. All rights reserved.
 // 
 
-final class ConjugatableChallengeProvider {
+final class ConjugatableChallengeProvider: ChallengeProvidable {
   
   init(lexicon: Lexicon = .shared, speech: Speech = .shared) {
     self.lexicon = lexicon
@@ -106,4 +106,11 @@ final class ConjugatableChallengeProvider {
   
   private let lexicon: Lexicon
   private let speech: Speech
+  
+  // MARK: - ChallengeProvidable conformance
+  
+  func generate(fromPool pool: [Distinguishable], index: Int) -> PickChallenge {
+    let entries = pool.compactMap { $0 as? ConjugatableEntry }
+    return generate(fromPool: entries, index: index)
+  }
 }

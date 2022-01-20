@@ -2,7 +2,9 @@
 // The LanguagePractice project.
 // Created by optionaldev on 14/02/2021.
 // Copyright © 2021 optionaldev. All rights reserved.
-// 
+//
+
+import struct Foundation.TimeInterval
 
 private struct Constants {
   
@@ -21,4 +23,9 @@ extension Storable where Self: RawRepresentable, Self.RawValue: StringProtocol {
   var storeValue: String {
     return Constants.storeValuePrefix + rawValue
   }
+}
+
+protocol TimeStorable {
+  
+  var storeValue: TimeInterval { get }
 }

@@ -10,7 +10,7 @@ struct OldPickChallenge: ChallengeProtocol {
   let output: [String]
   let correctAnswerIndex: Int
   
-  var state: OldPickChallengeState?
+  var state: PickChallengeState?
   
   // inputRepresentation and outputRepresentation can change during a challenge
   // so they're not part of what we save

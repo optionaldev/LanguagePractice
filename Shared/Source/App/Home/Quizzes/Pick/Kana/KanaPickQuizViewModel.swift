@@ -16,8 +16,6 @@ import struct Foundation.TimeInterval
 protocol Challengeable: Distinguishable, Equatable {
   
   var inputRep: InputRepresentation { get }
-  
-  var id: String { get }
 }
 
 protocol Quizzical {
@@ -48,7 +46,7 @@ final class HiraganaPickQuizViewModel: Quizzical, ObservableObject, SpeechDelega
   
   private let challengeProvider = KanaPickChallengeProvider()
   
-  private var challengeResults: [OldPickChallengeState] = []
+  private var challengeResults: [PickChallengeState] = []
   
   private let speech: Speech
   private let lexicon: Lexicon
