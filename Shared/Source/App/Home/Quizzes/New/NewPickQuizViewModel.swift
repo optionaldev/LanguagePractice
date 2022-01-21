@@ -21,7 +21,7 @@ protocol EntryProvidable {
 
 protocol ChallengeProvidable {
   
-  func generate(fromPool pool: [Distinguishable], index: Int) -> PickChallenge
+  func generate<Challenge: Challengeable>(fromPool pool: [Distinguishable], index: Int) -> Challenge
 }
 
 protocol ResultsInterpretable {
@@ -29,24 +29,28 @@ protocol ResultsInterpretable {
   func assessResults(entries: [Distinguishable], states: [TimeStorable]) -> [LearnedItem]
 }
 
-final class NewPickQuizViewModel: Quizing, ObservableObject, SpeechDelegate {
+final class NewPickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceChallengeable, InputTappable {
   
   @Published var visibleChallenges: [PickChallenge] = []
+  @Published var itemsLearned: [LearnedItem] = []
   
-  @Published private(set) var itemsLearned: [LearnedItem] = []
-  
-  private(set) var challengeMeasurement = ChallengeMeasurement()
+  var nextChallenge: PickChallenge?
   
   private(set) var challengeEntries: [Distinguishable]
+  private(set) var challengeMeasurement = ChallengeMeasurement()
+  private(set) var challengeProvider: ChallengeProvidable
   
-  init(entryProvider: EntryProvidable, challengeProvider: ChallengeProvidable, resultsInterpreter: ResultsInterpretable) {
+  init(entryProvider: EntryProvidable,
+       challengeProvider: ChallengeProvidable,
+       resultsInterpreter: ResultsInterpretable,
+       speech: Speech = .shared)
+  {
     self.challengeProvider = challengeProvider
     self.resultsInterpreter = resultsInterpreter
+    self.speech = speech
     challengeEntries = entryProvider.generate()
     performInitialSetup()
   }
-  
-  var nextChallenge: PickChallenge?
   
   func handleFinish() {
     itemsLearned = resultsInterpreter.assessResults(entries: challengeEntries, states: challengeStates)
@@ -59,18 +63,52 @@ final class NewPickQuizViewModel: Quizing, ObservableObject, SpeechDelegate {
     }
   }
   
-  func prepareNextChallenge() {
-    nextChallenge = challengeProvider.generate(fromPool: challengeEntries, index: visibleChallenges.count)
+  // MARK: - InputTappable conformance
+  
+  func inputTapped() {
+    // TODO
   }
   
   // MARK: - SpeechDelegate conformance
   
-  func speechStarted() {}
-  func speechEnded() {}
+  func speechEnded() {
+    if case .voice = currentChallenge.inputRep {
+      challengeMeasurement.start()
+    } else if case .voice = currentChallenge.correctOutput,
+              currentChallenge.correctAnswerIndex == voiceLastTappedIndex
+    {
+      challengeMeasurement.start()
+    }
+  }
+  
+  // MARK: - VoiceChallengeable conformance
+  
+  func chose(index: Int) {
+    if case .voice(let rep) = currentChallenge.outputRep[index] {
+      
+      // When voice is the output type of the challenge, the user first has to tap on the
+      // output button to hear the answer and tap the same output button again to choose
+      // that answer, so we always remember what the last pressed button was
+      if voiceLastTappedIndex == index && currentChallenge.correctAnswerIndex == index {
+        goToNext()
+        voiceLastTappedIndex = -1
+      } else {
+        voiceLastTappedIndex = index
+        speech.speak(string: rep)
+      }
+    } else {
+      if currentChallenge.correctAnswerIndex == index {
+        goToNext()
+      } else {
+        challengeStates[visibleChallenges.count - 1] = .guessedIncorrectly
+      }
+    }
+  }
   
   // MARK: - Private
   
-  private var challengeProvider: ChallengeProvidable
   private var challengeStates: [PickChallengeState] = []
   private var resultsInterpreter: ResultsInterpretable
+  private var speech: Speech
+  private var voiceLastTappedIndex: Int = -1
 }

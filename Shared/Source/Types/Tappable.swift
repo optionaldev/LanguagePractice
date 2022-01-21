@@ -4,7 +4,7 @@
 // Copyright © 2022 optionaldev. All rights reserved.
 // 
 
-protocol Tappable {
+protocol InputTappable {
   
   func inputTapped()
 }

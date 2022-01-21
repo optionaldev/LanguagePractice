@@ -60,6 +60,12 @@ protocol Quizing: ObservableObject {
    */
   var itemsLearned: [LearnedItem] { get }
   
+  /**
+   Use to provide the next challenge.
+   In some scenarios, when going to settings tab and coming back, if current challenge isn't viable anymore, it is rebuilt.
+   */
+  var challengeProvider: ChallengeProvidable { get }
+  
   func challengeAppeared()
   func finishedCurrentChallenge()
   func handleFinish()
@@ -118,6 +124,10 @@ extension Quizing {
     } else {
       challengeMeasurement.start()
     }
+  }
+  
+  func prepareNextChallenge() {
+    nextChallenge = challengeProvider.generate(fromPool: challengeEntries, index: visibleChallenges.count)
   }
   
   // MARK: - Private

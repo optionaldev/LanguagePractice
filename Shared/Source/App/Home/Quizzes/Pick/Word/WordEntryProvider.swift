@@ -4,13 +4,13 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-final class WordEntryProvider {
+final class WordEntryProvider: EntryProvidable {
 
   init(lexicon: Lexicon = .shared) {
     self.lexicon = lexicon
   }
 
-  func generate() -> [WordEntry] {
+  func generate() -> [Distinguishable] {
     return lexicon.foreign.all
       .prefix(AppConstants.challengeInitialSampleSize)
       .compactMap { $0 as? ForeignWord }

@@ -4,7 +4,7 @@
 // Copyright © 2022 optionaldev. All rights reserved.
 // 
 
-final class WordChallengeProvider {
+final class WordChallengeProvider: ChallengeProvidable {
   
   init(lexicon: Lexicon = .shared, speech: Speech = .shared) {
     self.lexicon = lexicon
@@ -126,5 +126,11 @@ final class WordChallengeProvider {
       case .voice:
         return (nonImageSource.map { .voice($0.spoken) }, .voice(word.spoken))
     }
+  }
+  
+  // MARK: - ChallengeProvidable conformance
+  
+  func generate<Challenge>(fromPool pool: [Distinguishable], index: Int) -> Challenge where Challenge : Challengeable {
+    generate(fromPool: pool.compactMap { $0 as? WordEntry }, index: index)
   }
 }

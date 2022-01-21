@@ -11,7 +11,7 @@ enum Possibility {
   case voice
 }
 
-final class KanaPickChallengeProvider {
+final class KanaPickChallengeProvider: ChallengeProvidable {
   
   init(lexicon: Lexicon = .shared) {
     self.lexicon = lexicon
@@ -111,6 +111,12 @@ final class KanaPickChallengeProvider {
     }
     
     return .init(inputRep: input, outputRep: otherOutput, correctAnswerIndex: correctAnswerIndex)
+  }
+  
+  // MARK: - ChallengeProvidable conformance
+  
+  func generate<Challenge>(fromPool pool: [Distinguishable], index: Int) -> Challenge where Challenge : Challengeable {
+    return generate(fromPool: pool.compactMap { $0 as? KanaEntry }, index: index)
   }
   
   // MARK: - Private

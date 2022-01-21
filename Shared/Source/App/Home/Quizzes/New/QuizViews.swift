@@ -23,7 +23,7 @@ struct QuizViews {
   static let waveformImage = Image(systemName: "waveform.circle")
   
   @ViewBuilder
-  static func inputView(rep: Rep, viewModel: Tappable) -> some View {
+  static func inputView(rep: InputRepresentation, viewModel: InputTappable) -> some View {
     switch rep {
       case .voice:
         waveformImage
@@ -45,7 +45,7 @@ struct QuizViews {
           Text(rep.translation)
             .opacity(AppConstants.defaultOpacity)
         }
-      case .simpleText(let rep):
+      case .text(let rep):
         Text(rep.text)
           .font(.system(size: 30))
       case .textWithFurigana(let rep):
@@ -54,16 +54,16 @@ struct QuizViews {
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .cornerRadius(5)
       case .image(let rep):
-        viewForImage(withRepresentation: rep, signal: .output)
+        viewForImage(id: rep, signal: .output)
     }
   }
   
-  static func textWithFurigana(representation: TextWithFuriganaRep) -> some View {
+  static func textWithFurigana(representation: FuriganaRep) -> some View {
     HStack(spacing: 0) {
       ForEach(0..<representation.text.count, id: \.self) { index in
         VStack(alignment: .center, spacing: 0) {
-          if representation.furigana.isEmpty == false {
-            Text(representation.furigana[index])
+          if representation.groups.isEmpty == false {
+            Text(representation.groups[index])
               .foregroundColor(Color.black)
               .font(.system(size: 15))
               .opacity(AppConstants.defaultOpacity)
@@ -80,14 +80,14 @@ struct QuizViews {
   }
   
   @ViewBuilder
-  static func viewForImage(withRepresentation rep: ImageRep, signal: ChallengeSlot) -> some View {
-    if let customImage = imageCache.image(forID: rep.imageID) {
+  static func viewForImage(id: String, signal: ChallengeSlot) -> some View {
+    if let customImage = imageCache.image(forID: id) {
       Image(customImage: customImage)
         .resizable()
         .cornerRadius(5)
     } else {
       // Should never end up on the else branch, but just in case
-      Text(rep.imageID.removingUniqueness())
+      Text(id)
     }
   }
   

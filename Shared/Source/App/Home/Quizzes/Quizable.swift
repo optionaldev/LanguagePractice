@@ -18,6 +18,11 @@ protocol OutputQuizable: Quizable {
   func chose(index: Int)
 }
 
+protocol VoiceChallengeable {
+  
+  func chose(index: Int)
+}
+
 extension OutputQuizable where Challenge == OldPickChallenge {
   
   func chose(index: Int) {
