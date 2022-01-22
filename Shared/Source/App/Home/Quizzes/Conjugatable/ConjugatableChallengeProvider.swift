@@ -109,8 +109,7 @@ final class ConjugatableChallengeProvider: ChallengeProvidable {
   
   // MARK: - ChallengeProvidable conformance
   
-  func generate(fromPool pool: [Distinguishable], index: Int) -> PickChallenge {
-    let entries = pool.compactMap { $0 as? ConjugatableEntry }
-    return generate(fromPool: entries, index: index)
+  func generate<Challenge>(fromPool pool: [Distinguishable], index: Int) -> Challenge where Challenge : Challengeable {
+    generate(fromPool: pool.compactMap { $0 as? ConjugatableEntry }, index: index)
   }
 }

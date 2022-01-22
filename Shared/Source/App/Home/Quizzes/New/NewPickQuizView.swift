@@ -60,7 +60,7 @@ struct NewPickQuizView: View {
         .frame(maxWidth: Canvas.width - 10)
         .background(Color.orange.opacity(0.5))
         .cornerRadius(5)
-      pickChallengeOutput(outputType: challenge.outputType, representations: challenge.outputRepresentations)
+      pickChallengeOutput(representations: challenge.outputRep)
         .frame(maxWidth: Canvas.width - 10, maxHeight: .infinity)
         .padding(0)
     }
@@ -73,7 +73,7 @@ struct NewPickQuizView: View {
         .background(Color.orange.opacity(0.5))
         .cornerRadius(5)
         .padding(5)
-      pickChallengeOutput(outputType: challenge.outputType, representations: challenge.outputRepresentations)
+      pickChallengeOutput(representations: challenge.outputRepresentations)
         .frame(width: 300, height: 300)
         .padding(0)
     }
@@ -83,7 +83,7 @@ struct NewPickQuizView: View {
   
   // MARK: - Output
   
-  private func pickChallengeOutput(outputType: ChallengeType, representations: [Rep]) -> some View {
+  private func pickChallengeOutput(representations: [OutputRepresentation]) -> some View {
     GridView(rows: 3, columns: 2) { index in
       Button {
         viewModel.chose(index: index)
@@ -101,12 +101,12 @@ struct NewPickQuizView: View {
   }
   
   @ViewBuilder
-  private func outputContent(forRepresentation representation: Rep) -> some View {
+  private func outputContent(forRepresentation representation: OutputRepresentation) -> some View {
     switch representation {
       case .image(let rep):
-        OldQuizViews.viewForImage(withRepresentation: rep, signal: .output)
+        QuizViews.viewForImage(id: rep, signal: .output)
       case .voice:
-        OldQuizViews.waveformImage
+        QuizViews.waveformImage
           .resizable()
           .aspectRatio(1, contentMode: .fit)
           .padding(10)
@@ -123,13 +123,16 @@ struct NewPickQuizView: View {
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .background(Color.blue.opacity(0.5))
           .cornerRadius(5)
-      case .textWithFurigana(let rep):
-        OldQuizViews.textWithFurigana(representation: rep)
+      case .textWithRegularFurigana(let rep):
+        QuizViews.textWithFurigana(representation: rep)
           .background(Color.blue.opacity(0.5))
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .cornerRadius(5)
-      case .simpleText(let rep):
-        Text(rep.text)
+      case .textWithIrregularFurigana(let rep):
+        // TODO: Solution is tricky because we need a combination of hstack & vstack
+        fatalError()
+      case .text(let rep):
+        Text(rep)
           .font(.system(size: 20))
           .background(Color.blue.opacity(0.5))
           .frame(maxWidth: .infinity, maxHeight: .infinity)

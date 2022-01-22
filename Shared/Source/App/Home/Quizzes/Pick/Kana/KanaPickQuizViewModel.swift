@@ -54,7 +54,7 @@ final class HiraganaPickQuizViewModel: Quizzical, ObservableObject, SpeechDelega
   init(lexicon: Lexicon = Lexicon.shared, speech: Speech = Speech.shared) {
     self.lexicon = lexicon
     self.speech = speech
-    challengeEntries = KanaEntryProvider().generate()
+    challengeEntries = KanaEntryProvider().generate(source: lexicon.foreign.hiragana).compactMap { $0 as? KanaEntry }
     performInitialSetup()
     
     Speech.shared.delegate = self

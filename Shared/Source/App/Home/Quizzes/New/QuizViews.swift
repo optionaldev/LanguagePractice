@@ -46,13 +46,16 @@ struct QuizViews {
             .opacity(AppConstants.defaultOpacity)
         }
       case .text(let rep):
-        Text(rep.text)
+        Text(rep)
           .font(.system(size: 30))
-      case .textWithFurigana(let rep):
+      case .textWithRegularFurigana(let rep):
         textWithFurigana(representation: rep)
           .background(Color.blue.opacity(0.5))
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .cornerRadius(5)
+      case .textWithIrregularFurigana(let rep):
+        // TODO:
+        fatalError()
       case .image(let rep):
         viewForImage(id: rep, signal: .output)
     }

@@ -4,11 +4,18 @@
 // Copyright © 2022 optionaldev. All rights reserved.
 //
 
+struct TranslationRep {
+  
+  let text: String
+  let translation: String
+}
+
 enum InputRepresentation {
 
   case text( _ text: String)
-  case textWithTranslation(TextWithTranslationRep)
-  case textWithFurigana(TextWithFuriganaRep, _ regular: Bool)
+  case textWithTranslation(TranslationRep)
+  case textWithRegularFurigana(FuriganaRep)
+  case textWithIrregularFurigana(FuriganaRep)
   case image(_ id: String)
   case voice(_ spoken: String)
   
@@ -18,7 +25,9 @@ enum InputRepresentation {
         return "simpleText(\(rep))"
       case .textWithTranslation(let rep):
         return "textWithTranslation(\(rep))"
-      case .textWithFurigana(let rep, _):
+      case .textWithRegularFurigana(let rep):
+        return "textWithFurigana(\(rep))"
+      case .textWithIrregularFurigana(let rep):
         return "textWithFurigana(\(rep))"
       case .image(let rep):
         return "image(\(rep))"
