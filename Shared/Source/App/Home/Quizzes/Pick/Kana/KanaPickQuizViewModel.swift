@@ -13,7 +13,7 @@ import struct Foundation.Date
 import struct Foundation.Published
 import struct Foundation.TimeInterval
 
-protocol Challengeable: Distinguishable, Equatable {
+protocol Challengeable: Equatable, Distinguishable {
   
   var inputRep: InputRepresentation { get }
 }
@@ -72,7 +72,7 @@ final class HiraganaPickQuizViewModel: Quizzical, ObservableObject, SpeechDelega
   }
   
   func prepareNextChallenge() {
-    nextChallenge = challengeProvider.generate(fromPool: challengeEntries, index: visibleChallenges.count)
+    nextChallenge = challengeProvider.generatePick(fromPool: challengeEntries, index: visibleChallenges.count) 
   }
   
   func chose(index: Int) {

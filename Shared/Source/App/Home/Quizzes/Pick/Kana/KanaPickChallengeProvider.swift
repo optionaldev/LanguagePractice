@@ -17,7 +17,14 @@ final class KanaPickChallengeProvider: ChallengeProvidable {
     self.lexicon = lexicon
   }
   
-  func generate(fromPool pool: [KanaEntry], index: Int) -> PickChallenge {
+  // MARK: - ChallengeProvidable conformance
+  
+  func generateTyping(fromPool pool: [Distinguishable], index: Int) -> TypingChallenge {
+    fatalError()
+  }
+  
+  func generatePick(fromPool pool: [Distinguishable], index: Int) -> PickChallenge {
+    let pool = pool.compactMap { $0 as? KanaEntry }
     let entry = pool[index]
     
     guard let character = lexicon.foreignDictionary[entry.id] as? ForeignCharacter else {
@@ -110,13 +117,7 @@ final class KanaPickChallengeProvider: ChallengeProvidable {
       fatalError("Couldn't find correct answer in list of answers.")
     }
     
-    return .init(inputRep: input, outputRep: otherOutput, correctAnswerIndex: correctAnswerIndex)
-  }
-  
-  // MARK: - ChallengeProvidable conformance
-  
-  func generate<Challenge>(fromPool pool: [Distinguishable], index: Int) -> Challenge where Challenge : Challengeable {
-    return generate(fromPool: pool.compactMap { $0 as? KanaEntry }, index: index)
+    return PickChallenge(inputRep: input, outputRep: otherOutput, correctAnswerIndex: correctAnswerIndex)
   }
   
   // MARK: - Private

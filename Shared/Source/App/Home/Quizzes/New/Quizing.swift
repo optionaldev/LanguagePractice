@@ -126,10 +126,6 @@ extension Quizing {
     }
   }
   
-  func prepareNextChallenge() {
-    nextChallenge = challengeProvider.generate(fromPool: challengeEntries, index: visibleChallenges.count)
-  }
-  
   // MARK: - Private
   
   private func prepareNextChallengeIfAvailable() {

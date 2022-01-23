@@ -11,7 +11,14 @@ final class WordChallengeProvider: ChallengeProvidable {
     self.speech = speech
   }
   
-  func generate(fromPool pool: [WordEntry], index: Int) -> PickChallenge {
+  // MARK: - ChallengeProvidable conformance
+  
+  func generateTyping(fromPool pool: [Distinguishable], index: Int) -> TypingChallenge {
+    fatalError()
+  }
+  
+  func generatePick(fromPool pool: [Distinguishable], index: Int) -> PickChallenge {
+    let pool = pool.compactMap { $0 as? WordEntry }
     let entry = pool[index]
     
     guard let word = lexicon.foreignDictionary[entry.id] as? ForeignWord else {
@@ -126,11 +133,5 @@ final class WordChallengeProvider: ChallengeProvidable {
       case .voice:
         return (nonImageSource.map { .voice($0.spoken) }, .voice(word.spoken))
     }
-  }
-  
-  // MARK: - ChallengeProvidable conformance
-  
-  func generate<Challenge>(fromPool pool: [Distinguishable], index: Int) -> Challenge where Challenge : Challengeable {
-    generate(fromPool: pool.compactMap { $0 as? WordEntry }, index: index)
   }
 }

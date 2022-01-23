@@ -37,6 +37,6 @@ enum OutputRepresentation: Equatable {
   }
   
   static func ==(lhs: Self, rhs: Self) -> Bool {
-    return lhs.description != rhs.description
+    return lhs.description == rhs.description
   }
 }

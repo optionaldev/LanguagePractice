@@ -11,7 +11,14 @@ final class ConjugatableChallengeProvider: ChallengeProvidable {
     self.speech = speech
   }
   
-  func generate(fromPool pool: [ConjugatableEntry], index: Int) -> PickChallenge {
+  // MARK: - ChallengeProvidable conformance
+  
+  func generateTyping(fromPool pool: [Distinguishable], index: Int) -> TypingChallenge {
+    fatalError()
+  }
+  
+  func generatePick(fromPool pool: [Distinguishable], index: Int) -> PickChallenge {
+    let pool = pool.compactMap { $0 as? ConjugatableEntry }
     let entry = pool[index]
     
     guard let conjugatable = lexicon.foreignDictionary[entry.id] as? ForeignConjugatable else {
@@ -99,17 +106,11 @@ final class ConjugatableChallengeProvider: ChallengeProvidable {
       fatalError("Couldn't find correct answer in list of answers.")
     }
     
-    return .init(inputRep: input, outputRep: otherOutput, correctAnswerIndex: correctAnswerIndex)
+    return PickChallenge(inputRep: input, outputRep: otherOutput, correctAnswerIndex: correctAnswerIndex)
   }
   
   // MARK: - Private
   
   private let lexicon: Lexicon
   private let speech: Speech
-  
-  // MARK: - ChallengeProvidable conformance
-  
-  func generate<Challenge>(fromPool pool: [Distinguishable], index: Int) -> Challenge where Challenge : Challengeable {
-    generate(fromPool: pool.compactMap { $0 as? ConjugatableEntry }, index: index)
-  }
 }

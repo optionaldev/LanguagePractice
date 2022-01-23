@@ -21,7 +21,8 @@ protocol EntryProvidable {
 
 protocol ChallengeProvidable {
   
-  func generate<Challenge: Challengeable>(fromPool pool: [Distinguishable], index: Int) -> Challenge
+  func generatePick(fromPool pool: [Distinguishable], index: Int) -> PickChallenge
+  func generateTyping(fromPool pool: [Distinguishable], index: Int) -> TypingChallenge
 }
 
 protocol ResultsInterpretable {
@@ -63,6 +64,10 @@ final class NewPickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, Voi
     }
   }
   
+  func prepareNextChallenge() {
+    nextChallenge = challengeProvider.generatePick(fromPool: challengeEntries, index: visibleChallenges.count)
+  }
+  
   // MARK: - InputTappable conformance
   
   func inputTapped() {
@@ -100,7 +105,9 @@ final class NewPickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, Voi
       if currentChallenge.correctAnswerIndex == index {
         goToNext()
       } else {
-        challengeStates[visibleChallenges.count - 1] = .guessedIncorrectly
+        if challengeStates.count != visibleChallenges.count {
+          challengeStates.append(.guessedIncorrectly)
+        }
       }
     }
   }

@@ -67,7 +67,7 @@ struct KanaQuizBody<ViewModel: Quizzical, Content: View>: View {
           LazyStack(spacing: 0) {
             ForEach(viewModel.visibleChallenges, id: \.id) { challenge in
               content(challenge)
-                .disabled(challenge != viewModel.visibleChallenges.last)
+                .disabled(challenge.id != viewModel.visibleChallenges.last?.id)
             }
             if viewModel.itemsLearned.isEmpty == false {
               resultsScreen()

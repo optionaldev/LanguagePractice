@@ -42,6 +42,10 @@ struct LanguagePracticeApp: App {
   private func printStatus() {
     #if DEBUG
     
+    guard Lexicon.shared != nil else {
+      return
+    }
+    
     let knownItems = Defaults.knownIds(for: .picking)
     if knownItems.count < 40 {
       log("Items learned so far: \(knownItems.sorted())")

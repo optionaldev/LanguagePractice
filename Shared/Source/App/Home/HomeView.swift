@@ -40,7 +40,7 @@ struct HomeView: View {
           .navigationBarHidden(true)
         NavigationLink("New hiragana", destination: NavigationLazyView(KanaPickQuizView()))
           .navigationBarHidden(true)
-        
+        NavigationLink("New word", destination: NavigationLazyView(NewPickQuizView(entryType: .hiragana)))
       }
     }
     #else
