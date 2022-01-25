@@ -5,16 +5,16 @@
 // 
 
 protocol Entryable: Distinguishable {
-  
+
   associatedtype Category: CategoryProtocol
-  
+
   var id: String { get }
   var category: Category { get }
 }
 
 protocol CategoryProtocol {
-  
+
   var voiceValid: Bool { get }
-  
+
   static var all: [Self] { get }
 }

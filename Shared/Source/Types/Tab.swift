@@ -23,6 +23,7 @@ enum Tab: Int, CaseIterable, Distinguishable {
     }
     return iconName
   }
+  
   var name: String {
     switch self {
       case .home:
@@ -39,7 +40,6 @@ enum Tab: Int, CaseIterable, Distinguishable {
   var id: String {
     return "\(rawValue)"
   }
-  
   
   // MARK: - Private
   

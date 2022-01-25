@@ -54,7 +54,7 @@ struct QuizViews {
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .cornerRadius(5)
       case .textWithIrregularFurigana(let rep):
-        // TODO:
+        // TODO: Solution is tricky because we need a combination of hstack & vstack
         fatalError()
       case .image(let rep):
         viewForImage(id: rep, signal: .output)

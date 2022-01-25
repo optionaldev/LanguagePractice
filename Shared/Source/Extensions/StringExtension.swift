@@ -42,5 +42,9 @@ extension String {
   var containsKanji: Bool {
     return first(where: { !$0.isHiragana }) != nil
   }
+  
+  var containsHiragana: Bool {
+    return first(where: { $0.isHiragana }) != nil
+  }
   #endif
 }

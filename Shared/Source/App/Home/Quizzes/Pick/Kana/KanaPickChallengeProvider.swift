@@ -31,7 +31,14 @@ final class KanaPickChallengeProvider: ChallengeProvidable {
       fatalError("Couldn't find character with id \"\(entry.id)\"")
     }
     
-    let otherCharacters = lexicon.foreign.hiragana
+    let source: [ForeignCharacter]
+    if character.written.containsHiragana {
+      source = lexicon.foreign.hiragana
+    } else {
+      source = lexicon.foreign.katakana
+    }
+    
+    let otherCharacters = source
             .filter { $0.id != character.id }
             .shuffled()
             .prefix(5)

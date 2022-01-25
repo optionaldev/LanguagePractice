@@ -4,11 +4,11 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 //
 
-protocol ChallengeProtocol: Equatable, Distinguishable {
-  
-  var inputType: ChallengeType { get }
-  var input: String { get }
-  var inputRepresentation: Rep { get }
-  
-  var output: [String] { get }
-}
+//protocol ChallengeProtocol: Equatable, Distinguishable {
+//  
+//  var inputType: ChallengeType { get }
+//  var input: String { get }
+//  var inputRepresentation: Rep { get }
+//  
+//  var output: [String] { get }
+//}
