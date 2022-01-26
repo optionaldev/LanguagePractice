@@ -30,16 +30,6 @@ struct HomeView: View {
     #if os(iOS)
     NavigationView {
       List {
-//        NavigationLink("Pick", destination: NavigationLazyView(PickQuizView(entryType: .words)))
-//          .navigationBarHidden(true)
-//        NavigationLink("Hiragana", destination: NavigationLazyView(PickQuizView(entryType: .hiragana)))
-//          .navigationBarHidden(true)
-//        NavigationLink("Katakana", destination: NavigationLazyView(PickQuizView(entryType: .katakana)))
-//          .navigationBarHidden(true)
-//        NavigationLink("Typing", destination: NavigationLazyView(TypingQuizView()))
-//          .navigationBarHidden(true)
-//        NavigationLink("New hiragana", destination: NavigationLazyView(KanaPickQuizView()))
-//          .navigationBarHidden(true)
         NavigationLink("Hiragana", destination: NavigationLazyView(NewPickQuizView(entryType: .hiragana)))
         NavigationLink("Katakana", destination: NavigationLazyView(NewPickQuizView(entryType: .katakana)))
         NavigationLink("Words", destination: NavigationLazyView(NewPickQuizView(entryType: .words)))

@@ -43,7 +43,7 @@ struct MacHomeView: View {
   
   private func homeView() -> some View {
     List {
-      ForEach(HomeQuiz.allCases) { quiz in
+      ForEach(HomeQuiz.allCases, id: \.id) { quiz in
         Button(action: {
           viewModel.currentQuiz = quiz
         }, label: {

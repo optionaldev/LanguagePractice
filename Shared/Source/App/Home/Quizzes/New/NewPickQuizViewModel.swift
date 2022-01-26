@@ -71,7 +71,9 @@ final class NewPickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, Voi
   // MARK: - InputTappable conformance
   
   func inputTapped() {
-    // TODO
+    if case .voice(let rep) = currentChallenge.inputRep {
+      speech.speak(string: rep)
+    }
   }
   
   // MARK: - SpeechDelegate conformance

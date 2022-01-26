@@ -21,7 +21,7 @@ import struct SwiftUI.VStack
 import struct SwiftUI.ViewBuilder
 
 
-struct NewPickQuizView: View {
+struct PickQuizView: View {
   
   init(entryType: EntryType, lexicon: Lexicon = .shared, speech: Speech = .shared) {
     switch entryType {
@@ -68,12 +68,12 @@ struct NewPickQuizView: View {
     .background(Color.green.opacity(0.3))
 #else
     HStack {
-      OldQuizViews.inputView(rep: challenge.inputRepresentation, viewModel: viewModel)
+      QuizViews.inputView(rep: challenge.inputRep, viewModel: viewModel)
         .frame(width: 390, height: 290)
         .background(Color.orange.opacity(0.5))
         .cornerRadius(5)
         .padding(5)
-      pickChallengeOutput(representations: challenge.outputRepresentations)
+      pickChallengeOutput(representations: challenge.outputRep)
         .frame(width: 300, height: 300)
         .padding(0)
     }

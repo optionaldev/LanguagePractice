@@ -35,7 +35,7 @@ struct SideMenuView: View {
   var body: some View {
     HStack {
       VStack(alignment: .leading, spacing: 20) {
-        ForEach(SideMenuItem.allCases) { item in
+        ForEach(SideMenuItem.allCases, id: \.id) { item in
           Button(action: {
             selectedItem = item
           }, label: {
