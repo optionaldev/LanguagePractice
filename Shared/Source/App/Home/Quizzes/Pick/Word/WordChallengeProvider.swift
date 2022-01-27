@@ -40,8 +40,15 @@ final class WordChallengeProvider: ChallengeProvidable {
       inputTypePossibilities.append(.image)
     }
     
-    let otherWords: [ForeignWord] = pool
-      .compactMap { lexicon.foreignDictionary[$0.id] as? ForeignWord }
+    let otherWords: [Item] = pool
+      .compactMap { item in
+        switch entry.category {
+          case .foreign:
+            return lexicon.englishDictionary[item.id]
+          case .english:
+            return lexicon.foreignDictionary[item.id]
+        }
+      }
       .filter { $0.id != word.id }
     
     let otherWordsWithImages = otherWords.filter { Persistence.imagePath(id: $0.id) != nil }
@@ -97,29 +104,31 @@ final class WordChallengeProvider: ChallengeProvidable {
   private let lexicon: Lexicon
   private let speech: Speech
   
-  private func processedWords(_ words: [ForeignWord]) -> [ForeignWord] {
+  private func processedWords(_ words: [Item]) -> [Item] {
     return words
       .shuffled()
       .prefix(Defaults.outputCount - 1)
       .map { $0 }
   }
   
-  private func generateTextualRepresentation(forWord word: ForeignWord) -> OutputRepresentation {
-    if word.hasFurigana {
-      let charactersArray = word.written.map { String($0) }
+  private func generateTextualRepresentation(forWord item: Item) -> OutputRepresentation {
+    if let foreignWord = item as? ForeignWord,
+       foreignWord.hasFurigana
+    {
+      let charactersArray = foreignWord.written.map { String($0) }
       let representation = FuriganaRep(text: charactersArray,
-                                       groups: word.kanaComponents)
-      if word.groupFurigana {
+                                       groups: foreignWord.kanaComponents)
+      if foreignWord.groupFurigana {
         return .textWithIrregularFurigana(representation)
       } else {
         return .textWithRegularFurigana(representation)
       }
     } else {
-      return .text(word.written)
+      return .text(item.written)
     }
   }
   
-  private func generateOutput(word: ForeignWord, nonImageSource: [ForeignWord], imageSource: [ForeignWord], outputType: Possibility, category: WordEntry.Category) -> ([OutputRepresentation], OutputRepresentation) {
+  private func generateOutput(word: Item, nonImageSource: [Item], imageSource: [Item], outputType: Possibility, category: WordEntry.Category) -> ([OutputRepresentation], OutputRepresentation) {
     switch outputType {
       case .image:
         switch category {
