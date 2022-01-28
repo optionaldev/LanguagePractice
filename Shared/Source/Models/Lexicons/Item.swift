@@ -25,11 +25,11 @@ extension Item {
     return id.removingUniqueness()
   }
   
-  var spoken: String {
+  var written: String {
     return roman
   }
   
-  var written: String {
-    return roman
+  var spoken: String {
+    return written
   }
 }

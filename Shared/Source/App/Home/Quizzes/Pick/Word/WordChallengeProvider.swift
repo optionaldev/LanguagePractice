@@ -40,22 +40,33 @@ final class WordChallengeProvider: ChallengeProvidable {
       inputTypePossibilities.append(.image)
     }
     
-    let otherWords: [Item] = pool
+    let otherItems: [Item] = pool
       .compactMap { item in
         switch entry.category {
           case .foreign:
-            return lexicon.englishDictionary[item.id]
+            let englishIds: [String] = (lexicon.foreignDictionary[item.id] as? ForeignWord)?.english ?? []
+            let oneEnglishId = englishIds.randomElement()!
+            return lexicon.englishDictionary[oneEnglishId]
           case .english:
             return lexicon.foreignDictionary[item.id]
         }
       }
       .filter { $0.id != word.id }
     
-    let otherWordsWithImages = otherWords.filter { Persistence.imagePath(id: $0.id) != nil }
+    // We need unique values since there's multiple entries with same id,
+    // but what differentiates them is the combination of id and category
+    var uniqueItems: [Item] = []
+    for (_, item) in otherItems.enumerated() {
+      if uniqueItems.contains(where: { $0.id == item.id }) == false {
+        uniqueItems.append(item)
+      }
+    }
     
-    let irrespectiveOfImagesOtherWords = processedWords(otherWords)
+    let otherItemsWithImages = uniqueItems.filter { Persistence.imagePath(id: $0.id) != nil }
     
-    if otherWordsWithImages.count >= Defaults.outputCount - 1 && entry.category == .foreign {
+    let irrespectiveOfImagesOtherWords = processedWords(uniqueItems)
+    
+    if otherItemsWithImages.count >= Defaults.outputCount - 1 && entry.category == .foreign {
       outputTypePossibilities.append(.image)
     }
     
@@ -84,10 +95,10 @@ final class WordChallengeProvider: ChallengeProvidable {
         }
       case .voice:
         input = .voice(word.spoken)
-        (output, correctOutput) = generateOutput(word: word, nonImageSource: irrespectiveOfImagesOtherWords, imageSource: otherWordsWithImages, outputType: outputType, category: entry.category)
+        (output, correctOutput) = generateOutput(word: word, nonImageSource: irrespectiveOfImagesOtherWords, imageSource: otherItemsWithImages, outputType: outputType, category: entry.category)
       case .text:
         input = .text(word.written)
-        (output, correctOutput) = generateOutput(word: word, nonImageSource: irrespectiveOfImagesOtherWords, imageSource: otherWordsWithImages, outputType: outputType, category: entry.category)
+        (output, correctOutput) = generateOutput(word: word, nonImageSource: irrespectiveOfImagesOtherWords, imageSource: otherItemsWithImages, outputType: outputType, category: entry.category)
     }
     
     output.append(correctOutput)
@@ -138,7 +149,14 @@ final class WordChallengeProvider: ChallengeProvidable {
             return (processedWords(imageSource).map { OutputRepresentation.image($0.id) }, OutputRepresentation.image(word.id))
         }
       case .text:
-        return (nonImageSource.map { .text($0.written) }, .text(word.written))
+        switch category {
+          case .foreign:
+            let englishTranslation = (word as? ForeignWord)?.english.randomElement() ?? ""
+            return (nonImageSource.map { .text($0.written) }, .text(englishTranslation))
+          case .english:
+            return (nonImageSource.map { .text($0.written) }, .text(word.written))
+        }
+        
       case .voice:
         return (nonImageSource.map { .voice($0.spoken) }, .voice(word.spoken))
     }
