@@ -9,15 +9,21 @@ import AVFoundation
 // These represent words that certain speech synthesizers can't pronounce well
 private enum SpeechBlacklist: String, CaseIterable {
   
-  case tom = "Tom"
-  case lee = "Lee"
+  case alex
+  case lee
+  case samantha
+  case tom
   
   var misspronouncedWords: [String] {
     switch self {
-      case .tom:
-        return ["irritation", "dog"]
+      case .alex:
+        return ["hit"]
       case .lee:
         return []
+      case .samantha:
+        return ["map"]
+      case .tom:
+        return ["irritation", "dog"]
     }
   }
 }
@@ -25,7 +31,7 @@ private enum SpeechBlacklist: String, CaseIterable {
 extension AVSpeechSynthesisVoice {
   
   func misspronounces(word: String) -> Bool {
-    guard let blacklist = SpeechBlacklist(rawValue: name) else {
+    guard let blacklist = SpeechBlacklist(rawValue: name.lowercased()) else {
       return false
     }
     return blacklist.misspronouncedWords.contains(word)

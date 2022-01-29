@@ -2,7 +2,17 @@
 // The LanguagePractice project.
 // Created by optionaldev on 11/03/2021.
 // Copyright © 2021 optionaldev. All rights reserved.
-// 
+//
+
+extension Array {
+  
+  var output: [Element] {
+    return self
+      .shuffled()
+      .prefix(Defaults.outputCount - 1)
+      .map { $0 }
+  }
+}
 
 extension Array where Element: Equatable {
   
@@ -18,6 +28,10 @@ extension Array where Element: Equatable {
   
   func without(_ element: Element) -> [Element] {
     return self.filter { $0 != element }
+  }
+  
+  var isNonEmpty: Bool {
+    return !isEmpty
   }
 }
 

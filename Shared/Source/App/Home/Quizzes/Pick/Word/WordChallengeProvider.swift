@@ -21,9 +21,11 @@ final class WordChallengeProvider: ChallengeProvidable {
     let pool = pool.compactMap { $0 as? WordEntry }
     let entry = pool[index]
     
-    guard let word = lexicon.foreignDictionary[entry.id] as? ForeignWord else {
+    guard let foreignWord = lexicon.foreignDictionary[entry.id] as? ForeignWord else {
       fatalError("Couldn't find word with id: \"\(entry.id)\"")
     }
+    
+    let englishWord = randomEnglishWord(forForeignWordId: foreignWord.id)
     
     // TODO: Improve
     let voiceEnabled = speech.voicePossible(forEntry: entry)
@@ -34,10 +36,6 @@ final class WordChallengeProvider: ChallengeProvidable {
     if voiceEnabled {
       inputTypePossibilities.append(.voice)
       outputTypePossibilities.append(.voice)
-    }
-    
-    if Persistence.imagePath(id: word.id) != nil && entry.category == .english {
-      inputTypePossibilities.append(.image)
     }
     
     let otherItems: [Item] = pool
@@ -51,7 +49,7 @@ final class WordChallengeProvider: ChallengeProvidable {
             return lexicon.foreignDictionary[item.id]
         }
       }
-      .filter { $0.id != word.id }
+      .filter { $0.id != foreignWord.id }
     
     // We need unique values since there's multiple entries with same id,
     // but what differentiates them is the combination of id and category
@@ -62,12 +60,21 @@ final class WordChallengeProvider: ChallengeProvidable {
       }
     }
     
-    let otherItemsWithImages = uniqueItems.filter { Persistence.imagePath(id: $0.id) != nil }
+    let idsWithImages = uniqueItems
+      .compactMap { $0 as? ForeignWord }
+      .flatMap { $0.englishImages }
     
-    let irrespectiveOfImagesOtherWords = processedWords(uniqueItems)
+    let irrespectiveOfImagesOtherWords = uniqueItems.output
     
-    if otherItemsWithImages.count >= Defaults.outputCount - 1 && entry.category == .foreign {
-      outputTypePossibilities.append(.image)
+    switch entry.category {
+      case .english:
+        if foreignWord.englishImages.isNonEmpty {
+          inputTypePossibilities.append(.image)
+        }
+      case .foreign:
+        if idsWithImages.count >= Defaults.outputCount - 1 {
+          outputTypePossibilities.append(.image)
+        }
     }
     
     let inputType = inputTypePossibilities.randomElement()!
@@ -76,6 +83,65 @@ final class WordChallengeProvider: ChallengeProvidable {
     let input: InputRepresentation
     var output: [OutputRepresentation]
     var correctOutput: OutputRepresentation
+    
+    switch inputType {
+      case .image:
+        input = .image(foreignWord.englishImages.shuffled()[0])
+      case .voice:
+        switch entry.category {
+          case .english:
+            input = .voice(englishWord.spoken)
+          case .foreign:
+            input = .voice(foreignWord.spoken)
+        }
+      case .text:
+        switch entry.category {
+          case .english:
+            input = .text(englishWord.written)
+          case .foreign:
+            input = .text(foreignWord.written)
+        }
+    }
+    
+    switch outputType {
+      case .image:
+        output = idsWithImages.output.map { OutputRepresentation.image($0) }
+        correctOutput = .image(foreignWord.englishImages.shuffled()[0])
+      case .text:
+        output = irrespectiveOfImagesOtherWords.map { .text($0.written) }
+        switch entry.category {
+          case .english:
+            correctOutput = .text(foreignWord.written)
+          case .foreign:
+            correctOutput = .text(englishWord.written)
+        }
+      case .voice:
+        output = irrespectiveOfImagesOtherWords.map { .voice($0.spoken) }
+        switch entry.category {
+          case .english:
+            correctOutput = .voice(foreignWord.spoken)
+          case .foreign:
+            correctOutput = .voice(englishWord.spoken)
+        }
+    }
+    /*
+     :text
+     
+     case .foreign:
+     let englishTranslation = (word as? ForeignWord)?.english.randomElement() ?? ""
+     return (nonImageSource.map { .text($0.written) }, .text(englishTranslation))
+     case .english:
+     return (nonImageSource.map { .text($0.written) }, .text(word.written))
+     }
+     
+     case .voice:
+     
+     switch category {
+     case .foreign:
+     return (nonImageSource.map { .voice($0.spoken) }, .voice(randomEnglishWord(forForeignWordId: word.id).spoken))
+     case .english:
+     return (nonImageSource.map { .voice($0.spoken) }, .voice(word.spoken))
+     }
     
     switch inputType {
       case .image:
@@ -94,18 +160,39 @@ final class WordChallengeProvider: ChallengeProvidable {
             correctOutput = .image(word.written)
         }
       case .voice:
-        input = .voice(word.spoken)
+        switch entry.category {
+          case .english:
+            input = .voice(randomEnglishWord(forForeignWordId: word.id))
+          case .foreign:
+            input = .voice(word.spoken)
+        }
+        
         (output, correctOutput) = generateOutput(word: word, nonImageSource: irrespectiveOfImagesOtherWords, imageSource: otherItemsWithImages, outputType: outputType, category: entry.category)
       case .text:
-        input = .text(word.written)
+        switch entry.category {
+          case .english:
+            input = .text(word.english.randomElement()!)
+          case .foreign:
+            input = .text(word.written)
+        }
+        
         (output, correctOutput) = generateOutput(word: word, nonImageSource: irrespectiveOfImagesOtherWords, imageSource: otherItemsWithImages, outputType: outputType, category: entry.category)
     }
+     */
     
     output.append(correctOutput)
     
     guard let correctAnswerIndex = output.firstIndex(where: { $0.description == correctOutput.description }) else {
       fatalError("Couldn't find correct answer in list of answers.")
     }
+    
+    log("----------------------")
+    log("category = \(entry.category)")
+    log("inputType = \(inputType)")
+    log("outputType = \(outputType)")
+    log("input = \(input)")
+    log("output = \(output.map { $0.description })")
+    log("correct answer index = \(correctAnswerIndex)")
     
     return PickChallenge(inputRep: input, outputRep: output, correctAnswerIndex: correctAnswerIndex)
   }
@@ -114,13 +201,6 @@ final class WordChallengeProvider: ChallengeProvidable {
   
   private let lexicon: Lexicon
   private let speech: Speech
-  
-  private func processedWords(_ words: [Item]) -> [Item] {
-    return words
-      .shuffled()
-      .prefix(Defaults.outputCount - 1)
-      .map { $0 }
-  }
   
   private func generateTextualRepresentation(forWord item: Item) -> OutputRepresentation {
     if let foreignWord = item as? ForeignWord,
@@ -139,26 +219,44 @@ final class WordChallengeProvider: ChallengeProvidable {
     }
   }
   
-  private func generateOutput(word: Item, nonImageSource: [Item], imageSource: [Item], outputType: Possibility, category: WordEntry.Category) -> ([OutputRepresentation], OutputRepresentation) {
-    switch outputType {
-      case .image:
-        switch category {
-          case .english:
-            fatalError("Can't have images as foreign output")
-          case .foreign:
-            return (processedWords(imageSource).map { OutputRepresentation.image($0.id) }, OutputRepresentation.image(word.id))
-        }
-      case .text:
-        switch category {
-          case .foreign:
-            let englishTranslation = (word as? ForeignWord)?.english.randomElement() ?? ""
-            return (nonImageSource.map { .text($0.written) }, .text(englishTranslation))
-          case .english:
-            return (nonImageSource.map { .text($0.written) }, .text(word.written))
-        }
-        
-      case .voice:
-        return (nonImageSource.map { .voice($0.spoken) }, .voice(word.spoken))
+//  private func generateOutput(word: Item, nonImageSource: [Item], imageSource: [Item], outputType: Possibility, category: WordEntry.Category) -> ([OutputRepresentation], OutputRepresentation) {
+//    switch outputType {
+//      case .image:
+//        switch category {
+//          case .english:
+//            fatalError("Can't have images as foreign output")
+//          case .foreign:
+//            return (processedWords(imageSource).map { OutputRepresentation.image($0.id) }, OutputRepresentation.image(word.id))
+//        }
+//      case .text:
+//        switch category {
+//          case .foreign:
+//            let englishTranslation = (word as? ForeignWord)?.english.randomElement() ?? ""
+//            return (nonImageSource.map { .text($0.written) }, .text(englishTranslation))
+//          case .english:
+//            return (nonImageSource.map { .text($0.written) }, .text(word.written))
+//        }
+//
+//      case .voice:
+//        switch category {
+//          case .foreign:
+//            return (nonImageSource.map { .voice($0.spoken) }, .voice(randomEnglishWord(forForeignWordId: word.id).spoken))
+//          case .english:
+//            return (nonImageSource.map { .voice($0.spoken) }, .voice(word.spoken))
+//        }
+//    }
+//  }
+  
+  func randomEnglishWord(forForeignWordId foreignId: String) -> EnglishItem {
+    guard let foreignWord = lexicon.foreignDictionary[foreignId] as? ForeignWord else {
+      fatalError()
     }
+    guard let randomEnglishId = foreignWord.english.randomElement() else {
+      fatalError()
+    }
+    guard let englishItem = lexicon.englishDictionary[randomEnglishId] else {
+      fatalError()
+    }
+    return englishItem
   }
 }

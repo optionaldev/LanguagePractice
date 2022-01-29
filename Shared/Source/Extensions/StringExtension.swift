@@ -20,6 +20,14 @@ extension String {
     return result
   }
   
+  func firstLetterUppercased() -> String {
+    if let firstCharacter = first {
+//      return "\(String(firstCharacter).uppercased())\(suffix(from: index(after: startIndex)))"
+      return "\(String(firstCharacter).uppercased())\(self[index(after: startIndex)...]))"
+    }
+    return ""
+  }
+  
   #if JAPANESE
   func toHiragana() -> String {
     guard let hiragana = applyingTransform(.latinToHiragana, reverse: false) else {

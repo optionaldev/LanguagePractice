@@ -4,6 +4,10 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-protocol EnglishWord: Item {
+protocol EnglishItem: Item {
+  
+}
+
+protocol EnglishWord: EnglishItem {
   
 }

@@ -9,6 +9,8 @@ protocol ForeignWord: ForeignItem {
   /// A list of IDs representing English words that the foreign word can be translated into.
   var english: [String] { get }
   
+  var englishImages: [String] { get }
+  
   #if JAPANESE
   /**
    A string containing one or more hiragana characters/groups, separated by spaces.
@@ -37,6 +39,13 @@ protocol ForeignWord: ForeignItem {
    */
   var groupFurigana: Bool { get }
   #endif
+}
+
+extension ForeignWord {
+  
+  var englishImages: [String] {
+    return english.filter { Persistence.imagePath(id: $0) != nil }
+  }
 }
 
 #if JAPANESE

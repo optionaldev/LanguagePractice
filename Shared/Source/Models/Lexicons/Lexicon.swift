@@ -11,8 +11,8 @@ final class Lexicon: Codable {
   let english: EnglishLexicon
   let foreign: ForeignLexicon
   
-  lazy var englishDictionary: [String: EnglishWord] = {
-    english.nouns.reduce(into: [String: EnglishWord]()) { $0[$1.id] = $1 }
+  lazy var englishDictionary: [String: EnglishItem] = {
+    english.nouns.reduce(into: [String: EnglishItem]()) { $0[$1.id] = $1 }
   }()
   
   lazy var foreignDictionary: [String: ForeignItem] = {
