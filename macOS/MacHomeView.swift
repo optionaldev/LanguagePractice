@@ -24,14 +24,7 @@ struct MacHomeView: View {
       // is the only that that not only allows for `dismiss` actions in other views,
       // but also remembers where the view was if the user switches tabs
       if let quiz = viewModel.currentQuiz {
-        switch quiz {
-          case .hiragana:
-            PickQuizView(entryType: .hiragana)
-          case .katakana:
-            PickQuizView(entryType: .katakana)
-          case .words:
-            PickQuizView(entryType: .words)
-        }
+        PickQuizView(entryType: quiz)
       }
     }
     .environmentObject(viewModel)
@@ -43,7 +36,7 @@ struct MacHomeView: View {
   
   private func homeView() -> some View {
     List {
-      ForEach(HomeQuiz.allCases, id: \.id) { quiz in
+      ForEach(EntryType.allCases, id: \.id) { quiz in
         Button(action: {
           viewModel.currentQuiz = quiz
         }, label: {

@@ -4,9 +4,11 @@
 // Copyright © 2022 optionaldev. All rights reserved.
 // 
 
-enum EntryType {
+enum EntryType: CaseIterable {
 
   case hiragana
   case katakana
   case words
+  case conjugateAdjectives
+  case conjugateVerbs
 }

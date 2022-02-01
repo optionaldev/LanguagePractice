@@ -26,17 +26,26 @@ struct PickQuizView: View {
   init(entryType: EntryType, lexicon: Lexicon = .shared, speech: Speech = .shared) {
     switch entryType {
       case .hiragana:
-        viewModel = NewPickQuizViewModel(entryProvider: HiraganaEntryProvider(lexicon: lexicon),
-                                         challengeProvider: KanaPickChallengeProvider(lexicon: lexicon),
-                                         resultsInterpreter: KanaResultsInterpreter())
+        viewModel = PickQuizViewModel(entryProvider: HiraganaEntryProvider(lexicon: lexicon),
+                                      challengeProvider: KanaPickChallengeProvider(lexicon: lexicon),
+                                      resultsInterpreter: KanaResultsInterpreter())
       case .katakana:
-        viewModel = NewPickQuizViewModel(entryProvider: KatakanaEntryProvider(lexicon: lexicon),
-                                         challengeProvider: KanaPickChallengeProvider(lexicon: lexicon),
-                                         resultsInterpreter: KanaResultsInterpreter())
+        viewModel = PickQuizViewModel(entryProvider: KatakanaEntryProvider(lexicon: lexicon),
+                                      challengeProvider: KanaPickChallengeProvider(lexicon: lexicon),
+                                      resultsInterpreter: KanaResultsInterpreter())
       case .words:
-        viewModel = NewPickQuizViewModel(entryProvider: WordEntryProvider(lexicon: lexicon),
-                                         challengeProvider: WordChallengeProvider(lexicon: lexicon, speech: speech),
-                                         resultsInterpreter: WordResultsInterpreter())
+        viewModel = PickQuizViewModel(entryProvider: WordEntryProvider(lexicon: lexicon),
+                                      challengeProvider: WordChallengeProvider(lexicon: lexicon, speech: speech),
+                                      resultsInterpreter: WordResultsInterpreter())
+      case .conjugateVerbs:
+        viewModel = PickQuizViewModel(entryProvider: ConjugatableVerbsEntryProvider(),
+                                      challengeProvider: ConjugatableChallengeProvider(),
+                                      resultsInterpreter: ConjugatableResultsInterpreter())
+      case .conjugateAdjectives:
+        viewModel = PickQuizViewModel(entryProvider: ConjugatableAdjectiveEntryProvider(),
+                                      challengeProvider: ConjugatableChallengeProvider(),
+                                      resultsInterpreter: ConjugatableResultsInterpreter())
+        
     }
   }
   
@@ -48,7 +57,7 @@ struct PickQuizView: View {
   
   // MARK: - Private
   
-  @ObservedObject private var viewModel: NewPickQuizViewModel
+  @ObservedObject private var viewModel: PickQuizViewModel
   
   @ViewBuilder
   private func challengeView(challenge: PickChallenge) -> some View {

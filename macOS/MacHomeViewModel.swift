@@ -10,5 +10,5 @@ import struct SwiftUI.Published
 
 final class MacHomeViewModel: ObservableObject {
   
-  @Published var currentQuiz: HomeQuiz?
+  @Published var currentQuiz: EntryType?
 }

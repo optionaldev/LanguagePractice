@@ -30,7 +30,7 @@ protocol ResultsInterpretable {
   func assessResults(entries: [Distinguishable], states: [TimeStorable]) -> [LearnedItem]
 }
 
-final class NewPickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceChallengeable, InputTappable {
+final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceChallengeable, InputTappable {
   
   @Published var visibleChallenges: [PickChallenge] = []
   @Published var itemsLearned: [LearnedItem] = []

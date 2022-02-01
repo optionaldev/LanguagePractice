@@ -4,13 +4,6 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 //
 
-enum Possibility {
-  
-  case image
-  case text
-  case voice
-}
-
 final class KanaPickChallengeProvider: ChallengeProvidable {
   
   init(lexicon: Lexicon = .shared) {
