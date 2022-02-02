@@ -18,7 +18,11 @@ struct ForeignVerb: ForeignWord {
   let id: String
   let written: String
   let english: [String]
-  let category: ForeignVerbCategory
+  
+  // TODO: Revert to being fetched from Codable
+  var category: ForeignVerbCategory {
+    return .iruEru
+  }
   
 #if JAPANESE
   let furigana: String?
@@ -36,7 +40,7 @@ struct ForeignVerb: ForeignWord {
     case id
     case written = "ch"
     case english = "en"
-    case category = "ca"
+//    case category = "ca"
     
 #if JAPANESE
     case furigana = "fg"

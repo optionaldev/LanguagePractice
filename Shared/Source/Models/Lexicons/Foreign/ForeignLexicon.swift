@@ -13,7 +13,11 @@ struct ForeignLexicon: Codable {
   let adjectives: [ForeignAdjective]
   
   var all: [ForeignItem] {
-    return nouns as [ForeignItem] + hiragana as [ForeignItem] + katakana as [ForeignItem]
+    return nouns as [ForeignItem] +
+    hiragana as [ForeignItem] +
+    katakana as [ForeignItem] +
+    verbs as [ForeignItem] +
+    adjectives as [ForeignItem]
   }
   
   init() {

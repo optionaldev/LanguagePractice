@@ -17,7 +17,7 @@ struct ForeignAdjective: ForeignWord, ForeignConjugatable {
   let id: String
   let written: String
   let english: [String]
-  let category: ForeignAdjectiveCategory
+  
   
 #if JAPANESE
   let furigana: String?
@@ -29,26 +29,33 @@ struct ForeignAdjective: ForeignWord, ForeignConjugatable {
   var shouldReadKana: Bool {
     return readKana == 1
   }
+  
+  var category: ForeignAdjectiveCategory {
+    if iAdjective == 1 {
+      return .i
+    }
+    return .na
+  }
 #endif
   
   enum CodingKeys: String, CodingKey {
     case id
     case written  = "ch"
     case english  = "en"
-    case category = "ca"
     
 #if JAPANESE
     case furigana      = "fg"
     case irregularKana = "ik"
     case readKana      = "rk"
+    case iAdjective    = "i"
 #endif
   }
   
   // MARK: - Private
   
-  private var readKana: Int?
-  
   private var irregularKana: Int?
+  private var readKana: Int?
+  private var iAdjective: Int?
   
   private func conjugatePresent(negative: Bool, type conjugationType: ConjugationType) -> String {
     var result = written

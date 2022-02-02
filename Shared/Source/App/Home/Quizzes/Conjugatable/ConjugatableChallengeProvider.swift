@@ -29,6 +29,8 @@ final class ConjugatableChallengeProvider: ChallengeProvidable {
       fatalError("Couldn't find word with id: \"\(entry.id)\"")
     }
     
+    let possibleTenses: [Tense] = [.past, .present, .future]
+    
     // TODO: Improve
     let voiceEnabled = speech.voicePossible(forEntry: entry)
     
@@ -38,7 +40,7 @@ final class ConjugatableChallengeProvider: ChallengeProvidable {
     let outputType: Possibility = voiceEnabled ? [.voice, .text].randomElement()! : .text
     
     let correctOutput: OutputRepresentation
-    var otherOutput: [OutputRepresentation]
+    var output: [OutputRepresentation]
     
     switch inputType {
       case .image:
@@ -53,7 +55,7 @@ final class ConjugatableChallengeProvider: ChallengeProvidable {
               case .image, .voice:
                 fatalError("Not possible")
               case .text:
-                otherOutput = Tense.allCases.without(.present).map {
+                output = possibleTenses.without(.present).map {
                   .text($0.rawValue) }
                 correctOutput = .text("present")
             }
@@ -64,10 +66,10 @@ final class ConjugatableChallengeProvider: ChallengeProvidable {
               case .image:
                 fatalError("Not possible")
               case .text:
-                otherOutput = Tense.allCases.without(.present).map { .text(conjugatable.conjugate(tense: $0, negative: .random(), type: .regular).id) }
+                output = possibleTenses.without(.present).map { .text(conjugatable.conjugate(tense: $0, negative: .random(), type: .regular).id) }
                 correctOutput = .text(conjugatable.conjugate(tense: .present, negative: false, type: .regular).id)
               case .voice:
-                otherOutput = Tense.allCases.without(.present).map { .voice(conjugatable.conjugate(tense: $0, negative: .random(), type: .regular).id) }
+                output = possibleTenses.without(.present).map { .voice(conjugatable.conjugate(tense: $0, negative: .random(), type: .regular).id) }
                 correctOutput = .voice(conjugatable.conjugate(tense: .present, negative: false, type: .regular).id)
             }
         }
@@ -81,7 +83,7 @@ final class ConjugatableChallengeProvider: ChallengeProvidable {
               case .image, .voice:
                 fatalError("Not possible")
               case .text:
-                otherOutput = Tense.allCases.without(.present).map { .text($0.rawValue) }
+                output = possibleTenses.without(.present).map { .text($0.rawValue) }
                 correctOutput = .text("present")
             }
           case .askCorrectForm:
@@ -91,22 +93,22 @@ final class ConjugatableChallengeProvider: ChallengeProvidable {
               case .image:
                 fatalError("Not possible")
               case .text:
-                otherOutput = Tense.allCases.without(.present).map { .text(conjugatable.conjugate(tense: $0, negative: .random(), type: .regular).id) }
+                output = possibleTenses.without(.present).map { .text(conjugatable.conjugate(tense: $0, negative: .random(), type: .regular).id) }
                 correctOutput = .text(conjugatable.conjugate(tense: .present, negative: false, type: .regular).id)
               case .voice:
-                otherOutput = Tense.allCases.without(.present).map { .voice(conjugatable.conjugate(tense: $0, negative: .random(), type: .regular).id) }
+                output = possibleTenses.without(.present).map { .voice(conjugatable.conjugate(tense: $0, negative: .random(), type: .regular).id) }
                 correctOutput = .voice(conjugatable.conjugate(tense: .present, negative: false, type: .regular).id)
             }
         }
     }
-    otherOutput.append(correctOutput)
-    otherOutput.shuffle()
+    output.append(correctOutput)
+    output.shuffle()
     
-    guard let correctAnswerIndex = otherOutput.firstIndex(where: { $0.description == correctOutput.description }) else {
+    guard let correctAnswerIndex = output.firstIndex(where: { $0.description == correctOutput.description }) else {
       fatalError("Couldn't find correct answer in list of answers.")
     }
     
-    return PickChallenge(inputRep: input, outputRep: otherOutput, correctAnswerIndex: correctAnswerIndex)
+    return PickChallenge(inputRep: input, outputRep: output, correctAnswerIndex: correctAnswerIndex)
   }
   
   // MARK: - Private

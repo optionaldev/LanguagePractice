@@ -46,10 +46,18 @@ struct LanguagePracticeApp: App {
       return
     }
     
-    let knownItems = Defaults.knownIds(for: .picking)
-    if knownItems.count < 40 {
-      log("Items learned so far: \(knownItems.sorted())")
-      log("Items left to learn: \(Lexicon.shared.foreign.nouns.map { $0.id }.filter { !knownItems.contains($0) }.sorted() )")
+    let knownItems = Defaults.knownIds(for: .picking).sorted()
+    if knownItems.count > 40 {
+      log("\(knownItems.count) items learned so far.")
+    } else {
+      log("Items learned so far: \(knownItems)")
+    }
+    
+    let itemsLeft = Lexicon.shared.foreign.nouns.map { $0.id }.filter { !knownItems.contains($0) }.sorted()
+    if itemsLeft.count > 40 {
+      log("\(itemsLeft.count) items left to learn.")
+    } else {
+      log("Items left to learn: \(itemsLeft)")
     }
     
     #endif
