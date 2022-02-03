@@ -42,65 +42,50 @@ final class ConjugatableChallengeProvider: ChallengeProvidable {
     let correctOutput: OutputRepresentation
     var output: [OutputRepresentation]
     
+    let inputVariation = ConjugationVariation(tense: possibleTenses.randomElement()!, negative: .random(), type: .allCases.randomElement()!)
+    
+    let outputTenses = possibleTenses.without(inputVariation.tense)
+    let outputVariations = allVariations(outputTenses: outputTenses).shuffled().prefix(5)
+    
+    let inputText: String
+    switch entry.category {
+      case .askCorrectForm:
+        inputText = "Present form of:\n\"\(word.written)\""
+      case .askTense:
+        inputText = conjugatable.conjugate(variation: inputVariation).id
+    }
+    
     switch inputType {
       case .image:
         fatalError("Not possible")
       case .text:
-        switch entry.category {
-          case .askTense:
-            let string = conjugatable.conjugate(tense: .present, negative: .random(), type: .regular).id
-            let text = "Tense of\n\"\(string)\""
-            input = .text(text)
-            switch outputType {
-              case .image, .voice:
-                fatalError("Not possible")
-              case .text:
-                output = possibleTenses.without(.present).map {
-                  .text($0.rawValue) }
-                correctOutput = .text("present")
-            }
-          case .askCorrectForm:
-            let text = "Present form of\n\"\(word.written)\""
-            input = .text(text)
-            switch outputType {
-              case .image:
-                fatalError("Not possible")
-              case .text:
-                output = possibleTenses.without(.present).map { .text(conjugatable.conjugate(tense: $0, negative: .random(), type: .regular).id) }
-                correctOutput = .text(conjugatable.conjugate(tense: .present, negative: false, type: .regular).id)
-              case .voice:
-                output = possibleTenses.without(.present).map { .voice(conjugatable.conjugate(tense: $0, negative: .random(), type: .regular).id) }
-                correctOutput = .voice(conjugatable.conjugate(tense: .present, negative: false, type: .regular).id)
-            }
-        }
+        input = .text(inputText)
       case .voice:
-        switch entry.category {
-          case .askTense:
-            let string = conjugatable.conjugate(tense: .present, negative: .random(), type: .regular).id
-            let text = "Tense of\n\"\(string)\""
-            input = .voice(text)
-            switch outputType {
-              case .image, .voice:
-                fatalError("Not possible")
-              case .text:
-                output = possibleTenses.without(.present).map { .text($0.rawValue) }
-                correctOutput = .text("present")
-            }
-          case .askCorrectForm:
-            let text = "Present form of\n\"\(word.written)\""
-            input = .text(text)
-            switch outputType {
-              case .image:
-                fatalError("Not possible")
-              case .text:
-                output = possibleTenses.without(.present).map { .text(conjugatable.conjugate(tense: $0, negative: .random(), type: .regular).id) }
-                correctOutput = .text(conjugatable.conjugate(tense: .present, negative: false, type: .regular).id)
-              case .voice:
-                output = possibleTenses.without(.present).map { .voice(conjugatable.conjugate(tense: $0, negative: .random(), type: .regular).id) }
-                correctOutput = .voice(conjugatable.conjugate(tense: .present, negative: false, type: .regular).id)
-            }
-        }
+        input = .voice(inputText)
     }
+    
+    let correctOutputText: String
+    let otherOutputTexts: [String]
+    switch entry.category {
+      case .askCorrectForm:
+        otherOutputTexts = outputVariations.map { conjugatable.conjugate(variation: $0).id }
+        correctOutputText = conjugatable.conjugate(variation: inputVariation).id
+      case .askTense:
+        otherOutputTexts = outputVariations.map { $0.spoken }
+        correctOutputText = inputVariation.spoken
+    }
+    
+    switch outputType {
+      case .image:
+        fatalError("Not possible")
+      case .text:
+        output = otherOutputTexts.map { .text($0) }
+        correctOutput = .text(correctOutputText)
+      case .voice:
+        output = otherOutputTexts.map { .voice($0) }
+        correctOutput = .voice(correctOutputText)
+    }
+    
     output.append(correctOutput)
     output.shuffle()
     
@@ -115,4 +100,15 @@ final class ConjugatableChallengeProvider: ChallengeProvidable {
   
   private let lexicon: Lexicon
   private let speech: Speech
+  
+  private func allVariations(outputTenses: [Tense]) -> [ConjugationVariation] {
+    var result: [ConjugationVariation] = []
+    for tense in outputTenses {
+      for conjugationType in ConjugationType.allCases {
+        result.append(ConjugationVariation(tense: tense, negative: true, type: conjugationType))
+        result.append(ConjugationVariation(tense: tense, negative: false, type: conjugationType))
+      }
+    }
+    return result
+  }
 }

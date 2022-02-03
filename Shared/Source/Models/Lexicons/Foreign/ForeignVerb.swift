@@ -49,7 +49,7 @@ struct ForeignVerb: ForeignWord {
 #endif
   }
   
-  func conjugate(tense: VerbTense, formal: Bool, negative: Bool) -> String {
+  func conjugate(tense: Tense, formal: Bool, negative: Bool) -> String {
     switch tense {
       case .present:
         return conjugatePresent(formal: formal, negative: negative)

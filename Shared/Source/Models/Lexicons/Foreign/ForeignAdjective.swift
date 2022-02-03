@@ -152,5 +152,4 @@ struct ForeignAdjective: ForeignWord, ForeignConjugatable {
                        negative: negative,
                        type: conjugationType)
   }
-  
 }

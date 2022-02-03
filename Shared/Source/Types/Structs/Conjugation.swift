@@ -1,8 +1,8 @@
 //
 // The LanguagePractice (iOS) project.
-// Created by optionaldev on 03/01/2022.
+// Created by optionaldev on 03/02/2022.
 // Copyright © 2022 optionaldev. All rights reserved.
-//
+// 
 
 struct Conjugation {
   
@@ -11,9 +11,3 @@ struct Conjugation {
   let negative: Bool
   let type: ConjugationType
 }
-
-protocol ForeignConjugatable: Distinguishable {
-  
-  func conjugate(tense: Tense, negative: Bool, type: ConjugationType) -> Conjugation
-}
-

@@ -4,7 +4,7 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-protocol Item: Codable, Distinguishable {
+protocol Item: Codable, Distinguishable, Speakable {
   
   /// Unique identifier across all items from one lexicon.
   var id: String { get }

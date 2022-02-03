@@ -4,12 +4,12 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-enum VerbTense: CaseIterable {
-  
-  case present
-  case past
-  case future
-  case want
-  case can
-  case presentContinuous
-}
+//enum VerbTense: CaseIterable {
+//  
+//  case present
+//  case past
+//  case future
+//  case want
+//  case can
+//  case presentContinuous
+//}

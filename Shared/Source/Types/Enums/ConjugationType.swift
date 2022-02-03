@@ -4,7 +4,7 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
-enum ConjugationType {
+enum ConjugationType: CaseIterable {
   
   case regular
   case formalEnding
