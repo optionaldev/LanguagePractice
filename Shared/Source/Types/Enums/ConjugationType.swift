@@ -6,7 +6,7 @@
 
 enum ConjugationType: CaseIterable {
   
-  case regular
+  case modifier
   case formalEnding
   case informalEnding
 }

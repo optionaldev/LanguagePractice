@@ -142,6 +142,7 @@ struct PickQuizView: View {
         fatalError()
       case .text(let rep):
         Text(rep)
+          .multilineTextAlignment(.center)
           .font(.system(size: 20))
           .background(Color.blue.opacity(0.5))
           .frame(maxWidth: .infinity, maxHeight: .infinity)

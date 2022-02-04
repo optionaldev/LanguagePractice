@@ -40,6 +40,12 @@ struct AppConstants {
   /// Default number of times the user has to complete the typing challenge to go to the next word
   static let forfeitRetriesCount = 3
   
-  static let formalEnding = "ます"
+  #if JAPANESE
+  // Both desu です and ます are polite endings, used in different circumstances
+  static let masuEnding = "ます"
+  static let desuEnding = "です"
+  
+  // da だ is the plaint / impolite ending
   static let informalEnding = "だ"
+  #endif
 }

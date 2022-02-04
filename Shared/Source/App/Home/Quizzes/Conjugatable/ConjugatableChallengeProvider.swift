@@ -50,7 +50,7 @@ final class ConjugatableChallengeProvider: ChallengeProvidable {
     let inputText: String
     switch entry.category {
       case .askCorrectForm:
-        inputText = "Present form of:\n\"\(word.written)\""
+        inputText = "\(inputVariation.spoken) of\n\(word.written)"
       case .askTense:
         inputText = conjugatable.conjugate(variation: inputVariation).id
     }

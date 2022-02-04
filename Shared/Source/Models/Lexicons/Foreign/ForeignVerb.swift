@@ -100,10 +100,10 @@ struct ForeignVerb: ForeignWord {
           var result = written
           let postfix = baseForm(vowel: .i)
           result.append(postfix)
-          result.append(AppConstants.formalEnding)
+          result.append(AppConstants.masuEnding)
           return result
         case .iruEru:
-          return written.removingLast().appending(AppConstants.formalEnding)
+          return written.removingLast().appending(AppConstants.masuEnding)
       }
     } else {
       if negative {

@@ -66,24 +66,27 @@ struct ForeignAdjective: ForeignWord, ForeignConjugatable {
           result.append("くない")
         }
         switch conjugationType {
-          case .regular, .informalEnding:
+          case .modifier, .informalEnding:
+            // modifier and informal ending don't add and suffixes
             break
           case .formalEnding:
-            result.append(AppConstants.formalEnding)
+            result.append(AppConstants.desuEnding)
         }
       case .na:
         if negative {
           result.append("じゃない")
         }
         switch conjugationType {
-          case .regular:
+          case .modifier:
             if !negative {
               result.append("な")
             }
           case .formalEnding:
-            result.append(AppConstants.formalEnding)
+            result.append(AppConstants.desuEnding)
           case .informalEnding:
-            result.append(AppConstants.informalEnding)
+            if !negative {
+              result.append(AppConstants.informalEnding)
+            }
         }
     }
     return result
@@ -97,39 +100,35 @@ struct ForeignAdjective: ForeignWord, ForeignConjugatable {
         if negative {
           result.append("くなかった")
         } else {
-          result.append("くない")
+          result.append("かった")
         }
         switch conjugationType {
-          case .regular:
+          case .modifier:
             break
           case .formalEnding:
-            result.append(AppConstants.formalEnding)
+            result.append(AppConstants.desuEnding)
           case .informalEnding:
             result.append(AppConstants.informalEnding)
         }
       case .na:
         if negative {
           result.append("じゃなかった")
-        }
-        switch conjugationType {
-          case .regular:
-            if negative {
+          
+          switch conjugationType {
+            case .modifier:
               break
-            } else {
-              fatalError("Not a possible combo")
-            }
-          case .formalEnding:
-            if negative {
-              result.append(AppConstants.formalEnding)
-            } else {
-              result.append("でした")
-            }
-          case .informalEnding:
-            if negative {
+            case .formalEnding:
+              result.append(AppConstants.desuEnding)
+            case .informalEnding:
               result.append(AppConstants.informalEnding)
-            } else {
+          }
+        } else {
+          switch conjugationType {
+            case .modifier, .informalEnding:
               result.append("だった")
-            }
+            case .formalEnding:
+              result.append("でした")
+          }
         }
     }
     return result

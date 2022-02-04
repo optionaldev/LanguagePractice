@@ -16,8 +16,8 @@ struct ConjugationVariation: Speakable {
       result.append("negative ")
     }
     switch type {
-      case .regular:
-        result.append("regular ")
+      case .modifier:
+        result.append("modifier ")
       case .formalEnding:
         result.append("formal ")
       case .informalEnding:
