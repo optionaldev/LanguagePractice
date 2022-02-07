@@ -36,6 +36,7 @@ final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceC
   @Published var itemsLearned: [LearnedItem] = []
   
   var nextChallenge: PickChallenge?
+  var queuedVoiceLine: String?
   
   private(set) var challengeEntries: [Distinguishable]
   private(set) var challengeMeasurement = ChallengeMeasurement()
@@ -68,23 +69,20 @@ final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceC
     nextChallenge = challengeProvider.generatePick(fromPool: challengeEntries, index: visibleChallenges.count)
   }
   
-  // MARK: - InputTappable conformance
-  
-  func inputTapped() {
-    if case .voice(let rep) = currentChallenge.inputRep {
-      speech.speak(string: rep)
-    }
-  }
-  
   // MARK: - SpeechDelegate conformance
   
   func speechEnded() {
-    if case .voice = currentChallenge.inputRep {
-      challengeMeasurement.start()
-    } else if case .voice = currentChallenge.correctOutput,
-              currentChallenge.correctAnswerIndex == voiceLastTappedIndex
-    {
-      challengeMeasurement.start()
+    if let voiceLine = queuedVoiceLine {
+      queuedVoiceLine = nil
+      speech.speak(string: voiceLine)
+    } else {
+      if case .voice = currentChallenge.inputRep {
+        challengeMeasurement.start()
+      } else if case .voice = currentChallenge.correctOutput,
+                currentChallenge.correctAnswerIndex == voiceLastTappedIndex
+      {
+        challengeMeasurement.start()
+      }
     }
   }
   

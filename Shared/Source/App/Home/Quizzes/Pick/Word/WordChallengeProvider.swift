@@ -90,9 +90,9 @@ final class WordChallengeProvider: ChallengeProvidable {
       case .voice:
         switch entry.category {
           case .english:
-            input = .voice(englishWord.spoken)
+            input = .voice(.init(first: englishWord.spoken))
           case .foreign:
-            input = .voice(foreignWord.spoken)
+            input = .voice(.init(first: foreignWord.spoken))
         }
       case .text:
         switch entry.category {

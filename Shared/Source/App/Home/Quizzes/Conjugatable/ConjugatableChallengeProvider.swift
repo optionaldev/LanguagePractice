@@ -47,21 +47,21 @@ final class ConjugatableChallengeProvider: ChallengeProvidable {
     let outputTenses = possibleTenses.without(inputVariation.tense)
     let outputVariations = allVariations(outputTenses: outputTenses).shuffled().prefix(5)
     
-    let inputText: String
+    let inputText: [String]
     switch entry.category {
       case .askCorrectForm:
-        inputText = "\(inputVariation.spoken) of\n\(word.written)"
+        inputText = ["\(inputVariation.spoken) of", word.written]
       case .askTense:
-        inputText = conjugatable.conjugate(variation: inputVariation).id
+        inputText = ["Tense of", conjugatable.conjugate(variation: inputVariation).id]
     }
     
     switch inputType {
       case .image:
         fatalError("Not possible")
       case .text:
-        input = .text(inputText)
+        input = .text(inputText.joined(separator: "\n"))
       case .voice:
-        input = .voice(inputText)
+        input = .voice(.init(first: inputText.first!, second: inputText.last!))
     }
     
     let correctOutputText: String

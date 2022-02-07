@@ -97,7 +97,7 @@ final class KanaPickChallengeProvider: ChallengeProvidable {
             }
         }
       case .voice:
-        input = .voice(character.spoken)
+        input = .voice(.init(first: character.spoken))
         switch entry.category {
           case .foreign:
             correctOutput = .text(character.romaji)

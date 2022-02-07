@@ -66,6 +66,12 @@ protocol Quizing: ObservableObject {
    */
   var challengeProvider: ChallengeProvidable { get }
   
+  /**
+   When the current speech ends, if there is a queued speech, it is immediately played after the current one.
+   This separation happens when the first line and the second line are different languages.
+   */
+  var queuedVoiceLine: String? { get set }
+  
   func challengeAppeared()
   func finishedCurrentChallenge()
   func handleFinish()
@@ -83,7 +89,10 @@ extension Quizing {
   
   func inputTapped() {
     if case .voice(let rep) = currentChallenge.inputRep {
-      Speech.shared.speak(string: rep)
+      if let secondVoiceLine = rep.secondPart {
+        queuedVoiceLine = secondVoiceLine
+      }
+      Speech.shared.speak(string: rep.firstPart)
     }
   }
   

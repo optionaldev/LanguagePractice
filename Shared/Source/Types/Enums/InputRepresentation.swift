@@ -4,6 +4,20 @@
 // Copyright © 2022 optionaldev. All rights reserved.
 //
 
+// We want to be able to have a representation that allows two languages, so
+// we could ask things like "What's the future form of the verb 食べる?"
+// In case the second part is missing, it's treated as a simple string
+struct VoiceRep {
+  
+  let firstPart: String
+  let secondPart: String?
+  
+  init(first: String, second: String? = nil) {
+    firstPart = first
+    secondPart = second
+  }
+}
+
 struct TranslationRep {
   
   let text: String
@@ -17,7 +31,7 @@ enum InputRepresentation {
   case textWithRegularFurigana(FuriganaRep)
   case textWithIrregularFurigana(FuriganaRep)
   case image(_ id: String)
-  case voice(_ spoken: String)
+  case voice(VoiceRep)
   
   var description: String {
     switch self {
