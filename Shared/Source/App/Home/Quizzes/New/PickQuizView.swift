@@ -39,11 +39,11 @@ struct PickQuizView: View {
                                       resultsInterpreter: WordResultsInterpreter())
       case .conjugateVerbs:
         viewModel = PickQuizViewModel(entryProvider: ConjugatableVerbsEntryProvider(),
-                                      challengeProvider: ConjugatableChallengeProvider(),
+                                      challengeProvider: VerbConjugationsChallengeProvider(),
                                       resultsInterpreter: ConjugatableResultsInterpreter())
       case .conjugateAdjectives:
         viewModel = PickQuizViewModel(entryProvider: ConjugatableAdjectiveEntryProvider(),
-                                      challengeProvider: ConjugatableChallengeProvider(),
+                                      challengeProvider: AdjectiveConjugationsChallengeProvider(),
                                       resultsInterpreter: ConjugatableResultsInterpreter())
         
     }

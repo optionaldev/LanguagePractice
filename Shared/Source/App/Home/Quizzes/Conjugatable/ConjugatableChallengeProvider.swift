@@ -2,13 +2,34 @@
 // The LanguagePractice (iOS) project.
 // Created by optionaldev on 03/01/2022.
 // Copyright © 2022 optionaldev. All rights reserved.
-// 
+//
 
-final class ConjugatableChallengeProvider: ChallengeProvidable {
+
+final class AdjectiveConjugationsChallengeProvider: ConjugatableChallengeProvider {
+  
+  override var possibleTenses: [Tense] {
+    // Because present and future are conjugated the same, we can randomly choosen between the two
+    return [.past].appending([Tense.present, Tense.future].randomElement()!)
+  }
+}
+
+final class VerbConjugationsChallengeProvider: ConjugatableChallengeProvider {
+  
+  override var possibleTenses: [Tense] {
+    // Because present and future are conjugated the same, we can randomly choosen between the two
+    return [.past, .can, .want, .presentContinuous].appending([Tense.present, Tense.future].randomElement()!)
+  }
+}
+
+class ConjugatableChallengeProvider: ChallengeProvidable {
   
   init(lexicon: Lexicon = .shared, speech: Speech = .shared) {
     self.lexicon = lexicon
     self.speech = speech
+  }
+  
+  var possibleTenses: [Tense] {
+    fatalError("Subclass must implement __possibleTenses__")
   }
   
   // MARK: - ChallengeProvidable conformance
@@ -28,9 +49,6 @@ final class ConjugatableChallengeProvider: ChallengeProvidable {
     guard let word = lexicon.foreignDictionary[entry.id] as? ForeignWord else {
       fatalError("Couldn't find word with id: \"\(entry.id)\"")
     }
-    
-    let possibleTenses: [Tense] = [.past, .present, .future]
-    
     // TODO: Improve
     let voiceEnabled = speech.voicePossible(forEntry: entry)
     
@@ -44,13 +62,13 @@ final class ConjugatableChallengeProvider: ChallengeProvidable {
     
     let inputVariation = ConjugationVariation(tense: possibleTenses.randomElement()!, negative: .random(), type: .allCases.randomElement()!)
     
-    let outputTenses = possibleTenses.without(inputVariation.tense)
+    let outputTenses = ForeignAdjective.possibleTenses.without(inputVariation.tense)
     let outputVariations = allVariations(outputTenses: outputTenses).shuffled().prefix(5)
     
     let inputText: [String]
     switch entry.category {
       case .askCorrectForm:
-        inputText = ["\(inputVariation.spoken) of", word.written]
+        inputText = ["\(inputVariation.representation(spoken: inputType == .voice)) for", word.written]
       case .askTense:
         inputText = ["Tense of", conjugatable.conjugate(variation: inputVariation).id]
     }
@@ -71,8 +89,8 @@ final class ConjugatableChallengeProvider: ChallengeProvidable {
         otherOutputTexts = outputVariations.map { conjugatable.conjugate(variation: $0).id }
         correctOutputText = conjugatable.conjugate(variation: inputVariation).id
       case .askTense:
-        otherOutputTexts = outputVariations.map { $0.spoken }
-        correctOutputText = inputVariation.spoken
+        otherOutputTexts = outputVariations.map { $0.representation(spoken: outputType == .voice) }
+        correctOutputText = inputVariation.representation(spoken: outputType == .voice)
     }
     
     switch outputType {

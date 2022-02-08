@@ -49,8 +49,11 @@ final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceC
   {
     self.challengeProvider = challengeProvider
     self.resultsInterpreter = resultsInterpreter
-    self.speech = speech
     challengeEntries = entryProvider.generate()
+    
+    self.speech = speech
+    speech.delegate = self
+
     performInitialSetup()
   }
   

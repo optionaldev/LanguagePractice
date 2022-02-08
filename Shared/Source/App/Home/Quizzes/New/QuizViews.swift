@@ -47,6 +47,7 @@ struct QuizViews {
         }
       case .text(let rep):
         Text(rep)
+          .multilineTextAlignment(.center)
           .font(.system(size: 30))
       case .textWithRegularFurigana(let rep):
         textWithFurigana(representation: rep)

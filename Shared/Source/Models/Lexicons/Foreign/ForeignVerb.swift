@@ -13,7 +13,7 @@ enum ForeignVerbCategory: String, Codable {
 #endif
 }
 
-struct ForeignVerb: ForeignWord {
+struct ForeignVerb: ForeignWord, ForeignConjugatable {
   
   let id: String
   let written: String
@@ -49,23 +49,6 @@ struct ForeignVerb: ForeignWord {
 #endif
   }
   
-  func conjugate(tense: Tense, formal: Bool, negative: Bool) -> String {
-    switch tense {
-      case .present:
-        return conjugatePresent(formal: formal, negative: negative)
-      case .past:
-        return conjugatePast(formal: formal, negative: negative)
-      case .future:
-        return conjugateFuture(formal: formal, negative: negative)
-      case .want:
-        return conjugateWant(formal: formal, negative: negative)
-      case .can:
-        return conjugateCan(formal: formal, negative: negative)
-      case .presentContinuous:
-        return conjugatePresentContinuous(formal: formal, negative: negative)
-    }
-  }
-  
   // MARK: - Private
   
   private var readKana: Int?
@@ -93,60 +76,97 @@ struct ForeignVerb: ForeignWord {
     }
   }
   
-  private func conjugatePresent(formal: Bool, negative: Bool) -> String {
-    if formal {
-      switch category {
-        case .regular:
-          var result = written
-          let postfix = baseForm(vowel: .i)
-          result.append(postfix)
-          result.append(AppConstants.masuEnding)
-          return result
-        case .iruEru:
-          return written.removingLast().appending(AppConstants.masuEnding)
-      }
-    } else {
-      if negative {
-        let base: String
+  private func conjugatePresent(negative: Bool, conjugationType: ConjugationType) -> Conjugation {
+    var text: String = ""
+    
+    switch conjugationType {
+      case .modifier:
+        fatalError()
+      case .formalEnding:
+        
         switch category {
           case .regular:
-            base = baseForm(vowel: .a)
+            var result = written
+            let postfix = baseForm(vowel: .i)
+            result.append(postfix)
+            result.append(AppConstants.masuEnding)
+            text = result
           case .iruEru:
-            base = written.removingLast()
+            text = written.removingLast().appending(AppConstants.masuEnding)
         }
-        return base.appending("ない")
-      } else {
-        return written
-      }
+      case .informalEnding:
+        
+        if negative {
+          let base: String
+          switch category {
+            case .regular:
+              base = baseForm(vowel: .a)
+            case .iruEru:
+              base = written.removingLast()
+          }
+          text = base.appending("ない")
+        } else {
+          text = written
+        }
+    }
+    
+    return Conjugation(id: text, tense: .present, negative: negative, type: conjugationType)
+  }
+  
+  private func conjugatePast(negative: Bool, conjugationType: ConjugationType) -> Conjugation {
+    
+    // TODO
+    fatalError()
+  }
+  
+  private func conjugateFuture(negative: Bool, conjugationType: ConjugationType) -> Conjugation {
+    // Present and future are the same in Japanese
+    // Differentiating between the two is based on sentence context
+    return conjugatePresent(negative: negative, conjugationType: conjugationType)
+  }
+  
+  private func conjugateWant(negative: Bool, conjugationType: ConjugationType) -> Conjugation {
+    
+    // TODO
+    fatalError()
+  }
+  
+  
+  private func conjugateCan(negative: Bool, conjugationType: ConjugationType) -> Conjugation {
+    
+    // TODO
+    fatalError()
+  }
+  
+  private func conjugatePresentContinuous(negative: Bool, conjugationType: ConjugationType) -> Conjugation {
+    
+    // TODO
+    fatalError()
+  }
+  
+  // MARK: - ForeignConjugatable conformance
+  
+  
+  func conjugate(tense: Tense, negative: Bool, type: ConjugationType) -> Conjugation {
+    switch tense {
+      case .present:
+        return conjugatePresent(negative: negative, conjugationType: type)
+      case .past:
+        return conjugatePast(negative: negative, conjugationType: type)
+      case .future:
+        return conjugateFuture(negative: negative, conjugationType: type)
+      case .want:
+        return conjugateWant(negative: negative, conjugationType: type)
+      case .can:
+        return conjugateCan(negative: negative, conjugationType: type)
+      case .presentContinuous:
+        return conjugatePresentContinuous(negative: negative, conjugationType: type)
     }
   }
   
-  private func conjugatePast(formal: Bool, negative: Bool) -> String {
+  static var possibleTenses: [Tense] {
     
     // TODO
-    return ""
-  }
-  
-  private func conjugateFuture(formal: Bool, negative: Bool) -> String {
-    return conjugatePresent(formal: formal, negative: negative)
-  }
-  
-  private func conjugateWant(formal: Bool, negative: Bool) -> String {
-    
-    // TODO
-    return ""
-  }
-  
-  
-  private func conjugateCan(formal: Bool, negative: Bool) -> String {
-    
-    // TODO
-    return ""
-  }
-  
-  private func conjugatePresentContinuous(formal: Bool, negative: Bool) -> String {
-    
-    // TODO
-    return ""
+    return []
   }
 }

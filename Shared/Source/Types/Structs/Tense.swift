@@ -4,31 +4,6 @@
 // Copyright © 2022 optionaldev. All rights reserved.
 //
 
-struct ConjugationVariation: Speakable {
-  
-  let tense: Tense
-  let negative: Bool
-  let type: ConjugationType
-  
-  var spoken: String {
-    var result: String = ""
-    if negative {
-      result.append("negative ")
-    }
-    switch type {
-      case .modifier:
-        result.append("modifier ")
-      case .formalEnding:
-        result.append("formal ")
-      case .informalEnding:
-        result.append("informal ")
-    }
-    
-    // TODO: Handle present continuous
-    return result.appending(tense.rawValue)
-  }
-}
-
 enum Tense: String, CaseIterable {
   
   case present

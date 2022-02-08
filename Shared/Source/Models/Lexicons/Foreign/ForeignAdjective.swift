@@ -18,7 +18,6 @@ struct ForeignAdjective: ForeignWord, ForeignConjugatable {
   let written: String
   let english: [String]
   
-  
 #if JAPANESE
   let furigana: String?
   
@@ -150,5 +149,11 @@ struct ForeignAdjective: ForeignWord, ForeignConjugatable {
                        tense: tense,
                        negative: negative,
                        type: conjugationType)
+  }
+  
+  static var possibleTenses: [Tense] {
+    #if JAPANESE
+    return [.past, .present, .future]
+    #endif
   }
 }

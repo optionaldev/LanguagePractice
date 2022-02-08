@@ -7,8 +7,9 @@
 protocol ForeignConjugatable: Distinguishable {
   
   func conjugate(tense: Tense, negative: Bool, type: ConjugationType) -> Conjugation
-  
   func conjugate(variation: ConjugationVariation) -> Conjugation
+  
+  static var possibleTenses: [Tense] { get }
 }
 
 extension ForeignConjugatable {
