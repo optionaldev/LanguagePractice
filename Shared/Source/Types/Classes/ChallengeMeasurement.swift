@@ -17,6 +17,15 @@ final class ChallengeMeasurement {
     }
   }
   
+  func fetchElapsedAndContinue() -> TimeInterval {
+    if let time = startTime {
+      let measurement = time.distance(to: Date())
+      return measurement
+    }
+    log("Should always called fetch after starting", type: .unexpected)
+    return .zero
+  }
+  
   func stopAndFetchResult() -> TimeInterval {
     if let time = startTime {
       let measurement = time.distance(to: Date())

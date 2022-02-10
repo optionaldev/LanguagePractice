@@ -25,9 +25,28 @@ protocol ChallengeProvidable {
   func generateTyping(fromPool pool: [Distinguishable], index: Int) -> TypingChallenge
 }
 
+enum PickState {
+  
+  case incorrect(_ attempts: [PickPress])
+  case correct(_ timeToCompletion: TimeInterval)
+}
+
+struct TypingState {
+  
+}
+
+
 protocol ResultsInterpretable {
   
-  func assessResults(entries: [Distinguishable], states: [TimeStorable]) -> [LearnedItem]
+  func assess(entries: [Distinguishable], challenges: [PickChallenge], states: [PickState]) -> [LearnedItem]
+  func assess(entries: [Distinguishable], challenges: [TypingChallenge], states: [TypingState]) -> [LearnedItem]
+}
+
+// TODO: remove extension
+extension ResultsInterpretable {
+  
+  func assess(entries: [Distinguishable], challenges: [PickChallenge], states: [PickState]) -> [LearnedItem] {return []}
+  func assess(entries: [Distinguishable], challenges: [TypingChallenge], states: [TypingState]) -> [LearnedItem] { return []}
 }
 
 final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceChallengeable, InputTappable {
@@ -58,13 +77,17 @@ final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceC
   }
   
   func handleFinish() {
-    itemsLearned = resultsInterpreter.assessResults(entries: challengeEntries, states: challengeStates)
+    itemsLearned = resultsInterpreter.assess(entries: challengeEntries, challenges: visibleChallenges, states: challengeStates)
   }
   
   func finishedCurrentChallenge() {
-    if challengeStates.count == visibleChallenges.count && challengeStates.last != .guessedIncorrectly {
-      let challengeTime = challengeMeasurement.stopAndFetchResult()
-      challengeStates[visibleChallenges.count - 1] = .finished(challengeTime)
+    let lastMeasurement = challengeMeasurement.stopAndFetchResult()
+    if valuesPressed.isEmpty {
+      challengeStates.append(.correct(lastMeasurement))
+    } else {
+      valuesPressed.append(PickPress(index: currentChallenge.correctAnswerIndex, time: lastMeasurement))
+      challengeStates.append(.incorrect(valuesPressed))
+      valuesPressed = []
     }
   }
   
@@ -93,32 +116,51 @@ final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceC
   
   func chose(index: Int) {
     if case .voice(let rep) = currentChallenge.outputRep[index] {
-      
       // When voice is the output type of the challenge, the user first has to tap on the
       // output button to hear the answer and tap the same output button again to choose
       // that answer, so we always remember what the last pressed button was
-      if voiceLastTappedIndex == index && currentChallenge.correctAnswerIndex == index {
-        goToNext()
-        voiceLastTappedIndex = -1
-      } else {
-        voiceLastTappedIndex = index
+      
+      if voiceLastTappedIndex == -1 {
+        // In this scenario, we're not yet considering the user to have pressed an incorrect answer
         speech.speak(string: rep)
+      } else if voiceLastTappedIndex == index {
+        if currentChallenge.correctAnswerIndex == index {
+          goToNext()
+          voiceLastTappedIndex = -1
+        } else {
+          addCurrentFailure(index: index)
+        }
+      } else {
+        // Not -1, not correct answer
+        if valuesPressed.isNonEmpty {
+          // If we already have failing values, it means the user chose a wrong value again
+          addCurrentFailure(index: index)
+        }
       }
     } else {
       if currentChallenge.correctAnswerIndex == index {
         goToNext()
       } else {
-        if challengeStates.count != visibleChallenges.count {
-          challengeStates.append(.guessedIncorrectly)
-        }
+        addCurrentFailure(index: index)
       }
     }
   }
-  
+
   // MARK: - Private
   
-  private var challengeStates: [PickChallengeState] = []
+  private var challengeStates: [PickState] = []
   private var resultsInterpreter: ResultsInterpretable
   private var speech: Speech
+  private var valuesPressed: [PickPress] = []
   private var voiceLastTappedIndex: Int = -1
+  
+  private func addCurrentFailure(index: Int) {
+    valuesPressed.append(PickPress(index: index, time: challengeMeasurement.fetchElapsedAndContinue()))
+  }
+}
+
+struct PickPress {
+  
+  let index: Int
+  let time: TimeInterval
 }

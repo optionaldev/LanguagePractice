@@ -12,6 +12,10 @@ extension Array {
       .prefix(Defaults.outputCount - 1)
       .map { $0 }
   }
+  
+  var isNonEmpty: Bool {
+    return !isEmpty
+  }
 }
 
 extension Array where Element: Equatable {
@@ -28,10 +32,6 @@ extension Array where Element: Equatable {
   
   func without(_ element: Element) -> [Element] {
     return self.filter { $0 != element }
-  }
-  
-  var isNonEmpty: Bool {
-    return !isEmpty
   }
 }
 
