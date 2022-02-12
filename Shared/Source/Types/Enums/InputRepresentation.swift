@@ -4,9 +4,11 @@
 // Copyright © 2022 optionaldev. All rights reserved.
 //
 
-// We want to be able to have a representation that allows two languages, so
-// we could ask things like "What's the future form of the verb 食べる?"
-// In case the second part is missing, it's treated as a simple string
+/**
+ We want to be able to have a representation that allows two languages, so
+ we could ask things like "What's the future form of the verb 食べる?"
+ In case the second part is missing, it's treated as a simple string
+ */
 struct VoiceRep {
   
   let firstPart: String
@@ -18,6 +20,14 @@ struct VoiceRep {
   }
 }
 
+/**
+ Translation representation is mainly used when we're displaying
+ the kanji + translation and the user has to guess what the
+ hiragana behind the kanji is.
+ 
+ The translation is a helpful tool. When difficulty will be introduced,
+ for the hard difficulties, this won't be available.
+ */
 struct TranslationRep {
   
   let text: String

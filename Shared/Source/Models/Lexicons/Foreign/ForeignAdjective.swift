@@ -146,9 +146,9 @@ struct ForeignAdjective: ForeignWord, ForeignConjugatable {
         fatalError("TODO: Implement")
     }
     return Conjugation(id: conjugatedString,
-                       tense: tense,
-                       negative: negative,
-                       type: conjugationType)
+                       variation: ConjugationVariation(tense: tense,
+                                                       negative: negative,
+                                                       type: conjugationType))
   }
   
   static var possibleTenses: [Tense] {

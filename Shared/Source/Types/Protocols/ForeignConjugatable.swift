@@ -4,6 +4,11 @@
 // Copyright © 2022 optionaldev. All rights reserved.
 //
 
+/**
+ Some words are conjugatable. At least for english, this
+ means verbs, but in other languages like Japanese, both
+ verbs and adjectives can be conjugated.
+ */
 protocol ForeignConjugatable: Distinguishable {
   
   func conjugate(tense: Tense, negative: Bool, type: ConjugationType) -> Conjugation

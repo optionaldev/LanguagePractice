@@ -6,23 +6,31 @@
 
 extension String {
   
+  // TODO: Will not work if we decide to implementing guessing using romaji
   func detectLanguage() -> Language {
     return self.first?.isASCII == true ? .english : .foreign
   }
   
+  /**
+   Removes and underscore followed by digits, which is
+   the method used to separate words with the same
+   letters but different meaning, such that we keep
+   id unique despite these conflicts.
+   */
   func removingUniqueness() -> String {
     return self.replacingOccurrences(of: "_[0-9]{1,}", with: "", options: CompareOptions.regularExpression, range: self.range(of: self))
   }
   
+  /** Remove last character from a string. */
   func removingLast() -> String {
     var result = self
     result.remove(at: index(before: endIndex))
     return result
   }
   
+  /** Capitalize first letter of the string. */
   func firstLetterUppercased() -> String {
     if let firstCharacter = first {
-//      return "\(String(firstCharacter).uppercased())\(suffix(from: index(after: startIndex)))"
       return "\(String(firstCharacter).uppercased())\(self[index(after: startIndex)...]))"
     }
     return ""

@@ -43,8 +43,6 @@
 		6E1B7A7A2641333B002D0A82 /* UnitRandom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1B7A792641333B002D0A82 /* UnitRandom.swift */; };
 		6E1BA93425FA07BD00D64435 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1BA93325FA07BD00D64435 /* ArrayExtension.swift */; };
 		6E1BA93525FA07BD00D64435 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1BA93325FA07BD00D64435 /* ArrayExtension.swift */; };
-		6E1FF049277F312A00DC54EA /* AdjectiveTense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1FF048277F312A00DC54EA /* AdjectiveTense.swift */; };
-		6E1FF04A277F312A00DC54EA /* AdjectiveTense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1FF048277F312A00DC54EA /* AdjectiveTense.swift */; };
 		6E1FF04C277F39C000DC54EA /* ConjugationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1FF04B277F39C000DC54EA /* ConjugationType.swift */; };
 		6E1FF04D277F39C000DC54EA /* ConjugationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1FF04B277F39C000DC54EA /* ConjugationType.swift */; };
 		6E21B1F62782EF2100296579 /* ConjugatableEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E21B1F52782EF2100296579 /* ConjugatableEntry.swift */; };
@@ -97,7 +95,6 @@
 		6E35D846278F446B00263564 /* QuizBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E35D845278F446B00263564 /* QuizBody.swift */; };
 		6E35D847278F446B00263564 /* QuizBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E35D845278F446B00263564 /* QuizBody.swift */; };
 		6E411D7327AC69AF0099C2B5 /* Speakable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E411D7227AC69AF0099C2B5 /* Speakable.swift */; };
-		6E411D7627AC69E50099C2B5 /* ChallengeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C0DC125D34E1E006C399E /* ChallengeType.swift */; };
 		6E411D7A27AC6A750099C2B5 /* Conjugation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E411D7927AC6A750099C2B5 /* Conjugation.swift */; };
 		6E411D7B27AC6B480099C2B5 /* Tense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E24E28127A1CF2300A39AD0 /* Tense.swift */; };
 		6E411D7C27AC6B480099C2B5 /* LearnedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1B7A52263FE774002D0A82 /* LearnedItem.swift */; };
@@ -161,7 +158,6 @@
 		6E7B154227501CFC007595D8 /* english.json in Resources */ = {isa = PBXBuildFile; fileRef = 6E7B153F27501CFC007595D8 /* english.json */; };
 		6E7B154327501CFC007595D8 /* english.json in Resources */ = {isa = PBXBuildFile; fileRef = 6E7B153F27501CFC007595D8 /* english.json */; };
 		6E7EBAF82732E1FC00A15B25 /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7EBAF72732E1FC00A15B25 /* StringExtensionTests.swift */; };
-		6E8C0DC225D34E1E006C399E /* ChallengeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C0DC125D34E1E006C399E /* ChallengeType.swift */; };
 		6E8C0DC925D34E6B006C399E /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C0DC825D34E6B006C399E /* Language.swift */; };
 		6E96204A25F23EC200E4278B /* SwiftPrint in Frameworks */ = {isa = PBXBuildFile; productRef = 6E96204925F23EC200E4278B /* SwiftPrint */; };
 		6E96205025F24EA200E4278B /* DefaultsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E96204F25F24EA200E4278B /* DefaultsProtocol.swift */; };
@@ -278,7 +274,6 @@
 		6E1B7A792641333B002D0A82 /* UnitRandom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitRandom.swift; sourceTree = "<group>"; };
 		6E1B7A7B2641333B002D0A82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6E1BA93325FA07BD00D64435 /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
-		6E1FF048277F312A00DC54EA /* AdjectiveTense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjectiveTense.swift; sourceTree = "<group>"; };
 		6E1FF04B277F39C000DC54EA /* ConjugationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConjugationType.swift; sourceTree = "<group>"; };
 		6E21B1F52782EF2100296579 /* ConjugatableEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConjugatableEntry.swift; sourceTree = "<group>"; };
 		6E21B1F72782F01800296579 /* ConjugatableEntryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConjugatableEntryProvider.swift; sourceTree = "<group>"; };
@@ -347,7 +342,6 @@
 		6E7B153E27501CFC007595D8 /* japanese.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = japanese.json; sourceTree = "<group>"; };
 		6E7B153F27501CFC007595D8 /* english.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = english.json; sourceTree = "<group>"; };
 		6E7EBAF72732E1FC00A15B25 /* StringExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
-		6E8C0DC125D34E1E006C399E /* ChallengeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeType.swift; sourceTree = "<group>"; };
 		6E8C0DC825D34E6B006C399E /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		6E96204F25F24EA200E4278B /* DefaultsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsProtocol.swift; sourceTree = "<group>"; };
 		6E99DE4D2797663900DE187E /* PickQuizViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickQuizViewModel.swift; sourceTree = "<group>"; };
@@ -568,8 +562,6 @@
 		6E411D7427AC69B90099C2B5 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
-				6E1FF048277F312A00DC54EA /* AdjectiveTense.swift */,
-				6E8C0DC125D34E1E006C399E /* ChallengeType.swift */,
 				6E1FF04B277F39C000DC54EA /* ConjugationType.swift */,
 				6E35D83527877F3700263564 /* InputRepresentation.swift */,
 				6ED070C02758244E00FF33FF /* KnowledgeType.swift */,
@@ -594,10 +586,10 @@
 			isa = PBXGroup;
 			children = (
 				6E411D7927AC6A750099C2B5 /* Conjugation.swift */,
+				6E5FE5FE27B2FA8E00A7F8E1 /* ConjugationVariation.swift */,
 				6E1B7A52263FE774002D0A82 /* LearnedItem.swift */,
 				6E275D0525F61A2E00617262 /* Representation.swift */,
 				6E24E28127A1CF2300A39AD0 /* Tense.swift */,
-				6E5FE5FE27B2FA8E00A7F8E1 /* ConjugationVariation.swift */,
 			);
 			path = Structs;
 			sourceTree = "<group>";
@@ -1086,7 +1078,6 @@
 			files = (
 				6E6AEA6D273981C50079E211 /* CustomLabel.swift in Sources */,
 				6E21B1F62782EF2100296579 /* ConjugatableEntry.swift in Sources */,
-				6E8C0DC225D34E1E006C399E /* ChallengeType.swift in Sources */,
 				6E5CD9D32799E7A8008A8A12 /* ConjugatableResultsInterpreter.swift in Sources */,
 				6E675E8F25CEFE1B002D8D98 /* LanguagePracticeApp.swift in Sources */,
 				6E35D83C278B8DA800263564 /* Entryable.swift in Sources */,
@@ -1125,7 +1116,6 @@
 				6EAA248527AB1376001F991D /* EnglishAdjective.swift in Sources */,
 				6E1B7A5E26411DD3002D0A82 /* Formatters.swift in Sources */,
 				6E55549C25D20674000565F2 /* PhoneTabView.swift in Sources */,
-				6E1FF049277F312A00DC54EA /* AdjectiveTense.swift in Sources */,
 				6EF41E9E273E4AFF007F67F4 /* Screen.swift in Sources */,
 				6E96205025F24EA200E4278B /* DefaultsProtocol.swift in Sources */,
 				6E15F67026294B66008BDFB4 /* FontSelectionView.swift in Sources */,
@@ -1219,7 +1209,6 @@
 				6E675E9025CEFE1B002D8D98 /* LanguagePracticeApp.swift in Sources */,
 				6E10FF6A25DDE41F00F8EDBD /* UrlBuilder.swift in Sources */,
 				6E07D54C25D9774800310B17 /* Storable.swift in Sources */,
-				6E1FF04A277F312A00DC54EA /* AdjectiveTense.swift in Sources */,
 				6E5D631525EEFB4E0062E564 /* HomeView.swift in Sources */,
 				6E24E27627A0848900A39AD0 /* Challengeable.swift in Sources */,
 				6E24E28827A1D46000A39AD0 /* Tab.swift in Sources */,
@@ -1285,7 +1274,6 @@
 				6E14EB9A25F61412008800C6 /* NavigationLazyView.swift in Sources */,
 				6E24E28727A1D1C100A39AD0 /* KnowledgeType.swift in Sources */,
 				6E32D3E327A9CC8000EA5958 /* Possibility.swift in Sources */,
-				6E411D7627AC69E50099C2B5 /* ChallengeType.swift in Sources */,
 				6E411D8227AC6B530099C2B5 /* ForeignConjugatable.swift in Sources */,
 				6E24E28427A1CF3B00A39AD0 /* ChallengeMeasurement.swift in Sources */,
 				6EE81CE625D89EC000667CE5 /* EnglishWord.swift in Sources */,

@@ -23,6 +23,7 @@ struct LexiconView: View {
     HStack {
       VStack {
         Picker("", selection: $viewModel.selection) {
+          // The picker works by going through the tags
           Text("English").tag(Language.english)
           Text("Foreign").tag(Language.foreign)
         }.pickerStyle(SegmentedPickerStyle())

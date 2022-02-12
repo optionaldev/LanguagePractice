@@ -41,7 +41,7 @@ final class ChallengeMeasurement {
   // MARK: - Private
   
   /**
-   Defines the point at which the challenge measurement time starts. When a challenge
+   Defines the point at which the challenge measurement time starts. WHEN a challenge
    starts is different based on the type of challenge the user is given.
    
    For challenges where information is instantly visible (e.g: text challenges, image
@@ -51,7 +51,9 @@ final class ChallengeMeasurement {
    For challenges where information is not instantly visible (e.g: voice challenges)
    the value is set after the sound is heard. For input, this means after the screen
    is presented and the sound has been heard. For output, this means after the
-   correct answer has been heard for the first time.
+   correct answer has been heard by the user for the first time. He might go through
+   multiple answers before finding the correct one. The challenge measurement time
+   isn't shown to the user, so he can't extrapolate the correct answer.
    */
   private var startTime: Date? = nil
 }

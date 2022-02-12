@@ -25,31 +25,3 @@ extension EntryType: Distinguishable {
     return title
   }
 }
-//
-//enum HomeQuiz: String, CaseIterable, Distinguishable {
-//  
-//  case hiragana
-//  case katakana
-//  case words
-//  
-//  var title: String {
-//    switch self {
-//      case .hiragana:
-//        return "Basic Hiragana"
-//      case .katakana:
-//        return "Basic Katakana"
-//      case .words:
-//        return "Simple words"
-//      case .:
-//        return "Simple words"
-//      case .words:
-//        return "Simple words"
-//    }
-//  }
-//  
-//  // MARK: - Distinguishable conformance
-//  
-//  var id: String {
-//    return rawValue
-//  }
-//}

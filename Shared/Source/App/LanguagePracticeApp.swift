@@ -21,11 +21,10 @@ struct LanguagePracticeApp: App {
     _ = Speech.shared
     HomeViewModel().requestAnyMissingItems()
     
-    printStatus()
+    printProgress()
     
     Defaults.performInitialSetup()
-//    UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
-//    UserDefaults.standard.synchronize()
+    
   }
   
   var body: some Scene {
@@ -39,7 +38,8 @@ struct LanguagePracticeApp: App {
   }
   
   // MARK: - Private
-  private func printStatus() {
+  
+  private func printProgress() {
     #if DEBUG
     
     guard Lexicon.shared != nil else {
@@ -59,6 +59,18 @@ struct LanguagePracticeApp: App {
     } else {
       log("Items left to learn: \(itemsLeft)")
     }
+    
+    #endif
+  }
+  
+  private func removeLexiconFromUserDefaults() {
+    #if DEBUG
+    
+    // If Lexicon is available via user defaults, currently
+    // it will never be fetched again
+    // Uncomment to test if network layer is working
+    //    UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+    //    UserDefaults.standard.synchronize()
     
     #endif
   }

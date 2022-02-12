@@ -50,7 +50,7 @@ struct SideMenuView: View {
       .opacity(0.7)
       .background(Color.gray.opacity(0.1))
       
-      // TODO: check if it's possible to change to expand the frame to the left instead of to
+      // TODO: check if it's possible to expand the frame to the left instead of to
       // the right such that we can keep the position of the challenge portion where it is
       .frame(width: showLabelCheckbox ? 150 : 50)
       ZStack {

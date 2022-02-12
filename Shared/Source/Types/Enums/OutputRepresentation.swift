@@ -10,6 +10,13 @@ struct FuriganaRep {
   var groups: [String]
 }
 
+/**
+ How outputs in pick challenges are represented. Even though
+ it's currently identical to InputRepresentation, because
+ there's no way to share cases, it's kind of duplicate code,
+ but there are plans in the future to have more possible
+ input representations than output representations.
+ */
 enum OutputRepresentation: Equatable {
   
   case text(_ text: String)

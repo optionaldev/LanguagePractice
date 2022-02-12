@@ -45,6 +45,10 @@ final class Speech: NSObject, AVSpeechSynthesizerDelegate {
     }
   }
   
+  func speak(speakable: Speakable, language: Language? = nil, volume: Float = 1.0, rate: Float = 0.5) {
+    speak(string: speakable.spoken, language: language, volume: volume, rate: rate)
+  }
+  
   func speak(string: String, language: Language? = nil, volume: Float = 1.0, rate: Float = 0.5) {
     
     guard Defaults.voiceEnabled else {

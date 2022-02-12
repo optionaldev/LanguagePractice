@@ -7,7 +7,5 @@
 struct Conjugation {
   
   let id: String
-  let tense: Tense
-  let negative: Bool
-  let type: ConjugationType
+  let variation: ConjugationVariation
 }

@@ -4,6 +4,10 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
+/**
+ Item is the base protocol of anything and
+ everything that can be found in the Lexicon.
+ */
 protocol Item: Codable, Distinguishable, Speakable {
   
   /// Unique identifier across all items from one lexicon.

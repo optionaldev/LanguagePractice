@@ -4,6 +4,7 @@
 // Copyright © 2022 optionaldev. All rights reserved.
 // 
 
+
 protocol VoiceChallengeable {
 
   func chose(index: Int)

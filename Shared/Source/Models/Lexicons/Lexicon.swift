@@ -4,6 +4,10 @@
 // Copyright © 2021 optionaldev. All rights reserved.
 // 
 
+/**
+ Basically a real life dictionary, but dictionary
+ terminology was avoided due to pre-existing structure.
+ */
 final class Lexicon: Codable {
   
   static let shared: Lexicon! = Defaults.lexicon

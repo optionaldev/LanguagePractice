@@ -9,6 +9,9 @@ enum Language: String, Equatable, CustomStringConvertible {
   case english
   case foreign = "japanese"
   
+  /**
+   Returns foreign if english and vice-versa.
+   */
   var other: Self {
     self == .english ? .foreign : .english
   }

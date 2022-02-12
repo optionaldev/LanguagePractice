@@ -110,7 +110,10 @@ struct ForeignVerb: ForeignWord, ForeignConjugatable {
         }
     }
     
-    return Conjugation(id: text, tense: .present, negative: negative, type: conjugationType)
+    return Conjugation(id: text,
+                       variation: .init(tense: .present,
+                                        negative: negative,
+                                        type: conjugationType))
   }
   
   private func conjugatePast(negative: Bool, conjugationType: ConjugationType) -> Conjugation {
