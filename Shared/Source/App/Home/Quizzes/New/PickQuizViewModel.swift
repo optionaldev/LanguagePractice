@@ -54,6 +54,7 @@ final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceC
   @Published var visibleChallenges: [PickChallenge] = []
   @Published var itemsLearned: [LearnedItem] = []
   
+  var inputSpoken: Bool = false
   var nextChallenge: PickChallenge?
   var queuedVoiceLine: String?
   
@@ -74,6 +75,16 @@ final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceC
     speech.delegate = self
 
     performInitialSetup()
+  }
+  
+  func challengeAppeared() {
+    if case .voice = currentChallenge.inputRep {
+      // nothing to do here
+    } else if case .voice = currentChallenge.correctOutput {
+      // nothing to do here
+    } else {
+      challengeMeasurement.start()
+    }
   }
   
   func handleFinish() {
@@ -120,10 +131,7 @@ final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceC
       // output button to hear the answer and tap the same output button again to choose
       // that answer, so we always remember what the last pressed button was
       
-      if voiceLastTappedIndex == -1 {
-        // In this scenario, we're not yet considering the user to have pressed an incorrect answer
-        speech.speak(string: rep)
-      } else if voiceLastTappedIndex == index {
+      if voiceLastTappedIndex == index {
         if currentChallenge.correctAnswerIndex == index {
           goToNext()
           voiceLastTappedIndex = -1
@@ -131,11 +139,18 @@ final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceC
           addCurrentFailure(index: index)
         }
       } else {
-        // Not -1, not correct answer
-        if valuesPressed.isNonEmpty {
+        speech.speak(string: rep)
+        if voiceLastTappedIndex != -1 {
           // If we already have failing values, it means the user chose a wrong value again
           addCurrentFailure(index: index)
         }
+        voiceLastTappedIndex = index
+//          // In this scenario, we're not yet considering the user to have pressed an incorrect answer
+//        } else
+//        // Not -1, not correct answer
+//        if valuesPressed.isNonEmpty {
+//
+//        }
       }
     } else {
       if currentChallenge.correctAnswerIndex == index {
@@ -144,6 +159,7 @@ final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceC
         addCurrentFailure(index: index)
       }
     }
+    voiceLastTappedIndex = index
   }
 
   // MARK: - Private
@@ -155,6 +171,10 @@ final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceC
   private var voiceLastTappedIndex: Int = -1
   
   private func addCurrentFailure(index: Int) {
+    guard challengeMeasurement.isStarted else {
+      // For voice challenge, we don't start the measurement immediately 
+      return
+    }
     valuesPressed.append(PickPress(index: index, time: challengeMeasurement.fetchElapsedAndContinue()))
   }
 }

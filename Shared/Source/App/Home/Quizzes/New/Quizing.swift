@@ -72,10 +72,16 @@ protocol Quizing: ObservableObject {
    */
   var queuedVoiceLine: String? { get set }
   
+  /**
+   On appear is triggered even during scrolling of the LazyStack, so we need to differentiate between
+   when the view is appearing for the first time and when the view is reappearing
+   */
+  var inputSpoken: Bool { get set }
+  
   func challengeAppeared()
   func finishedCurrentChallenge()
   func handleFinish()
-  func inputTapped()
+  func inputTapped(initial: Bool)
   func goToNext()
   func performInitialSetup()
   func prepareNextChallenge()
@@ -87,7 +93,11 @@ extension Quizing {
     return visibleChallenges.last!
   }
   
-  func inputTapped() {
+  func inputTapped(initial: Bool) {
+    guard (initial && !inputSpoken) || !initial else {
+      return
+    }
+    inputSpoken = true
     if case .voice(let rep) = currentChallenge.inputRep {
       if let secondVoiceLine = rep.secondPart {
         queuedVoiceLine = secondVoiceLine
@@ -97,6 +107,7 @@ extension Quizing {
   }
   
   func goToNext() {
+    inputSpoken = false
     finishedCurrentChallenge()
     
     if let nextChallenge = nextChallenge {
@@ -125,14 +136,6 @@ extension Quizing {
     challengeAppeared()
     
     prepareNextChallengeIfAvailable()
-  }
-  
-  func challengeAppeared() {
-    if case .voice = currentChallenge.inputRep {
-      // nothing to do here
-    } else {
-      challengeMeasurement.start()
-    }
   }
   
   // MARK: - Private

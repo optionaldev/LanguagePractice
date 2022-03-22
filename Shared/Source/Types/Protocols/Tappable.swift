@@ -11,5 +11,5 @@
  */
 protocol InputTappable {
   
-  func inputTapped()
+  func inputTapped(initial: Bool)
 }

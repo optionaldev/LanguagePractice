@@ -38,6 +38,10 @@ final class ChallengeMeasurement {
     return .zero
   }
   
+  var isStarted: Bool {
+    return startTime != nil
+  }
+  
   // MARK: - Private
   
   /**

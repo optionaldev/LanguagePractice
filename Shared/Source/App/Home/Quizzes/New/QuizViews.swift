@@ -30,11 +30,11 @@ struct QuizViews {
           .resizable()
           .frame(width: 50, height: 50)
           .onTapGesture {
-            viewModel.inputTapped()
+            viewModel.inputTapped(initial: false)
           }
           .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-              viewModel.inputTapped()
+              viewModel.inputTapped(initial: true)
             }
           }
       case .textWithTranslation(let rep):
