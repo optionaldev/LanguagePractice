@@ -22,6 +22,8 @@
 		6E10FF6A25DDE41F00F8EDBD /* UrlBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E10FF6825DDE41F00F8EDBD /* UrlBuilder.swift */; };
 		6E112BA925E717BF005CE59B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E112BA825E717BF005CE59B /* Logger.swift */; };
 		6E112BAA25E717BF005CE59B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E112BA825E717BF005CE59B /* Logger.swift */; };
+		6E11ABDF27EBB19A0099CD37 /* SequenceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E11ABDE27EBB19A0099CD37 /* SequenceExtension.swift */; };
+		6E11ABE027EBB19A0099CD37 /* SequenceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E11ABDE27EBB19A0099CD37 /* SequenceExtension.swift */; };
 		6E14EB9925F61412008800C6 /* NavigationLazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E14EB9825F61412008800C6 /* NavigationLazyView.swift */; };
 		6E14EB9A25F61412008800C6 /* NavigationLazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E14EB9825F61412008800C6 /* NavigationLazyView.swift */; };
 		6E15F66526294B04008BDFB4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E15F66426294B04008BDFB4 /* SettingsView.swift */; };
@@ -260,6 +262,7 @@
 		6E07D56125D988AC00310B17 /* MacDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacDefaultsKeys.swift; sourceTree = "<group>"; };
 		6E10FF6825DDE41F00F8EDBD /* UrlBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlBuilder.swift; sourceTree = "<group>"; };
 		6E112BA825E717BF005CE59B /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		6E11ABDE27EBB19A0099CD37 /* SequenceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceExtension.swift; sourceTree = "<group>"; };
 		6E14EB9825F61412008800C6 /* NavigationLazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLazyView.swift; sourceTree = "<group>"; };
 		6E15F66426294B04008BDFB4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		6E15F66F26294B66008BDFB4 /* FontSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSelectionView.swift; sourceTree = "<group>"; };
@@ -493,6 +496,7 @@
 				6E57EDD22622E87600A4EE41 /* EntryTypeExtension.swift */,
 				6E18FC2525D73E1E00EEEB42 /* StringExtension.swift */,
 				6EEAF949260B2EE4005EE9CC /* ImageExtension.swift */,
+				6E11ABDE27EBB19A0099CD37 /* SequenceExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1140,6 +1144,7 @@
 				6E275D1D25F774B700617262 /* PickChallengeState.swift in Sources */,
 				6EE81CC925D89E4E00667CE5 /* ForeignNoun.swift in Sources */,
 				6EEAF94A260B2EE4005EE9CC /* ImageExtension.swift in Sources */,
+				6E11ABDF27EBB19A0099CD37 /* SequenceExtension.swift in Sources */,
 				6E5CD9D02799E387008A8A12 /* TypingChallenge.swift in Sources */,
 				6E24E28227A1CF2300A39AD0 /* Tense.swift in Sources */,
 				6EB3819725D5D68900114B83 /* VoiceHandler.swift in Sources */,
@@ -1234,6 +1239,7 @@
 				6E45651627692CB2006496D0 /* KanaEntryProvider.swift in Sources */,
 				6EC81A9E260AB1400029854B /* ImageCache.swift in Sources */,
 				6E5289462777BDD500DBAF6D /* Vowel.swift in Sources */,
+				6E11ABE027EBB19A0099CD37 /* SequenceExtension.swift in Sources */,
 				6E5CD9DA279B11FB008A8A12 /* KanaResultsInterpreter.swift in Sources */,
 				6EE81CB925D89DD900667CE5 /* ForeignLexicon.swift in Sources */,
 				6EC7F088276F35E0007AB5DF /* WordEntry.swift in Sources */,
