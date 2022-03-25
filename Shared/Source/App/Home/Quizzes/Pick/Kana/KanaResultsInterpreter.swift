@@ -8,6 +8,12 @@ import Foundation
 
 final class KanaResultsInterpreter: ResultsInterpretable {
   
+  init(lexicon: Lexicon) {
+    self.lexicon = lexicon
+  }
+  
+  private var lexicon: Lexicon
+  
   func assess(entries: [Distinguishable], challenges: [PickChallenge], states: [PickState]) -> [LearnedItem] {
     
     guard entries.count == challenges.count && entries.count == states.count else {
@@ -44,6 +50,7 @@ final class KanaResultsInterpreter: ResultsInterpretable {
       .map { $0.id }
       .uniqueElements
       .filter { knownIds.contains($0) }
-      .map { LearnedItem(character: $0, averageTime: history[$0]?.challengeAverage ?? 0) }
+      .compactMap { lexicon.foreignDictionary[$0] }
+      .map { LearnedItem(character: $0.written, averageTime: history[$0.id]?.challengeAverage ?? 0) }
   }
 }

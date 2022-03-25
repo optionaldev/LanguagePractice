@@ -92,6 +92,7 @@ final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceC
   }
   
   func finishedCurrentChallenge() {
+    voiceLastTappedIndex = -1
     let lastMeasurement = challengeMeasurement.stopAndFetchResult()
     if valuesPressed.isEmpty {
       challengeStates.append(.correct(lastMeasurement))
@@ -134,7 +135,6 @@ final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceC
       if voiceLastTappedIndex == index {
         if currentChallenge.correctAnswerIndex == index {
           goToNext()
-          voiceLastTappedIndex = -1
         } else {
           addCurrentFailure(index: index)
         }

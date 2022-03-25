@@ -28,11 +28,11 @@ struct PickQuizView: View {
       case .hiragana:
         viewModel = PickQuizViewModel(entryProvider: HiraganaEntryProvider(lexicon: lexicon),
                                       challengeProvider: KanaPickChallengeProvider(lexicon: lexicon),
-                                      resultsInterpreter: KanaResultsInterpreter())
+                                      resultsInterpreter: KanaResultsInterpreter(lexicon: lexicon))
       case .katakana:
         viewModel = PickQuizViewModel(entryProvider: KatakanaEntryProvider(lexicon: lexicon),
                                       challengeProvider: KanaPickChallengeProvider(lexicon: lexicon),
-                                      resultsInterpreter: KanaResultsInterpreter())
+                                      resultsInterpreter: KanaResultsInterpreter(lexicon: lexicon))
       case .words:
         viewModel = PickQuizViewModel(entryProvider: WordEntryProvider(lexicon: lexicon),
                                       challengeProvider: WordChallengeProvider(lexicon: lexicon, speech: speech),
