@@ -69,16 +69,17 @@ struct QuizBody<ViewModel: Quizing, Content: View>: View {
               content(challenge)
                 .disabled(challenge != viewModel.visibleChallenges.last)
             }
-            if viewModel.itemsLearned.isEmpty == false {
+            if viewModel.quizResult != nil {
               resultsScreen()
             }
           }
           .onChange(of: viewModel.visibleChallenges) { _ in
-            withAnimation {
+            // FIXME: Temporarily removed animations due to animation scroll performance on iPhone simulator
+//            withAnimation {
               value.scrollTo(viewModel.currentChallenge.id)
-            }
+//            }
           }
-          .onChange(of: viewModel.itemsLearned) { _ in
+          .onChange(of: viewModel.quizResult) { _ in
             withAnimation {
               value.scrollTo(Constants.resultsID)
             }
@@ -91,21 +92,34 @@ struct QuizBody<ViewModel: Quizing, Content: View>: View {
       topBar()
     }
   }
-  
-  private func resultsScreen() -> some View {
-    GeometryReader { reader in
-      VStack {
-        ForEach(viewModel.itemsLearned, id:\.id) { learned in
-          Text("\(learned.id) \(learned.challengeAverageTime)")
-            .padding(5)
-        }
-      }
-      // Exact same frame size needs to be specified for both the ZStack and the GeometryReader
-      .frame(width: Canvas.width, height: iOS ? nil : Canvas.height)
-      .background(Color.blue)
+
+  @ViewBuilder
+  func resultsScreen() -> some View {
+    if let result = viewModel.quizResult {
+      switch result {
+        case .learnedNothing:
+          VStack {
+            Text("Nothing learned.")
+              .id(Constants.resultsID)
+          }
+          case .learnedSomething(let learnedItems):
+            GeometryReader { reader in
+              VStack {
+                ForEach(learnedItems, id:\.id) { learned in
+                  Text("\(learned.id) \(learned.challengeAverageTime)")
+                    .padding(5)
+                }
+              }
+              // Exact same frame size needs to be specified for both the ZStack and the GeometryReader
+              .frame(width: Canvas.width, height: iOS ? nil : Canvas.height)
+              .background(Color.blue)
+            }
+            .frame(width: Canvas.width, height: iOS ? nil : Canvas.height)
+            .id(Constants.resultsID)
+          }
+    } else {
+      Text("ok")
     }
-    .frame(width: Canvas.width, height: iOS ? nil : Canvas.height)
-    .id(Constants.resultsID)
   }
   
   // Used for dismissing this view

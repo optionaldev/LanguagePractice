@@ -57,8 +57,10 @@ protocol Quizing: ObservableObject {
   /**
    Used to display words that were considered "learned", based on different metrics.
    This is populated after the last challenge has been completed.
+   There are situations in which nothing new was learned. Find an appropriate
+   way to show that.
    */
-  var itemsLearned: [LearnedItem] { get }
+  var quizResult: QuizResult? { get }
   
   /**
    Use to provide the next challenge.

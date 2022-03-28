@@ -38,21 +38,21 @@ struct TypingState {
 
 protocol ResultsInterpretable {
   
-  func assess(entries: [Distinguishable], challenges: [PickChallenge], states: [PickState]) -> [LearnedItem]
-  func assess(entries: [Distinguishable], challenges: [TypingChallenge], states: [TypingState]) -> [LearnedItem]
+  func assess(entries: [Distinguishable], challenges: [PickChallenge], states: [PickState]) -> QuizResult
+  func assess(entries: [Distinguishable], challenges: [TypingChallenge], states: [TypingState]) -> QuizResult
 }
 
 // TODO: remove extension
 extension ResultsInterpretable {
   
-  func assess(entries: [Distinguishable], challenges: [PickChallenge], states: [PickState]) -> [LearnedItem] {return []}
-  func assess(entries: [Distinguishable], challenges: [TypingChallenge], states: [TypingState]) -> [LearnedItem] { return []}
+  func assess(entries: [Distinguishable], challenges: [PickChallenge], states: [PickState]) -> QuizResult { return .learnedNothing }
+  func assess(entries: [Distinguishable], challenges: [TypingChallenge], states: [TypingState]) -> QuizResult { return .learnedNothing }
 }
 
 final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceChallengeable, InputTappable {
   
   @Published var visibleChallenges: [PickChallenge] = []
-  @Published var itemsLearned: [LearnedItem] = []
+  @Published var quizResult: QuizResult?
   
   var inputSpoken: Bool = false
   var nextChallenge: PickChallenge?
@@ -88,7 +88,7 @@ final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceC
   }
   
   func handleFinish() {
-    itemsLearned = resultsInterpreter.assess(entries: challengeEntries, challenges: visibleChallenges, states: challengeStates)
+    quizResult = resultsInterpreter.assess(entries: challengeEntries, challenges: visibleChallenges, states: challengeStates)
   }
   
   func finishedCurrentChallenge() {
@@ -131,7 +131,6 @@ final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceC
       // When voice is the output type of the challenge, the user first has to tap on the
       // output button to hear the answer and tap the same output button again to choose
       // that answer, so we always remember what the last pressed button was
-      
       if voiceLastTappedIndex == index {
         if currentChallenge.correctAnswerIndex == index {
           goToNext()
@@ -145,12 +144,6 @@ final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceC
           addCurrentFailure(index: index)
         }
         voiceLastTappedIndex = index
-//          // In this scenario, we're not yet considering the user to have pressed an incorrect answer
-//        } else
-//        // Not -1, not correct answer
-//        if valuesPressed.isNonEmpty {
-//
-//        }
       }
     } else {
       if currentChallenge.correctAnswerIndex == index {
@@ -159,7 +152,6 @@ final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceC
         addCurrentFailure(index: index)
       }
     }
-    voiceLastTappedIndex = index
   }
 
   // MARK: - Private
