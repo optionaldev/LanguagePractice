@@ -64,7 +64,7 @@ final class WordChallengeProvider: ChallengeProvidable {
       .compactMap { $0 as? ForeignWord }
       .flatMap { $0.englishImages }
     
-    let po = uniqueItems.filter { $0.id != entry.id }.output
+    let irrespectiveOfImagesOtherWords = uniqueItems.filter { foreignWord.english.contains($0.id) == false }.output
     
     switch entry.category {
       case .english:
