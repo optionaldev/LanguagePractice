@@ -12,6 +12,7 @@ final class WordEntryProvider: EntryProvidable {
 
   func generate() -> [Distinguishable] {
     return lexicon.foreign.all
+      .filter { Defaults.knownIds(for: .picking).contains($0.id) == false }
       .prefix(AppConstants.challengeInitialSampleSize)
       .compactMap { $0 as? ForeignWord }
       .flatMap { generateEntries(forWord: $0) }

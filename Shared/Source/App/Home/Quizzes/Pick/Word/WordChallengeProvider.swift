@@ -126,6 +126,7 @@ final class WordChallengeProvider: ChallengeProvidable {
     }
     
     output.append(correctOutput)
+    output.shuffle()
     
     guard let correctAnswerIndex = output.firstIndex(where: { $0.description == correctOutput.description }) else {
       fatalError("Couldn't find correct answer in list of answers.")

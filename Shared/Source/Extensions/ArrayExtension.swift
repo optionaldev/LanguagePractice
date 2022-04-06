@@ -56,6 +56,9 @@ extension Array where Element: Hashable {
 extension Array where Element == Double {
   
   var challengeAverage: Double {
+    guard count >= 3 else {
+      return 0
+    }
     return suffix(3).reduce(0, +) / 3
   }
 }

@@ -36,7 +36,7 @@ struct PickQuizView: View {
       case .words:
         viewModel = PickQuizViewModel(entryProvider: WordEntryProvider(lexicon: lexicon),
                                       challengeProvider: WordChallengeProvider(lexicon: lexicon, speech: speech),
-                                      resultsInterpreter: WordResultsInterpreter())
+                                      resultsInterpreter: WordResultsInterpreter(lexicon: lexicon))
       case .conjugateVerbs:
         viewModel = PickQuizViewModel(entryProvider: ConjugatableVerbsEntryProvider(),
                                       challengeProvider: VerbConjugationsChallengeProvider(),

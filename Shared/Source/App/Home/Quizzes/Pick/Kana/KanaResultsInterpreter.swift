@@ -12,7 +12,7 @@ final class KanaResultsInterpreter: ResultsInterpretable {
     self.lexicon = lexicon
   }
   
-  private var lexicon: Lexicon
+  private let lexicon: Lexicon
   
   func assess(entries: [Distinguishable], challenges: [PickChallenge], states: [PickState]) -> QuizResult {
     
