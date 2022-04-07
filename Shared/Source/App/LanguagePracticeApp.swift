@@ -47,11 +47,11 @@ struct LanguagePracticeApp: App {
     }
     
     let knownItems = Defaults.knownIds(for: .picking).sorted()
-    if knownItems.count > 40 {
-      log("\(knownItems.count) items learned so far.")
-    } else {
-      log("Items learned so far: \(knownItems)")
-    }
+    let printedItems = knownItems
+      .compactMap { Lexicon.shared.foreignDictionary[$0] as? ForeignWord }
+      .map { $0.id.removingUniqueness() }
+      .joined(separator: ", ")
+    log("Items learned so far: \(printedItems)")
     
     let itemsLeft = Lexicon.shared.foreign.nouns.map { $0.id }.filter { !knownItems.contains($0) }.sorted()
     if itemsLeft.count > 40 {
