@@ -11,3 +11,10 @@ protocol EnglishItem: Item {
 protocol EnglishWord: EnglishItem {
   
 }
+
+extension EnglishWord {
+  
+  var imageExists: Bool {
+    return false
+  }
+}

@@ -8,14 +8,11 @@ struct EnglishLexicon: Codable {
   
   let nouns: [EnglishNoun]
   let adjectives: [EnglishAdjective]
-  
-  init() {
-    nouns = []
-    adjectives = []
-  }
+  let prepositions: [EnglishPreposition]
   
   var all: [EnglishWord] {
     return nouns as [EnglishWord] +
-    adjectives as [EnglishWord]
+    adjectives as [EnglishWord] +
+    prepositions as [EnglishWord]
   }
 }

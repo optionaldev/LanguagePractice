@@ -78,6 +78,8 @@
 		6E289FDA262F5CB40081E38E /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E289FD9262F5CB40081E38E /* CustomTextField.swift */; };
 		6E2B22DA25DC899F001B8A77 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2B22D925DC899F001B8A77 /* Network.swift */; };
 		6E2B22DB25DC899F001B8A77 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2B22D925DC899F001B8A77 /* Network.swift */; };
+		6E2BD77927FAFDFA0034CDED /* EnglishPreposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2BD77827FAFDFA0034CDED /* EnglishPreposition.swift */; };
+		6E2BD77A27FAFDFA0034CDED /* EnglishPreposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2BD77827FAFDFA0034CDED /* EnglishPreposition.swift */; };
 		6E32D3DE27A9BBA100EA5958 /* ConjugatableEntryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E21B1F72782F01800296579 /* ConjugatableEntryProvider.swift */; };
 		6E32D3DF27A9BBA300EA5958 /* ConjugatableEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E21B1F52782EF2100296579 /* ConjugatableEntry.swift */; };
 		6E32D3E027A9BBA700EA5958 /* ConjugatableChallengeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E21B1F92782F17600296579 /* ConjugatableChallengeProvider.swift */; };
@@ -297,6 +299,7 @@
 		6E275D1C25F774B700617262 /* PickChallengeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickChallengeState.swift; sourceTree = "<group>"; };
 		6E289FD9262F5CB40081E38E /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		6E2B22D925DC899F001B8A77 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		6E2BD77827FAFDFA0034CDED /* EnglishPreposition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishPreposition.swift; sourceTree = "<group>"; };
 		6E32D3E127A9CC8000EA5958 /* Possibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Possibility.swift; sourceTree = "<group>"; };
 		6E32E8A12639F5EB00775B65 /* ForeignItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignItem.swift; sourceTree = "<group>"; };
 		6E32E8B02639F71A00775B65 /* ForeignCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignCharacter.swift; sourceTree = "<group>"; };
@@ -806,8 +809,8 @@
 			isa = PBXGroup;
 			children = (
 				6E675E6325CEFE1A002D8D98 /* LanguagePracticeApp.swift */,
-				6EA9A78E2737DA8D004AD26A /* Lexicon */,
 				6E5D632D25EEFD0F0062E564 /* Home */,
+				6EA9A78E2737DA8D004AD26A /* Lexicon */,
 				6EEAA8A526277964007DF1BA /* Settings */,
 			);
 			path = App;
@@ -831,6 +834,7 @@
 				6EE81CB025D89DCA00667CE5 /* EnglishLexicon.swift */,
 				6EE81CDD25D89EAB00667CE5 /* EnglishNoun.swift */,
 				6EE81CE425D89EC000667CE5 /* EnglishWord.swift */,
+				6E2BD77827FAFDFA0034CDED /* EnglishPreposition.swift */,
 			);
 			path = English;
 			sourceTree = "<group>";
@@ -1171,6 +1175,7 @@
 				6EB702872635DAF900E46268 /* ChallengeSlot.swift in Sources */,
 				6E32D3E227A9CC8000EA5958 /* Possibility.swift in Sources */,
 				6E11ABE227F2312C0099CD37 /* QuizResult.swift in Sources */,
+				6E2BD77927FAFDFA0034CDED /* EnglishPreposition.swift in Sources */,
 				6E19C15E2631407E00AE993D /* TypingChallengeState.swift in Sources */,
 				6E8C0DC925D34E6B006C399E /* Language.swift in Sources */,
 				6E6529A0275578F300042745 /* TypingQuizViewModel.swift in Sources */,
@@ -1245,6 +1250,7 @@
 				6E45651627692CB2006496D0 /* KanaEntryProvider.swift in Sources */,
 				6EC81A9E260AB1400029854B /* ImageCache.swift in Sources */,
 				6E5289462777BDD500DBAF6D /* Vowel.swift in Sources */,
+				6E2BD77A27FAFDFA0034CDED /* EnglishPreposition.swift in Sources */,
 				6E11ABE027EBB19A0099CD37 /* SequenceExtension.swift in Sources */,
 				6E5CD9DA279B11FB008A8A12 /* KanaResultsInterpreter.swift in Sources */,
 				6EE81CB925D89DD900667CE5 /* ForeignLexicon.swift in Sources */,

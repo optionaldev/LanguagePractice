@@ -91,8 +91,8 @@ struct LexiconView: View {
             Speech.shared.speak(string: item.id.removingUniqueness(), language: viewModel.selection)
           }
       }
+      .padding(0)
     }
-    .frame(width: Screen.width, height: Screen.height)
   }
   
   private func fetchHiragana(row: Int, column: Int) -> ForeignItem? {
