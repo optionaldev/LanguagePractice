@@ -11,6 +11,8 @@ protocol ForeignWord: ForeignItem {
   
   var englishImages: [String] { get }
   
+  var uncommonWriting: Bool { get }
+  
   #if JAPANESE
   /**
    A string containing one or more hiragana characters/groups, separated by spaces.
@@ -45,6 +47,10 @@ extension ForeignWord {
   
   var englishImages: [String] {
     return english.filter { Persistence.imagePath(id: $0) != nil }
+  }
+  
+  var uncommonWriting: Bool {
+    return false
   }
 }
 

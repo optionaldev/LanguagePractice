@@ -23,13 +23,46 @@ extension Character {
       /* r */ "ら", "り", "る", "れ", "ろ",
       /* y */ "や", "ゆ", "よ",
       /* w */ "わ", "を",
-      "ん",
+              "ん",
       
       // Extended hiragana specific characters (smaller versions of や　ゆ　よ)
-      "ゃ", "ゅ", "ょ",
+              "ゃ", "ゅ", "ょ",
       
       // Double consonant marker (small tsu)
-      "っ"]
+              "っ"]
+      .contains(self)
+  }
+  
+  var isKatakana: Bool {
+    return [
+      /*row*/
+      /* a */ "ア", "イ", "ウ", "エ", "オ",
+      /* k */ "カ", "キ", "ク", "ケ", "コ",
+      /* g */ "ガ", "ギ", "グ", "ゲ", "ゴ",
+      /* s */ "サ", "シ", "ス", "セ", "ソ",
+      /* z */ "ザ", "ジ", "ズ", "ゼ", "ゾ",
+      /* t */ "タ", "チ", "ツ", "テ", "ト",
+      /* d */ "ダ", "ヂ", "ヅ", "デ", "ド",
+      /* n */ "ナ", "ニ", "ヌ", "ネ", "ノ",
+      /* h */ "ハ", "ヒ", "フ", "ヘ", "ホ",
+      /* b */ "バ", "ビ", "ブ", "ベ", "ボ",
+      /* p */ "パ", "ピ", "プ", "ペ", "ポ",
+      /* m */ "マ", "ミ", "ム", "メ", "モ",
+      /* r */ "ラ", "リ", "ル", "レ", "ロ",
+      /* y */ "ヤ", "ユ", "ヨ",
+      /* w */ "ワ", "ヲ",
+              "ン",
+      
+              
+      // Extended katakana specific characters (smaller versions)
+              "ァ", "ィ", "ヮ", "ェ", "ォ",
+              "ャ", "ュ", "ョ",
+      
+      // Elongated vowel marker
+              "ー",
+    
+      // Double consonant marker (small tsu)
+              "ッ"]
       .contains(self)
   }
 }

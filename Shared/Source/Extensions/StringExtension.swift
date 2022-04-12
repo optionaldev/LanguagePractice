@@ -56,11 +56,16 @@ extension String {
   }
   
   var containsKanji: Bool {
-    return first(where: { !$0.isHiragana }) != nil
+    return first(where: { !$0.isHiragana && !$0.isKatakana }) != nil
   }
   
   var containsHiragana: Bool {
     return first(where: { $0.isHiragana }) != nil
   }
+  
+  var containsKatakana: Bool {
+    return first(where: { $0.isKatakana }) != nil
+  }
+  
   #endif
 }

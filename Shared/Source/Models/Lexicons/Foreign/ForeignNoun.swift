@@ -10,6 +10,10 @@ struct ForeignNoun: ForeignWord, Hashable {
   let written: String
   let english: [String]
   
+  var uncommonWriting: Bool {
+    return uncommon == 1
+  }
+  
   #if JAPANESE
   let furigana: String?
   
@@ -27,6 +31,7 @@ struct ForeignNoun: ForeignWord, Hashable {
     case id
     case written  = "ch"
     case english  = "en"
+    case uncommon = "uc"
     
     #if JAPANESE
     case furigana      = "fg"
@@ -36,6 +41,8 @@ struct ForeignNoun: ForeignWord, Hashable {
   }
   
   // MARK: - Private
+  
+  private var uncommon: Int?
   
   #if JAPANESE
   /// Absence of this value means we should just read the characters
