@@ -23,7 +23,7 @@ class StringExtensionTests: XCTestCase {
       "cold"
     ]
     
-    let results = possibleKeys.map { $0.removingIdentifier() }
+    let results = possibleKeys.map { $0.removingUniqueness() }
     
     for (index, value) in results.enumerated() {
       XCTAssertEqual(value, expectedResults[index])
