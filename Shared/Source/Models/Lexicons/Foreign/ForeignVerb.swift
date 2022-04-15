@@ -18,6 +18,7 @@ struct ForeignVerb: ForeignWord, ForeignConjugatable {
   let id: String
   let written: String
   let english: [String]
+  let jlpt: Int?
   
   // TODO: Revert to being fetched from Codable
   var category: ForeignVerbCategory {
@@ -40,6 +41,7 @@ struct ForeignVerb: ForeignWord, ForeignConjugatable {
     case id
     case written = "ch"
     case english = "en"
+    case jlpt     = "jl"
 //    case category = "ca"
     
 #if JAPANESE

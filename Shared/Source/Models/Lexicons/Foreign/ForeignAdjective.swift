@@ -20,6 +20,7 @@ struct ForeignAdjective: ForeignWord, ForeignConjugatable {
   
 #if JAPANESE
   let furigana: String?
+  let jlpt: Int?
   
   var groupFurigana: Bool {
     return irregularKana == 1
@@ -41,6 +42,7 @@ struct ForeignAdjective: ForeignWord, ForeignConjugatable {
     case id
     case written  = "ch"
     case english  = "en"
+    case jlpt     = "jl"
     
 #if JAPANESE
     case furigana      = "fg"

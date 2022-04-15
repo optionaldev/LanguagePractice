@@ -14,16 +14,18 @@ final class WordEntryProvider: EntryProvidable {
     return lexicon.foreign.all
       // Filter already known words
       .filter { Defaults.knownIds(for: .picking).contains($0.id) == false }
-      
+    
+      // Excluse characters since we're only interested in words
+      .compactMap { $0 as? ForeignWord }
+    
+      // We want to start by learning JLPT5 words and leave non-JLPT words at the end
+      .sorted { ($0.jlpt ?? 0) > ($1.jlpt ?? 0) }
     
       // In order to prevent compactMap on too many items, we select double
       // the amount of needed items and we expect that even after filtering
       // we will have enough items
       .prefix(AppConstants.challengeInitialSampleSize * 2)
     
-      // Cast into ForeignWord, should always succeed
-      .compactMap { $0 as? ForeignWord }
-      
       // Even though Katakana is part of the dictionary, we don't
       // prioritize learning them because they're often words
       // that an English speaker can understand

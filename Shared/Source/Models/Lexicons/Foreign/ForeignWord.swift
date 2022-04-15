@@ -40,6 +40,18 @@ protocol ForeignWord: ForeignItem {
    * __false__ means each kanji has a separate hiragana representation.
    */
   var groupFurigana: Bool { get }
+  
+  /**
+   Japanese Language Proficiency Test
+   Integer in the range 1 to 5, where 1 is the hardest and 5 is the easiest.
+   Lexicons will be ordered based on JLPT level and quizzes will always take the words in order.
+   It's not excluded to have JLPT4 words mixed with JLPT5 words, since at one point
+   we might only have 1-2 JLPT5 words left to learn, but we still want a complete quiz.
+   
+   * __nil__ means that the word is less common and not part of the JLPT system.
+   * __1-5__ expected value, any other integer value is invalid
+   */
+  var jlpt: Int? { get }
   #endif
 }
 

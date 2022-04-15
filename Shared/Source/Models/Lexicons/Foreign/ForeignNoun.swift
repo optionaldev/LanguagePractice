@@ -9,13 +9,13 @@ struct ForeignNoun: ForeignWord, Hashable {
   let id: String
   let written: String
   let english: [String]
-  
   var uncommonWriting: Bool {
     return uncommon == 1
   }
   
   #if JAPANESE
   let furigana: String?
+  let jlpt: Int?
   
   var groupFurigana: Bool {
     return irregularKana == 1
@@ -32,6 +32,7 @@ struct ForeignNoun: ForeignWord, Hashable {
     case written  = "ch"
     case english  = "en"
     case uncommon = "uc"
+    case jlpt     = "jl"
     
     #if JAPANESE
     case furigana      = "fg"

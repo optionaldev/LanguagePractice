@@ -24,7 +24,6 @@ struct LanguagePracticeApp: App {
     printProgress()
     
     Defaults.performInitialSetup()
-    
   }
   
   var body: some Scene {
