@@ -4,4 +4,15 @@
 // Copyright © 2022 optionaldev. All rights reserved.
 // 
 
-import Foundation
+struct EnglishPronoun: EnglishWord {
+  
+  let id: String
+  let clarification: String?
+  let reference: String?
+  
+  enum CodingKeys: String, CodingKey {
+    case id
+    case clarification = "cl"
+    case reference     = "rf"
+  }
+}

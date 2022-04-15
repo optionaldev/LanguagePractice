@@ -9,10 +9,12 @@ struct EnglishLexicon: Codable {
   let nouns: [EnglishNoun]
   let adjectives: [EnglishAdjective]
   let prepositions: [EnglishPreposition]
+  let pronouns: [EnglishPronoun]
   
   var all: [EnglishWord] {
     return nouns as [EnglishWord] +
     adjectives as [EnglishWord] +
-    prepositions as [EnglishWord]
+    prepositions as [EnglishWord] +
+    pronouns as [EnglishWord]
   }
 }

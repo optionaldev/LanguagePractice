@@ -81,6 +81,8 @@
 		6E2BD77927FAFDFA0034CDED /* EnglishPreposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2BD77827FAFDFA0034CDED /* EnglishPreposition.swift */; };
 		6E2BD77A27FAFDFA0034CDED /* EnglishPreposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2BD77827FAFDFA0034CDED /* EnglishPreposition.swift */; };
 		6E3008022803300500D97626 /* DecodingIgnoringInvalidElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3008012803300500D97626 /* DecodingIgnoringInvalidElements.swift */; };
+		6E3008052807537B00D97626 /* EnglishPronoun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3008032807534100D97626 /* EnglishPronoun.swift */; };
+		6E3008062807537B00D97626 /* EnglishPronoun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3008032807534100D97626 /* EnglishPronoun.swift */; };
 		6E32D3DE27A9BBA100EA5958 /* ConjugatableEntryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E21B1F72782F01800296579 /* ConjugatableEntryProvider.swift */; };
 		6E32D3DF27A9BBA300EA5958 /* ConjugatableEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E21B1F52782EF2100296579 /* ConjugatableEntry.swift */; };
 		6E32D3E027A9BBA700EA5958 /* ConjugatableChallengeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E21B1F92782F17600296579 /* ConjugatableChallengeProvider.swift */; };
@@ -302,6 +304,7 @@
 		6E2B22D925DC899F001B8A77 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		6E2BD77827FAFDFA0034CDED /* EnglishPreposition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishPreposition.swift; sourceTree = "<group>"; };
 		6E3008012803300500D97626 /* DecodingIgnoringInvalidElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodingIgnoringInvalidElements.swift; sourceTree = "<group>"; };
+		6E3008032807534100D97626 /* EnglishPronoun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishPronoun.swift; sourceTree = "<group>"; };
 		6E32D3E127A9CC8000EA5958 /* Possibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Possibility.swift; sourceTree = "<group>"; };
 		6E32E8A12639F5EB00775B65 /* ForeignItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignItem.swift; sourceTree = "<group>"; };
 		6E32E8B02639F71A00775B65 /* ForeignCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignCharacter.swift; sourceTree = "<group>"; };
@@ -836,8 +839,9 @@
 				6EAA248427AB1376001F991D /* EnglishAdjective.swift */,
 				6EE81CB025D89DCA00667CE5 /* EnglishLexicon.swift */,
 				6EE81CDD25D89EAB00667CE5 /* EnglishNoun.swift */,
-				6EE81CE425D89EC000667CE5 /* EnglishWord.swift */,
 				6E2BD77827FAFDFA0034CDED /* EnglishPreposition.swift */,
+				6E3008032807534100D97626 /* EnglishPronoun.swift */,
+				6EE81CE425D89EC000667CE5 /* EnglishWord.swift */,
 			);
 			path = English;
 			sourceTree = "<group>";
@@ -1101,6 +1105,7 @@
 				6E32E8A22639F5EB00775B65 /* ForeignItem.swift in Sources */,
 				6E99DE4E2797663900DE187E /* PickQuizViewModel.swift in Sources */,
 				6E275D0625F61A2E00617262 /* Representation.swift in Sources */,
+				6E3008052807537B00D97626 /* EnglishPronoun.swift in Sources */,
 				6EE81CB125D89DCA00667CE5 /* EnglishLexicon.swift in Sources */,
 				6E24E27527A0848900A39AD0 /* Challengeable.swift in Sources */,
 				6EE81CB825D89DD900667CE5 /* ForeignLexicon.swift in Sources */,
@@ -1266,6 +1271,7 @@
 				6E15F67126294B66008BDFB4 /* FontSelectionView.swift in Sources */,
 				6EB381A725D5D70900114B83 /* SpeechBlacklist.swift in Sources */,
 				6E23CD0726041E9A00D022B2 /* MatrixView.swift in Sources */,
+				6E3008062807537B00D97626 /* EnglishPronoun.swift in Sources */,
 				6EB3818D25D5D5FF00114B83 /* Voices.swift in Sources */,
 				6E96205125F24EA200E4278B /* DefaultsProtocol.swift in Sources */,
 				6EE681C326480941000554BE /* SettingsView.swift in Sources */,
