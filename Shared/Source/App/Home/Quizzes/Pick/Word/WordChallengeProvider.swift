@@ -142,37 +142,41 @@ final class WordChallengeProvider: ChallengeProvidable {
   
   // The next two functions are identical except for return type. Is it somehow possible to unity them into one?
   private func generateTextualRepresentation(forWord item: Item) -> InputRepresentation {
-    if let foreignWord = item as? ForeignWord,
-       foreignWord.hasFurigana
-    {
-      let charactersArray = foreignWord.written.map { String($0) }
-      let representation = FuriganaRep(text: charactersArray,
-                                       groups: foreignWord.kanaComponents)
-      if foreignWord.groupFurigana {
-        return .textWithIrregularFurigana(representation)
-      } else {
-        return .textWithRegularFurigana(representation)
+    if let foreignWord = item as? ForeignWord {
+      
+      if foreignWord.uncommonWriting {
+        return .text(foreignWord.kana ?? foreignWord.written)
+      } else if foreignWord.hasFurigana {
+        let charactersArray = foreignWord.written.map { String($0) }
+        let representation = FuriganaRep(text: charactersArray,
+                                         groups: foreignWord.kanaComponents)
+        if foreignWord.groupFurigana {
+          return .textWithIrregularFurigana(representation)
+        } else {
+          return .textWithRegularFurigana(representation)
+        }
       }
-    } else {
-      return .text(item.written)
     }
+    return .text(item.written)
   }
   
   private func generateTextualRepresentation(forWord item: Item) -> OutputRepresentation {
-    if let foreignWord = item as? ForeignWord,
-       foreignWord.hasFurigana
-    {
-      let charactersArray = foreignWord.written.map { String($0) }
-      let representation = FuriganaRep(text: charactersArray,
-                                       groups: foreignWord.kanaComponents)
-      if foreignWord.groupFurigana {
-        return .textWithIrregularFurigana(representation)
-      } else {
-        return .textWithRegularFurigana(representation)
+    if let foreignWord = item as? ForeignWord {
+      
+      if foreignWord.uncommonWriting {
+        return .text(foreignWord.kana ?? foreignWord.written)
+      } else if foreignWord.hasFurigana {
+        let charactersArray = foreignWord.written.map { String($0) }
+        let representation = FuriganaRep(text: charactersArray,
+                                         groups: foreignWord.kanaComponents)
+        if foreignWord.groupFurigana {
+          return .textWithIrregularFurigana(representation)
+        } else {
+          return .textWithRegularFurigana(representation)
+        }
       }
-    } else {
-      return .text(item.written)
     }
+    return .text(item.written)
   }
   
   func randomEnglishWord(forForeignWordId foreignId: String) -> EnglishItem {

@@ -18,6 +18,11 @@ struct ForeignVerb: ForeignWord, ForeignConjugatable {
   let id: String
   let written: String
   let english: [String]
+  
+  var uncommonWriting: Bool {
+    return uncommon == 1
+  }
+  
   let jlpt: Int?
   
   // TODO: Revert to being fetched from Codable
@@ -39,9 +44,10 @@ struct ForeignVerb: ForeignWord, ForeignConjugatable {
   
   enum CodingKeys: String, CodingKey {
     case id
-    case written = "ch"
-    case english = "en"
+    case written  = "ch"
+    case english  = "en"
     case jlpt     = "jl"
+    case uncommon = "un"
 //    case category = "ca"
     
 #if JAPANESE
@@ -52,6 +58,8 @@ struct ForeignVerb: ForeignWord, ForeignConjugatable {
   }
   
   // MARK: - Private
+  
+  private var uncommon: Int?
   
   private var readKana: Int?
   

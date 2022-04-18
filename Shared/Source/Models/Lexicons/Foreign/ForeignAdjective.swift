@@ -18,6 +18,10 @@ struct ForeignAdjective: ForeignWord, ForeignConjugatable {
   let written: String
   let english: [String]
   
+  var uncommonWriting: Bool {
+    return uncommon == 1
+  }
+  
 #if JAPANESE
   let furigana: String?
   let jlpt: Int?
@@ -43,6 +47,7 @@ struct ForeignAdjective: ForeignWord, ForeignConjugatable {
     case written  = "ch"
     case english  = "en"
     case jlpt     = "jl"
+    case uncommon = "un"
     
 #if JAPANESE
     case furigana      = "fg"
@@ -54,6 +59,7 @@ struct ForeignAdjective: ForeignWord, ForeignConjugatable {
   
   // MARK: - Private
   
+  private var uncommon: Int?
   private var irregularKana: Int?
   private var readKana: Int?
   private var iAdjective: Int?

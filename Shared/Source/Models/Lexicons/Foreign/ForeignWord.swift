@@ -60,10 +60,6 @@ extension ForeignWord {
   var englishImages: [String] {
     return english.filter { Persistence.imagePath(id: $0) != nil }
   }
-  
-  var uncommonWriting: Bool {
-    return false
-  }
 }
 
 #if JAPANESE
