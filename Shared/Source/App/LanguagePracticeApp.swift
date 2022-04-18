@@ -52,7 +52,9 @@ struct LanguagePracticeApp: App {
       .joined(separator: ", ")
     log("Items learned so far: \(printedItems)")
     
-    let itemsLeft = Lexicon.shared.foreign.nouns.map { $0.id }.filter { !knownItems.contains($0) }.sorted()
+    let itemsLeft = Lexicon.shared.foreign.all
+      .map { $0.id }
+      .filter { !knownItems.contains($0) }
     if itemsLeft.count > 40 {
       log("\(itemsLeft.count) items left to learn.")
     } else {

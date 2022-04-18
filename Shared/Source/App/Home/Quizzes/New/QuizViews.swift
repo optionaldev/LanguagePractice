@@ -13,6 +13,7 @@ import struct SwiftUI.Environment
 import struct SwiftUI.ForEach
 import struct SwiftUI.HStack
 import struct SwiftUI.Image
+import struct SwiftUI.Spacer
 import struct SwiftUI.Text
 import struct SwiftUI.ViewBuilder
 import struct SwiftUI.VStack
@@ -50,36 +51,55 @@ struct QuizViews {
           .multilineTextAlignment(.center)
           .font(.system(size: 30))
       case .textWithRegularFurigana(let rep):
-        textWithFurigana(representation: rep)
+        textWithFurigana(representation: rep, regular: true)
           .background(Color.blue.opacity(0.5))
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .cornerRadius(5)
       case .textWithIrregularFurigana(let rep):
-        // TODO: Solution is tricky because we need a combination of hstack & vstack
-        fatalError()
+        textWithFurigana(representation: rep, regular: false)
+          .background(Color.blue.opacity(0.5))
+          .frame(maxWidth: .infinity, maxHeight: .infinity)
+          .cornerRadius(5)
+        //      case .textWithIrregularFurigana(let rep):
       case .image(let rep):
         viewForImage(id: rep, signal: .output)
     }
   }
   
-  static func textWithFurigana(representation: FuriganaRep) -> some View {
-    HStack(spacing: 0) {
-      ForEach(0..<representation.text.count, id: \.self) { index in
-        VStack(alignment: .center, spacing: 0) {
-          if representation.groups.isEmpty == false {
-            Text(representation.groups[index])
-              .foregroundColor(Color.black)
-              .font(.system(size: 15))
-              .opacity(AppConstants.defaultOpacity)
-              .background(Color.blue.opacity(0.3))
+  @ViewBuilder
+  static func textWithFurigana(representation: FuriganaRep, regular: Bool) -> some View {
+    if regular {
+      HStack(spacing: 0) {
+        ForEach(0..<representation.text.count, id: \.self) { index in
+          VStack(alignment: .center, spacing: 0) {
+            if representation.groups.isEmpty == false {
+              Text(representation.groups[index])
+                .foregroundColor(Color.black)
+                .font(.system(size: 15))
+                .opacity(AppConstants.defaultOpacity)
+                .background(Color.blue.opacity(0.3))
+            }
+            Text("\(representation.text[index])")
+              .font(.system(size: 30))
+              .padding(.bottom, 5)
+              .background(Color.green.opacity(0.3))
           }
-          Text("\(representation.text[index])")
-            .font(.system(size: 30))
-            .padding(.bottom, 5)
-            .background(Color.green.opacity(0.3))
+          .background(Color.purple.opacity(0.3))
         }
-        .background(Color.purple.opacity(0.3))
       }
+    } else {
+      VStack(alignment: .leading) {
+        Text(representation.groups.joined())
+          .foregroundColor(Color.black)
+          .font(.system(size: 15))
+          .opacity(AppConstants.defaultOpacity)
+          .background(Color.blue.opacity(0.3))
+        Text(representation.text.joined())
+          .font(.system(size: 30))
+          .padding(.bottom, 5)
+          .background(Color.green.opacity(0.3))
+      }
+      .background(Color.purple.opacity(0.3))
     }
   }
   

@@ -6,8 +6,8 @@
 
 struct FuriganaRep {
   
-  var text: [String]
-  var groups: [String]
+  let text: [String]
+  let groups: [String]
 }
 
 /**

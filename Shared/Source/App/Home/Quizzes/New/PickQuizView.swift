@@ -133,13 +133,15 @@ struct PickQuizView: View {
           .background(Color.blue.opacity(0.5))
           .cornerRadius(5)
       case .textWithRegularFurigana(let rep):
-        QuizViews.textWithFurigana(representation: rep)
+        QuizViews.textWithFurigana(representation: rep, regular: true)
           .background(Color.blue.opacity(0.5))
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .cornerRadius(5)
       case .textWithIrregularFurigana(let rep):
-        // TODO: Solution is tricky because we need a combination of hstack & vstack
-        fatalError()
+        QuizViews.textWithFurigana(representation: rep, regular: false)
+          .background(Color.blue.opacity(0.5))
+          .frame(maxWidth: .infinity, maxHeight: .infinity)
+          .cornerRadius(5)
       case .text(let rep):
         Text(rep)
           .multilineTextAlignment(.center)
