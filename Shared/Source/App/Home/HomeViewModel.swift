@@ -11,6 +11,7 @@ import class Foundation.JSONDecoder
 import protocol Foundation.ObservableObject
 
 import struct Foundation.Data
+import class Foundation.DispatchQueue
 import struct Foundation.Published
 import struct Foundation.URL
 
@@ -33,6 +34,10 @@ final class HomeViewModel: ObservableObject {
             
             Defaults.set(englishLexicon, forKey: .englishLexicon)
             Defaults.set(foreignLexicon, forKey: .foreignLexicon)
+            
+            DispatchQueue.global(qos: .background).async { [weak self] in
+              self?.checkForDuplicateEntries()
+            }
           } 
         } catch {
           log(error)
@@ -104,8 +109,22 @@ final class HomeViewModel: ObservableObject {
   }
   
   private func checkForDuplicateEntries() {
-    checkForDuplicateEntries(Lexicon.shared.english.nouns)
-    checkForDuplicateEntries(Lexicon.shared.foreign.nouns)
+    #if DEBUG
+    checkForDuplicateEntries(Lexicon.shared.english.all)
+    checkForDuplicateEntries(Lexicon.shared.foreign.all)
+    
+    for word in Lexicon.shared.foreign.all.compactMap({ $0 as? ForeignWord }) {
+      if word.english.isEmpty {
+        log("Found foreign word \"\(word.id)\" with no English entry", type: .unexpected)
+      } else {
+        for englishEntry in word.english {
+          if Lexicon.shared.englishDictionary[englishEntry] == nil {
+            log("Foreign word \"\(word.id)\" has an English entry \"\(englishEntry)\" that's not part of the English dictionary")
+          }
+        }
+      }
+    }
+    #endif
   }
   
   private func checkForDuplicateEntries(_ items: [Item]) {
@@ -116,7 +135,7 @@ final class HomeViewModel: ObservableObject {
       if dictionary[item.id] == nil {
         dictionary[item.id] = 1
       } else {
-        log("Found duplicate for \(item.id)", type: .unexpected)
+        log("Found duplicate for \"\(item.id)\"", type: .unexpected)
       }
     }
     #endif
