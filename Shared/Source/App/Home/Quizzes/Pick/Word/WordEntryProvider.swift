@@ -11,7 +11,7 @@ final class WordEntryProvider: EntryProvidable {
   }
 
   func generate() -> [Distinguishable] {
-    return lexicon.foreign.all
+    var words = lexicon.foreign.all
       // Filter already known words
       .filter { Defaults.knownIds(for: .picking).contains($0.id) == false }
     
@@ -38,9 +38,13 @@ final class WordEntryProvider: EntryProvidable {
       .flatMap { generateEntries(forWord: $0) }
       
       // Shuffle to prevent same entry challenge, one after the other
-      // TODO: It's still possible after a shuffle that same entry challenge is next to each other
-      // so we need an algorithm for splitting
       .shuffled()
+    
+    shuffleUntilNoDuplicates(&words)
+    
+    print(words.compactMap { $0.id }.joined(separator: "\n"))
+    
+    return words
   }
 
   // MARK: - Private
@@ -50,5 +54,50 @@ final class WordEntryProvider: EntryProvidable {
   private func generateEntries(forWord word: ForeignWord) -> [WordEntry] {
     return WordEntry.Category.all
       .map { WordEntry(id: word.id, category: $0) }
+  }
+  
+  private func shuffleUntilNoDuplicates(_ words: inout [WordEntry]) {
+    
+    print("Called shuffle.")
+    
+    var firstDuplicate: Int?
+    var secondDuplicate: Int?
+    
+    for index in 0..<words.count {
+      if index + 1 < words.count && words[index].id == words[index + 1].id {
+        if firstDuplicate == nil {
+          firstDuplicate = index
+        } else {
+          if secondDuplicate == nil {
+            secondDuplicate = index
+          } else {
+            // Already have 2 duplicates and found a third
+            // Call the manual management off and try reshuffling
+            words.shuffle()
+            shuffleUntilNoDuplicates(&words)
+            return
+          }
+        }
+      }
+    }
+    
+    if let first = firstDuplicate {
+      if let second = secondDuplicate {
+        let firstValue = words[first]
+        let secondValue = words[second]
+        
+        words[first] = secondValue
+        words[second] = firstValue
+      } else {
+        let element = words.remove(at: first)
+        if first > 10 {
+          words.insert(element, at: 0)
+        } else {
+          words.append(element)
+        }
+      }
+      
+      shuffleUntilNoDuplicates(&words)
+    }
   }
 }
