@@ -8,8 +8,11 @@ import Dispatch
 
 import protocol SwiftUI.View
 
+import struct SwiftUI.AppStorage
 import struct SwiftUI.Button
+import struct SwiftUI.CGFloat
 import struct SwiftUI.Color
+import struct SwiftUI.Font
 import struct SwiftUI.ForEach
 import struct SwiftUI.HStack
 import struct SwiftUI.Image
@@ -19,6 +22,7 @@ import struct SwiftUI.PlainButtonStyle
 import struct SwiftUI.Rectangle
 import struct SwiftUI.VStack
 import struct SwiftUI.ViewBuilder
+import SwiftUI
 
 
 struct PickQuizView: View {
@@ -128,7 +132,7 @@ struct PickQuizView: View {
           .multilineTextAlignment(.center)
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .contentShape(Rectangle())
-          .font(.system(size: 25))
+          .font(customFont(ofSize: 25))
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .background(Color.blue.opacity(0.5))
           .cornerRadius(5)
@@ -145,10 +149,21 @@ struct PickQuizView: View {
       case .text(let rep):
         Text(rep)
           .multilineTextAlignment(.center)
-          .font(.system(size: 20))
+          .font(customFont(ofSize: 20))
           .background(Color.blue.opacity(0.5))
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .cornerRadius(5)
     }
   }
+  
+  func customFont(ofSize size: CGFloat) -> Font {
+    if let fontName = kanjiFontName {
+      print("custom font")
+      return .custom(fontName, size: size)
+    }
+    print("system font")
+    return .system(size: size)
+  }
+  
+  @AppStorage(DefaultsStringKey.kanjiFontName.rawValue) var kanjiFontName: String?
 }

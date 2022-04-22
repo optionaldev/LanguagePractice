@@ -8,8 +8,11 @@ import Dispatch
 
 import protocol SwiftUI.View
 
+import struct SwiftUI.AppStorage
 import struct SwiftUI.Color
+import struct SwiftUI.CGFloat
 import struct SwiftUI.Environment
+import struct SwiftUI.Font
 import struct SwiftUI.ForEach
 import struct SwiftUI.HStack
 import struct SwiftUI.Image
@@ -22,6 +25,15 @@ import struct SwiftUI.VStack
 struct QuizViews {
   
   static let waveformImage = Image(systemName: "waveform.circle")
+  
+  static func customFont(ofSize size: CGFloat) -> Font {
+    if let fontName = Defaults.string(forKey: .kanjiFontName) {
+      return .custom(fontName, size: size)
+    }
+    return .system(size: size)
+  }
+  
+  @AppStorage(DefaultsStringKey.kanjiFontName.rawValue) static var kanjiFontName: String?
   
   @ViewBuilder
   static func inputView(rep: InputRepresentation, viewModel: InputTappable) -> some View {
@@ -42,14 +54,15 @@ struct QuizViews {
         VStack {
           Text(" ")
           Text(rep.text)
-            .font(.system(size: 30))
+            .font(customFont(ofSize: 30))
           Text(rep.translation)
             .opacity(AppConstants.defaultOpacity)
+            .font(customFont(ofSize: 15))
         }
       case .text(let rep):
         Text(rep)
           .multilineTextAlignment(.center)
-          .font(.system(size: 30))
+          .font(customFont(ofSize: 30))
       case .textWithRegularFurigana(let rep):
         textWithFurigana(representation: rep, regular: true)
           .background(Color.blue.opacity(0.5))
@@ -75,12 +88,12 @@ struct QuizViews {
             if representation.groups.isEmpty == false {
               Text(representation.groups[index])
                 .foregroundColor(Color.black)
-                .font(.system(size: 15))
+                .font(customFont(ofSize: 15))
                 .opacity(AppConstants.defaultOpacity)
                 .background(Color.blue.opacity(0.3))
             }
             Text("\(representation.text[index])")
-              .font(.system(size: 30))
+              .font(customFont(ofSize: 30))
               .padding(.bottom, 5)
               .background(Color.green.opacity(0.3))
           }
@@ -91,11 +104,11 @@ struct QuizViews {
       VStack(alignment: .leading) {
         Text(representation.groups.joined())
           .foregroundColor(Color.black)
-          .font(.system(size: 15))
+          .font(customFont(ofSize: 15))
           .opacity(AppConstants.defaultOpacity)
           .background(Color.blue.opacity(0.3))
         Text(representation.text.joined())
-          .font(.system(size: 30))
+          .font(customFont(ofSize: 30))
           .padding(.bottom, 5)
           .background(Color.green.opacity(0.3))
       }
