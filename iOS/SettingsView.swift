@@ -14,6 +14,7 @@ import struct SwiftUI.State
 import struct SwiftUI.Text
 import struct SwiftUI.Toggle
 import struct SwiftUI.ViewBuilder
+import Foundation
 
 struct SettingsView: View {
   
@@ -25,7 +26,7 @@ struct SettingsView: View {
   
   // MARK: - Private
   
-  @State private var voiceEnabled = Defaults.voiceEnabled
+  @State private var voiceEnabled = UserDefaults.standard.bool(forKey: DefaultsBoolKey.voiceEnabled.rawValue)
   
   private func content() -> some View {
     NavigationView {

@@ -4,9 +4,10 @@
 // Copyright © 2022 optionaldev. All rights reserved.
 // 
 
-
 import class Foundation.DispatchQueue
 import class Foundation.NumberFormatter
+import class Foundation.UserDefaults
+import class Foundation.NSKeyValueObservation
 
 import protocol Foundation.ObservableObject
 
@@ -49,10 +50,18 @@ extension ResultsInterpretable {
   func assess(entries: [Distinguishable], challenges: [TypingChallenge], states: [TypingState]) -> QuizResult { return .learnedNothing }
 }
 
+extension UserDefaults {
+  @objc dynamic var voiceEnabled: Int {
+    return integer(forKey: "voiceEnabled")
+  }
+}
+
 final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceChallengeable, InputTappable {
   
   @Published var visibleChallenges: [PickChallenge] = []
   @Published var quizResult: QuizResult?
+  
+  var observer: NSKeyValueObservation?
   
   var inputSpoken: Bool = false
   var nextChallenge: PickChallenge?
@@ -73,8 +82,12 @@ final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceC
     
     self.speech = speech
     speech.delegate = self
-
+    
     performInitialSetup()
+    
+    observer = UserDefaults.standard.observe(\.voiceEnabled, options: [.initial, .new], changeHandler: { (defaults, change) in
+      self.visibleChallenges[self.visibleChallenges.count - 1] = challengeProvider.generatePick(fromPool: self.challengeEntries, index: visibleChallenges.count)
+    })
   }
   
   func challengeAppeared() {

@@ -20,6 +20,7 @@ import struct SwiftUI.Spacer
 import struct SwiftUI.Text
 import struct SwiftUI.ViewBuilder
 import struct SwiftUI.VStack
+import SwiftUI
 
 
 struct QuizViews {
@@ -34,11 +35,12 @@ struct QuizViews {
   }
   
   @AppStorage(DefaultsStringKey.kanjiFontName.rawValue) static var kanjiFontName: String?
+  @AppStorage(DefaultsBoolKey.voiceEnabled.rawValue) static var voiceEnabled: Bool = Defaults.voiceEnabled
   
   @ViewBuilder
   static func inputView(rep: InputRepresentation, viewModel: InputTappable) -> some View {
     switch rep {
-      case .voice:
+      case .voice(let rep):
         waveformImage
           .resizable()
           .frame(width: 50, height: 50)
@@ -129,4 +131,5 @@ struct QuizViews {
   }
   
   @Environment(\.imageCache) private static var imageCache
+  
 }
