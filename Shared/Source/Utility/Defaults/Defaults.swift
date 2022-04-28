@@ -45,10 +45,10 @@ final class Defaults: DefaultsArrayProtocol,
     return 6
   }
   
-//  static var voiceEnabled: Bool {
-//    return bool(forKey: .voiceEnabled)
-//  }
-//  
+  @objc dynamic static var voiceEnabled: Bool {
+    return bool(forKey: .voiceEnabled)
+  }
+  
   static func history(for type: KnowledgeType) -> [String: [TimeInterval]] {
     switch type {
       case .picking:

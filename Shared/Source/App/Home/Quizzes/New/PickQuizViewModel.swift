@@ -85,9 +85,32 @@ final class PickQuizViewModel: Quizing, ObservableObject, SpeechDelegate, VoiceC
     
     performInitialSetup()
     
-    observer = UserDefaults.standard.observe(\.voiceEnabled, options: [.initial, .new], changeHandler: { (defaults, change) in
-      self.visibleChallenges[self.visibleChallenges.count - 1] = challengeProvider.generatePick(fromPool: self.challengeEntries, index: visibleChallenges.count)
+    observer = UserDefaults.standard.observe(\.voiceEnabled, options: [.new], changeHandler: { [weak self] (_, _) in
+      self?.removeVoiceChallengesIfTurnedOff()
     })
+  }
+  
+  private func removeVoiceChallengesIfTurnedOff() {
+    var newChallengeNeeded = false
+    if case .voice = currentChallenge.inputRep {
+      newChallengeNeeded = true
+    }
+    if case .voice = currentChallenge.correctOutput {
+      newChallengeNeeded = true
+    }
+    
+    if newChallengeNeeded {
+      let newChallenge = challengeProvider.generatePick(fromPool: challengeEntries,
+                                                        index: visibleChallenges.count - 1)
+      var copy = visibleChallenges
+      copy.removeLast()
+      copy.append(newChallenge)
+      self.visibleChallenges = copy
+    }
+  }
+  
+  deinit {
+    observer?.invalidate()
   }
   
   func challengeAppeared() {

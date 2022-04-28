@@ -54,7 +54,7 @@ final class WordChallengeProvider: ChallengeProvidable {
     // We need unique values since there's multiple entries with same id,
     // but what differentiates them is the combination of id and category
     var uniqueItems: [Item] = []
-    for (_, item) in otherItems.enumerated() {
+    for item in otherItems {
       if uniqueItems.contains(where: { $0.id == item.id }) == false {
         uniqueItems.append(item)
       }

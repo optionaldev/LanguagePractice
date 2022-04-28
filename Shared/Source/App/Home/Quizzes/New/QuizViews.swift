@@ -35,7 +35,6 @@ struct QuizViews {
   }
   
   @AppStorage(DefaultsStringKey.kanjiFontName.rawValue) static var kanjiFontName: String?
-  @AppStorage(DefaultsBoolKey.voiceEnabled.rawValue) static var voiceEnabled: Bool = Defaults.voiceEnabled
   
   @ViewBuilder
   static func inputView(rep: InputRepresentation, viewModel: InputTappable) -> some View {

@@ -26,7 +26,7 @@ struct SettingsView: View {
   
   // MARK: - Private
   
-  @State private var voiceEnabled = UserDefaults.standard.bool(forKey: DefaultsBoolKey.voiceEnabled.rawValue)
+  @State private var voiceEnabled = Defaults.voiceEnabled
   
   private func content() -> some View {
     NavigationView {

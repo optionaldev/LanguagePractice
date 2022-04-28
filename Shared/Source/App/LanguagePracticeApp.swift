@@ -50,7 +50,7 @@ struct LanguagePracticeApp: App {
       .compactMap { Lexicon.shared.foreignDictionary[$0] as? ForeignWord }
       .map { $0.id.removingUniqueness() }
       .joined(separator: ", ")
-    log("Items learned so far: \(printedItems)")
+    log("\(printedItems.count) items learned so far: \(printedItems)")
     
     let itemsLeft = Lexicon.shared.foreign.all
       .map { $0.id }

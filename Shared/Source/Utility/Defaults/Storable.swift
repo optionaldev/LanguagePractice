@@ -21,7 +21,7 @@ protocol Storable {
 extension Storable where Self: RawRepresentable, Self.RawValue: StringProtocol {
   
   var storeValue: String {
-    return Constants.storeValuePrefix + rawValue
+    return "\(rawValue)"
   }
 }
 
