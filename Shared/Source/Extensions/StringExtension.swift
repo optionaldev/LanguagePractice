@@ -67,5 +67,11 @@ extension String {
     return first(where: { $0.isKatakana }) != nil
   }
   
+  // TODO: It could still be Japanese, but romaji
+  // Will need to check for that
+  var isJapanese: Bool {
+    return containsKanji || containsHiragana || containsKatakana
+  }
+  
   #endif
 }

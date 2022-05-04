@@ -130,9 +130,11 @@ struct PickQuizView: View {
         Text(rep.text)
           .fixedSize(horizontal: false, vertical: true)
           .multilineTextAlignment(.center)
+          .minimumScaleFactor(0.2)
+          .lineLimit(2)
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .contentShape(Rectangle())
-          .font(customFont(ofSize: 25))
+          .font(customFont(forRep: rep))
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .background(Color.blue.opacity(0.5))
           .cornerRadius(5)
@@ -149,11 +151,28 @@ struct PickQuizView: View {
       case .text(let rep):
         Text(rep)
           .multilineTextAlignment(.center)
-          .font(customFont(ofSize: 20))
+          .font(customFont(forRep: rep))
+          .minimumScaleFactor(0.2)
+          .lineLimit(2)
           .background(Color.blue.opacity(0.5))
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .cornerRadius(5)
     }
+  }
+  
+  func customFont(forRep rep: String) -> Font {
+    let size: CGFloat = rep.isJapanese ? 30 : 20
+    return customFont(ofSize: size)
+  }
+  
+  func customFont(forRep rep: FuriganaRep) -> Font {
+    let size: CGFloat = rep.text.first?.isJapanese == true ? 30 : 20
+    return customFont(ofSize: size)
+  }
+  
+  func customFont(forRep rep: TextWithTranslationRep) -> Font {
+    let size: CGFloat = rep.language == .foreign ? 30 : 20
+    return customFont(ofSize: size)
   }
   
   func customFont(ofSize size: CGFloat) -> Font {
