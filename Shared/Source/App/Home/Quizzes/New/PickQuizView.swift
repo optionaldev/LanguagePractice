@@ -177,10 +177,8 @@ struct PickQuizView: View {
   
   func customFont(ofSize size: CGFloat) -> Font {
     if let fontName = kanjiFontName {
-      print("custom font")
       return .custom(fontName, size: size)
     }
-    print("system font")
     return .system(size: size)
   }
   

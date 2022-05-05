@@ -57,9 +57,6 @@ final class WordEntryProvider: EntryProvidable {
   }
   
   private func shuffleUntilNoDuplicates(_ words: inout [WordEntry]) {
-    
-    print("Called shuffle.")
-    
     var firstDuplicate: Int?
     var secondDuplicate: Int?
     
