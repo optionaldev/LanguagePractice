@@ -13,6 +13,7 @@ struct EnglishAdjective: EnglishWord {
   
   var imageExists: Bool {
     return _imageExists == 1
+    
   }
   
   enum CodingKeys: String, CodingKey {
