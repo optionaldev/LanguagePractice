@@ -4,7 +4,6 @@ Practice tool for Japanese.
 
 Supported platforms:
 - iOS
-- macOS
 
 Plans to include for first release:
 - practice hiragana & katakana
