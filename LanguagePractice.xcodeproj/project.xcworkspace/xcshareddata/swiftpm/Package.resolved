@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "SwiftAnchoring",
+        "repositoryURL": "https://github.com/optionaldev/SwiftAnchoring",
+        "state": {
+          "branch": "main",
+          "revision": "fb674a81b8a0e9a4561f5da256de2149bfa25d09",
+          "version": null
+        }
+      },
+      {
+        "package": "SwiftPrint",
+        "repositoryURL": "https://github.com/optionaldev/SwiftPrint",
+        "state": {
+          "branch": null,
+          "revision": "58d4b03ee9ff694015d6f3207761e0af5cc30e38",
+          "version": "1.1.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
