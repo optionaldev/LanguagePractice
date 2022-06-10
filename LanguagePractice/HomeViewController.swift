@@ -1,20 +1,17 @@
 //
-// The  project.
-// Created by optionaldev on 31/05/2022.
+// The LanguagePractice project.
+// Created by optionaldev on 10/06/2022.
 // Copyright © 2022 optionaldev. All rights reserved.
 // 
 
+import SwiftAnchoring
 import UIKit
 
-class ViewController: BaseViewController {
+final class HomeViewController: BaseViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view.
     
     view.backgroundColor = .red
   }
-
-
 }
-
