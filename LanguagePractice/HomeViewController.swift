@@ -7,18 +7,19 @@
 import SwiftAnchoring
 import UIKit
 
-final class HomeViewController: BaseViewController, UICollectionViewDataSource {
+final class HomeViewController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate {
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
     let flowLayout = UICollectionViewFlowLayout()
-    flowLayout.itemSize = CGSize(width: UIScreen.width, height: 50)
+    flowLayout.itemSize = CGSize(width: Screen.width, height: 50)
     
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
     self.collectionView = view.addingSubview(collectionView)
     collectionView.anchor(.inner, with: view)
     collectionView.dataSource = self
+    collectionView.delegate = self
     collectionView.register(cellType: HomeCell.self)
   }
   
@@ -34,6 +35,13 @@ final class HomeViewController: BaseViewController, UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return EntryType.allCases.count
+  }
+  
+  // MARK: - UICollectionViewDelegate conformance
+  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let quizVC = QuizViewController()
+    navigationController?.pushViewController(quizVC, animated: true)
   }
   
   // MARK: - Private

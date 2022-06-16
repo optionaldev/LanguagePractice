@@ -15,8 +15,8 @@ final class TabBarController: UITabBarController {
     let lexiconItem = UITabBarItem(title: "lexicon", image: UIImage(systemName: "a.book.closed"), selectedImage: UIImage(systemName: "a.book.closed"))
     let settingsItem = UITabBarItem(title: "settings", image: UIImage(systemName: "wrench.and.screwdriver"), selectedImage: UIImage(systemName: "wrench.and.screwdriver"))
 
-    let homeVC = HomeViewController()
-    homeVC.tabBarItem = homeItem
+    let homeNC = UINavigationController(rootViewController: HomeViewController())
+    homeNC.tabBarItem = homeItem
     
     let lexiconVC = LexiconViewController()
     lexiconVC.tabBarItem = lexiconItem
@@ -24,7 +24,7 @@ final class TabBarController: UITabBarController {
     let settingsVC = SettingsViewController()
     settingsVC.tabBarItem = settingsItem
     
-    viewControllers = [homeVC, lexiconVC, settingsVC]
+    viewControllers = [homeNC, lexiconVC, settingsVC]
     tabBar.backgroundColor = .white
   }
 }

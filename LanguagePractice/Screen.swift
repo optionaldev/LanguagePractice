@@ -6,7 +6,7 @@
 
 import UIKit
 
-extension UIScreen {
+enum Screen {
   
   static var width: CGFloat {
     return UIScreen.main.bounds.width
